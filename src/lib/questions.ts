@@ -32,8 +32,8 @@ export type Question = {
 };
 
 export type AnswerValue = {
-  value?: number | string | number[];
-  detail?: string;
+  value?: number | string | number[] | undefined;
+  detail?: string | undefined;
 };
 export type Answers = Record<number, AnswerValue | undefined>;
 
