@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssessmentRouteImport } from './routes/assessment'
 import { Route as ConsentRouteImport } from './routes/consent'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as FounderMetricsRouteImport } from './routes/founder-metrics'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +30,60 @@ const ConsentRoute = ConsentRouteImport.update({
   path: '/consent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FounderMetricsRoute = FounderMetricsRouteImport.update({
+  id: '/founder-metrics',
+  path: '/founder-metrics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
   '/consent': typeof ConsentRoute
+  '/dashboard': typeof DashboardRoute
+  '/founder-metrics': typeof FounderMetricsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
   '/consent': typeof ConsentRoute
+  '/dashboard': typeof DashboardRoute
+  '/founder-metrics': typeof FounderMetricsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
   '/consent': typeof ConsentRoute
+  '/dashboard': typeof DashboardRoute
+  '/founder-metrics': typeof FounderMetricsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/assessment' | '/consent'
+  fullPaths:
+    '/' | '/assessment' | '/consent' | '/dashboard' | '/founder-metrics'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/assessment' | '/consent'
-  id: '__root__' | '/' | '/assessment' | '/consent'
+  to: '/' | '/assessment' | '/consent' | '/dashboard' | '/founder-metrics'
+  id:
+    | '__root__'
+    | '/'
+    | '/assessment'
+    | '/consent'
+    | '/dashboard'
+    | '/founder-metrics'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssessmentRoute: typeof AssessmentRoute
   ConsentRoute: typeof ConsentRoute
+  DashboardRoute: typeof DashboardRoute
+  FounderMetricsRoute: typeof FounderMetricsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +109,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/founder-metrics': {
+      id: '/founder-metrics'
+      path: '/founder-metrics'
+      fullPath: '/founder-metrics'
+      preLoaderRoute: typeof FounderMetricsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +130,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssessmentRoute: AssessmentRoute,
   ConsentRoute: ConsentRoute,
+  DashboardRoute: DashboardRoute,
+  FounderMetricsRoute: FounderMetricsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
