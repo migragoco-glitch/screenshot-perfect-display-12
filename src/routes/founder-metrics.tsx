@@ -11,10 +11,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { ShieldAlert } from "lucide-react";
+import { FlaskConical, ShieldAlert } from "lucide-react";
 import { BrandLogo, LanguageSwitch } from "@/components/BrandHeader";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import { readMetrics, type Metrics } from "@/lib/store";
+import { fetchValidationSignals, type ValidationSignals } from "@/lib/feedback";
 
 const PASSWORD = "migrago2026";
 const SESSION_KEY = "migrago.founder";
@@ -43,10 +44,12 @@ function FounderMetrics() {
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
   const [metrics, setMetrics] = useState<Metrics | null>(null);
+  const [signals, setSignals] = useState<ValidationSignals | null>(null);
 
   useEffect(() => {
     if (window.sessionStorage.getItem(SESSION_KEY) === "1") setUnlocked(true);
     setMetrics(readMetrics());
+    void fetchValidationSignals().then(setSignals);
   }, []);
 
   const funnel = useMemo(() => {
@@ -162,13 +165,24 @@ function FounderMetrics() {
       </header>
 
       <div className="px-4 pt-4 md:px-8">
-        <p
-          className="mx-auto flex max-w-7xl items-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold"
-          style={plum}
-        >
-          <ShieldAlert className="size-4" aria-hidden />
-          {t("metrics.banner")}
-        </p>
+        <div className="mx-auto max-w-7xl space-y-3">
+          <p
+            className="flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold"
+            style={plum}
+          >
+            <ShieldAlert className="size-4" aria-hidden />
+            {t("metrics.banner")}
+          </p>
+          <div className="rounded-2xl border border-[var(--gold)] bg-[var(--gold)]/12 px-5 py-3">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--gold)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
+              <FlaskConical className="size-3.5" aria-hidden />
+              {t("metrics.prototype")}
+            </span>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              {t("metrics.prototypeBody")}
+            </p>
+          </div>
+        </div>
       </div>
 
       <main className="mx-auto max-w-7xl px-4 py-8 md:px-8">
@@ -176,7 +190,44 @@ function FounderMetrics() {
           {t("metrics.title")}
         </h1>
 
-        <div className="mt-7 grid gap-5 lg:grid-cols-2">
+        <section className="mt-7 grid gap-5 md:grid-cols-3">
+          {[
+            {
+              title: t("metrics.csat"),
+              value:
+                signals && signals.csat_total > 0
+                  ? `${localizeNumber(Math.round((signals.csat_positive / signals.csat_total) * 100), lang)}%`
+                  : "—",
+              note: `${t("metrics.csatMatch")} · n=${localizeNumber(signals?.csat_total ?? 0, lang)}`,
+            },
+            {
+              title: t("metrics.nps"),
+              value:
+                signals && signals.nps_total > 0
+                  ? localizeNumber(Math.round(signals.nps_avg * 10) / 10, lang)
+                  : "—",
+              note: `${t("metrics.npsAvg")} · n=${localizeNumber(signals?.nps_total ?? 0, lang)}`,
+            },
+            {
+              title: t("metrics.emailLeads"),
+              value: localizeNumber(signals?.founders_circle ?? 0, lang),
+              note: `${t("metrics.responses")} · n=${localizeNumber(signals?.founders_circle ?? 0, lang)}`,
+            },
+          ].map((c) => (
+            <div key={c.title} className="rounded-3xl border border-secondary/30 bg-card p-6">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-secondary">
+                {t("metrics.live")}
+              </h2>
+              <p className="mt-1 text-sm font-semibold">{c.title}</p>
+              <p className="mt-3 text-4xl font-bold tabular-nums" style={{ color: "var(--plum)" }}>
+                {c.value}
+              </p>
+              <p className="mt-2 text-xs text-muted-foreground">{c.note}</p>
+            </div>
+          ))}
+        </section>
+
+        <div className="mt-5 grid gap-5 lg:grid-cols-2">
           <Card title={t("metrics.registrations")}>
             <div className="h-[220px]">
               <ResponsiveContainer width="100%" height="100%">

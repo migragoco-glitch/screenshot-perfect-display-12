@@ -13,14 +13,23 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { Building2, Lock, Pencil, Sparkles, Trash2 } from "lucide-react";
+import { FileText, Lock, LogIn, Pencil, ShieldCheck, Sparkles, Trash2 } from "lucide-react";
 import { AppHeader, LanguageSwitch, SiteFooter } from "@/components/BrandHeader";
 import { PenguinLoader } from "@/components/PenguinLoader";
+import {
+  CsatWidget,
+  FoundersCircleModal,
+  InstitutionBadge,
+  NpsSurvey,
+} from "@/components/FeedbackWidgets";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import { analysisSummary, computeProfile } from "@/lib/scoring";
 import { KNOWLEDGE_TABLE_VERSION, PHASE_TITLE_KEYS, generateRoadmap } from "@/lib/roadmap";
+import { fetchRoadmapProgress, setRoadmapTask } from "@/lib/feedback";
+import { useSession } from "@/lib/session";
 import { trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -51,10 +60,33 @@ type Tab = "profile" | "roadmap" | "settings";
 function Dashboard() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const { state, hydrated, update, pushSnapshot, reset } = useAppState();
+  const { state, hydrated, pushSnapshot, reset } = useAppState();
   const [tab, setTab] = useState<Tab>("profile");
   const [buildingRoadmap, setBuildingRoadmap] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [payModal, setPayModal] = useState(false);
+  const [done, setDone] = useState<Set<string>>(new Set());
+  const { user } = useSession();
+
+  useEffect(() => {
+    if (!user) {
+      setDone(new Set());
+      return;
+    }
+    void fetchRoadmapProgress().then(setDone);
+  }, [user]);
+
+  // Returning from the Founder's Circle email capture + consent step.
+  useEffect(() => {
+    if (!hydrated) return;
+    if (window.localStorage.getItem("migrago.justUpgraded") !== "1") return;
+    window.localStorage.removeItem("migrago.justUpgraded");
+    setTab("roadmap");
+    setBuildingRoadmap(true);
+    const id = window.setTimeout(() => setBuildingRoadmap(false), 2600);
+    return () => window.clearTimeout(id);
+  }, [hydrated]);
+
 
   const profile = useMemo(() => computeProfile(state.answers), [state.answers]);
   const roadmap = useMemo(() => generateRoadmap(profile), [profile]);
@@ -101,15 +133,32 @@ function Dashboard() {
     value: 25,
   }));
 
-  const upgrade = () => {
+  const openPaywall = () => {
     trackEvent({ type: "upgrade_click" });
-    trackEvent({ type: "checkout_started" });
-    trackEvent({ type: "checkout_completed" });
-    update({ tier: "navigator" });
-    setTab("roadmap");
-    setBuildingRoadmap(true);
-    window.setTimeout(() => setBuildingRoadmap(false), 2600);
+    setPayModal(true);
   };
+
+  // Email captured (or skipped) → the existing Consent screen → unlocked roadmap.
+  const afterEmailCapture = () => {
+    setPayModal(false);
+    void navigate({ to: "/consent", search: { upgrade: true } });
+  };
+
+  const totalTasks = roadmap.reduce((n, p) => n + p.items.length, 0);
+  const doneCount = roadmap.reduce(
+    (n, p) => n + p.items.filter((i) => done.has(i.id)).length,
+    0,
+  );
+
+  const toggleTask = (id: string) => {
+    const next = new Set(done);
+    const willBeDone = !next.has(id);
+    if (willBeDone) next.add(id);
+    else next.delete(id);
+    setDone(next);
+    if (user) void setRoadmapTask(user.id, id, willBeDone);
+  };
+
 
   return (
     <div className="min-h-screen">
@@ -289,6 +338,9 @@ function Dashboard() {
                 ) : null}
               </section>
 
+              <CsatWidget />
+
+
               <section className="rounded-3xl border border-border bg-card p-6">
                 <h2 className="text-lg">{t("dash.bonus")}</h2>
                 <p className="mt-2 text-4xl font-bold text-secondary tabular-nums">
@@ -306,7 +358,8 @@ function Dashboard() {
                   <p className="mt-2 text-sm opacity-85">{t("pay.sub")}</p>
                   <button
                     type="button"
-                    onClick={upgrade}
+                    onClick={openPaywall}
+
                     className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-bold text-accent-foreground transition-opacity duration-200 ease-out hover:opacity-90"
                   >
                     <Sparkles className="size-4" aria-hidden />
@@ -351,10 +404,28 @@ function Dashboard() {
                 <h2 className="text-xl md:text-2xl">{t("road.title")}</h2>
                 <p className="mt-1 text-sm text-muted-foreground">{t("road.sub")}</p>
               </div>
-              <span className="rounded-full border border-border bg-card px-3 py-1 text-[11px] font-semibold text-muted-foreground">
-                knowledge table {KNOWLEDGE_TABLE_VERSION}
-              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                {!locked ? (
+                  <span className="rounded-full bg-secondary/12 px-3 py-1 text-[11px] font-semibold text-secondary">
+                    {localizeNumber(doneCount, lang)} / {localizeNumber(totalTasks, lang)}{" "}
+                    {t("road.progress")}
+                  </span>
+                ) : null}
+                <span className="rounded-full border border-border bg-card px-3 py-1 text-[11px] font-semibold text-muted-foreground">
+                  knowledge table {KNOWLEDGE_TABLE_VERSION}
+                </span>
+              </div>
             </div>
+            {!locked && !user ? (
+              <p className="mt-3 inline-flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-2 text-xs text-muted-foreground">
+                <LogIn className="size-3.5" aria-hidden />
+                {t("road.signInToSave")}
+                <Link to="/auth" className="font-semibold text-secondary underline underline-offset-4">
+                  {t("nav.signIn")}
+                </Link>
+              </p>
+            ) : null}
+
 
             {locked ? (
               <div className="mt-6 rounded-3xl border border-dashed border-border bg-muted/50 p-10 text-center">
@@ -362,7 +433,7 @@ function Dashboard() {
                 <p className="mt-4 text-sm font-semibold">{t("road.locked")}</p>
                 <button
                   type="button"
-                  onClick={upgrade}
+                  onClick={openPaywall}
                   className="mt-5 inline-flex items-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-bold text-secondary-foreground"
                 >
                   {t("pay.unlock")}
@@ -422,49 +493,74 @@ function Dashboard() {
                           </span>
                         </header>
                         <ol className="mt-4 space-y-3">
-                          {phase.items.map((item) => (
-                            <li
-                              key={item.id}
-                              className="rounded-2xl border border-border/70 bg-background p-4"
-                            >
-                              <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
-                                <span className="rounded-full bg-primary/8 px-2.5 py-0.5 text-primary">
-                                  {t("road.week")} {localizeNumber(item.week, lang)}
-                                </span>
-                                <span
-                                  className={cn(
-                                    "rounded-full px-2.5 py-0.5",
-                                    item.priority === "high"
-                                      ? "bg-destructive/12 text-destructive"
-                                      : item.priority === "medium"
-                                        ? "bg-accent/25 text-accent-foreground"
-                                        : "bg-muted text-muted-foreground",
-                                  )}
-                                >
-                                  {t("road.priority")}:{" "}
-                                  {item.priority === "high"
-                                    ? t("road.high")
-                                    : item.priority === "medium"
-                                      ? t("road.medium")
-                                      : t("road.normal")}
-                                </span>
-                                <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary/12 px-2.5 py-0.5 text-secondary">
-                                  <Building2 className="size-3" aria-hidden />
-                                  {t("road.institution")}: {item.institution}
-                                </span>
-                              </div>
-                              <h4 className="mt-3 text-sm font-bold leading-snug">{item.title[lang]}</h4>
-                              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                                {item.detail[lang]}
-                              </p>
-                            </li>
-                          ))}
+                          {phase.items.map((item) => {
+                            const checked = done.has(item.id);
+                            return (
+                              <li
+                                key={item.id}
+                                className={cn(
+                                  "rounded-2xl border border-border/70 bg-background p-4 transition-opacity duration-200 ease-out",
+                                  checked && "opacity-70",
+                                )}
+                              >
+                                <div className="flex items-start gap-3">
+                                  <input
+                                    type="checkbox"
+                                    checked={checked}
+                                    onChange={() => toggleTask(item.id)}
+                                    aria-label={`${t("road.done")}: ${item.title[lang]}`}
+                                    className="mt-1 size-4 shrink-0 accent-[var(--teal)]"
+                                  />
+                                  <div className="min-w-0 flex-1">
+                                    <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
+                                      <span className="rounded-full bg-primary/8 px-2.5 py-0.5 text-primary">
+                                        {t("road.week")} {localizeNumber(item.week, lang)}
+                                      </span>
+                                      <span
+                                        className={cn(
+                                          "rounded-full px-2.5 py-0.5",
+                                          item.priority === "high"
+                                            ? "bg-destructive/12 text-destructive"
+                                            : item.priority === "medium"
+                                              ? "bg-accent/25 text-accent-foreground"
+                                              : "bg-muted text-muted-foreground",
+                                        )}
+                                      >
+                                        {t("road.priority")}:{" "}
+                                        {item.priority === "high"
+                                          ? t("road.high")
+                                          : item.priority === "medium"
+                                            ? t("road.medium")
+                                            : t("road.normal")}
+                                      </span>
+                                      <InstitutionBadge institution={item.institution} />
+                                    </div>
+                                    <h4
+                                      className={cn(
+                                        "mt-3 text-sm font-bold leading-snug",
+                                        checked && "line-through",
+                                      )}
+                                    >
+                                      {item.title[lang]}
+                                    </h4>
+                                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                                      {item.detail[lang]}
+                                    </p>
+                                  </div>
+                                </div>
+                              </li>
+                            );
+                          })}
+
                         </ol>
                       </article>
                     ))}
                   </div>
                 </section>
+
+                <NpsSurvey />
               </>
+
             )}
           </div>
         ) : null}
@@ -473,7 +569,43 @@ function Dashboard() {
         {tab === "settings" ? (
           <div className="rise-in mt-7 max-w-2xl space-y-5">
             <section className="rounded-3xl border border-border bg-card p-6">
+              <h2 className="text-lg">{t("set.account")}</h2>
+              {user ? (
+                <p className="mt-3 text-sm">
+                  <span className="text-muted-foreground">{t("set.email")}: </span>
+                  <span className="font-semibold">{user.email}</span>
+                </p>
+              ) : (
+                <p className="mt-3 text-sm text-muted-foreground">
+                  {t("set.notSignedIn")}{" "}
+                  <Link to="/auth" className="font-semibold text-secondary underline underline-offset-4">
+                    {t("nav.signIn")}
+                  </Link>
+                </p>
+              )}
+              <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-secondary/12 px-3 py-1.5 text-[11px] font-semibold text-secondary">
+                <ShieldCheck className="size-3.5" aria-hidden />
+                {t("set.gdpr")}
+              </p>
+            </section>
+
+            <section className="rounded-3xl border border-border bg-card p-6">
+              <h2 className="text-lg">{t("set.legal")}</h2>
+              <div className="mt-3 flex flex-wrap gap-4 text-sm font-semibold">
+                <Link to="/privacy" className="inline-flex items-center gap-1.5 text-secondary underline underline-offset-4">
+                  <FileText className="size-4" aria-hidden />
+                  {t("set.privacy")}
+                </Link>
+                <Link to="/terms" className="inline-flex items-center gap-1.5 text-secondary underline underline-offset-4">
+                  <FileText className="size-4" aria-hidden />
+                  {t("set.terms")}
+                </Link>
+              </div>
+            </section>
+
+            <section className="rounded-3xl border border-border bg-card p-6">
               <h2 className="text-lg">{t("dash.langSection")}</h2>
+
               <div className="mt-4">
                 <LanguageSwitch />
               </div>
@@ -501,6 +633,13 @@ function Dashboard() {
           </div>
         ) : null}
       </main>
+
+      <FoundersCircleModal
+        open={payModal}
+        onClose={() => setPayModal(false)}
+        onJoined={afterEmailCapture}
+      />
+
 
       <SiteFooter />
     </div>

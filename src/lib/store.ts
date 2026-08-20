@@ -44,13 +44,14 @@ const emptyState: AppState = {
 
 const seededMetrics: Metrics = {
   registrations: [
-    { date: "2026-03", count: 31 },
-    { date: "2026-04", count: 68 },
-    { date: "2026-05", count: 112 },
-    { date: "2026-06", count: 176 },
-    { date: "2026-07", count: 254 },
-    { date: "2026-08", count: 337 },
+    { date: "2026-08", count: 31 },
+    { date: "2026-09", count: 68 },
+    { date: "2026-10", count: 112 },
+    { date: "2026-11", count: 176 },
+    { date: "2026-12", count: 254 },
+    { date: "2027-01", count: 337 },
   ],
+
   started: 337,
   finished: 214,
   paywallViews: 189,

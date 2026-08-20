@@ -1,9 +1,11 @@
-import { Link } from "@tanstack/react-router";
-import { Globe, Lock } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { Globe, Lock, LogOut } from "lucide-react";
 import logoAsset from "@/assets/logo.png.asset.json";
 import { useI18n } from "@/lib/i18n";
+import { useSession, signOutEverywhere } from "@/lib/session";
 import { trackEvent } from "@/lib/store";
 import { cn } from "@/lib/utils";
+
 
 export const COUNTRY_OPTIONS = [
   { code: "FI", flag: "🇫🇮", name: { en: "Finland", fa: "فنلاند" }, active: true },
@@ -96,6 +98,17 @@ export function CountrySelector() {
 
 export function AppHeader({ registered }: { registered?: boolean }) {
   const { t } = useI18n();
+  const navigate = useNavigate();
+  const { session } = useSession();
+
+  const handleLogout = async () => {
+    await signOutEverywhere();
+    if (typeof window !== "undefined") {
+      window.sessionStorage.removeItem("migrago.founder");
+    }
+    void navigate({ to: "/" });
+  };
+
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-4 py-3 md:px-8">
@@ -111,11 +124,29 @@ export function AppHeader({ registered }: { registered?: boolean }) {
               {t("nav.profile")}
             </Link>
           ) : null}
+          {session ? (
+            <button
+              type="button"
+              onClick={() => void handleLogout()}
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-transparent px-4 py-2 text-xs font-semibold text-muted-foreground transition-colors duration-200 ease-out hover:bg-muted hover:text-foreground"
+            >
+              <LogOut className="size-3.5 rtl:rotate-180" aria-hidden />
+              {t("nav.logout")}
+            </button>
+          ) : (
+            <Link
+              to="/auth"
+              className="rounded-full border border-border bg-transparent px-4 py-2 text-xs font-semibold text-muted-foreground transition-colors duration-200 ease-out hover:bg-muted hover:text-foreground"
+            >
+              {t("nav.signIn")}
+            </Link>
+          )}
         </div>
       </div>
     </header>
   );
 }
+
 
 export function SiteFooter() {
   const { t } = useI18n();
