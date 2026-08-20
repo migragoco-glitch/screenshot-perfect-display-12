@@ -41,9 +41,14 @@ const EMPTY_SIGNALS: ValidationSignals = {
 };
 
 export async function fetchValidationSignals(): Promise<ValidationSignals> {
-  const { data, error } = await supabase.rpc("validation_signals");
-  if (error || !data) return EMPTY_SIGNALS;
-  return { ...EMPTY_SIGNALS, ...(data as unknown as ValidationSignals) };
+  try {
+    const { getValidationSignals } = await import("./validation-signals.functions");
+    const data = await getValidationSignals();
+    if (!data) return EMPTY_SIGNALS;
+    return { ...EMPTY_SIGNALS, ...(data as unknown as ValidationSignals) };
+  } catch {
+    return EMPTY_SIGNALS;
+  }
 }
 
 export async function submitCsat(positive: boolean) {
