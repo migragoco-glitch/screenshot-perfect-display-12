@@ -7,5 +7,5 @@ export const getValidationSignals = createServerFn({ method: "GET" }).handler(as
     console.error("[validation_signals]", error);
     return null;
   }
-  return data as unknown;
+  return (data ?? null) as Record<string, number> | null;
 });
