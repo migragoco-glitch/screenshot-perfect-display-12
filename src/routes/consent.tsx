@@ -6,6 +6,8 @@ import { useI18n } from "@/lib/i18n";
 import { trackEvent, useAppState } from "@/lib/store";
 
 export const Route = createFileRoute("/consent")({
+  validateSearch: (search: Record<string, unknown>): { upgrade?: boolean } =>
+    search['upgrade'] === true || search['upgrade'] === "true" ? { upgrade: true } : {},
   head: () => ({
     meta: [
       { title: "Data & consent — MigraGo assessment" },
@@ -30,6 +32,7 @@ function ConsentScreen() {
   const { t } = useI18n();
   const { update } = useAppState();
   const navigate = useNavigate();
+  const { upgrade } = Route.useSearch();
   const [checked, setChecked] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
 
@@ -76,6 +79,15 @@ function ConsentScreen() {
               type="button"
               disabled={!checked}
               onClick={() => {
+                if (upgrade) {
+                  // Founder's Circle checkout confirmation → unlock the roadmap.
+                  update({ consent: true, tier: "navigator" });
+                  trackEvent({ type: "checkout_started" });
+                  trackEvent({ type: "checkout_completed" });
+                  window.localStorage.setItem("migrago.justUpgraded", "1");
+                  void navigate({ to: "/dashboard" });
+                  return;
+                }
                 update({ consent: true });
                 trackEvent({ type: "start" });
                 void navigate({ to: "/assessment" });
