@@ -185,6 +185,76 @@ export const en = {
   "common.close": "Close",
   "common.yes": "Yes",
   "common.no": "No",
+
+  "nav.signIn": "Sign in",
+  "nav.logout": "Log out",
+
+  "auth.subtitle": "Sign in to save your roadmap progress across devices. Your assessment answers stay on this device.",
+  "auth.email": "Email",
+  "auth.password": "Password (min. 6 characters)",
+  "auth.signIn": "Sign in",
+  "auth.signUp": "Create account",
+  "auth.google": "Continue with Google",
+  "auth.toggleToSignUp": "No account yet? Create one",
+  "auth.toggleToSignIn": "Already have an account? Sign in",
+  "auth.checkEmail": "Check your inbox to confirm your email address.",
+
+  "csat.q": "Does this analysis match your real situation?",
+  "csat.sub": "One tap. It helps us validate the model — no personal data is stored.",
+  "csat.yes": "Yes, it matches",
+  "csat.partly": "Partly",
+  "csat.no": "Not really",
+  "csat.thanks": "Thank you — your signal was recorded.",
+
+  "pay.emailTitle": "Join the Founder's Circle",
+  "pay.emailSub":
+    "The first 100 members get the Navigator upgrade at the founding price and early access to new countries.",
+  "pay.emailLabel": "Your email",
+  "pay.emailCta": "Join and continue",
+  "pay.counter": "members joined so far",
+  "pay.counterSpots": "founding spots left",
+  "pay.counterFull": "The first 100 founding spots are taken — you can still join the waitlist.",
+  "pay.emailInvalid": "Please enter a valid email address.",
+  "pay.emailThanks": "You're on the list. Unlocking your roadmap…",
+  "pay.emailSkip": "Continue without joining",
+
+  "set.account": "Account",
+  "set.email": "Signed in as",
+  "set.notSignedIn": "You are not signed in. Sign in to save roadmap progress across devices.",
+  "set.legal": "Legal",
+  "set.privacy": "Privacy Policy",
+  "set.terms": "Terms of Service",
+  "set.gdpr": "Built with GDPR principles",
+  "set.placeholderNote": "Placeholder document for this prototype — not legal advice.",
+
+  "road.done": "Done",
+  "road.progress": "steps completed",
+  "road.signInToSave": "Sign in to save your checkmarks across devices.",
+
+  "nps.title": "How likely are you to recommend MigraGo to another newcomer?",
+  "nps.sub": "0 = not at all likely · 10 = extremely likely",
+  "nps.comment": "What would make it more useful? (optional)",
+  "nps.submit": "Send feedback",
+  "nps.thanks": "Thank you — your feedback was recorded.",
+
+  "metrics.prototype": "Prototype mode",
+  "metrics.prototypeBody":
+    "This dashboard mixes seeded demonstration figures with live prototype signals. Registration, funnel and demographic charts are illustrative; CSAT, NPS and Founder's Circle counts below are real responses collected from this prototype.",
+  "metrics.csat": "Analysis-match signal (CSAT)",
+  "metrics.csatMatch": "said the analysis matched",
+  "metrics.nps": "Recommendation score (NPS)",
+  "metrics.npsAvg": "average score",
+  "metrics.emailLeads": "Founder's Circle email leads",
+  "metrics.responses": "responses",
+  "metrics.live": "Live prototype data",
+
+  "privacy.title": "Privacy Policy",
+  "privacy.body":
+    "This is a placeholder privacy notice for the MigraGo prototype. Assessment answers are stored in your browser only. Email addresses submitted to the Founder's Circle are stored securely and used solely to contact you about early access. Feedback responses are stored without any identifying information. You can delete your local data at any time from Settings.",
+  "terms.title": "Terms of Service",
+  "terms.body":
+    "This is a placeholder terms document for the MigraGo prototype. MigraGo provides informational guidance only. It does not replace legal advice or official authorities, and it does not guarantee residence permits or integration outcomes. Always verify requirements with the responsible Finnish institution.",
+
 };
 
 export const fa: Record<keyof typeof en, string> = {
