@@ -4,7 +4,9 @@ import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { useI18n } from "@/lib/i18n";
 import { useAppState } from "@/lib/store";
 
+// Trigger rebuild after prior changes
 export const Route = createFileRoute("/")({
+
   head: () => ({
     meta: [
       { title: "MigraGo — SettleSmart Navigator for Finland" },
