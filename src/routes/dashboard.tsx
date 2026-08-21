@@ -25,6 +25,7 @@ import {
   InstitutionBadge,
   NpsSurvey,
 } from "@/components/FeedbackWidgets";
+import { SupportChannels } from "@/components/SupportChannels";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import { analysisSummary, computeProfile } from "@/lib/scoring";
 import { KNOWLEDGE_TABLE_VERSION, PHASE_TITLE_KEYS, generateRoadmap } from "@/lib/roadmap";
@@ -625,6 +626,9 @@ function Dashboard() {
                   <Mail className="size-4" aria-hidden />
                   {t("nav.contact")}
                 </Link>
+              </div>
+              <div className="mt-4">
+                <SupportChannels compact />
               </div>
             </section>
 

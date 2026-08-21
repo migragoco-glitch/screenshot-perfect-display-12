@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Globe, Lock, LogOut } from "lucide-react";
 import logoAsset from "@/assets/logo.png.asset.json";
+import { CONTACT_EMAIL, MAILTO_URL, WHATSAPP_URL } from "@/components/SupportChannels";
 import { useI18n } from "@/lib/i18n";
 import { useSession, signOutEverywhere } from "@/lib/session";
 import { trackEvent } from "@/lib/store";
@@ -173,6 +174,20 @@ export function SiteFooter() {
           <Link to="/terms" className="underline underline-offset-4 hover:opacity-80">
             {t("set.terms")}
           </Link>
+          <a
+            href={MAILTO_URL}
+            className="underline underline-offset-4 hover:opacity-80"
+          >
+            {CONTACT_EMAIL}
+          </a>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="underline underline-offset-4 hover:opacity-80"
+          >
+            {t("support.whatsapp")}
+          </a>
         </nav>
         <p className="mt-5 text-xs uppercase tracking-[0.2em] text-primary-foreground/60">
           {t("footer.rights")}
