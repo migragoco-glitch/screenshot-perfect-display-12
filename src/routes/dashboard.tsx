@@ -388,32 +388,38 @@ function Dashboard() {
                   </button>
                   <p className="mt-3 text-center text-[11px] opacity-70">{t("pay.demoNote")}</p>
                 </section>
-              ) : (
-                <section className="rounded-3xl border border-border bg-card p-6">
-                  <h2 className="text-lg">{t("dash.history")}</h2>
-                  {historyData.length > 1 ? (
-                    <div className="mt-3 h-[150px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={historyData}>
-                          <XAxis dataKey="n" tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
-                          <YAxis domain={[0, 100]} width={28} tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
-                          <Tooltip />
-                          <Line
-                            type="monotone"
-                            dataKey="overall"
-                            stroke="var(--teal)"
-                            strokeWidth={2.5}
-                            dot={{ r: 3 }}
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
-                  ) : (
-                    <p className="mt-3 text-sm text-muted-foreground">{t("dash.noHistory")}</p>
-                  )}
-                </section>
-              )}
+              ) : null}
             </div>
+
+            {/* Trend — score history over time */}
+            <section className="rounded-3xl border border-border bg-card p-6 lg:col-span-3">
+              <h2 className="text-lg">{t("dash.history")}</h2>
+              <p className="mt-1 text-xs text-muted-foreground">{t("dash.historyNote")}</p>
+              {historyData.length > 1 ? (
+                <div className="mt-4 h-[220px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={historyData}>
+                      <XAxis dataKey="n" tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
+                      <YAxis domain={[0, 100]} width={28} tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
+                      <Tooltip />
+                      <Line
+                        type="monotone"
+                        dataKey="overall"
+                        name={t("dash.overall")}
+                        stroke="var(--plum)"
+                        strokeWidth={3}
+                        dot={{ r: 3 }}
+                      />
+                      <Line type="monotone" dataKey="legal" name={t("dash.dim1")} stroke={DIM_COLORS[0]} strokeWidth={1.75} dot={false} />
+                      <Line type="monotone" dataKey="professional" name={t("dash.dim2")} stroke={DIM_COLORS[1]} strokeWidth={1.75} dot={false} />
+                      <Line type="monotone" dataKey="psychological" name={t("dash.dim3")} stroke={DIM_COLORS[2]} strokeWidth={1.75} dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              ) : (
+                <p className="mt-3 text-sm text-muted-foreground">{t("dash.noHistory")}</p>
+              )}
+            </section>
           </div>
         ) : null}
 
