@@ -25,6 +25,7 @@ import {
   InstitutionBadge,
   NpsSurvey,
 } from "@/components/FeedbackWidgets";
+import { SupportChannels } from "@/components/SupportChannels";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import { analysisSummary, computeProfile } from "@/lib/scoring";
 import { KNOWLEDGE_TABLE_VERSION, PHASE_TITLE_KEYS, generateRoadmap } from "@/lib/roadmap";
@@ -133,6 +134,9 @@ function Dashboard() {
   const historyData = state.history.map((h, i) => ({
     n: localizeNumber(i + 1, lang),
     overall: h.overall,
+    legal: h.legal,
+    professional: h.professional,
+    psychological: h.psychological,
   }));
   const phaseComposition = roadmap.map((p, i) => ({
     name: t(PHASE_TITLE_KEYS[i] ?? "road.phase1"),
@@ -226,8 +230,11 @@ function Dashboard() {
                 ) : null}
               </div>
 
-              <div className="mt-4 grid gap-6 sm:grid-cols-[240px_1fr] sm:items-center">
-                <div className={cn("relative h-[220px]", locked && "blur-md")} aria-hidden={locked}>
+              <p className="mt-1 text-xs text-muted-foreground">{t("dash.compositionNote")}</p>
+
+              <div className="mt-4 grid gap-6 sm:grid-cols-2 sm:items-center">
+                {/* Composition — donut */}
+                <div className={cn("relative h-[240px]", locked && "blur-md")} aria-hidden={locked}>
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
@@ -255,50 +262,71 @@ function Dashboard() {
                   </div>
                 </div>
 
-                <ul className="space-y-4">
-                  {dims.map((d) => (
-                    <li key={d.key}>
-                      <div className="flex items-baseline justify-between text-sm font-semibold">
-                        <span className="inline-flex items-center gap-2">
-                          <span className="size-2.5 rounded-full" style={{ backgroundColor: d.color }} />
-                          {d.label}
-                          <span className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
-                            {t("dash.weight")} {localizeNumber(d.weight, lang)}
-                          </span>
-                        </span>
-                        <span className={cn("tabular-nums", locked && "select-none blur-[6px]")}>
-                          {localizeNumber(d.value, lang)}%
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mt-8">
-                <h3 className="text-sm font-bold">{t("dash.byDimension")}</h3>
-                <div className={cn("mt-3 h-[240px]", locked && "blur-md")}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart
-                      data={dims.map((d) => ({ name: d.label, value: locked ? 60 : d.value }))}
-                      outerRadius="72%"
-                    >
-                      <PolarGrid stroke="var(--border)" />
-                      <PolarAngleAxis dataKey="name" tick={{ fontSize: 11 }} />
-                      <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
-                      <Radar
-                        dataKey="value"
-                        stroke="var(--teal)"
-                        fill="var(--teal)"
-                        fillOpacity={0.35}
-                        isAnimationActive
-                        animationDuration={900}
-                      />
-                      <Tooltip />
-                    </RadarChart>
-                  </ResponsiveContainer>
+                {/* Balance — radar, directly beside the donut */}
+                <div>
+                  <h3 className="text-sm font-bold">{t("dash.balance")}</h3>
+                  <div className={cn("mt-1 h-[210px]", locked && "blur-md")}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <RadarChart
+                        data={dims.map((d) => ({ name: d.label, value: locked ? 60 : d.value }))}
+                        outerRadius="70%"
+                      >
+                        <defs>
+                          <linearGradient id="dimGradient" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stopColor="var(--navy)" stopOpacity={0.55} />
+                            <stop offset="50%" stopColor="var(--teal)" stopOpacity={0.5} />
+                            <stop offset="100%" stopColor="var(--gold)" stopOpacity={0.55} />
+                          </linearGradient>
+                        </defs>
+                        <PolarGrid stroke="var(--border)" />
+                        <PolarAngleAxis dataKey="name" tick={{ fontSize: 10 }} />
+                        <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
+                        <Radar
+                          dataKey="value"
+                          stroke="var(--teal)"
+                          strokeWidth={2}
+                          fill="url(#dimGradient)"
+                          fillOpacity={1}
+                          isAnimationActive
+                          animationDuration={900}
+                          dot={(props: { cx?: number; cy?: number; index?: number }) => (
+                            <circle
+                              key={props.index}
+                              cx={props.cx}
+                              cy={props.cy}
+                              r={4}
+                              fill={DIM_COLORS[(props.index ?? 0) % 3]}
+                              stroke="var(--background)"
+                              strokeWidth={1.5}
+                            />
+                          )}
+                        />
+                        <Tooltip />
+                      </RadarChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <p className="mt-1 text-[11px] text-muted-foreground">{t("dash.balanceNote")}</p>
                 </div>
               </div>
+
+              <ul className="mt-4 grid gap-3 border-t border-border pt-4 sm:grid-cols-3">
+                {dims.map((d) => (
+                  <li key={d.key}>
+                    <div className="flex items-baseline justify-between gap-2 text-sm font-semibold">
+                      <span className="inline-flex items-center gap-2">
+                        <span className="size-2.5 rounded-full" style={{ backgroundColor: d.color }} />
+                        {d.label}
+                      </span>
+                      <span className={cn("tabular-nums", locked && "select-none blur-[6px]")}>
+                        {localizeNumber(d.value, lang)}%
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                      {t("dash.weight")} {localizeNumber(d.weight, lang)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </section>
 
             {/* Analysis + paywall */}
@@ -363,32 +391,38 @@ function Dashboard() {
                   </button>
                   <p className="mt-3 text-center text-[11px] opacity-70">{t("pay.demoNote")}</p>
                 </section>
-              ) : (
-                <section className="rounded-3xl border border-border bg-card p-6">
-                  <h2 className="text-lg">{t("dash.history")}</h2>
-                  {historyData.length > 1 ? (
-                    <div className="mt-3 h-[150px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={historyData}>
-                          <XAxis dataKey="n" tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
-                          <YAxis domain={[0, 100]} width={28} tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
-                          <Tooltip />
-                          <Line
-                            type="monotone"
-                            dataKey="overall"
-                            stroke="var(--teal)"
-                            strokeWidth={2.5}
-                            dot={{ r: 3 }}
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
-                  ) : (
-                    <p className="mt-3 text-sm text-muted-foreground">{t("dash.noHistory")}</p>
-                  )}
-                </section>
-              )}
+              ) : null}
             </div>
+
+            {/* Trend — score history over time */}
+            <section className="rounded-3xl border border-border bg-card p-6 lg:col-span-3">
+              <h2 className="text-lg">{t("dash.history")}</h2>
+              <p className="mt-1 text-xs text-muted-foreground">{t("dash.historyNote")}</p>
+              {historyData.length > 1 ? (
+                <div className="mt-4 h-[220px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={historyData}>
+                      <XAxis dataKey="n" tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
+                      <YAxis domain={[0, 100]} width={28} tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
+                      <Tooltip />
+                      <Line
+                        type="monotone"
+                        dataKey="overall"
+                        name={t("dash.overall")}
+                        stroke="var(--plum)"
+                        strokeWidth={3}
+                        dot={{ r: 3 }}
+                      />
+                      <Line type="monotone" dataKey="legal" name={t("dash.dim1")} stroke={DIM_COLORS[0]} strokeWidth={1.75} dot={false} />
+                      <Line type="monotone" dataKey="professional" name={t("dash.dim2")} stroke={DIM_COLORS[1]} strokeWidth={1.75} dot={false} />
+                      <Line type="monotone" dataKey="psychological" name={t("dash.dim3")} stroke={DIM_COLORS[2]} strokeWidth={1.75} dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              ) : (
+                <p className="mt-3 text-sm text-muted-foreground">{t("dash.noHistory")}</p>
+              )}
+            </section>
           </div>
         ) : null}
 
@@ -625,6 +659,9 @@ function Dashboard() {
                   <Mail className="size-4" aria-hidden />
                   {t("nav.contact")}
                 </Link>
+              </div>
+              <div className="mt-4">
+                <SupportChannels compact />
               </div>
             </section>
 

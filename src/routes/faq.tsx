@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HelpCircle } from "lucide-react";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
+import { SupportChannels } from "@/components/SupportChannels";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/faq")({
@@ -24,7 +25,7 @@ export const Route = createFileRoute("/faq")({
   component: FaqPage,
 });
 
-const ITEMS = Array.from({ length: 10 }, (_, i) => i + 1);
+const ITEMS = Array.from({ length: 11 }, (_, i) => i + 1);
 
 function FaqPage() {
   const { t } = useI18n();
@@ -51,6 +52,13 @@ function FaqPage() {
               </p>
             </details>
           ))}
+        </div>
+
+        <h2 className="mt-10 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+          {t("support.channels")}
+        </h2>
+        <div className="mt-3">
+          <SupportChannels compact />
         </div>
       </main>
       <SiteFooter />
