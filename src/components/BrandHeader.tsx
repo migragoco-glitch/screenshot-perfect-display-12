@@ -22,7 +22,7 @@ export function BrandLogo({ className }: { className?: string }) {
       <img
         src={logoAsset.url}
         alt="MigraGo — SettleSmart Navigator"
-        className="h-11 w-auto md:h-12"
+        className="h-16 w-auto md:h-20"
       />
     </Link>
   );
