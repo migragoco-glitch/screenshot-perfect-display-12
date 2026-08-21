@@ -134,6 +134,9 @@ function Dashboard() {
   const historyData = state.history.map((h, i) => ({
     n: localizeNumber(i + 1, lang),
     overall: h.overall,
+    legal: h.legal,
+    professional: h.professional,
+    psychological: h.psychological,
   }));
   const phaseComposition = roadmap.map((p, i) => ({
     name: t(PHASE_TITLE_KEYS[i] ?? "road.phase1"),

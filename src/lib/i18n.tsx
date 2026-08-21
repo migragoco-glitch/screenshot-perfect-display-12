@@ -367,6 +367,8 @@ export const en = {
   "dash.balance": "Balance across dimensions",
   "dash.balanceNote": "How evenly your three dimensions sit relative to each other.",
   "dash.compositionNote": "Each dimension's proportional contribution to your overall score.",
+  "dash.historyNote":
+    "Every time you edit an answer your score is recalculated and a new snapshot is added here.",
   "dash.trend": "Score history",
   "dash.trendNote": "A new snapshot is added every time you edit an answer and your score recalculates.",
 
@@ -743,6 +745,8 @@ export const fa: Record<keyof typeof en, string> = {
   "dash.balance": "توازن میان ابعاد",
   "dash.balanceNote": "نشان می‌دهد سه بُعد شما نسبت به یکدیگر چقدر متوازن‌اند.",
   "dash.compositionNote": "سهم نسبی هر بُعد در نمرهٔ کلی شما.",
+  "dash.historyNote":
+    "هر بار که پاسخی را ویرایش می‌کنید، نمرهٔ شما بازمحاسبه و یک نقطهٔ تازه به این نمودار افزوده می‌شود.",
   "dash.trend": "تاریخچهٔ نمره",
   "dash.trendNote": "هر بار که پاسخی را ویرایش کنید و نمره دوباره محاسبه شود، یک نقطهٔ جدید افزوده می‌شود.",
 
