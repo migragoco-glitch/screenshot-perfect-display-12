@@ -321,6 +321,8 @@ export const en = {
   "faq.a10":
     "Use the Contact page: email us at migrago.co@gmail.com or start a WhatsApp chat with the team. Both channels are staffed during this MVP stage; an in-app assistant is a planned future capability, not a live feature.",
   "faq.q11": "What does the €249 Stabilization Package include?",
+  "faq.a11":
+    "In addition to SettleSmart Navigator's capabilities, this package guides you toward the relevant government authorities and institutions, as well as a network of verified individuals and organizations — including certified translators and translation offices, lawyers and advisors (financial, tax, career, legal, family), daycare centres, schools, universities, vocational and technical education institutions, and cultural and arts centres. It also includes monitoring and evaluation of your progress, and ongoing support-team guidance during roadmap execution. Future vision (beyond current MVP scope): in later stages it could connect you directly to each institution's service desk at every roadmap phase — including scheduling and assigning a responsible caseworker — and, with your explicit consent, make your information visible on that institution's staff dashboard (planned Connect+ B2B and institutional B2G capabilities). This package is not active in this MVP.",
 
   "contact.title": "Contact us",
   "contact.sub": "Email is our support channel during this MVP stage. We reply within a few working days.",
