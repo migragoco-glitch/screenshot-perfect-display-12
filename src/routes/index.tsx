@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BadgeCheck, Building2, ClipboardList, Compass, Route as RouteIcon, Sparkles } from "lucide-react";
+import { ArrowRight, BadgeCheck, Building2, ClipboardList, Compass, Hourglass, Route as RouteIcon, Sparkles } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { useI18n } from "@/lib/i18n";
