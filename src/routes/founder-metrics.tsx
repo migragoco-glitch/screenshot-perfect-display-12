@@ -348,6 +348,115 @@ function FounderMetrics() {
           <Card title={t("metrics.countryInterest")}>{ranking(metrics.countryClicks)}</Card>
         </div>
 
+        {role === "demo" ? (
+          <p className="mt-6 rounded-2xl border border-border bg-card p-4 text-xs font-semibold text-muted-foreground">
+            {t("metrics.demoRole")}
+          </p>
+        ) : null}
+
+        {role === "primary" ? (
+          <section className="mt-6 rounded-3xl border border-border bg-card p-6">
+            <h2 className="text-sm font-bold uppercase tracking-wider" style={{ color: "var(--plum)" }}>
+              {t("metrics.demoTitle")}
+            </h2>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{t("metrics.demoBody")}</p>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+              <label className="text-xs font-semibold text-muted-foreground">
+                {t("metrics.demoLabel")}
+                <input
+                  value={demoLabel}
+                  onChange={(e) => setDemoLabel(e.target.value)}
+                  className="mt-1.5 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-ring"
+                />
+              </label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                {t("metrics.demoEmail")}
+                <input
+                  type="email"
+                  value={demoEmail}
+                  onChange={(e) => setDemoEmail(e.target.value)}
+                  className="mt-1.5 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-ring"
+                />
+              </label>
+              <button
+                type="button"
+                disabled={!demoLabel.trim() || !demoEmail.trim()}
+                onClick={async () => {
+                  await createDemoAccount({
+                    data: {
+                      password: primaryPassword.current,
+                      label: demoLabel.trim(),
+                      email: demoEmail.trim(),
+                    },
+                  });
+                  setDemoLabel("");
+                  setDemoEmail("");
+                  void refreshDemoAccounts();
+                }}
+                className="rounded-full px-5 py-2.5 text-sm font-bold disabled:opacity-50"
+                style={plum}
+              >
+                {t("metrics.demoCreate")}
+              </button>
+            </div>
+
+            <ul className="mt-5 space-y-3">
+              {demoAccounts.length === 0 ? (
+                <li className="text-sm text-muted-foreground">{t("metrics.demoNone")}</li>
+              ) : null}
+              {demoAccounts.map((a) => (
+                <li
+                  key={a.id}
+                  className="flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-muted/50 p-4 text-sm"
+                >
+                  <div className="min-w-40 flex-1">
+                    <p className="font-semibold">{a.label}</p>
+                    <p className="text-xs text-muted-foreground">{a.email}</p>
+                    <p className="mt-1 text-xs">
+                      <span className="text-muted-foreground">{t("metrics.demoCode")}: </span>
+                      <code className="rounded bg-card px-1.5 py-0.5 font-mono text-xs">{a.access_code}</code>
+                    </p>
+                  </div>
+                  <span
+                    className={
+                      a.active
+                        ? "rounded-full bg-secondary/15 px-3 py-1 text-[11px] font-bold text-secondary"
+                        : "rounded-full bg-muted px-3 py-1 text-[11px] font-bold text-muted-foreground"
+                    }
+                  >
+                    {a.active ? t("metrics.demoActive") : t("metrics.demoRevoked")}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      await setDemoAccountActive({
+                        data: { password: primaryPassword.current, id: a.id, active: !a.active },
+                      });
+                      void refreshDemoAccounts();
+                    }}
+                    className="rounded-full border border-border bg-card px-4 py-1.5 text-xs font-semibold"
+                  >
+                    {a.active ? t("metrics.demoRevoke") : t("metrics.demoRestore")}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      await deleteDemoAccount({
+                        data: { password: primaryPassword.current, id: a.id },
+                      });
+                      void refreshDemoAccounts();
+                    }}
+                    className="rounded-full border border-destructive/40 px-4 py-1.5 text-xs font-semibold text-destructive"
+                  >
+                    {t("metrics.demoDelete")}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
         <p className="mt-6 text-xs text-muted-foreground">{t("metrics.aggregateNote")}</p>
       </main>
     </div>
