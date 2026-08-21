@@ -76,14 +76,15 @@ export function CountrySelector() {
         title={t("nav.comingSoonTip")}
         aria-disabled="true"
         onClick={() => trackEvent({ type: "country_click", country: c.name.en })}
-        className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs text-muted-foreground/80 transition-colors duration-200 ease-out hover:bg-muted"
+        className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-[color:var(--plum)]/30 px-2.5 py-1 text-xs text-muted-foreground/80 transition-colors duration-200 ease-out hover:bg-muted"
       >
         <span aria-hidden className="grayscale">
           {c.flag}
         </span>
         {c.name[lang]}
-        <Lock className="size-3" aria-hidden />
+        <Lock className="size-3" style={{ color: "var(--plum)" }} aria-hidden />
       </button>
+
     );
 
   return (
