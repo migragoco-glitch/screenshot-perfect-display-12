@@ -64,7 +64,10 @@ export const en = {
   "pricing.stab": "Stabilization Package",
   "pricing.stabPrice": "€249",
   "pricing.stabDesc":
-    "Monitoring, evaluation, guidance and service referral. Future offering — not active in this MVP.",
+    "In addition to SettleSmart Navigator's capabilities, this package guides you toward the relevant government authorities and institutions, as well as a network of verified individuals and organizations — including certified translators and translation offices, lawyers and advisors (financial, tax, career, legal, family), daycare centres, schools, universities, vocational and technical education institutions, and cultural and arts centres. It also includes monitoring and evaluation of your progress, and ongoing support-team guidance to answer questions during roadmap execution.",
+  "pricing.stabFutureLabel": "Future vision (beyond current MVP scope)",
+  "pricing.stabFuture":
+    "In later development stages, this package could connect you directly to the relevant service desk of each institution at every roadmap phase — including scheduling and assigning a responsible caseworker — and, with your explicit consent, make your information visible on that institution's staff dashboard. This corresponds to the planned Connect+ (B2B) and institutional dashboard (B2G) capabilities, to be developed only after the core product has been validated.",
   "pricing.future": "Future · not active",
   "pricing.recommended": "Recommended",
   "pricing.upgrade": "Upgrade to Navigator",
@@ -316,7 +319,8 @@ export const en = {
     "Yes. Edit any answer from your profile and your scores and roadmap recalculate immediately, with your score history preserved.",
   "faq.q10": "How do I get support?",
   "faq.a10":
-    "Use the Contact page. Email support is our channel during this MVP stage; an in-app assistant is a planned future capability, not a live feature.",
+    "Use the Contact page: email us at migrago.co@gmail.com or start a WhatsApp chat with the team. Both channels are staffed during this MVP stage; an in-app assistant is a planned future capability, not a live feature.",
+  "faq.q11": "What does the €249 Stabilization Package include?",
 
   "contact.title": "Contact us",
   "contact.sub": "Email is our support channel during this MVP stage. We reply within a few working days.",
@@ -351,6 +355,34 @@ export const en = {
   "metrics.emailVsPay":
     "Email captures are a lead-generation signal. Checkouts are the willingness-to-pay signal. They are counted separately.",
   "metrics.checkoutSection": "€9.90 checkouts (Stripe test mode)",
+
+  // ── Corrective build: final round ─────────────────────────
+  "support.email": "Email",
+  "support.whatsapp": "WhatsApp",
+  "support.whatsappCta": "Chat with us on WhatsApp",
+  "support.channels": "Support channels",
+
+  "dash.balance": "Balance across dimensions",
+  "dash.balanceNote": "How evenly your three dimensions sit relative to each other.",
+  "dash.compositionNote": "Each dimension's proportional contribution to your overall score.",
+  "dash.trend": "Score history",
+  "dash.trendNote": "A new snapshot is added every time you edit an answer and your score recalculates.",
+
+  "metrics.demoTitle": "Temporary demonstration access",
+  "metrics.demoBody":
+    "Create a separate, read-only demo login to share with an external evaluator. The founder password stays private and the gate is never disabled.",
+  "metrics.demoLabel": "Label (who it is for)",
+  "metrics.demoEmail": "Demo account email",
+  "metrics.demoCreate": "Create demo access",
+  "metrics.demoRevoke": "Revoke access",
+  "metrics.demoRestore": "Re-enable",
+  "metrics.demoDelete": "Delete",
+  "metrics.demoNone": "No demo accounts yet.",
+  "metrics.demoActive": "Active",
+  "metrics.demoRevoked": "Revoked",
+  "metrics.demoCode": "Access code",
+  "metrics.demoRole": "You are signed in with temporary demo access (read-only).",
+  "metrics.gateEmail": "Email (demo accounts only)",
 };
 
 export const fa: Record<keyof typeof en, string> = {
@@ -406,7 +438,10 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.stab": "بستهٔ تثبیت",
   "pricing.stabPrice": "۲۴۹ یورو",
   "pricing.stabDesc":
-    "پایش، ارزیابی، راهنمایی و ارجاع به خدمات. محصول آینده — در این نسخه فعال نیست.",
+    "افزون بر قابلیت‌های SettleSmart Navigator، این بسته کاربر را به نهادها و مراجع دولتی مرتبط و نیز به شبکه‌ای از افراد و سازمان‌های راستی‌آزمایی‌شده راهنمایی می‌کند؛ از جمله مترجمان رسمی و دفاتر ترجمه، وکلا و مشاوران (مالی، مالیاتی، شغلی، حقوقی و خانواده)، مهدکودک‌ها، مدارس، دانشگاه‌ها، مراکز آموزش فنی‌وحرفه‌ای و مراکز فرهنگی و هنری. همچنین شامل پایش و ارزیابی پیشرفت کاربر و راهنمایی مستمر تیم پشتیبانی برای پاسخ به پرسش‌ها در حین اجرای نقشهٔ راه است.",
+  "pricing.stabFutureLabel": "چشم‌انداز آینده (فراتر از دامنهٔ نسخهٔ کنونی)",
+  "pricing.stabFuture":
+    "در مراحل بعدی توسعه، این بسته می‌تواند کاربر را در هر مرحله از نقشهٔ راه مستقیماً به میز خدمت مربوط در هر نهاد وصل کند — از جمله زمان‌بندی و تخصیص کارشناس مسئول — و با رضایت صریح کاربر، اطلاعات او را در داشبورد کارکنان آن نهاد قابل مشاهده کند. این موضوع با قابلیت‌های برنامه‌ریزی‌شدهٔ Connect+ (B2B) و داشبورد نهادی (B2G) هم‌راستاست و تنها پس از اعتبارسنجی محصول اصلی توسعه خواهد یافت.",
   "pricing.future": "آینده · غیرفعال",
   "pricing.recommended": "پیشنهاد ما",
   "pricing.upgrade": "ارتقا به Navigator",
@@ -656,6 +691,7 @@ export const fa: Record<keyof typeof en, string> = {
   "faq.q9": "می‌توانم بعداً پاسخ‌هایم را تغییر دهم؟",
   "faq.a9":
     "بله. هر پاسخ را از پروفایل خود ویرایش کنید؛ نمره‌ها و نقشهٔ راه بی‌درنگ بازمحاسبه می‌شوند و تاریخچهٔ نمرهٔ شما حفظ می‌ماند.",
+  "faq.q11": "بستهٔ تثبیت ۲۴۹ یورویی شامل چه چیزهایی است؟"
   "faq.q10": "چگونه پشتیبانی بگیرم؟",
   "faq.a10":
     "از صفحهٔ تماس با ما استفاده کنید. در این مرحلهٔ MVP، رایانامه کانال پشتیبانی ماست؛ دستیار درون‌برنامه‌ای یک قابلیت آینده است و اکنون فعال نیست.",
@@ -693,6 +729,34 @@ export const fa: Record<keyof typeof en, string> = {
   "metrics.emailVsPay":
     "ثبت رایانامه سیگنال جذب سرنخ است و پرداخت‌ها سیگنال تمایل واقعی به پرداخت. این دو جداگانه شمارش می‌شوند.",
   "metrics.checkoutSection": "پرداخت‌های ۹٫۹۰ یورویی (حالت آزمایشی Stripe)",
+
+  // ── ویرایش اصلاحی: دور پایانی ─────────────────────────────
+  "support.email": "رایانامه",
+  "support.whatsapp": "واتس‌اپ",
+  "support.whatsappCta": "گفت‌وگو در واتس‌اپ",
+  "support.channels": "راه‌های پشتیبانی",
+
+  "dash.balance": "توازن میان ابعاد",
+  "dash.balanceNote": "نشان می‌دهد سه بُعد شما نسبت به یکدیگر چقدر متوازن‌اند.",
+  "dash.compositionNote": "سهم نسبی هر بُعد در نمرهٔ کلی شما.",
+  "dash.trend": "تاریخچهٔ نمره",
+  "dash.trendNote": "هر بار که پاسخی را ویرایش کنید و نمره دوباره محاسبه شود، یک نقطهٔ جدید افزوده می‌شود.",
+
+  "metrics.demoTitle": "دسترسی موقت برای ارائه",
+  "metrics.demoBody":
+    "یک حساب نمایشی جداگانه و فقط‌خواندنی بسازید تا با ارزیاب بیرونی به اشتراک بگذارید. گذرواژهٔ اصلی بنیان‌گذار محرمانه می‌ماند و قفل صفحه هرگز غیرفعال نمی‌شود.",
+  "metrics.demoLabel": "برچسب (برای چه کسی)",
+  "metrics.demoEmail": "رایانامهٔ حساب نمایشی",
+  "metrics.demoCreate": "ایجاد دسترسی نمایشی",
+  "metrics.demoRevoke": "لغو دسترسی",
+  "metrics.demoRestore": "فعال‌سازی دوباره",
+  "metrics.demoDelete": "حذف",
+  "metrics.demoNone": "هنوز حساب نمایشی ساخته نشده است.",
+  "metrics.demoActive": "فعال",
+  "metrics.demoRevoked": "لغو شده",
+  "metrics.demoCode": "کد دسترسی",
+  "metrics.demoRole": "شما با دسترسی موقت نمایشی (فقط‌خواندنی) وارد شده‌اید.",
+  "metrics.gateEmail": "رایانامه (فقط برای حساب‌های نمایشی)",
 };
 
 const dicts = { en, fa };
