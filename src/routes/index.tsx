@@ -280,7 +280,7 @@ function Landing() {
               <button
                 type="button"
                 disabled
-                className="mt-6 w-full cursor-not-allowed rounded-full border border-border px-5 py-3 text-sm font-semibold text-muted-foreground"
+                className="mt-6 w-full cursor-not-allowed rounded-full border border-border bg-[#0B2545] px-5 py-3 text-sm font-semibold text-white"
               >
                 {t("nav.comingSoon")}
               </button>
