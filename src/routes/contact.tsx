@@ -4,7 +4,6 @@ import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { SupportChannels } from "@/components/SupportChannels";
 import { useI18n } from "@/lib/i18n";
 
-export { CONTACT_EMAIL } from "@/components/SupportChannels";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
