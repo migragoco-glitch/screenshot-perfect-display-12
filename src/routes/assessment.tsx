@@ -1,11 +1,32 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Save, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Briefcase,
+  Check,
+  Gavel,
+  HeartHandshake,
+  Info,
+  Compass,
+  Save,
+  ScrollText,
+  Sparkles,
+  Star,
+  Wallet,
+} from "lucide-react";
 import { AppHeader } from "@/components/BrandHeader";
 import { PenguinLoader } from "@/components/PenguinLoader";
 import { QuestionField } from "@/components/QuestionField";
 import { localizeNumber, useI18n } from "@/lib/i18n";
-import { COUNTRIES, QUESTIONS, SECTIONS, isAnswered, questionsForSection } from "@/lib/questions";
+import {
+  COUNTRIES,
+  QUESTIONS,
+  SECTIONS,
+  SECTION_DIMENSION,
+  isAnswered,
+  questionsForSection,
+} from "@/lib/questions";
 import { computeProfile } from "@/lib/scoring";
 import { trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -31,6 +52,15 @@ export const Route = createFileRoute("/assessment")({
   component: Assessment,
 });
 
+const SECTION_ICONS = [Gavel, Briefcase, Wallet, HeartHandshake, ScrollText, Compass, Star] as const;
+
+const DIMENSION_KEY = {
+  legal: "dash.dim1",
+  professional: "dash.dim2",
+  psychological: "dash.dim3",
+  bonus: "dash.bonus",
+} as const;
+
 function Assessment() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
@@ -50,6 +80,10 @@ function Assessment() {
   const sectionComplete = meta?.optional
     ? true
     : visible.every((q) => isAnswered(q, state.answers[q.id]));
+
+  const encouragement =
+    section <= 2 ? t("q.encourage1") : section <= 5 ? t("q.encourage2") : t("q.encourage3");
+  const dimensionKey = DIMENSION_KEY[SECTION_DIMENSION[section] ?? "legal"];
 
   if (analyzing) {
     return <PenguinLoader title={t("loading.analyzing")} subtitle={t("loading.analyzingSub")} />;
@@ -104,40 +138,85 @@ function Assessment() {
         <div className="mx-auto max-w-4xl px-4 py-3 md:px-8">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-muted-foreground">
             <span>
-              {t("q.section")} {localizeNumber(section, lang)} {t("q.of")} {localizeNumber(7, lang)} ·{" "}
+              {t("q.section")} {localizeNumber(section, lang)} {t("q.of")} {localizeNumber(7, lang)} —{" "}
               {meta?.title[lang]}
             </span>
             <span>
-              {t("q.estimate")}: {localizeNumber(meta?.minutes ?? 2, lang)} {t("q.min")} ·{" "}
+              {t("q.estimate")}: {localizeNumber(meta?.minutes ?? 2, lang)} {t("q.min")} —{" "}
               {t("q.progress")} {localizeNumber(progress, lang)}%
             </span>
           </div>
           <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
             <div
-              className="h-full rounded-full bg-secondary transition-[width] duration-300 ease-out"
-              style={{ width: `${progress}%` }}
+              className="h-full rounded-full transition-[width] duration-300 ease-out"
+              style={{ width: `${progress}%`, backgroundColor: "var(--teal)" }}
             />
           </div>
           <ol className="mt-3 flex gap-1.5">
-            {SECTIONS.map((s) => (
-              <li key={s.id} className="flex-1">
-                <button
-                  type="button"
-                  onClick={() => setSection(s.id)}
-                  className={cn(
-                    "h-1.5 w-full rounded-full transition-colors duration-200 ease-out",
-                    s.id === section ? "bg-primary" : s.id < section ? "bg-secondary/60" : "bg-border",
-                  )}
-                  aria-label={`${t("q.section")} ${s.id}: ${s.title[lang]}`}
-                />
-              </li>
-            ))}
+            {SECTIONS.map((s) => {
+              const Icon = SECTION_ICONS[s.id - 1] ?? Star;
+              const status = s.id < section ? "done" : s.id === section ? "current" : "todo";
+              return (
+                <li key={s.id} className="flex-1">
+                  <button
+                    type="button"
+                    onClick={() => setSection(s.id)}
+                    aria-current={status === "current" ? "step" : undefined}
+                    aria-label={`${t("q.section")} ${s.id}: ${s.title[lang]}`}
+                    className="flex w-full flex-col items-center gap-1"
+                  >
+                    <Icon
+                      className={cn(
+                        "size-3.5 transition-colors duration-200 ease-out",
+                        status === "done"
+                          ? "text-secondary"
+                          : status === "current"
+                            ? "text-accent"
+                            : "text-muted-foreground/50",
+                      )}
+                      aria-hidden
+                    />
+                    <span
+                      className={cn(
+                        "h-1.5 w-full rounded-full transition-colors duration-200 ease-out",
+                        status === "done"
+                          ? "bg-secondary"
+                          : status === "current"
+                            ? "bg-accent"
+                            : "bg-muted-foreground/25",
+                      )}
+                    />
+                  </button>
+                </li>
+              );
+            })}
           </ol>
+          <p className="mt-2 text-[11px] font-medium text-muted-foreground">
+            {localizeNumber(section - 1, lang)} {t("q.of")} {localizeNumber(7, lang)}{" "}
+            {t("q.sectionsDone")} — {encouragement}
+          </p>
         </div>
       </div>
 
       <main className="mx-auto max-w-4xl px-4 py-10 md:px-8">
         <h1 className="text-2xl md:text-3xl">{meta?.title[lang]}</h1>
+        <p
+          className="mt-3 inline-flex items-start gap-2 rounded-2xl border border-secondary/25 bg-secondary/8 px-3.5 py-2 text-xs text-muted-foreground"
+          title={t("q.feedsInto")}
+        >
+          <Info className="mt-0.5 size-3.5 shrink-0 text-secondary" aria-hidden />
+          <span>
+            {SECTION_DIMENSION[section] === "bonus" ? (
+              t("q.bonusNote2")
+            ) : (
+              <>
+                {t("q.feedsInto")}{" "}
+                <span className="font-semibold text-foreground">{t(dimensionKey)}</span>{" "}
+                {t("q.scoreWord")}
+              </>
+            )}
+          </span>
+        </p>
         {meta?.optional ? (
           <div className="mt-4 rounded-2xl border border-accent/50 bg-accent/10 p-4">
             <p className="text-sm font-bold">{t("q.optionalSection")}</p>
@@ -204,7 +283,7 @@ function Assessment() {
 
         <p className="mt-6 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
           <Check className="size-3.5 text-secondary" aria-hidden />
-          {t("q.saved")} ·{" "}
+          {t("q.saved")}{" "}
           {typeof state.answers[2]?.value === "string"
             ? COUNTRIES.find((c) => c.en === state.answers[2]?.value)?.[lang]
             : null}

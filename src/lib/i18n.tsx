@@ -22,8 +22,8 @@ export const en = {
   "hero.title": "Know where you stand. Know what's next.",
   "hero.sub":
     "MigraGo uses a smart assessment to map your current status and readiness for integration, then builds you a personalized 12-week roadmap — grounded in real rules, procedures, and services.",
-  "hero.badge": "Finland · Evidence-based integration pathway",
-  "hero.time": "9–12 minutes · 42 questions · Save & resume anytime",
+  "hero.badge": "Evidence-based integration pathway",
+  "hero.time": "9–12 minutes — 42 questions — save and resume anytime",
 
   "about.title": "What MigraGo is",
   "about.definitionTitle": "Definition",
@@ -40,9 +40,11 @@ export const en = {
   "how.s1.t": "Structured assessment",
   "how.s1.d": "7 sections, 42 questions, autosaved as you go.",
   "how.s2.t": "Smart Integration Profile",
-  "how.s2.d": "Legal Status, Professional Skills and Psychological Readiness scored 0–100.",
+  "how.s2.d":
+    "Legal Status, Economic & Professional Capacity and Soft Skills & Psychological Readiness, each scored 0–100.",
   "how.s3.t": "12-week roadmap",
-  "how.s3.d": "Four phases, each step traced to a real Finnish institution.",
+  "how.s3.d":
+    "Every roadmap step is linked to the relevant official institution in Finland (such as Migri or DVV).",
 
   "inst.title": "Grounded in real institutions",
   "inst.sub":
@@ -110,14 +112,14 @@ export const en = {
   "dash.title": "Smart Integration Profile",
   "dash.overall": "Baseline readiness score",
   "dash.dim1": "Legal Status",
-  "dash.dim2": "Professional Skills",
-  "dash.dim3": "Psychological Readiness",
+  "dash.dim2": "Economic & Professional Capacity",
+  "dash.dim3": "Soft Skills & Psychological Readiness",
   "dash.weight": "weight",
   "dash.bonus": "Bonus Pathway Indicator",
   "dash.bonusNote":
     "Talent & Founder potential — reported separately, never part of the 100-point base score.",
   "dash.composition": "Dimension composition",
-  "dash.byDimension": "Score by dimension",
+  "dash.byDimension": "Dimension balance",
   "dash.analysis": "AI analysis — overview",
   "dash.strengths": "Strengths",
   "dash.gaps": "Priority gaps",
@@ -141,7 +143,8 @@ export const en = {
   "pay.demoNote": "Demo checkout — no payment is taken in this MVP.",
 
   "road.title": "12-Week Roadmap",
-  "road.sub": "Four phases. Every step traced to the institution that handles it.",
+  "road.sub":
+    "Every roadmap step is linked to the relevant official institution in Finland (such as Migri or DVV).",
   "road.phase1": "Weeks 1–3 — Legal & Administrative Foundation",
   "road.phase2": "Weeks 4–6 — Daily Life & Language Stability",
   "road.phase3": "Weeks 7–9 — Employment & Professional Pathway",
@@ -191,7 +194,7 @@ export const en = {
 
   "auth.subtitle": "Sign in to save your roadmap progress across devices. Your assessment answers stay on this device.",
   "auth.email": "Email",
-  "auth.password": "Password (min. 6 characters)",
+  "auth.password": "Password (min. 8 characters)",
   "auth.signIn": "Sign in",
   "auth.signUp": "Create account",
   "auth.google": "Continue with Google",
@@ -206,17 +209,18 @@ export const en = {
   "csat.no": "Not really",
   "csat.thanks": "Thank you — your signal was recorded.",
 
-  "pay.emailTitle": "Join the Founder's Circle",
+  "pay.emailTitle": "Early access pricing",
   "pay.emailSub":
-    "The first 100 members get the Navigator upgrade at the founding price and early access to new countries.",
+    "The first 100 members get SettleSmart Navigator at a special early-access rate.",
   "pay.emailLabel": "Your email",
-  "pay.emailCta": "Join and continue",
-  "pay.counter": "members joined so far",
-  "pay.counterSpots": "founding spots left",
-  "pay.counterFull": "The first 100 founding spots are taken — you can still join the waitlist.",
+  "pay.emailCta": "Get my code and continue",
+  "pay.counter": "members registered so far",
+  "pay.counterSpots": "early-access places left",
+  "pay.counterFull":
+    "All 100 early-access places are taken — standard pricing applies from here.",
   "pay.emailInvalid": "Please enter a valid email address.",
-  "pay.emailThanks": "You're on the list. Unlocking your roadmap…",
-  "pay.emailSkip": "Continue without joining",
+  "pay.emailThanks": "Your early-access code is reserved. Continuing to checkout…",
+  "pay.emailSkip": "Continue at standard pricing",
 
   "set.account": "Account",
   "set.email": "Signed in as",
@@ -229,7 +233,7 @@ export const en = {
 
   "road.done": "Done",
   "road.progress": "steps completed",
-  "road.signInToSave": "Sign in to save your checkmarks across devices.",
+  "road.signInToSave": "Sign in to save your roadmap progress across all your devices.",
 
   "nps.title": "How likely are you to recommend MigraGo to another newcomer?",
   "nps.sub": "0 = not at all likely · 10 = extremely likely",
@@ -239,22 +243,114 @@ export const en = {
 
   "metrics.prototype": "Prototype mode",
   "metrics.prototypeBody":
-    "This dashboard mixes seeded demonstration figures with live prototype signals. Registration, funnel and demographic charts are illustrative; CSAT, NPS and Founder's Circle counts below are real responses collected from this prototype.",
-  "metrics.csat": "Analysis-match signal (CSAT)",
-  "metrics.csatMatch": "said the analysis matched",
+    "Figures combine simulated demonstration data with real pilot signups collected since August 2026.",
+  "metrics.csat": "AI Accuracy Signal (CSAT)",
+  "metrics.csatMatch": "positive",
   "metrics.nps": "Recommendation score (NPS)",
   "metrics.npsAvg": "average score",
-  "metrics.emailLeads": "Founder's Circle email leads",
-  "metrics.responses": "responses",
+  "metrics.emailLeads": "Email captures (early-access signups)",
+  "metrics.responses": "email captures",
   "metrics.live": "Live prototype data",
 
   "privacy.title": "Privacy Policy",
   "privacy.body":
-    "This is a placeholder privacy notice for the MigraGo prototype. Assessment answers are stored in your browser only. Email addresses submitted to the Founder's Circle are stored securely and used solely to contact you about early access. Feedback responses are stored without any identifying information. You can delete your local data at any time from Settings.",
+    "This is a placeholder privacy notice for the MigraGo prototype. Assessment answers are stored in your browser only. Email addresses submitted for early-access pricing are stored securely and used solely to contact you about early access. Feedback responses are stored without any identifying information. You can delete your local data at any time from Settings.",
   "terms.title": "Terms of Service",
   "terms.body":
     "This is a placeholder terms document for the MigraGo prototype. MigraGo provides informational guidance only. It does not replace legal advice or official authorities, and it does not guarantee residence permits or integration outcomes. Always verify requirements with the responsible Finnish institution.",
 
+  // ── Corrective build v2 ───────────────────────────────────
+  "hero.country": "Finland",
+  "hero.finlandPartner": "Built in partnership with Finland's integration ecosystem",
+  "hero.previewTitle": "Sample Smart Integration Profile",
+  "hero.previewNote": "Illustrative sample — your own scores are calculated from your answers.",
+
+  "about.processTitle": "Social integration is a process, not a destination.",
+  "about.processBody":
+    "It begins the moment someone decides to migrate, continues throughout the relocation itself, and carries on after arrival — through adaptation and integration into the new country's social, legal and economic structures. MigraGo measures and guides this full process — before migration, during migration and after arrival — not a single snapshot.",
+
+  "country.eu": "Europe / Schengen",
+  "country.global": "Global expansion — coming soon",
+  "country.active": "Live now",
+
+  "q.feedsInto": "Answers in this section contribute to your",
+  "q.scoreWord": "score",
+  "q.bonusNote2": "Optional questions — reported separately from the three core dimensions.",
+  "q.sectionsDone": "sections completed",
+  "q.encourage1": "Great start — the first sections are the quickest.",
+  "q.encourage2": "You're almost halfway there.",
+  "q.encourage3": "Final stretch — your profile is nearly ready.",
+
+  "nav.faq": "FAQ",
+  "nav.contact": "Contact us",
+  "set.support": "Support",
+
+  "faq.title": "Frequently asked questions",
+  "faq.sub": "The short answers to what newcomers ask us most.",
+  "faq.q1": "Do I need an account to use MigraGo?",
+  "faq.a1":
+    "No. You can complete the assessment and see your free overview without an account. Creating an account only saves your roadmap progress so it follows you across devices.",
+  "faq.q2": "What is included in the free tier?",
+  "faq.a2":
+    "The full 42-question assessment, a brief AI analysis and a general overview of your current status and direction. It does not include the full Smart Integration Profile or the 12-week roadmap.",
+  "faq.q3": "What do I get with SettleSmart Navigator (€9.90/month)?",
+  "faq.a3":
+    "All three dimension scores in full, the complete 12-week roadmap with institution-linked steps, live editing and recalculation, and progress tracking.",
+  "faq.q4": "How is my roadmap generated?",
+  "faq.a4":
+    "Your answers produce three dimension scores and a set of gap flags. Each gap is matched against a curated knowledge table of Finnish procedures and mapped to the institution that actually handles it, then sequenced across four phases over 12 weeks.",
+  "faq.q5": "Is this legal advice?",
+  "faq.a5":
+    "No. MigraGo does not replace legal advice or official authorities and does not guarantee residence permits or integration outcomes. Always verify requirements with the responsible institution.",
+  "faq.q6": "Where is my data stored, and how do I delete it?",
+  "faq.a6":
+    "Assessment answers are stored in your browser. Roadmap progress, feedback responses and early-access emails are stored in our secure backend. You can erase your local data at any time from Settings → Delete all my data.",
+  "faq.q7": "How accurate are the scores?",
+  "faq.a7":
+    "The model is transparent and rule-based, not a black box: each question maps to a known weight. It is a readiness indicator, not a prediction of any authority's decision.",
+  "faq.q8": "Which countries are supported?",
+  "faq.a8":
+    "Finland is live today. Germany, Sweden and the Netherlands are planned next, with Canada as the first market outside Europe.",
+  "faq.q9": "Can I change my answers later?",
+  "faq.a9":
+    "Yes. Edit any answer from your profile and your scores and roadmap recalculate immediately, with your score history preserved.",
+  "faq.q10": "How do I get support?",
+  "faq.a10":
+    "Use the Contact page. Email support is our channel during this MVP stage; an in-app assistant is a planned future capability, not a live feature.",
+
+  "contact.title": "Contact us",
+  "contact.sub": "Email is our support channel during this MVP stage. We reply within a few working days.",
+  "contact.emailCta": "Email the MigraGo team",
+  "contact.subject": "Subject",
+  "contact.message": "Message",
+  "contact.send": "Open in my email app",
+  "contact.futureTitle": "Planned — not active yet",
+  "contact.futureBody":
+    "An in-app AI support assistant is on the roadmap as a future capability. It is not available in this version.",
+
+  "checkout.title": "Secure checkout",
+  "checkout.sub": "SettleSmart Navigator — full Smart Integration Profile and 12-week roadmap.",
+  "checkout.plan": "SettleSmart Navigator (monthly)",
+  "checkout.discountLabel": "Early-access discount",
+  "checkout.total": "Total due today",
+  "checkout.pay": "Pay and unlock my roadmap",
+  "checkout.cancel": "Back to my profile",
+  "checkout.testMode":
+    "Test mode — this prototype runs a simulated payment step. No card is charged.",
+  "checkout.processing": "Processing payment…",
+  "checkout.done": "Payment confirmed. Unlocking your roadmap…",
+  "checkout.codeApplied": "Early-access code applied",
+
+  "pay.emailNote":
+    "This step reserves your discount only. The roadmap unlocks after checkout.",
+  "pay.standard": "Standard pricing",
+
+  "road.completion": "tasks completed",
+  "road.tasksOf": "of",
+
+  "metrics.emailVsPay":
+    "Email captures are a lead-generation signal. Checkouts are the willingness-to-pay signal. They are counted separately.",
+  "metrics.checkoutSection": "€9.90 checkouts (Stripe test mode)",
 };
 
 export const fa: Record<keyof typeof en, string> = {
@@ -269,8 +365,8 @@ export const fa: Record<keyof typeof en, string> = {
   "hero.title": "بدانید کجا ایستاده‌اید. بدانید قدم بعدی چیست.",
   "hero.sub":
     "میگراگو با یک ارزیابی هوشمند، وضعیت فعلی و میزان آمادگی شما برای ادغام اجتماعی را ترسیم می‌کند و سپس یک نقشه‌راه شخصی‌سازی‌شدهٔ ۱۲ هفته‌ای بر پایهٔ قوانین، رویه‌ها و خدمات واقعی برای شما می‌سازد.",
-  "hero.badge": "فنلاند · مسیر ادغام مبتنی بر شواهد",
-  "hero.time": "۹ تا ۱۲ دقیقه · ۴۲ پرسش · ذخیره و ادامه در هر زمان",
+  "hero.badge": "مسیر ادغام مبتنی بر شواهد",
+  "hero.time": "۹ تا ۱۲ دقیقه — ۴۲ پرسش — ذخیره و ادامه در هر زمان",
 
   "about.title": "میگراگو چیست",
   "about.definitionTitle": "تعریف",
@@ -287,9 +383,11 @@ export const fa: Record<keyof typeof en, string> = {
   "how.s1.t": "ارزیابی ساختارمند",
   "how.s1.d": "۷ بخش، ۴۲ پرسش، با ذخیرهٔ خودکار در هر پاسخ.",
   "how.s2.t": "پروفایل هوشمند ادغام",
-  "how.s2.d": "وضعیت حقوقی، مهارت‌های حرفه‌ای و آمادگی روانی با نمرهٔ ۰ تا ۱۰۰.",
+  "how.s2.d":
+    "وضعیت حقوقی، ظرفیت اقتصادی و حرفه‌ای، و مهارت‌های نرم و آمادگی روانی؛ هر کدام با نمرهٔ ۰ تا ۱۰۰.",
   "how.s3.t": "نقشه‌راه ۱۲ هفته‌ای",
-  "how.s3.d": "چهار فاز؛ هر گام به یک نهاد رسمی فنلاند متصل است.",
+  "how.s3.d":
+    "هر گام نقشهٔ راه به نهاد رسمی مربوط در فنلاند (مانند Migri یا DVV) متصل است.",
 
   "inst.title": "متصل به نهادهای واقعی",
   "inst.sub": "هر گام نقشه‌راه به مرجع یا سازمانی که واقعاً متولی آن است نسبت داده می‌شود.",
@@ -355,14 +453,14 @@ export const fa: Record<keyof typeof en, string> = {
   "dash.title": "پروفایل هوشمند ادغام",
   "dash.overall": "نمرهٔ پایهٔ آمادگی",
   "dash.dim1": "وضعیت حقوقی",
-  "dash.dim2": "مهارت‌های حرفه‌ای",
-  "dash.dim3": "آمادگی روانی",
+  "dash.dim2": "ظرفیت اقتصادی و حرفه‌ای",
+  "dash.dim3": "مهارت‌های نرم و آمادگی روانی",
   "dash.weight": "وزن",
   "dash.bonus": "شاخص مسیر مکمل",
   "dash.bonusNote":
     "توان استعداد و کارآفرینی — جداگانه گزارش می‌شود و هرگز بخشی از نمرهٔ پایهٔ ۱۰۰ نیست.",
   "dash.composition": "ترکیب ابعاد",
-  "dash.byDimension": "نمره بر اساس بُعد",
+  "dash.byDimension": "توازن ابعاد",
   "dash.analysis": "تحلیل هوش مصنوعی — نمای کلی",
   "dash.strengths": "نقاط قوت",
   "dash.gaps": "شکاف‌های اولویت‌دار",
@@ -386,7 +484,8 @@ export const fa: Record<keyof typeof en, string> = {
   "pay.demoNote": "پرداخت نمایشی — در این نسخه هیچ مبلغی دریافت نمی‌شود.",
 
   "road.title": "نقشه‌راه ۱۲ هفته‌ای",
-  "road.sub": "چهار فاز. هر گام به نهاد متولی آن نسبت داده شده است.",
+  "road.sub":
+    "هر گام نقشهٔ راه به نهاد رسمی مربوط در فنلاند (مانند Migri یا DVV) متصل است.",
   "road.phase1": "هفتهٔ ۱ تا ۳ — بنیاد حقوقی و اداری",
   "road.phase2": "هفتهٔ ۴ تا ۶ — زندگی روزمره و تثبیت زبان",
   "road.phase3": "هفتهٔ ۷ تا ۹ — اشتغال و مسیر حرفه‌ای",
@@ -437,7 +536,7 @@ export const fa: Record<keyof typeof en, string> = {
   "auth.subtitle":
     "برای ذخیرهٔ پیشرفت نقشهٔ راه خود روی همهٔ دستگاه‌ها وارد شوید. پاسخ‌های پرسش‌نامه روی همین دستگاه باقی می‌ماند.",
   "auth.email": "رایانامه",
-  "auth.password": "گذرواژه (حداقل ۶ نویسه)",
+  "auth.password": "گذرواژه (حداقل ۸ نویسه)",
   "auth.signIn": "ورود",
   "auth.signUp": "ساخت حساب",
   "auth.google": "ادامه با گوگل",
@@ -452,17 +551,18 @@ export const fa: Record<keyof typeof en, string> = {
   "csat.no": "چندان نه",
   "csat.thanks": "سپاسگزاریم — پاسخ شما ثبت شد.",
 
-  "pay.emailTitle": "به حلقهٔ بنیان‌گذاران بپیوندید",
+  "pay.emailTitle": "قیمت دسترسی زودهنگام",
   "pay.emailSub":
-    "صد عضو نخست، ارتقای Navigator را با قیمت ویژهٔ بنیان‌گذاری و دسترسی زودهنگام به کشورهای تازه دریافت می‌کنند.",
+    "صد عضو نخست، SettleSmart Navigator را با نرخ ویژهٔ دسترسی زودهنگام دریافت می‌کنند.",
   "pay.emailLabel": "رایانامهٔ شما",
-  "pay.emailCta": "پیوستن و ادامه",
-  "pay.counter": "عضو تاکنون پیوسته‌اند",
-  "pay.counterSpots": "جایگاه بنیان‌گذاری باقی مانده است",
-  "pay.counterFull": "صد جایگاه بنیان‌گذاری تکمیل شده است — همچنان می‌توانید در فهرست انتظار ثبت‌نام کنید.",
+  "pay.emailCta": "دریافت کد و ادامه",
+  "pay.counter": "عضو تاکنون ثبت‌نام کرده‌اند",
+  "pay.counterSpots": "جایگاه دسترسی زودهنگام باقی مانده است",
+  "pay.counterFull":
+    "هر ۱۰۰ جایگاه دسترسی زودهنگام تکمیل شده است — از این پس قیمت استاندارد اعمال می‌شود.",
   "pay.emailInvalid": "لطفاً یک نشانی رایانامهٔ معتبر وارد کنید.",
-  "pay.emailThanks": "نام شما ثبت شد. در حال باز کردن نقشهٔ راه…",
-  "pay.emailSkip": "ادامه بدون پیوستن",
+  "pay.emailThanks": "کد دسترسی زودهنگام شما رزرو شد. در حال رفتن به مرحلهٔ پرداخت…",
+  "pay.emailSkip": "ادامه با قیمت استاندارد",
 
   "set.account": "حساب کاربری",
   "set.email": "واردشده با",
@@ -475,7 +575,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "road.done": "انجام شد",
   "road.progress": "گام انجام‌شده",
-  "road.signInToSave": "برای ذخیرهٔ تیک‌ها روی همهٔ دستگاه‌ها وارد شوید.",
+  "road.signInToSave": "برای ذخیرهٔ پیشرفت نقشهٔ راه روی همهٔ دستگاه‌هایتان وارد شوید.",
 
   "nps.title": "چقدر احتمال دارد MigraGo را به مهاجر دیگری معرفی کنید؟",
   "nps.sub": "۰ = اصلاً · ۱۰ = بسیار زیاد",
@@ -485,22 +585,114 @@ export const fa: Record<keyof typeof en, string> = {
 
   "metrics.prototype": "حالت نمونهٔ اولیه",
   "metrics.prototypeBody":
-    "این داشبورد ترکیبی از داده‌های نمایشی شبیه‌سازی‌شده و سیگنال‌های واقعیِ نمونهٔ اولیه است. نمودارهای ثبت‌نام، قیف تبدیل و جمعیت‌شناسی جنبهٔ نمایشی دارند؛ آمار CSAT، NPS و حلقهٔ بنیان‌گذاران در پایین، پاسخ‌های واقعی گردآوری‌شده از این نمونه هستند.",
-  "metrics.csat": "سیگنال همخوانی تحلیل (CSAT)",
-  "metrics.csatMatch": "گفته‌اند تحلیل همخوان بوده است",
+    "این ارقام ترکیبی از داده‌های نمایشی شبیه‌سازی‌شده و ثبت‌نام‌های واقعی آزمایشی گردآوری‌شده از اوت ۲۰۲۶ است.",
+  "metrics.csat": "سیگنال دقت تحلیل هوش مصنوعی (CSAT)",
+  "metrics.csatMatch": "پاسخ مثبت",
   "metrics.nps": "امتیاز توصیه (NPS)",
   "metrics.npsAvg": "میانگین امتیاز",
-  "metrics.emailLeads": "سرنخ‌های رایانامه‌ای حلقهٔ بنیان‌گذاران",
-  "metrics.responses": "پاسخ",
+  "metrics.emailLeads": "ثبت رایانامه (دسترسی زودهنگام)",
+  "metrics.responses": "ثبت رایانامه",
   "metrics.live": "دادهٔ زندهٔ نمونهٔ اولیه",
 
   "privacy.title": "سیاست حریم خصوصی",
   "privacy.body":
-    "این متن، نسخهٔ نمونه برای پیش‌نمونهٔ MigraGo است. پاسخ‌های ارزیابی تنها در مرورگر شما ذخیره می‌شوند. نشانی رایانامه‌ای که برای حلقهٔ بنیان‌گذاران ثبت می‌کنید به‌صورت ایمن نگهداری و تنها برای اطلاع‌رسانی دسترسی زودهنگام استفاده می‌شود. پاسخ‌های بازخورد بدون هیچ اطلاعات شناسایی ذخیره می‌شوند. هر زمان بخواهید می‌توانید داده‌های محلی خود را از بخش تنظیمات حذف کنید.",
+    "این متن، نسخهٔ نمونه برای پیش‌نمونهٔ MigraGo است. پاسخ‌های ارزیابی تنها در مرورگر شما ذخیره می‌شوند. نشانی رایانامه‌ای که برای قیمت دسترسی زودهنگام ثبت می‌کنید به‌صورت ایمن نگهداری و تنها برای اطلاع‌رسانی دسترسی زودهنگام استفاده می‌شود. پاسخ‌های بازخورد بدون هیچ اطلاعات شناسایی ذخیره می‌شوند. هر زمان بخواهید می‌توانید داده‌های محلی خود را از بخش تنظیمات حذف کنید.",
   "terms.title": "شرایط استفاده از خدمات",
   "terms.body":
     "این متن، نسخهٔ نمونه برای پیش‌نمونهٔ MigraGo است. MigraGo تنها راهنمایی اطلاع‌رسانی ارائه می‌دهد؛ جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و هیچ تضمینی برای صدور اجازهٔ اقامت یا نتیجهٔ ادغام نمی‌دهد. همیشه الزامات را با نهاد مسئول فنلاندی راستی‌آزمایی کنید.",
 
+  // ── ویرایش اصلاحی نسخهٔ ۲ ─────────────────────────────────
+  "hero.country": "فنلاند",
+  "hero.finlandPartner": "با همراهی زیست‌بوم ادغام اجتماعی فنلاند ساخته شده است",
+  "hero.previewTitle": "نمونهٔ پروفایل هوشمند ادغام",
+  "hero.previewNote": "این نمونه صرفاً نمایشی است؛ نمرهٔ شما از پاسخ‌های خودتان محاسبه می‌شود.",
+
+  "about.processTitle": "ادغام اجتماعی یک فرایند است، نه یک مقصد.",
+  "about.processBody":
+    "این فرایند از لحظه‌ای آغاز می‌شود که فرد تصمیم به مهاجرت می‌گیرد، در طول جابه‌جایی ادامه می‌یابد و پس از ورود نیز با سازگاری و ادغام در ساختارهای اجتماعی، حقوقی و اقتصادی کشور مقصد پی گرفته می‌شود. میگراگو همین فرایند کامل را — پیش از مهاجرت، در حین مهاجرت و پس از ورود — می‌سنجد و راهنمایی می‌کند، نه یک وضعیت لحظه‌ای را.",
+
+  "country.eu": "اروپا / شنگن",
+  "country.global": "گسترش جهانی — به‌زودی",
+  "country.active": "فعال",
+
+  "q.feedsInto": "پاسخ‌های این بخش در نمرهٔ زیر لحاظ می‌شود:",
+  "q.scoreWord": "",
+  "q.bonusNote2": "پرسش‌های اختیاری — جدا از سه بُعد اصلی گزارش می‌شود.",
+  "q.sectionsDone": "بخش تکمیل شد",
+  "q.encourage1": "شروع خوبی بود — بخش‌های نخست سریع‌تر پیش می‌روند.",
+  "q.encourage2": "تقریباً به نیمهٔ راه رسیده‌اید.",
+  "q.encourage3": "مرحلهٔ پایانی — پروفایل شما تقریباً آماده است.",
+
+  "nav.faq": "پرسش‌های پرتکرار",
+  "nav.contact": "تماس با ما",
+  "set.support": "پشتیبانی",
+
+  "faq.title": "پرسش‌های پرتکرار",
+  "faq.sub": "پاسخ کوتاه به پرسش‌هایی که تازه‌واردان بیش از همه می‌پرسند.",
+  "faq.q1": "برای استفاده از میگراگو باید حساب کاربری بسازم؟",
+  "faq.a1":
+    "خیر. ارزیابی و نمای کلی رایگان بدون حساب کاربری در دسترس است. ساخت حساب تنها پیشرفت نقشهٔ راه شما را ذخیره می‌کند تا روی همهٔ دستگاه‌ها همراه‌تان باشد.",
+  "faq.q2": "نسخهٔ رایگان شامل چه چیزهایی است؟",
+  "faq.a2":
+    "کل ارزیابی ۴۲ پرسشی، تحلیل کوتاه هوش مصنوعی و نمای کلی از وضعیت و جهت‌گیری فعلی شما. پروفایل کامل هوشمند ادغام و نقشه‌راه ۱۲ هفته‌ای در آن نیست.",
+  "faq.q3": "اشتراک SettleSmart Navigator (ماهانه ۹٫۹۰ یورو) چه چیزی ارائه می‌دهد؟",
+  "faq.a3":
+    "نمرهٔ کامل هر سه بُعد، نقشه‌راه کامل ۱۲ هفته‌ای با گام‌های متصل به نهادهای رسمی، ویرایش زنده و محاسبهٔ مجدد، و پیگیری پیشرفت.",
+  "faq.q4": "نقشهٔ راه چگونه ساخته می‌شود؟",
+  "faq.a4":
+    "پاسخ‌های شما سه نمرهٔ بُعدی و مجموعه‌ای از شکاف‌ها را می‌سازد. هر شکاف با جدول دانش رویه‌های رسمی فنلاند تطبیق داده می‌شود، به نهاد متولی نسبت می‌یابد و سپس در چهار فاز طی ۱۲ هفته چیده می‌شود.",
+  "faq.q5": "آیا این مشاورهٔ حقوقی است؟",
+  "faq.a5":
+    "خیر. میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام نمی‌دهد. همیشه الزامات را با نهاد مسئول راستی‌آزمایی کنید.",
+  "faq.q6": "داده‌های من کجا ذخیره می‌شود و چگونه حذف می‌شود؟",
+  "faq.a6":
+    "پاسخ‌های ارزیابی در مرورگر شما ذخیره می‌شود. پیشرفت نقشهٔ راه، بازخوردها و رایانامه‌های دسترسی زودهنگام در بک‌اند امن ما نگهداری می‌شود. هر زمان می‌توانید از بخش تنظیمات، «حذف همهٔ داده‌های من» را اجرا کنید.",
+  "faq.q7": "نمره‌ها چقدر دقیق‌اند؟",
+  "faq.a7":
+    "مدل شفاف و قاعده‌محور است، نه جعبه‌سیاه: هر پرسش وزن مشخصی دارد. این نمره یک شاخص آمادگی است، نه پیش‌بینی تصمیم هیچ مرجع رسمی.",
+  "faq.q8": "چه کشورهایی پشتیبانی می‌شوند؟",
+  "faq.a8":
+    "امروز فنلاند فعال است. آلمان، سوئد و هلند در برنامهٔ بعدی هستند و کانادا نخستین بازار خارج از اروپا خواهد بود.",
+  "faq.q9": "می‌توانم بعداً پاسخ‌هایم را تغییر دهم؟",
+  "faq.a9":
+    "بله. هر پاسخ را از پروفایل خود ویرایش کنید؛ نمره‌ها و نقشهٔ راه بی‌درنگ بازمحاسبه می‌شوند و تاریخچهٔ نمرهٔ شما حفظ می‌ماند.",
+  "faq.q10": "چگونه پشتیبانی بگیرم؟",
+  "faq.a10":
+    "از صفحهٔ تماس با ما استفاده کنید. در این مرحلهٔ MVP، رایانامه کانال پشتیبانی ماست؛ دستیار درون‌برنامه‌ای یک قابلیت آینده است و اکنون فعال نیست.",
+
+  "contact.title": "تماس با ما",
+  "contact.sub": "در این مرحلهٔ MVP، رایانامه کانال پشتیبانی ماست. معمولاً ظرف چند روز کاری پاسخ می‌دهیم.",
+  "contact.emailCta": "ارسال رایانامه به تیم میگراگو",
+  "contact.subject": "موضوع",
+  "contact.message": "پیام",
+  "contact.send": "باز کردن در برنامهٔ رایانامه",
+  "contact.futureTitle": "برنامهٔ آینده — هنوز فعال نیست",
+  "contact.futureBody":
+    "دستیار پشتیبانی هوش مصنوعی درون‌برنامه‌ای در نقشهٔ راه محصول قرار دارد و در این نسخه در دسترس نیست.",
+
+  "checkout.title": "پرداخت امن",
+  "checkout.sub": "SettleSmart Navigator — پروفایل کامل هوشمند ادغام و نقشه‌راه ۱۲ هفته‌ای.",
+  "checkout.plan": "SettleSmart Navigator (ماهانه)",
+  "checkout.discountLabel": "تخفیف دسترسی زودهنگام",
+  "checkout.total": "مبلغ قابل پرداخت",
+  "checkout.pay": "پرداخت و باز کردن نقشهٔ راه",
+  "checkout.cancel": "بازگشت به پروفایل",
+  "checkout.testMode":
+    "حالت آزمایشی — این نمونهٔ اولیه یک مرحلهٔ پرداخت شبیه‌سازی‌شده اجرا می‌کند و هیچ مبلغی از کارت برداشت نمی‌شود.",
+  "checkout.processing": "در حال پردازش پرداخت…",
+  "checkout.done": "پرداخت تأیید شد. در حال باز کردن نقشهٔ راه…",
+  "checkout.codeApplied": "کد دسترسی زودهنگام اعمال شد",
+
+  "pay.emailNote":
+    "این مرحله فقط تخفیف شما را رزرو می‌کند. نقشهٔ راه پس از پرداخت باز می‌شود.",
+  "pay.standard": "قیمت استاندارد",
+
+  "road.completion": "گام انجام‌شده",
+  "road.tasksOf": "از",
+
+  "metrics.emailVsPay":
+    "ثبت رایانامه سیگنال جذب سرنخ است و پرداخت‌ها سیگنال تمایل واقعی به پرداخت. این دو جداگانه شمارش می‌شوند.",
+  "metrics.checkoutSection": "پرداخت‌های ۹٫۹۰ یورویی (حالت آزمایشی Stripe)",
 };
 
 const dicts = { en, fa };

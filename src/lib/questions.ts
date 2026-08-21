@@ -47,7 +47,14 @@ export const SECTIONS: { id: number; title: Bilingual; minutes: number; optional
     minutes: 2,
   },
   { id: 5, title: { en: "Legal History & Compliance", fa: "سابقهٔ حقوقی و تبعیت از قوانین" }, minutes: 1 },
-  { id: 6, title: { en: "Finland Strategy", fa: "راهبرد فنلاند" }, minutes: 1 },
+  {
+    id: 6,
+    title: {
+      en: "Motivation & Destination Country Strategy",
+      fa: "انگیزه و راهبرد کشور مقصد",
+    },
+    minutes: 1,
+  },
   {
     id: 7,
     title: { en: "Talent & Founder Potential", fa: "توان استعداد و کارآفرینی" },
@@ -55,6 +62,17 @@ export const SECTIONS: { id: number; title: Bilingual; minutes: number; optional
     optional: true,
   },
 ];
+
+/** Which scoring dimension each section feeds into (for the ⓘ header hint). */
+export const SECTION_DIMENSION: Record<number, "legal" | "professional" | "psychological" | "bonus"> = {
+  1: "legal",
+  2: "professional",
+  3: "professional",
+  4: "psychological",
+  5: "legal",
+  6: "psychological",
+  7: "bonus",
+};
 
 const o = (en: string, fa: string): Bilingual => ({ en, fa });
 
@@ -547,8 +565,8 @@ export const QUESTIONS: Question[] = [
     section: 6,
     type: "single",
     label: o(
-      "How urgent is your timeline for departure and relocation?",
-      "بازهٔ زمانی شما برای خروج و جابه‌جایی چقدر فوری است؟",
+      "What is your intended timeframe for leaving your home country and settling in the destination country?",
+      "بازهٔ زمانی مورد نظر شما برای خروج از کشور مبدأ و استقرار در کشور مقصد چقدر است؟",
     ),
     options: [
       o("Less than 3 months", "کمتر از ۳ ماه"),

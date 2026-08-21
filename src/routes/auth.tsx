@@ -119,7 +119,7 @@ function AuthPage() {
 
           <button
             type="button"
-            disabled={busy || !email || password.length < 6}
+            disabled={busy || !email || password.length < 8}
             onClick={() => void submit()}
             className="mt-5 w-full rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition-colors duration-200 ease-out hover:bg-primary/90 disabled:opacity-40"
           >

@@ -1,19 +1,22 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
-  Bar,
-  BarChart,
   Cell,
   Line,
   LineChart,
   Pie,
   PieChart,
+  PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  Radar,
+  RadarChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
-import { FileText, Lock, LogIn, Pencil, ShieldCheck, Sparkles, Trash2 } from "lucide-react";
+import { Check, FileText, HelpCircle, Lock, LogIn, Mail, Pencil, ShieldCheck, Sparkles, Trash2 } from "lucide-react";
 import { AppHeader, LanguageSwitch, SiteFooter } from "@/components/BrandHeader";
 import { PenguinLoader } from "@/components/PenguinLoader";
 import {
@@ -38,7 +41,7 @@ export const Route = createFileRoute("/dashboard")({
       {
         name: "description",
         content:
-          "Your Legal Status, Professional Skills and Psychological Readiness scores plus your evidence-based 12-week Finland roadmap.",
+          "Your Legal Status, Economic & Professional Capacity and Soft Skills & Psychological Readiness scores plus your evidence-based 12-week Finland roadmap.",
       },
       { property: "og:title", content: "Smart Integration Profile — MigraGo dashboard" },
       {
@@ -54,6 +57,9 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 const DIM_COLORS = ["var(--navy)", "var(--teal)", "var(--gold)"];
+
+/** Phase tints — one brand colour per roadmap phase. */
+const PHASE_COLORS = ["var(--navy)", "var(--teal)", "var(--gold)", "var(--plum)"];
 
 type Tab = "profile" | "roadmap" | "settings";
 
@@ -264,12 +270,6 @@ function Dashboard() {
                           {localizeNumber(d.value, lang)}%
                         </span>
                       </div>
-                      <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-muted">
-                        <div
-                          className={cn("h-full rounded-full transition-[width] duration-300 ease-out", locked && "blur-[3px]")}
-                          style={{ width: `${locked ? 60 : d.value}%`, backgroundColor: d.color }}
-                        />
-                      </div>
                     </li>
                   ))}
                 </ul>
@@ -277,29 +277,25 @@ function Dashboard() {
 
               <div className="mt-8">
                 <h3 className="text-sm font-bold">{t("dash.byDimension")}</h3>
-                <div className={cn("mt-3 h-[180px]", locked && "blur-md")}>
+                <div className={cn("mt-3 h-[240px]", locked && "blur-md")}>
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
+                    <RadarChart
                       data={dims.map((d) => ({ name: d.label, value: locked ? 60 : d.value }))}
-                      layout="vertical"
-                      margin={{ left: 8, right: 16 }}
+                      outerRadius="72%"
                     >
-                      <XAxis type="number" domain={[0, 100]} hide />
-                      <YAxis
-                        type="category"
-                        dataKey="name"
-                        width={140}
-                        tickLine={false}
-                        axisLine={false}
-                        tick={{ fontSize: 12 }}
+                      <PolarGrid stroke="var(--border)" />
+                      <PolarAngleAxis dataKey="name" tick={{ fontSize: 11 }} />
+                      <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
+                      <Radar
+                        dataKey="value"
+                        stroke="var(--teal)"
+                        fill="var(--teal)"
+                        fillOpacity={0.35}
+                        isAnimationActive
+                        animationDuration={900}
                       />
-                      <Tooltip cursor={{ fill: "transparent" }} />
-                      <Bar dataKey="value" radius={[6, 6, 6, 6]} barSize={18}>
-                        {dims.map((d, i) => (
-                          <Cell key={i} fill={d.color} />
-                        ))}
-                      </Bar>
-                    </BarChart>
+                      <Tooltip />
+                    </RadarChart>
                   </ResponsiveContainer>
                 </div>
               </div>
@@ -483,7 +479,14 @@ function Dashboard() {
 
                   <div className="space-y-5">
                     {roadmap.map((phase, i) => (
-                      <article key={phase.phase} className="rounded-3xl border border-border bg-card p-6">
+                      <article
+                        key={phase.phase}
+                        className="rounded-3xl border p-6"
+                        style={{
+                          borderColor: `color-mix(in oklab, ${PHASE_COLORS[i] ?? "var(--navy)"} 35%, transparent)`,
+                          background: `color-mix(in oklab, ${PHASE_COLORS[i] ?? "var(--navy)"} 7%, var(--card))`,
+                        }}
+                      >
                         <header className="flex flex-wrap items-center justify-between gap-2">
                           <h3 className="text-base font-bold">
                             {t(PHASE_TITLE_KEYS[i] ?? "road.phase1")}
@@ -504,13 +507,21 @@ function Dashboard() {
                                 )}
                               >
                                 <div className="flex items-start gap-3">
-                                  <input
-                                    type="checkbox"
-                                    checked={checked}
-                                    onChange={() => toggleTask(item.id)}
-                                    aria-label={`${t("road.done")}: ${item.title[lang]}`}
-                                    className="mt-1 size-4 shrink-0 accent-[var(--teal)]"
-                                  />
+                                  <label className="relative mt-0.5 inline-flex size-5 shrink-0 cursor-pointer items-center justify-center">
+                                    <input
+                                      type="checkbox"
+                                      checked={checked}
+                                      onChange={() => toggleTask(item.id)}
+                                      aria-label={`${t("road.done")}: ${item.title[lang]}`}
+                                      className="peer size-5 cursor-pointer appearance-none rounded-md border border-border bg-background transition-colors duration-200 ease-out checked:border-secondary checked:bg-secondary"
+                                    />
+                                    {checked ? (
+                                      <Check
+                                        className="check-pop pointer-events-none absolute size-3.5 text-secondary-foreground"
+                                        aria-hidden
+                                      />
+                                    ) : null}
+                                  </label>
                                   <div className="min-w-0 flex-1">
                                     <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
                                       <span className="rounded-full bg-primary/8 px-2.5 py-0.5 text-primary">
@@ -599,6 +610,20 @@ function Dashboard() {
                 <Link to="/terms" className="inline-flex items-center gap-1.5 text-secondary underline underline-offset-4">
                   <FileText className="size-4" aria-hidden />
                   {t("set.terms")}
+                </Link>
+              </div>
+            </section>
+
+            <section className="rounded-3xl border border-border bg-card p-6">
+              <h2 className="text-lg">{t("set.support")}</h2>
+              <div className="mt-3 flex flex-wrap gap-4 text-sm font-semibold">
+                <Link to="/faq" className="inline-flex items-center gap-1.5 text-secondary underline underline-offset-4">
+                  <HelpCircle className="size-4" aria-hidden />
+                  {t("nav.faq")}
+                </Link>
+                <Link to="/contact" className="inline-flex items-center gap-1.5 text-secondary underline underline-offset-4">
+                  <Mail className="size-4" aria-hidden />
+                  {t("nav.contact")}
                 </Link>
               </div>
             </section>
