@@ -94,9 +94,21 @@ function Landing() {
                   {t("hero.badge")}
                 </span>
               </div>
-              <p className="mt-3 text-xs font-medium text-muted-foreground">
-                {t("hero.finlandPartner")}
-              </p>
+              <div className="mt-4 inline-flex items-center gap-2.5 rounded-2xl border border-secondary/35 bg-card px-3.5 py-2 shadow-[var(--shadow-card)]">
+                <span
+                  className="flex size-7 items-center justify-center overflow-hidden rounded-md border border-border bg-white"
+                  aria-hidden
+                >
+                  <svg viewBox="0 0 18 11" className="size-full" role="presentation">
+                    <rect width="18" height="11" fill="#fff" />
+                    <rect x="5" width="3" height="11" fill="#003580" />
+                    <rect y="4" width="18" height="3" fill="#003580" />
+                  </svg>
+                </span>
+                <span className="text-[11px] font-semibold leading-snug text-foreground">
+                  {t("hero.finlandPartner")}
+                </span>
+              </div>
               <h1 className="mt-6 text-4xl leading-[1.08] md:text-6xl">
                 <span className="text-gradient-brand">{t("hero.title")}</span>
               </h1>
