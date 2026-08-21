@@ -325,7 +325,7 @@ export const en = {
     "In addition to SettleSmart Navigator's capabilities, this package guides you toward the relevant government authorities and institutions, as well as a network of verified individuals and organizations — including certified translators and translation offices, lawyers and advisors (financial, tax, career, legal, family), daycare centres, schools, universities, vocational and technical education institutions, and cultural and arts centres. It also includes monitoring and evaluation of your progress, and ongoing support-team guidance during roadmap execution. Future vision (beyond current MVP scope): in later stages it could connect you directly to each institution's service desk at every roadmap phase — including scheduling and assigning a responsible caseworker — and, with your explicit consent, make your information visible on that institution's staff dashboard (planned Connect+ B2B and institutional B2G capabilities). This package is not active in this MVP.",
 
   "contact.title": "Contact us",
-  "contact.sub": "Email is our support channel during this MVP stage. We reply within a few working days.",
+  "contact.sub": "Email and WhatsApp are our support channels during this MVP stage. We reply within a few working days.",
   "contact.emailCta": "Email the MigraGo team",
   "contact.subject": "Subject",
   "contact.message": "Message",
@@ -701,7 +701,7 @@ export const fa: Record<keyof typeof en, string> = {
     "افزون بر قابلیت‌های SettleSmart Navigator، این بسته کاربر را به نهادها و مراجع دولتی مرتبط و نیز به شبکه‌ای از افراد و سازمان‌های راستی‌آزمایی‌شده راهنمایی می‌کند؛ از جمله مترجمان رسمی و دفاتر ترجمه، وکلا و مشاوران (مالی، مالیاتی، شغلی، حقوقی و خانواده)، مهدکودک‌ها، مدارس، دانشگاه‌ها، مراکز آموزش فنی‌وحرفه‌ای و مراکز فرهنگی و هنری. همچنین شامل پایش و ارزیابی پیشرفت کاربر و راهنمایی مستمر تیم پشتیبانی در حین اجرای نقشهٔ راه است. چشم‌انداز آینده (فراتر از دامنهٔ نسخهٔ کنونی): در مراحل بعدی، این بسته می‌تواند کاربر را در هر مرحله از نقشهٔ راه مستقیماً به میز خدمت هر نهاد وصل کند — از جمله زمان‌بندی و تخصیص کارشناس مسئول — و با رضایت صریح کاربر، اطلاعات او را در داشبورد کارکنان آن نهاد نمایان کند (قابلیت‌های برنامه‌ریزی‌شدهٔ Connect+ در حوزهٔ B2B و داشبورد نهادی در حوزهٔ B2G). این بسته در نسخهٔ کنونی فعال نیست.",
 
   "contact.title": "تماس با ما",
-  "contact.sub": "در این مرحلهٔ MVP، رایانامه کانال پشتیبانی ماست. معمولاً ظرف چند روز کاری پاسخ می‌دهیم.",
+  "contact.sub": "در این مرحلهٔ MVP، رایانامه و واتس‌اپ کانال‌های پشتیبانی ما هستند. معمولاً ظرف چند روز کاری پاسخ می‌دهیم.",
   "contact.emailCta": "ارسال رایانامه به تیم میگراگو",
   "contact.subject": "موضوع",
   "contact.message": "پیام",
