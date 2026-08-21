@@ -253,10 +253,17 @@ function Landing() {
               </Link>
             </article>
 
-            <article className="rounded-2xl border border-dashed border-border bg-muted/50 p-7 opacity-80">
-              <span className="rounded-full bg-card px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+            <article className="relative overflow-hidden rounded-2xl border border-dashed border-[color:var(--plum)]/30 bg-muted/50 p-7">
+              <span
+                className="absolute inset-x-0 top-0 h-1"
+                style={{ background: "var(--plum)" }}
+                aria-hidden
+              />
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-card px-3 py-1 text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--plum)" }}>
+                <Hourglass className="size-3" aria-hidden />
                 {t("pricing.future")}
               </span>
+
               <h3 className="mt-4 text-lg">{t("pricing.stab")}</h3>
               <p className="mt-3 text-3xl font-bold text-muted-foreground">{t("pricing.stabPrice")}</p>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
