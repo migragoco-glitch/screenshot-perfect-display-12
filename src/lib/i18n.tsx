@@ -265,9 +265,9 @@ export const en = {
   "hero.previewTitle": "Sample Smart Integration Profile",
   "hero.previewNote": "Illustrative sample — your own scores are calculated from your answers.",
 
-  "about.processTitle": "Social integration is a process, not a destination.",
+  "about.processTitle": "Social integration is a process...",
   "about.processBody":
-    "It begins the moment someone decides to migrate, continues throughout the relocation itself, and carries on after arrival — through adaptation and integration into the new country's social, legal and economic structures. MigraGo measures and guides this full process — before migration, during migration and after arrival — not a single snapshot.",
+    "It begins the moment someone decides to migrate, continues throughout the relocation itself, and carries on after arrival — through adaptation and integration into the new country's social, legal and economic structures. MigraGo measures this full process — before migration, during migration and after arrival — and provides a personalized roadmap.",
 
   "country.eu": "Europe / Schengen",
   "country.global": "Global expansion — coming soon",
@@ -607,9 +607,9 @@ export const fa: Record<keyof typeof en, string> = {
   "hero.previewTitle": "نمونهٔ پروفایل هوشمند ادغام",
   "hero.previewNote": "این نمونه صرفاً نمایشی است؛ نمرهٔ شما از پاسخ‌های خودتان محاسبه می‌شود.",
 
-  "about.processTitle": "ادغام اجتماعی یک فرایند است، نه یک مقصد.",
+  "about.processTitle": "ادغام اجتماعی یک فرایند است...",
   "about.processBody":
-    "این فرایند از لحظه‌ای آغاز می‌شود که فرد تصمیم به مهاجرت می‌گیرد، در طول جابه‌جایی ادامه می‌یابد و پس از ورود نیز با سازگاری و ادغام در ساختارهای اجتماعی، حقوقی و اقتصادی کشور مقصد پی گرفته می‌شود. میگراگو همین فرایند کامل را — پیش از مهاجرت، در حین مهاجرت و پس از ورود — می‌سنجد و راهنمایی می‌کند، نه یک وضعیت لحظه‌ای را.",
+    "این فرایند از لحظه‌ای آغاز می‌شود که فرد تصمیم به مهاجرت می‌گیرد، در طول جابه‌جایی ادامه می‌یابد و پس از ورود نیز با سازگاری و ادغام در ساختارهای اجتماعی، حقوقی و اقتصادی کشور مقصد پی گرفته می‌شود. میگراگو همین فرایند کامل را — پیش از مهاجرت، در حین مهاجرت و پس از ورود — می‌سنجد و نقشه راه شخصی سازی شده میدهد.",
 
   "country.eu": "اروپا / شنگن",
   "country.global": "گسترش جهانی — به‌زودی",
