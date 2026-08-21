@@ -259,7 +259,17 @@ function Landing() {
               </span>
               <h3 className="mt-4 text-lg">{t("pricing.stab")}</h3>
               <p className="mt-3 text-3xl font-bold text-muted-foreground">{t("pricing.stabPrice")}</p>
-              <p className="mt-4 text-sm text-muted-foreground">{t("pricing.stabDesc")}</p>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                {t("pricing.stabDesc")}
+              </p>
+              <div className="mt-4 rounded-2xl border border-dashed border-border bg-card/70 p-4">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                  {t("pricing.stabFutureLabel")}
+                </span>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                  {t("pricing.stabFuture")}
+                </p>
+              </div>
               <button
                 type="button"
                 disabled
