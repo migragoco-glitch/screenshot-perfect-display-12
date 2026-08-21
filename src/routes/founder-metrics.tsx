@@ -67,7 +67,7 @@ function FounderMetrics() {
   const submitGate = async () => {
     setChecking(true);
     const res = await verifyFounderAccess({
-      data: { email: emailInput || undefined, password: input },
+      data: { email: emailInput, password: input },
     });
     setChecking(false);
     if (!res.role) {
