@@ -35,6 +35,33 @@ export type Database = {
         }
         Relationships: []
       }
+      founder_demo_access: {
+        Row: {
+          access_code: string
+          active: boolean
+          created_at: string
+          email: string
+          id: string
+          label: string
+        }
+        Insert: {
+          access_code: string
+          active?: boolean
+          created_at?: string
+          email: string
+          id?: string
+          label: string
+        }
+        Update: {
+          access_code?: string
+          active?: boolean
+          created_at?: string
+          email?: string
+          id?: string
+          label?: string
+        }
+        Relationships: []
+      }
       founders_circle_signups: {
         Row: {
           created_at: string
