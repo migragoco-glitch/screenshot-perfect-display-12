@@ -80,12 +80,10 @@ function ConsentScreen() {
               disabled={!checked}
               onClick={() => {
                 if (upgrade) {
-                  // Founder's Circle checkout confirmation → unlock the roadmap.
-                  update({ consent: true, tier: "navigator" });
-                  trackEvent({ type: "checkout_started" });
-                  trackEvent({ type: "checkout_completed" });
-                  window.localStorage.setItem("migrago.justUpgraded", "1");
-                  void navigate({ to: "/dashboard" });
+                  // Consent step of the upgrade flow → continue to checkout.
+                  // The roadmap only unlocks after a completed checkout.
+                  update({ consent: true });
+                  void navigate({ to: "/checkout" });
                   return;
                 }
                 update({ consent: true });

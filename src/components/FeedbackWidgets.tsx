@@ -18,6 +18,7 @@ import {
   submitCsat,
   submitNps,
 } from "@/lib/feedback";
+import { trackEvent } from "@/lib/store";
 
 const CSAT_KEY = "migrago.csat.done";
 const NPS_KEY = "migrago.nps.done";
@@ -107,7 +108,7 @@ export function CsatWidget() {
   );
 }
 
-/** 4 — Founder's Circle email capture with a real, live signup counter. */
+/** 4 — Early-access email capture with a real, live signup counter. */
 export function FoundersCircleModal({
   open,
   onClose,
@@ -142,6 +143,12 @@ export function FoundersCircleModal({
       setError(t("pay.emailInvalid"));
       return;
     }
+    // Email capture is a lead step only: it reserves the discount code.
+    const code = full ? null : "EARLY100";
+    window.localStorage.setItem("migrago.earlyAccessEmail", email.trim().toLowerCase());
+    if (code) window.localStorage.setItem("migrago.discountCode", code);
+    else window.localStorage.removeItem("migrago.discountCode");
+    trackEvent({ type: "email_captured" });
     setDone(true);
     window.setTimeout(onJoined, 800);
   };
@@ -197,6 +204,7 @@ export function FoundersCircleModal({
               className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
             />
             {error ? <p className="mt-2 text-xs font-semibold text-destructive">{error}</p> : null}
+            <p className="mt-3 text-xs text-muted-foreground">{t("pay.emailNote")}</p>
             <button
               type="button"
               disabled={busy}

@@ -227,6 +227,8 @@ function FounderMetrics() {
           ))}
         </section>
 
+        <p className="mt-4 text-xs text-muted-foreground">{t("metrics.emailVsPay")}</p>
+
         <div className="mt-5 grid gap-5 lg:grid-cols-2">
           <Card title={t("metrics.registrations")}>
             <div className="h-[220px]">
@@ -278,7 +280,7 @@ function FounderMetrics() {
             </div>
           </Card>
 
-          <Card title={t("metrics.wtp")}>
+          <Card title={t("metrics.checkoutSection")}>
             <dl className="grid grid-cols-3 gap-4 text-center">
               {[
                 [t("metrics.upgradeClicks"), metrics.upgradeClicks],

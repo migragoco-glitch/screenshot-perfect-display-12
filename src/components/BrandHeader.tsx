@@ -8,12 +8,12 @@ import { cn } from "@/lib/utils";
 
 
 export const COUNTRY_OPTIONS = [
-  { code: "FI", flag: "🇫🇮", name: { en: "Finland", fa: "فنلاند" }, active: true },
-  { code: "DE", flag: "🇩🇪", name: { en: "Germany", fa: "آلمان" }, active: false },
-  { code: "CA", flag: "🇨🇦", name: { en: "Canada", fa: "کانادا" }, active: false },
-  { code: "SE", flag: "🇸🇪", name: { en: "Sweden", fa: "سوئد" }, active: false },
-  { code: "NL", flag: "🇳🇱", name: { en: "Netherlands", fa: "هلند" }, active: false },
-];
+  { code: "FI", flag: "🇫🇮", name: { en: "Finland", fa: "فنلاند" }, active: true, group: "eu" },
+  { code: "DE", flag: "🇩🇪", name: { en: "Germany", fa: "آلمان" }, active: false, group: "eu" },
+  { code: "SE", flag: "🇸🇪", name: { en: "Sweden", fa: "سوئد" }, active: false, group: "eu" },
+  { code: "NL", flag: "🇳🇱", name: { en: "Netherlands", fa: "هلند" }, active: false, group: "eu" },
+  { code: "CA", flag: "🇨🇦", name: { en: "Canada", fa: "کانادا" }, active: false, group: "global" },
+] as const;
 
 export function BrandLogo({ className }: { className?: string }) {
   return (
@@ -58,40 +58,44 @@ export function LanguageSwitch() {
 
 export function CountrySelector() {
   const { lang, t } = useI18n();
+
+  const renderCountry = (c: (typeof COUNTRY_OPTIONS)[number]) =>
+    c.active ? (
+      <span
+        key={c.code}
+        className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-secondary-foreground"
+      >
+        <span aria-hidden>{c.flag}</span>
+        {c.name[lang]}
+      </span>
+    ) : (
+      <button
+        key={c.code}
+        type="button"
+        title={t("nav.comingSoonTip")}
+        aria-disabled="true"
+        onClick={() => trackEvent({ type: "country_click", country: c.name.en })}
+        className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs text-muted-foreground/80 transition-colors duration-200 ease-out hover:bg-muted"
+      >
+        <span aria-hidden className="grayscale">
+          {c.flag}
+        </span>
+        {c.name[lang]}
+        <Lock className="size-3" aria-hidden />
+      </button>
+    );
+
   return (
     <div className="flex flex-wrap items-center gap-1.5 rounded-full border border-border bg-card px-2 py-1">
       <span className="px-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-        {t("nav.country")}
+        {t("country.eu")}
       </span>
-      {COUNTRY_OPTIONS.map((c) =>
-        c.active ? (
-          <span
-            key={c.code}
-            className="inline-flex items-center gap-1.5 rounded-full bg-secondary/12 px-2.5 py-1 text-xs font-semibold text-secondary ring-1 ring-secondary/30"
-          >
-            <span aria-hidden>{c.flag}</span>
-            {c.name[lang]}
-          </span>
-        ) : (
-          <button
-            key={c.code}
-            type="button"
-            title={t("nav.comingSoonTip")}
-            aria-disabled="true"
-            onClick={() => trackEvent({ type: "country_click", country: c.name.en })}
-            className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs text-muted-foreground/80 transition-colors duration-200 ease-out hover:bg-muted"
-          >
-            <span aria-hidden className="grayscale">
-              {c.flag}
-            </span>
-            {c.name[lang]}
-            <Lock className="size-3" aria-hidden />
-            <span className="hidden text-[10px] uppercase tracking-wide sm:inline">
-              {t("nav.comingSoon")}
-            </span>
-          </button>
-        ),
-      )}
+      {COUNTRY_OPTIONS.filter((c) => c.group === "eu").map(renderCountry)}
+      <span className="mx-1 h-4 w-px bg-border" aria-hidden />
+      <span className="px-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+        {t("country.global")}
+      </span>
+      {COUNTRY_OPTIONS.filter((c) => c.group === "global").map(renderCountry)}
     </div>
   );
 }
@@ -136,7 +140,7 @@ export function AppHeader({ registered }: { registered?: boolean }) {
           ) : (
             <Link
               to="/auth"
-              className="rounded-full border border-border bg-transparent px-4 py-2 text-xs font-semibold text-muted-foreground transition-colors duration-200 ease-out hover:bg-muted hover:text-foreground"
+              className="rounded-full bg-secondary px-4 py-2 text-xs font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
             >
               {t("nav.signIn")}
             </Link>
@@ -156,7 +160,21 @@ export function SiteFooter() {
         <p className="max-w-3xl text-sm leading-relaxed text-primary-foreground/80">
           {t("footer.legal")}
         </p>
-        <p className="mt-4 text-xs uppercase tracking-[0.2em] text-primary-foreground/60">
+        <nav className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold">
+          <Link to="/faq" className="underline underline-offset-4 hover:opacity-80">
+            {t("nav.faq")}
+          </Link>
+          <Link to="/contact" className="underline underline-offset-4 hover:opacity-80">
+            {t("nav.contact")}
+          </Link>
+          <Link to="/privacy" className="underline underline-offset-4 hover:opacity-80">
+            {t("set.privacy")}
+          </Link>
+          <Link to="/terms" className="underline underline-offset-4 hover:opacity-80">
+            {t("set.terms")}
+          </Link>
+        </nav>
+        <p className="mt-5 text-xs uppercase tracking-[0.2em] text-primary-foreground/60">
           {t("footer.rights")}
         </p>
       </div>

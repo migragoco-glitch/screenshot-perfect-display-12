@@ -62,30 +62,31 @@
 :root {
   --radius: 0.75rem;
 
-  --navy: oklch(0.268 0.062 258.3);
-  --teal: oklch(0.575 0.072 189.5);
-  --gold: oklch(0.752 0.075 82.5);
-  --plum: oklch(0.372 0.121 292.5);
+  /* Locked official palette (Master Prompt) */
+  --navy: #0b2545;
+  --teal: #2a908f;
+  --gold: #c8a96a;
+  --plum: #3d2c6b;
 
-  --background: oklch(0.973 0.008 85);
-  --foreground: oklch(0.268 0.062 258.3);
+  --background: #f8f6f2;
+  --foreground: var(--navy);
   --card: oklch(0.995 0.004 85);
-  --card-foreground: oklch(0.268 0.062 258.3);
+  --card-foreground: var(--navy);
   --popover: oklch(0.995 0.004 85);
-  --popover-foreground: oklch(0.268 0.062 258.3);
-  --primary: oklch(0.268 0.062 258.3);
+  --popover-foreground: var(--navy);
+  --primary: var(--navy);
   --primary-foreground: oklch(0.98 0.006 85);
-  --secondary: oklch(0.575 0.072 189.5);
+  --secondary: var(--teal);
   --secondary-foreground: oklch(0.99 0.005 85);
   --muted: oklch(0.945 0.009 85);
   --muted-foreground: oklch(0.492 0.028 258);
-  --accent: oklch(0.752 0.075 82.5);
-  --accent-foreground: oklch(0.268 0.062 258.3);
+  --accent: var(--gold);
+  --accent-foreground: var(--navy);
   --destructive: oklch(0.52 0.19 25);
   --destructive-foreground: oklch(0.98 0.006 85);
   --border: oklch(0.898 0.011 85);
   --input: oklch(0.898 0.011 85);
-  --ring: oklch(0.575 0.072 189.5);
+  --ring: var(--teal);
 
   --chart-1: var(--navy);
   --chart-2: var(--teal);
@@ -173,32 +174,36 @@
   color: oklch(0.97 0.006 85);
 }
 
-/* Landing background: subtle Finnish-flag-inspired geometric motif */
-@utility finn-motif {
+/*
+ * Brand motif: country-agnostic diagonal fine-line pattern built from the
+ * brand palette. Reusable unchanged for every future market.
+ */
+@utility brand-motif {
   position: relative;
   isolation: isolate;
 }
-.finn-motif::before {
+.brand-motif::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   opacity: 0.1;
   background-image:
-    linear-gradient(to bottom, transparent 46%, var(--navy) 46%, var(--navy) 54%, transparent 54%),
-    linear-gradient(to right, transparent 26%, var(--navy) 26%, var(--navy) 32%, transparent 32%);
-  background-size: 420px 420px;
-  background-position: 0 0;
-  animation: motif-drift 42s linear infinite;
-}
-
-@keyframes motif-drift {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 420px 420px;
-  }
+    repeating-linear-gradient(
+      35deg,
+      var(--navy) 0 1px,
+      transparent 1px 46px
+    ),
+    repeating-linear-gradient(
+      35deg,
+      var(--teal) 0 1px,
+      transparent 1px 138px
+    ),
+    repeating-linear-gradient(
+      125deg,
+      var(--gold) 0 1px,
+      transparent 1px 184px
+    );
 }
 
 /* Penguin walking loader (used only for AI analysis + roadmap generation) */
@@ -246,4 +251,33 @@
 
 .rise-in {
   animation: rise-in 260ms ease-out both;
+}
+
+/* Task completion cue — brief fade/scale on the checkmark */
+@keyframes check-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.14);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.check-pop {
+  animation: check-pop 260ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .check-pop,
+  .rise-in,
+  .penguin-track,
+  .penguin-body {
+    animation: none !important;
+  }
 }

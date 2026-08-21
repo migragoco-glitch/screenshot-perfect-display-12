@@ -29,6 +29,7 @@ export type Metrics = {
   upgradeClicks: number;
   checkoutStarted: number;
   checkoutCompleted: number;
+  emailCaptures: number;
   countryClicks: Record<string, number>;
   nationalities: Record<string, number>;
   pathways: Record<string, number>;
@@ -58,6 +59,7 @@ const seededMetrics: Metrics = {
   upgradeClicks: 96,
   checkoutStarted: 61,
   checkoutCompleted: 38,
+  emailCaptures: 0,
   countryClicks: { Germany: 74, Canada: 58, Sweden: 41, Netherlands: 22 },
   nationalities: { Iran: 88, India: 47, Nigeria: 33, Türkiye: 29, Vietnam: 17 },
   pathways: { Work: 121, Study: 54, Startup: 26, "Financial self-sufficiency": 8, "Digital nomad": 5 },
@@ -97,6 +99,7 @@ export type MetricEvent =
   | { type: "upgrade_click" }
   | { type: "checkout_started" }
   | { type: "checkout_completed" }
+  | { type: "email_captured" }
   | { type: "country_click"; country: string };
 
 export function trackEvent(e: MetricEvent) {
@@ -122,6 +125,9 @@ export function trackEvent(e: MetricEvent) {
       break;
     case "checkout_completed":
       m.checkoutCompleted += 1;
+      break;
+    case "email_captured":
+      m.emailCaptures += 1;
       break;
     case "country_click":
       m.countryClicks[e.country] = (m.countryClicks[e.country] ?? 0) + 1;

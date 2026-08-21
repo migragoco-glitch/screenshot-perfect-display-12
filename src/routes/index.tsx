@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BadgeCheck, Building2, ClipboardList, Compass, Sparkles } from "lucide-react";
+import { ArrowRight, BadgeCheck, Building2, ClipboardList, Compass, Route as RouteIcon, Sparkles } from "lucide-react";
+import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { useI18n } from "@/lib/i18n";
 import { useAppState } from "@/lib/store";
@@ -30,6 +31,46 @@ export const Route = createFileRoute("/")({
 
 const INSTITUTIONS = ["Migri", "DVV", "Vero", "Kela", "TE Services", "Valvira / OPH", "International House Helsinki"];
 
+const SAMPLE = [
+  { key: "dash.dim1", value: 65, color: "var(--navy)" },
+  { key: "dash.dim2", value: 74, color: "var(--teal)" },
+  { key: "dash.dim3", value: 81, color: "var(--gold)" },
+] as const;
+
+function SampleDonut() {
+  const overall = Math.round((65 * 30 + 74 * 40 + 81 * 30) / 100);
+  const data = SAMPLE.map((d) => ({ name: d.key, value: d.value, color: d.color }));
+  return (
+    <div className="relative mt-4 h-52 w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            innerRadius="62%"
+            outerRadius="92%"
+            paddingAngle={3}
+            startAngle={90}
+            endAngle={-270}
+            stroke="none"
+            isAnimationActive
+            animationDuration={1400}
+            animationEasing="ease-out"
+          >
+            {data.map((d) => (
+              <Cell key={d.name} fill={d.color} />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+      <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-3xl font-bold tabular-nums">{overall}</span>
+        <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">100</span>
+      </div>
+    </div>
+  );
+}
+
 function Landing() {
   const { t, lang } = useI18n();
   const { state } = useAppState();
@@ -40,13 +81,22 @@ function Landing() {
 
       <main>
         {/* Hero */}
-        <section className="finn-motif border-b border-border/70">
+        <section className="brand-motif border-b border-border/70">
           <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 md:grid-cols-[1.15fr_0.85fr] md:items-center md:px-8 md:py-24">
             <div className="rise-in">
-              <span className="inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-card px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-secondary">
-                <Sparkles className="size-3.5" aria-hidden />
-                {t("hero.badge")}
-              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-secondary-foreground">
+                  <span aria-hidden>🇫🇮</span>
+                  {t("hero.country")}
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-card px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-secondary">
+                  <Sparkles className="size-3.5" aria-hidden />
+                  {t("hero.badge")}
+                </span>
+              </div>
+              <p className="mt-3 text-xs font-medium text-muted-foreground">
+                {t("hero.finlandPartner")}
+              </p>
               <h1 className="mt-6 text-4xl leading-[1.08] md:text-6xl">
                 <span className="text-gradient-brand">{t("hero.title")}</span>
               </h1>
@@ -67,30 +117,26 @@ function Landing() {
 
             <div className="glass-card rounded-3xl p-6 md:p-8">
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                {t("dash.title")}
+                {t("hero.previewTitle")}
               </p>
-              <div className="mt-5 space-y-5">
-                {[
-                  { label: t("dash.dim1"), value: 65, color: "var(--navy)" },
-                  { label: t("dash.dim2"), value: 74, color: "var(--teal)" },
-                  { label: t("dash.dim3"), value: 81, color: "var(--gold)" },
-                ].map((d) => (
-                  <div key={d.label}>
-                    <div className="flex items-baseline justify-between text-sm font-semibold">
-                      <span>{d.label}</span>
-                      <span className="tabular-nums text-muted-foreground">{d.value}%</span>
-                    </div>
-                    <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-muted">
-                      <div
-                        className="h-full rounded-full transition-[width] duration-300 ease-out"
-                        style={{ width: `${d.value}%`, backgroundColor: d.color }}
-                      />
-                    </div>
-                  </div>
+              <SampleDonut />
+              <ul className="mt-5 space-y-2">
+                {SAMPLE.map((d) => (
+                  <li key={d.key} className="flex items-center gap-2.5 text-sm">
+                    <span
+                      className="size-2.5 shrink-0 rounded-full"
+                      style={{ backgroundColor: d.color }}
+                      aria-hidden
+                    />
+                    <span className="flex-1">{t(d.key)}</span>
+                    <span className="tabular-nums font-semibold text-muted-foreground">
+                      {d.value}
+                    </span>
+                  </li>
                 ))}
-              </div>
-              <p className="mt-6 border-t border-border pt-4 text-xs text-muted-foreground">
-                {t("how.s3.d")}
+              </ul>
+              <p className="mt-5 border-t border-border pt-4 text-xs text-muted-foreground">
+                {t("hero.previewNote")}
               </p>
             </div>
           </div>
@@ -112,6 +158,17 @@ function Landing() {
               </article>
             ))}
           </div>
+        </section>
+
+        {/* Integration is a process */}
+        <section className="mx-auto max-w-7xl px-4 pb-4 md:px-8">
+          <article className="rounded-3xl border border-secondary/25 bg-secondary/8 p-8 md:p-10">
+            <RouteIcon className="size-6 text-secondary" aria-hidden />
+            <h2 className="mt-4 text-2xl md:text-3xl">{t("about.processTitle")}</h2>
+            <p className="mt-4 max-w-4xl text-sm leading-relaxed text-muted-foreground md:text-base">
+              {t("about.processBody")}
+            </p>
+          </article>
         </section>
 
         {/* How it works */}
