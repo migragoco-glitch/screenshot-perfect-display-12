@@ -71,6 +71,51 @@ function SampleDonut() {
   );
 }
 
+function MiniDonut({ label, value, color }: { label: string; value: number; color: string }) {
+  const size = 56;
+  const stroke = 6;
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  return (
+    <div className="flex flex-col items-center gap-1.5">
+      <div className="relative">
+        <svg width={size} height={size} role="img" aria-label={`${label}: ${value}%`}>
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            fill="none"
+            stroke="var(--muted)"
+            strokeWidth={stroke}
+          />
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            fill="none"
+            stroke={color}
+            strokeWidth={stroke}
+            strokeLinecap="round"
+            strokeDasharray={c}
+            strokeDashoffset={c - (c * value) / 100}
+            transform={`rotate(-90 ${size / 2} ${size / 2})`}
+            style={{ transition: "stroke-dashoffset 500ms ease-out" }}
+          />
+        </svg>
+        <span
+          className="pointer-events-none absolute inset-0 flex items-center justify-center text-[11px] font-bold tabular-nums"
+          style={{ color }}
+        >
+          {value}
+        </span>
+      </div>
+      <span className="text-center text-[10px] font-semibold leading-tight text-muted-foreground">
+        {label}
+      </span>
+    </div>
+  );
+}
+
 function Landing() {
   const { t, lang } = useI18n();
   const { state } = useAppState();
@@ -132,21 +177,11 @@ function Landing() {
                 {t("hero.previewTitle")}
               </p>
               <SampleDonut />
-              <ul className="mt-5 space-y-2">
+              <div className="mt-5 grid grid-cols-3 gap-3">
                 {SAMPLE.map((d) => (
-                  <li key={d.key} className="flex items-center gap-2.5 text-sm">
-                    <span
-                      className="size-2.5 shrink-0 rounded-full"
-                      style={{ backgroundColor: d.color }}
-                      aria-hidden
-                    />
-                    <span className="flex-1">{t(d.key)}</span>
-                    <span className="tabular-nums font-semibold text-muted-foreground">
-                      {d.value}
-                    </span>
-                  </li>
+                  <MiniDonut key={d.key} label={t(d.key)} value={d.value} color={d.color} />
                 ))}
-              </ul>
+              </div>
               <p className="mt-5 border-t border-border pt-4 text-xs text-muted-foreground">
                 {t("hero.previewNote")}
               </p>

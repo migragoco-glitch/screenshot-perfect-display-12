@@ -135,7 +135,7 @@ function Assessment() {
     <div className="min-h-screen">
       <AppHeader registered={answeredCount > 0} />
 
-      <div className="sticky top-[68px] z-30 border-b border-border/70 bg-background/90 backdrop-blur-md">
+      <div className="lg:sticky top-[68px] z-30 border-b border-border/70 bg-background/90 backdrop-blur-md">
         <div className="mx-auto max-w-4xl px-4 py-3 md:px-8">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-muted-foreground">
             <span>
@@ -199,7 +199,7 @@ function Assessment() {
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-6xl gap-6 px-4 py-10 md:px-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
+      <div className="mx-auto flex max-w-4xl flex-col gap-6 px-4 py-10 md:px-8 lg:grid lg:max-w-6xl lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
         <main className="min-w-0">
         <h1 className="text-2xl md:text-3xl">{meta?.title[lang]}</h1>
         <p
@@ -291,7 +291,7 @@ function Assessment() {
             : null}
         </p>
         </main>
-        <div className="order-first lg:order-none">
+        <div className="sticky top-[20rem] z-30 order-first lg:static lg:order-none">
           <LiveProgressPanel answers={state.answers} />
         </div>
       </div>
