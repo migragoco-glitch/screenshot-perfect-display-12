@@ -289,7 +289,9 @@ function Assessment() {
             ? COUNTRIES.find((c) => c.en === state.answers[2]?.value)?.[lang]
             : null}
         </p>
-      </main>
+        </main>
+        <LiveProgressPanel answers={state.answers} />
+      </div>
     </div>
   );
 }
