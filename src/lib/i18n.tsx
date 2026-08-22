@@ -88,6 +88,11 @@ export const en = {
   "consent.back": "Back",
 
   "q.progress": "Progress",
+  "q.live.title": "Live progress",
+  "q.live.overall": "Overall progress",
+  "q.live.inProgress": "In progress",
+  "q.live.note": "These rings show how much of the questionnaire you have completed — not your score. Your full scored profile unlocks on the dashboard.",
+  "dash.snapshot": "Snapshot",
   "q.section": "Section",
   "q.of": "of",
   "q.estimate": "Estimated time",
