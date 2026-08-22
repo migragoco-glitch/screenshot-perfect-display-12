@@ -135,7 +135,7 @@ function Assessment() {
     <div className="min-h-screen">
       <AppHeader registered={answeredCount > 0} />
 
-      <div className="sticky top-[68px] z-30 border-b border-border/70 bg-background/90 backdrop-blur-md">
+      <div className="lg:sticky top-[68px] z-30 border-b border-border/70 bg-background/90 backdrop-blur-md">
         <div className="mx-auto max-w-4xl px-4 py-3 md:px-8">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-muted-foreground">
             <span>

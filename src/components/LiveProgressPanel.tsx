@@ -61,7 +61,7 @@ export function LiveProgressPanel({ answers }: { answers: Answers }) {
   return (
     <>
       {/* Mobile: sticky overall completion bar */}
-      <div className="sticky top-[68px] z-20 lg:hidden">
+      <div className="sticky top-[68px] z-30 lg:hidden">
         <div className="rounded-2xl border border-border/70 bg-card/70 px-4 py-3 shadow-sm backdrop-blur-md">
           <div className="flex items-center justify-between text-[11px] font-semibold text-muted-foreground">
             <span>{t("q.live.title")}</span>
