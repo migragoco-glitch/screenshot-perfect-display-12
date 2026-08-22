@@ -290,7 +290,9 @@ function Assessment() {
             : null}
         </p>
         </main>
-        <LiveProgressPanel answers={state.answers} />
+        <div className="order-first lg:order-none">
+          <LiveProgressPanel answers={state.answers} />
+        </div>
       </div>
     </div>
   );
