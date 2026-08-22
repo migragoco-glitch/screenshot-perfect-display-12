@@ -18,6 +18,7 @@ import {
 import { AppHeader } from "@/components/BrandHeader";
 import { PenguinLoader } from "@/components/PenguinLoader";
 import { QuestionField } from "@/components/QuestionField";
+import { LiveProgressPanel } from "@/components/LiveProgressPanel";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import {
   COUNTRIES,
