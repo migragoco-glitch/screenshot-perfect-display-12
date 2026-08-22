@@ -132,7 +132,10 @@ function Dashboard() {
 
   const donutData = dims.map((d) => ({ name: d.label, value: d.value }));
   const historyData = state.history.map((h, i) => ({
-    n: localizeNumber(i + 1, lang),
+    n: `${t("dash.snapshot")} ${localizeNumber(i + 1, lang)} — ${new Date(h.at).toLocaleDateString(
+      lang === "fa" ? "fa-IR" : "en-GB",
+      { day: "numeric", month: "short" },
+    )}`,
     overall: h.overall,
     legal: h.legal,
     professional: h.professional,
