@@ -16,7 +16,7 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
   const isBracket = q.id === 17 || q.id === 21;
 
   return (
-    <fieldset className="rounded-2xl border border-border bg-card/70 p-5 md:p-6">
+    <fieldset className="rounded-2xl border border-border/70 bg-card/80 p-5 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_6px_24px_-16px_rgba(11,37,69,0.35)] backdrop-blur-sm md:p-6">
       <legend className="sr-only">{q.label[lang]}</legend>
       <div className="flex items-start gap-3">
         <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/8 text-xs font-bold text-primary">
@@ -75,7 +75,7 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
                 aria-pressed={selected === i}
                 onClick={() => onChange({ value: i })}
                 className={cn(
-                  "rounded-xl border px-4 py-3 text-start text-sm font-medium transition-colors duration-200 ease-out",
+                  "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
                   selected === i
                     ? "border-secondary bg-secondary/12 text-foreground ring-1 ring-secondary/40"
                     : "border-border bg-background hover:border-secondary/40",
@@ -110,7 +110,7 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
                     onChange({ value: next });
                   }}
                   className={cn(
-                    "rounded-xl border px-4 py-3 text-start text-sm font-medium transition-colors duration-200 ease-out",
+                    "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
                     active
                       ? "border-secondary bg-secondary/12 ring-1 ring-secondary/40"
                       : "border-border bg-background hover:border-secondary/40",
@@ -134,7 +134,7 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
                   aria-pressed={selected === n}
                   onClick={() => onChange({ value: n })}
                   className={cn(
-                    "flex-1 rounded-xl border py-3 text-sm font-bold tabular-nums transition-colors duration-200 ease-out",
+                    "flex-1 rounded-2xl border py-3 text-sm font-bold tabular-nums shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14)]",
                     selected === n
                       ? "border-secondary bg-secondary text-secondary-foreground"
                       : "border-border bg-background hover:border-secondary/40",

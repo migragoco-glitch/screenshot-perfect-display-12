@@ -88,7 +88,7 @@ export function CountrySelector() {
     );
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5 rounded-full border border-border bg-card px-2 py-1">
+    <div className="flex flex-wrap items-center gap-1.5 rounded-2xl border border-border bg-card px-3 py-2 md:rounded-full md:px-2 md:py-1">
       <span className="px-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
         {t("country.eu")}
       </span>

@@ -18,6 +18,7 @@ import {
 import { AppHeader } from "@/components/BrandHeader";
 import { PenguinLoader } from "@/components/PenguinLoader";
 import { QuestionField } from "@/components/QuestionField";
+import { LiveProgressPanel } from "@/components/LiveProgressPanel";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import {
   COUNTRIES,
@@ -198,7 +199,8 @@ function Assessment() {
         </div>
       </div>
 
-      <main className="mx-auto max-w-4xl px-4 py-10 md:px-8">
+      <div className="mx-auto grid max-w-6xl gap-6 px-4 py-10 md:px-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
+        <main className="min-w-0">
         <h1 className="text-2xl md:text-3xl">{meta?.title[lang]}</h1>
         <p
           className="mt-3 inline-flex items-start gap-2 rounded-2xl border border-secondary/25 bg-secondary/8 px-3.5 py-2 text-xs text-muted-foreground"
@@ -264,7 +266,7 @@ function Assessment() {
             <button
               type="button"
               onClick={goNext}
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors duration-200 ease-out hover:bg-primary/90"
+              className="inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] transition-all duration-200 ease-out hover:bg-primary/90 hover:shadow-[0_0_0_4px_rgba(42,144,143,0.18),inset_0_1px_0_rgba(255,255,255,0.18)]"
             >
               {t("q.next")}
               <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
@@ -288,7 +290,11 @@ function Assessment() {
             ? COUNTRIES.find((c) => c.en === state.answers[2]?.value)?.[lang]
             : null}
         </p>
-      </main>
+        </main>
+        <div className="order-first lg:order-none">
+          <LiveProgressPanel answers={state.answers} />
+        </div>
+      </div>
     </div>
   );
 }
