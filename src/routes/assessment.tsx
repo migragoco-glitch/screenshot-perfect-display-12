@@ -266,7 +266,7 @@ function Assessment() {
             <button
               type="button"
               onClick={goNext}
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors duration-200 ease-out hover:bg-primary/90"
+              className="inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] transition-all duration-200 ease-out hover:bg-primary/90 hover:shadow-[0_0_0_4px_rgba(42,144,143,0.18),inset_0_1px_0_rgba(255,255,255,0.18)]"
             >
               {t("q.next")}
               <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
