@@ -466,6 +466,11 @@ export const fa: Record<keyof typeof en, string> = {
   "consent.back": "بازگشت",
 
   "q.progress": "پیشرفت",
+  "q.live.title": "پیشرفت زنده",
+  "q.live.overall": "پیشرفت کلی",
+  "q.live.inProgress": "در حال انجام",
+  "q.live.note": "این نمودارها فقط میزان تکمیل پرسش‌ها را نشان می‌دهند، نه نمرهٔ شما. نمرهٔ کامل پس از پایان ارزیابی در داشبورد آزاد می‌شود.",
+  "dash.snapshot": "ثبت",
   "q.section": "بخش",
   "q.of": "از",
   "q.estimate": "زمان تقریبی",
