@@ -402,23 +402,29 @@ function Dashboard() {
               <h2 className="text-lg">{t("dash.history")}</h2>
               <p className="mt-1 text-xs text-muted-foreground">{t("dash.historyNote")}</p>
               {historyData.length > 1 ? (
-                <div className="mt-4 h-[220px]">
+                <div className="mt-4 h-[280px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={historyData}>
-                      <XAxis dataKey="n" tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
-                      <YAxis domain={[0, 100]} width={28} tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
-                      <Tooltip />
+                    <LineChart data={historyData} margin={{ top: 8, right: 12, bottom: 18, left: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.35} />
+                      <XAxis dataKey="n" tickLine={false} axisLine={false} tick={{ fontSize: 10 }} interval="preserveStartEnd" />
+                      <YAxis domain={[0, 100]} width={30} tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
+                      <Tooltip
+                        contentStyle={{ borderRadius: 12, fontSize: 12, border: "1px solid var(--border)" }}
+                        formatter={(v: number, name: string) => [`${v}%`, name]}
+                      />
+                      <Legend verticalAlign="bottom" height={30} iconType="plainline" wrapperStyle={{ fontSize: 11 }} />
                       <Line
                         type="monotone"
                         dataKey="overall"
                         name={t("dash.overall")}
                         stroke="var(--plum)"
-                        strokeWidth={3}
+                        strokeWidth={3.5}
                         dot={{ r: 3 }}
+                        activeDot={{ r: 5 }}
                       />
-                      <Line type="monotone" dataKey="legal" name={t("dash.dim1")} stroke={DIM_COLORS[0]} strokeWidth={1.75} dot={false} />
-                      <Line type="monotone" dataKey="professional" name={t("dash.dim2")} stroke={DIM_COLORS[1]} strokeWidth={1.75} dot={false} />
-                      <Line type="monotone" dataKey="psychological" name={t("dash.dim3")} stroke={DIM_COLORS[2]} strokeWidth={1.75} dot={false} />
+                      <Line type="monotone" dataKey="legal" name={t("dash.dim1")} stroke={DIM_COLORS[0]} strokeWidth={2.5} dot={{ r: 2.5 }} />
+                      <Line type="monotone" dataKey="professional" name={t("dash.dim2")} stroke={DIM_COLORS[1]} strokeWidth={2.5} strokeDasharray="6 3" dot={{ r: 2.5 }} />
+                      <Line type="monotone" dataKey="psychological" name={t("dash.dim3")} stroke={DIM_COLORS[2]} strokeWidth={2.5} strokeDasharray="2 3" dot={{ r: 2.5 }} />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
