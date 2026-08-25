@@ -169,7 +169,7 @@ export function SiteFooter() {
             {t("footer.tagline")}
           </p>
         </div>
-        <div className="flex flex-col items-start md:items-end">
+        <div className="flex flex-col items-start">
           <p className="max-w-3xl text-sm leading-relaxed text-primary-foreground/80">
             {t("footer.legal")}
           </p>
