@@ -150,11 +150,29 @@ function Landing() {
                     <rect y="4" width="18" height="3" fill="#003580" />
                   </svg>
                 </span>
-                <span className="text-[11px] font-semibold leading-snug text-foreground">
-                  {t("hero.finlandPartner")}
+              <span className="text-[11px] font-semibold leading-snug text-foreground">
+                {t("hero.finlandPartner")}
+              </span>
+            </div>
+
+            <div className="mt-4 inline-flex flex-col gap-1 rounded-2xl border border-secondary/30 bg-card px-4 py-3 shadow-[var(--shadow-card)]">
+              <span className="text-xs font-semibold text-secondary">{t("hero.badgeLine1")}</span>
+              <div className="flex items-center gap-2">
+                <span
+                  className="flex size-5 items-center justify-center overflow-hidden rounded-sm border border-border bg-white"
+                  aria-hidden
+                >
+                  <svg viewBox="0 0 18 11" className="size-full" role="presentation">
+                    <rect width="18" height="11" fill="#fff" />
+                    <rect x="5" width="3" height="11" fill="#003580" />
+                    <rect y="4" width="18" height="3" fill="#003580" />
+                  </svg>
                 </span>
+                <span className="text-xs font-medium text-muted-foreground">{t("hero.badgeLine2")}</span>
               </div>
-              <h1 className="mt-6 text-4xl leading-[1.08] md:text-6xl">
+            </div>
+
+            <h1 className="mt-6 text-4xl leading-[1.08] md:text-6xl">
                 <span className="text-gradient-brand">{t("hero.title")}</span>
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
