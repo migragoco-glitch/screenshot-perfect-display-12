@@ -129,31 +129,6 @@ function Landing() {
         <section className="brand-motif border-b border-border/70">
           <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 md:grid-cols-[1.15fr_0.85fr] md:items-center md:px-8 md:py-24">
             <div className="rise-in">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-secondary-foreground">
-                  <span aria-hidden>🇫🇮</span>
-                  {t("hero.country")}
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-card px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-secondary">
-                  <Sparkles className="size-3.5" aria-hidden />
-                  {t("hero.badge")}
-                </span>
-              </div>
-              <div className="mt-4 inline-flex items-center gap-2.5 rounded-2xl border border-secondary/35 bg-card px-3.5 py-2 shadow-[var(--shadow-card)]">
-                <span
-                  className="flex size-7 items-center justify-center overflow-hidden rounded-md border border-border bg-white"
-                  aria-hidden
-                >
-                  <svg viewBox="0 0 18 11" className="size-full" role="presentation">
-                    <rect width="18" height="11" fill="#fff" />
-                    <rect x="5" width="3" height="11" fill="#003580" />
-                    <rect y="4" width="18" height="3" fill="#003580" />
-                  </svg>
-                </span>
-              <span className="text-[11px] font-semibold leading-snug text-foreground">
-                {t("hero.finlandPartner")}
-              </span>
-            </div>
 
             <div className="mt-4 inline-flex flex-col gap-1 rounded-2xl border border-secondary/30 bg-card px-4 py-3 shadow-[var(--shadow-card)]">
               <span className="text-xs font-semibold text-secondary">{t("hero.badgeLine1")}</span>
