@@ -23,8 +23,8 @@ export const en = {
   "hero.sub":
     "MigraGo uses a smart assessment to map your current status and readiness for integration, then builds you a personalized 12-week roadmap — grounded in real rules, procedures, and services.",
   "hero.badge": "Evidence-based integration pathway",
-  "hero.badgeLine1": "Evidence-based integration path",
-  "hero.badgeLine2": "Built on Finland's integration knowledge and ecosystem",
+  "hero.badgeLine1": "Evidence-based integration pathway",
+  "hero.badgeLine2": "Informed by Finland's knowledge and social-integration ecosystem",
   "hero.time": "9–12 minutes — 42 questions — save and resume anytime",
 
   "about.title": "What MigraGo is",
