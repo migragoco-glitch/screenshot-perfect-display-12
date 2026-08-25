@@ -163,7 +163,7 @@ export function SiteFooter() {
           <img
             src={logoAsset.url}
             alt="MigraGo — SettleSmart Navigator"
-            className="h-10 w-auto"
+            className="h-14 w-auto"
           />
           <p className="text-base font-semibold text-primary-foreground">
             {t("footer.tagline")}
