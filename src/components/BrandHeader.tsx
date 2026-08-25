@@ -160,11 +160,13 @@ export function SiteFooter() {
     <footer className="border-t border-border/70 bg-primary text-primary-foreground">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 md:grid-cols-2 md:px-8">
         <div className="flex flex-col items-start gap-3">
-          <img
-            src={logoAsset.url}
-            alt="MigraGo — SettleSmart Navigator"
-            className="h-14 w-auto"
-          />
+          <div className="rounded-xl bg-white p-2">
+            <img
+              src={logoAsset.url}
+              alt="MigraGo — SettleSmart Navigator"
+              className="h-16 w-auto md:h-20"
+            />
+          </div>
           <p className="text-base font-semibold text-primary-foreground">
             {t("footer.tagline")}
           </p>
