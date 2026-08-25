@@ -23,6 +23,8 @@ export const en = {
   "hero.sub":
     "MigraGo uses a smart assessment to map your current status and readiness for integration, then builds you a personalized 12-week roadmap — grounded in real rules, procedures, and services.",
   "hero.badge": "Evidence-based integration pathway",
+  "hero.badgeLine1": "Evidence-based integration path",
+  "hero.badgeLine2": "Built on Finland's integration knowledge and ecosystem",
   "hero.time": "9–12 minutes — 42 questions — save and resume anytime",
 
   "about.title": "What MigraGo is",
@@ -407,6 +409,8 @@ export const fa: Record<keyof typeof en, string> = {
   "hero.sub":
     "میگراگو با یک ارزیابی هوشمند، وضعیت فعلی و میزان آمادگی شما برای ادغام اجتماعی را ترسیم می‌کند و سپس یک نقشه‌راه شخصی‌سازی‌شدهٔ ۱۲ هفته‌ای بر پایهٔ قوانین، رویه‌ها و خدمات واقعی برای شما می‌سازد.",
   "hero.badge": "مسیر ادغام مبتنی بر شواهد",
+  "hero.badgeLine1": "مسیر ادغام مبتنی بر شواهد",
+  "hero.badgeLine2": "بر پایهٔ دانش و اکوسیستم ادغام فنلاند ساخته شده",
   "hero.time": "۹ تا ۱۲ دقیقه — ۴۲ پرسش — ذخیره و ادامه در هر زمان",
 
   "about.title": "میگراگو چیست",
