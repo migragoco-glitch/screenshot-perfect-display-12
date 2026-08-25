@@ -158,41 +158,53 @@ export function SiteFooter() {
   const { t } = useI18n();
   return (
     <footer className="border-t border-border/70 bg-primary text-primary-foreground">
-      <div className="mx-auto max-w-7xl px-4 py-10 md:px-8">
-        <p className="max-w-3xl text-sm leading-relaxed text-primary-foreground/80">
-          {t("footer.legal")}
-        </p>
-        <nav className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold">
-          <Link to="/faq" className="underline underline-offset-4 hover:opacity-80">
-            {t("nav.faq")}
-          </Link>
-          <Link to="/contact" className="underline underline-offset-4 hover:opacity-80">
-            {t("nav.contact")}
-          </Link>
-          <Link to="/privacy" className="underline underline-offset-4 hover:opacity-80">
-            {t("set.privacy")}
-          </Link>
-          <Link to="/terms" className="underline underline-offset-4 hover:opacity-80">
-            {t("set.terms")}
-          </Link>
-          <a
-            href={MAILTO_URL}
-            className="underline underline-offset-4 hover:opacity-80"
-          >
-            {CONTACT_EMAIL}
-          </a>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="underline underline-offset-4 hover:opacity-80"
-          >
-            {t("support.whatsapp")}
-          </a>
-        </nav>
-        <p className="mt-5 text-xs uppercase tracking-[0.2em] text-primary-foreground/60">
-          {t("footer.rights")}
-        </p>
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 md:grid-cols-2 md:px-8">
+        <div className="flex flex-col items-start gap-3">
+          <img
+            src={logoAsset.url}
+            alt="MigraGo — SettleSmart Navigator"
+            className="h-14 w-auto"
+          />
+          <p className="text-base font-semibold text-primary-foreground">
+            {t("footer.tagline")}
+          </p>
+        </div>
+        <div className="flex flex-col items-start">
+          <p className="max-w-3xl text-sm leading-relaxed text-primary-foreground/80">
+            {t("footer.legal")}
+          </p>
+          <nav className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold">
+            <Link to="/faq" className="underline underline-offset-4 hover:opacity-80">
+              {t("nav.faq")}
+            </Link>
+            <Link to="/contact" className="underline underline-offset-4 hover:opacity-80">
+              {t("nav.contact")}
+            </Link>
+            <Link to="/privacy" className="underline underline-offset-4 hover:opacity-80">
+              {t("set.privacy")}
+            </Link>
+            <Link to="/terms" className="underline underline-offset-4 hover:opacity-80">
+              {t("set.terms")}
+            </Link>
+            <a
+              href={MAILTO_URL}
+              className="underline underline-offset-4 hover:opacity-80"
+            >
+              {CONTACT_EMAIL}
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="underline underline-offset-4 hover:opacity-80"
+            >
+              {t("support.whatsapp")}
+            </a>
+          </nav>
+          <p className="mt-5 text-xs uppercase tracking-[0.2em] text-primary-foreground/60">
+            {t("footer.rights")}
+          </p>
+        </div>
       </div>
     </footer>
   );
