@@ -161,16 +161,33 @@ export function SiteFooter() {
     <footer className="border-t border-border/70 bg-primary text-primary-foreground">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 md:grid-cols-2 md:px-8">
         <div className="flex flex-col items-start gap-3">
-          <div className="rounded-xl bg-white p-2">
-            <img
-              src={logoAsset.url}
-              alt="MigraGo — SettleSmart Navigator"
-              className="h-16 w-auto md:h-20"
-            />
+          <div className="flex items-center gap-3.5 rounded-xl bg-white p-3">
+            <div className="flex flex-col items-start gap-2">
+              <img
+                src={logoAsset.url}
+                alt="MigraGo — SettleSmart Navigator"
+                className="h-16 w-auto md:h-20"
+              />
+              <p className="text-base font-semibold text-foreground">
+                {t("footer.tagline")}
+              </p>
+            </div>
+            <a
+              href="https://www.migrago.fi"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="flex flex-col items-center gap-1"
+            >
+              <img
+                src={qrCodeAsset.url}
+                alt="MigraGo website QR code"
+                className="size-11 rounded"
+              />
+              <span className="text-[9px] text-foreground/60">
+                {t("footer.qrCaption")}
+              </span>
+            </a>
           </div>
-          <p className="text-base font-semibold text-primary-foreground">
-            {t("footer.tagline")}
-          </p>
         </div>
         <div className="flex flex-col items-start">
           <p className="max-w-3xl text-sm leading-relaxed text-primary-foreground/80">
