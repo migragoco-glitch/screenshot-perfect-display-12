@@ -189,3 +189,36 @@ export function useAppState() {
 
   return { state, hydrated, update, setAnswer, pushSnapshot, reset };
 }
+
+// --- Real vs simulated data separation (founder dashboard) ---
+// `seededMetrics` is demo/simulated baseline data. Real pilot activity is the
+// delta between what is stored locally and that baseline.
+export const simulatedBaseline: Metrics = seededMetrics;
+
+function diffRecord(all: Record<string, number>, base: Record<string, number>) {
+  const out: Record<string, number> = {};
+  for (const [k, v] of Object.entries(all)) {
+    const real = v - (base[k] ?? 0);
+    if (real > 0) out[k] = real;
+  }
+  return out;
+}
+
+/** Metrics with all simulated baseline numbers removed. */
+export function readRealMetrics(): Metrics {
+  const all = readMetrics();
+  const sub = (a: number, b: number) => Math.max(0, a - b);
+  return {
+    registrations: [],
+    started: sub(all.started, seededMetrics.started),
+    finished: sub(all.finished, seededMetrics.finished),
+    paywallViews: sub(all.paywallViews, seededMetrics.paywallViews),
+    upgradeClicks: sub(all.upgradeClicks, seededMetrics.upgradeClicks),
+    checkoutStarted: sub(all.checkoutStarted, seededMetrics.checkoutStarted),
+    checkoutCompleted: sub(all.checkoutCompleted, seededMetrics.checkoutCompleted),
+    emailCaptures: sub(all.emailCaptures, seededMetrics.emailCaptures),
+    countryClicks: diffRecord(all.countryClicks, seededMetrics.countryClicks),
+    nationalities: diffRecord(all.nationalities, seededMetrics.nationalities),
+    pathways: diffRecord(all.pathways, seededMetrics.pathways),
+  };
+}
