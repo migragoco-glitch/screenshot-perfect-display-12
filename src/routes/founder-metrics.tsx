@@ -14,7 +14,7 @@ import {
 import { FlaskConical, ShieldAlert } from "lucide-react";
 import { BrandLogo, LanguageSwitch } from "@/components/BrandHeader";
 import { localizeNumber, useI18n } from "@/lib/i18n";
-import { readMetrics, type Metrics } from "@/lib/store";
+import { readMetrics, readRealMetrics, type Metrics } from "@/lib/store";
 import { fetchValidationSignals, type ValidationSignals } from "@/lib/feedback";
 import {
   createDemoAccount,
