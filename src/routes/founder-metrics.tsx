@@ -356,7 +356,10 @@ function FounderMetrics() {
         <p className="mt-4 text-xs text-muted-foreground">{t("metrics.emailVsPay")}</p>
 
         <div className="mt-5 grid gap-5 lg:grid-cols-2">
-          <Card title={t("metrics.registrations")}>
+          <Card title={t("metrics.registrations")} source={sourceLocal}>
+            {metrics.registrations.length === 0 ? (
+              <p className="text-sm text-muted-foreground">{t("metrics.noRealData")}</p>
+            ) : (
             <div className="h-[220px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={metrics.registrations}>
@@ -368,9 +371,10 @@ function FounderMetrics() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
+            )}
           </Card>
 
-          <Card title={t("metrics.completion")}>
+          <Card title={t("metrics.completion")} source={sourceLocal}>
             <p className="text-5xl font-bold tabular-nums" style={{ color: "var(--plum)" }}>
               {localizeNumber(completionRate, lang)}%
             </p>
@@ -378,6 +382,7 @@ function FounderMetrics() {
               {t("metrics.started")}: {localizeNumber(metrics.started, lang)} · {t("metrics.finished")}:{" "}
               {localizeNumber(metrics.finished, lang)}
             </p>
+            <SmallSample n={metrics.started} />
             <div className="mt-4 h-3 overflow-hidden rounded-full bg-muted">
               <div
                 className="h-full rounded-full"
@@ -386,7 +391,7 @@ function FounderMetrics() {
             </div>
           </Card>
 
-          <Card title={t("metrics.funnel")}>
+          <Card title={t("metrics.funnel")} source={sourceLocal}>
             <div className="h-[240px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={funnel} layout="vertical" margin={{ left: 8, right: 16 }}>
@@ -406,7 +411,7 @@ function FounderMetrics() {
             </div>
           </Card>
 
-          <Card title={t("metrics.checkoutSection")}>
+          <Card title={t("metrics.checkoutSection")} source={sourceLocal}>
             <dl className="grid grid-cols-3 gap-4 text-center">
               {[
                 [t("metrics.upgradeClicks"), metrics.upgradeClicks],
@@ -423,9 +428,9 @@ function FounderMetrics() {
             </dl>
           </Card>
 
-          <Card title={t("metrics.nationalities")}>{ranking(metrics.nationalities)}</Card>
-          <Card title={t("metrics.pathways")}>{ranking(metrics.pathways)}</Card>
-          <Card title={t("metrics.countryInterest")}>{ranking(metrics.countryClicks)}</Card>
+          <Card title={t("metrics.nationalities")} source={sourceLocal}>{ranking(metrics.nationalities)}</Card>
+          <Card title={t("metrics.pathways")} source={sourceLocal}>{ranking(metrics.pathways)}</Card>
+          <Card title={t("metrics.countryInterest")} source={sourceLocal}>{ranking(metrics.countryClicks)}</Card>
         </div>
 
         {role === "demo" ? (
