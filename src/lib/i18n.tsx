@@ -398,6 +398,17 @@ export const en = {
   "metrics.demoCode": "Access code",
   "metrics.demoRole": "You are signed in with temporary demo access (read-only).",
   "metrics.gateEmail": "Email (demo accounts only)",
+  "metrics.dataMode": "Data shown",
+  "metrics.realOnly": "Real data only",
+  "metrics.includeSim": "Include simulated demo data",
+  "metrics.lastUpdated": "Last updated",
+  "metrics.smallSample": "Sample too small for a reliable signal",
+  "metrics.source": "Source",
+  "metrics.sourceCloud": "real user actions (cloud database)",
+  "metrics.sourceLocal": "real pilot actions recorded in this browser",
+  "metrics.sourceSim": "simulated demo data",
+  "metrics.simHidden": "Simulated demo data is hidden in this view.",
+  "metrics.noRealData": "No real data recorded yet.",
 };
 
 export const fa: Record<keyof typeof en, string> = {
