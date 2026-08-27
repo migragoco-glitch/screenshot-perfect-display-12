@@ -272,6 +272,44 @@ function FounderMetrics() {
           {t("metrics.title")}
         </h1>
 
+        <div className="mt-4 flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-card px-5 py-4">
+          <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            {t("metrics.dataMode")}
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { key: false, label: t("metrics.realOnly") },
+              { key: true, label: t("metrics.includeSim") },
+            ].map((opt) => (
+              <button
+                key={String(opt.key)}
+                type="button"
+                onClick={() => setIncludeSim(opt.key)}
+                className="rounded-full border px-4 py-1.5 text-xs font-semibold"
+                style={
+                  includeSim === opt.key
+                    ? { ...plum, borderColor: "var(--plum)" }
+                    : { borderColor: "var(--border)" }
+                }
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+          <span className="ms-auto text-[11px] text-muted-foreground">
+            {t("metrics.lastUpdated")}:{" "}
+            {updatedAt
+              ? updatedAt.toLocaleString(lang === "fa" ? "fa-IR" : "en-GB", {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                })
+              : "—"}
+          </span>
+          {!includeSim ? (
+            <p className="w-full text-[11px] text-muted-foreground">{t("metrics.simHidden")}</p>
+          ) : null}
+        </div>
+
         <section className="mt-7 grid gap-5 md:grid-cols-3">
           {[
             {
@@ -281,6 +319,7 @@ function FounderMetrics() {
                   ? `${localizeNumber(Math.round((signals.csat_positive / signals.csat_total) * 100), lang)}%`
                   : "—",
               note: `${t("metrics.csatMatch")} · n=${localizeNumber(signals?.csat_total ?? 0, lang)}`,
+              n: signals?.csat_total ?? 0,
             },
             {
               title: t("metrics.nps"),
@@ -289,11 +328,13 @@ function FounderMetrics() {
                   ? localizeNumber(Math.round(signals.nps_avg * 10) / 10, lang)
                   : "—",
               note: `${t("metrics.npsAvg")} · n=${localizeNumber(signals?.nps_total ?? 0, lang)}`,
+              n: signals?.nps_total ?? 0,
             },
             {
               title: t("metrics.emailLeads"),
               value: localizeNumber(signals?.founders_circle ?? 0, lang),
               note: `${t("metrics.responses")} · n=${localizeNumber(signals?.founders_circle ?? 0, lang)}`,
+              n: signals?.founders_circle ?? 0,
             },
           ].map((c) => (
             <div key={c.title} className="rounded-3xl border border-secondary/30 bg-card p-6">
@@ -305,9 +346,12 @@ function FounderMetrics() {
                 {c.value}
               </p>
               <p className="mt-2 text-xs text-muted-foreground">{c.note}</p>
+              <SmallSample n={c.n} />
+              <SourceNote text={sourceCloud} />
             </div>
           ))}
         </section>
+
 
         <p className="mt-4 text-xs text-muted-foreground">{t("metrics.emailVsPay")}</p>
 
