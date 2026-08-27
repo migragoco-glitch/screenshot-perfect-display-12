@@ -163,38 +163,67 @@ function FounderMetrics() {
 
   const completionRate = Math.round((metrics.finished / Math.max(1, metrics.started)) * 100);
 
-  const Card = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  const sourceLocal = includeSim
+    ? `${t("metrics.source")}: ${t("metrics.sourceSim")} + ${t("metrics.sourceLocal")}`
+    : `${t("metrics.source")}: ${t("metrics.sourceLocal")}`;
+  const sourceCloud = `${t("metrics.source")}: ${t("metrics.sourceCloud")}`;
+
+  const SourceNote = ({ text }: { text: string }) => (
+    <p className="mt-3 text-[11px] leading-snug text-muted-foreground">{text}</p>
+  );
+
+  const SmallSample = ({ n }: { n: number }) =>
+    n < 30 ? (
+      <span className="mt-2 inline-block rounded-full bg-[var(--gold)]/20 px-2.5 py-1 text-[10px] font-semibold leading-snug text-foreground">
+        {t("metrics.smallSample")} (n={localizeNumber(n, lang)})
+      </span>
+    ) : null;
+
+  const Card = ({
+    title,
+    source,
+    children,
+  }: {
+    title: string;
+    source?: string;
+    children: React.ReactNode;
+  }) => (
     <section className="rounded-3xl border border-border bg-card p-6">
       <h2 className="text-sm font-bold uppercase tracking-wider" style={{ color: "var(--plum)" }}>
         {title}
       </h2>
       <div className="mt-4">{children}</div>
+      {source ? <SourceNote text={source} /> : null}
     </section>
   );
 
-  const ranking = (record: Record<string, number>) => (
-    <ul className="space-y-2">
-      {Object.entries(record)
-        .sort((a, b) => b[1] - a[1])
-        .map(([k, v]) => (
-          <li key={k} className="flex items-center gap-3 text-sm">
-            <span className="w-40 shrink-0 truncate font-medium">{k}</span>
-            <span className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
-              <span
-                className="block h-full rounded-full"
-                style={{
-                  width: `${(v / Math.max(...Object.values(record))) * 100}%`,
-                  background: "var(--plum)",
-                }}
-              />
-            </span>
-            <span className="w-10 text-end tabular-nums text-muted-foreground">
-              {localizeNumber(v, lang)}
-            </span>
-          </li>
-        ))}
-    </ul>
-  );
+  const ranking = (record: Record<string, number>) =>
+    Object.keys(record).length === 0 ? (
+      <p className="text-sm text-muted-foreground">{t("metrics.noRealData")}</p>
+    ) : (
+      <ul className="space-y-2">
+        {Object.entries(record)
+          .sort((a, b) => b[1] - a[1])
+          .map(([k, v]) => (
+            <li key={k} className="flex items-center gap-3 text-sm">
+              <span className="w-40 shrink-0 truncate font-medium">{k}</span>
+              <span className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+                <span
+                  className="block h-full rounded-full"
+                  style={{
+                    width: `${(v / Math.max(...Object.values(record))) * 100}%`,
+                    background: "var(--plum)",
+                  }}
+                />
+              </span>
+              <span className="w-10 text-end tabular-nums text-muted-foreground">
+                {localizeNumber(v, lang)}
+              </span>
+            </li>
+          ))}
+      </ul>
+    );
+
 
   return (
     <div className="min-h-screen" style={{ background: "oklch(0.965 0.008 85)" }}>
