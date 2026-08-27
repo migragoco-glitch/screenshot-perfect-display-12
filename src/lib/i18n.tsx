@@ -799,6 +799,17 @@ export const fa: Record<keyof typeof en, string> = {
   "metrics.demoCode": "کد دسترسی",
   "metrics.demoRole": "شما با دسترسی موقت نمایشی (فقط‌خواندنی) وارد شده‌اید.",
   "metrics.gateEmail": "رایانامه (فقط برای حساب‌های نمایشی)",
+  "metrics.dataMode": "داده‌های نمایش‌داده‌شده",
+  "metrics.realOnly": "فقط داده‌های واقعی",
+  "metrics.includeSim": "شامل داده‌های شبیه‌سازی‌شدهٔ نمایشی",
+  "metrics.lastUpdated": "آخرین به‌روزرسانی",
+  "metrics.smallSample": "حجم نمونه برای سیگنال قابل‌اتکا بسیار کم است",
+  "metrics.source": "منبع",
+  "metrics.sourceCloud": "کنش‌های واقعی کاربران (پایگاه‌دادهٔ ابری)",
+  "metrics.sourceLocal": "کنش‌های واقعی پایلوت ثبت‌شده در این مرورگر",
+  "metrics.sourceSim": "دادهٔ شبیه‌سازی‌شدهٔ نمایشی",
+  "metrics.simHidden": "داده‌های شبیه‌سازی‌شده در این نما پنهان هستند.",
+  "metrics.noRealData": "هنوز دادهٔ واقعی ثبت نشده است.",
 };
 
 const dicts = { en, fa };
