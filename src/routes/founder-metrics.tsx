@@ -83,17 +83,24 @@ function FounderMetrics() {
     setRole(res.role);
     setUnlocked(true);
   };
-  const [metrics, setMetrics] = useState<Metrics | null>(null);
+  const [allMetrics, setAllMetrics] = useState<Metrics | null>(null);
+  const [realMetrics, setRealMetrics] = useState<Metrics | null>(null);
+  const [includeSim, setIncludeSim] = useState(false);
+  const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
   const [signals, setSignals] = useState<ValidationSignals | null>(null);
+  const metrics = includeSim ? allMetrics : realMetrics;
 
   useEffect(() => {
     if (window.sessionStorage.getItem(SESSION_KEY) === "1") {
       setUnlocked(true);
       setRole(window.sessionStorage.getItem(SESSION_ROLE_KEY) === "demo" ? "demo" : "primary");
     }
-    setMetrics(readMetrics());
+    setAllMetrics(readMetrics());
+    setRealMetrics(readRealMetrics());
+    setUpdatedAt(new Date());
     void fetchValidationSignals().then(setSignals);
   }, []);
+
 
   const funnel = useMemo(() => {
     if (!metrics) return [];
