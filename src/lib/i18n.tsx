@@ -194,7 +194,9 @@ export const en = {
     "MigraGo does not replace legal advice or official authorities, and does not guarantee residence or integration outcomes.",
   "footer.rights": "MigraGo — SettleSmart Navigator",
   "footer.tagline": "MigraGo — from a lost migrant to a settled one.",
-  "footer.qrCaption": "Visit Website",
+  "footer.description":
+    "SettleSmart Navigator — from the complexities of the migration journey to an actionable roadmap.",
+  "footer.qrCaption": "Get the App",
   "common.back": "Back",
   "common.continue": "Continue",
   "common.close": "Close",
@@ -580,6 +582,8 @@ export const fa: Record<keyof typeof en, string> = {
     "میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام ارائه نمی‌دهد.",
   "footer.rights": "میگراگو — SettleSmart Navigator",
   "footer.tagline": "میگراگو — از مهاجر سرگردان تا مهاجر ساکن‌شده.",
+  "footer.description":
+    "SettleSmart Navigator — از پیچیدگی‌های مسیر مهاجرت تا دستیابی به نقشه‌راهی قابل اجرا.",
   "footer.qrCaption": "وب‌سایت ما",
   "common.back": "بازگشت",
   "common.continue": "ادامه",
