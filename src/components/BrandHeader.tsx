@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Globe, Lock, LogOut } from "lucide-react";
 import logoAsset from "@/assets/logo.png.asset.json";
+import qrCodeAsset from "@/assets/qr-code-migrago.jpeg.asset.json";
 import { CONTACT_EMAIL, MAILTO_URL, WHATSAPP_URL } from "@/components/SupportChannels";
 import { useI18n } from "@/lib/i18n";
 import { useSession, signOutEverywhere } from "@/lib/session";
