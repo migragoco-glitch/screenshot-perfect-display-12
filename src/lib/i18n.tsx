@@ -581,7 +581,7 @@ export const fa: Record<keyof typeof en, string> = {
   "footer.legal":
     "میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام ارائه نمی‌دهد.",
   "footer.rights": "میگراگو — SettleSmart Navigator",
-  "footer.tagline": "میگراگو — از مهاجر سرگردان تا مهاجر ساکن‌شده.",
+  "footer.tagline": "میگراگو — از یک مهاجر سرگردان تا یک مهاجر مستقر.",
   "footer.description":
     "SettleSmart Navigator — از پیچیدگی‌های مسیر مهاجرت تا دستیابی به نقشه‌راهی قابل اجرا.",
   "footer.qrCaption": "وب‌سایت ما",
