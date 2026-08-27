@@ -193,7 +193,7 @@ export const en = {
   "footer.legal":
     "MigraGo does not replace legal advice or official authorities, and does not guarantee residence or integration outcomes.",
   "footer.rights": "MigraGo — SettleSmart Navigator",
-  "footer.tagline": "MigraGo — from a lost migrant to a settled one.",
+  "footer.tagline": "MigraGo — from an unsettled migrant to a settled one.",
   "footer.description":
     "SettleSmart Navigator — from the complexities of the migration journey to an actionable roadmap.",
   "footer.qrCaption": "Get the App",
