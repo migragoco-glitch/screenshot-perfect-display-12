@@ -398,6 +398,17 @@ export const en = {
   "metrics.demoCode": "Access code",
   "metrics.demoRole": "You are signed in with temporary demo access (read-only).",
   "metrics.gateEmail": "Email (demo accounts only)",
+  "metrics.dataMode": "Data shown",
+  "metrics.realOnly": "Real data only",
+  "metrics.includeSim": "Include simulated demo data",
+  "metrics.lastUpdated": "Last updated",
+  "metrics.smallSample": "Sample too small for a reliable signal",
+  "metrics.source": "Source",
+  "metrics.sourceCloud": "real user actions (cloud database)",
+  "metrics.sourceLocal": "real pilot actions recorded in this browser",
+  "metrics.sourceSim": "simulated demo data",
+  "metrics.simHidden": "Simulated demo data is hidden in this view.",
+  "metrics.noRealData": "No real data recorded yet.",
 };
 
 export const fa: Record<keyof typeof en, string> = {
@@ -788,6 +799,17 @@ export const fa: Record<keyof typeof en, string> = {
   "metrics.demoCode": "کد دسترسی",
   "metrics.demoRole": "شما با دسترسی موقت نمایشی (فقط‌خواندنی) وارد شده‌اید.",
   "metrics.gateEmail": "رایانامه (فقط برای حساب‌های نمایشی)",
+  "metrics.dataMode": "داده‌های نمایش‌داده‌شده",
+  "metrics.realOnly": "فقط داده‌های واقعی",
+  "metrics.includeSim": "شامل داده‌های شبیه‌سازی‌شدهٔ نمایشی",
+  "metrics.lastUpdated": "آخرین به‌روزرسانی",
+  "metrics.smallSample": "حجم نمونه برای سیگنال قابل‌اتکا بسیار کم است",
+  "metrics.source": "منبع",
+  "metrics.sourceCloud": "کنش‌های واقعی کاربران (پایگاه‌دادهٔ ابری)",
+  "metrics.sourceLocal": "کنش‌های واقعی پایلوت ثبت‌شده در این مرورگر",
+  "metrics.sourceSim": "دادهٔ شبیه‌سازی‌شدهٔ نمایشی",
+  "metrics.simHidden": "داده‌های شبیه‌سازی‌شده در این نما پنهان هستند.",
+  "metrics.noRealData": "هنوز دادهٔ واقعی ثبت نشده است.",
 };
 
 const dicts = { en, fa };

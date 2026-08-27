@@ -14,7 +14,7 @@ import {
 import { FlaskConical, ShieldAlert } from "lucide-react";
 import { BrandLogo, LanguageSwitch } from "@/components/BrandHeader";
 import { localizeNumber, useI18n } from "@/lib/i18n";
-import { readMetrics, type Metrics } from "@/lib/store";
+import { readMetrics, readRealMetrics, type Metrics } from "@/lib/store";
 import { fetchValidationSignals, type ValidationSignals } from "@/lib/feedback";
 import {
   createDemoAccount,
@@ -83,17 +83,24 @@ function FounderMetrics() {
     setRole(res.role);
     setUnlocked(true);
   };
-  const [metrics, setMetrics] = useState<Metrics | null>(null);
+  const [allMetrics, setAllMetrics] = useState<Metrics | null>(null);
+  const [realMetrics, setRealMetrics] = useState<Metrics | null>(null);
+  const [includeSim, setIncludeSim] = useState(false);
+  const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
   const [signals, setSignals] = useState<ValidationSignals | null>(null);
+  const metrics = includeSim ? allMetrics : realMetrics;
 
   useEffect(() => {
     if (window.sessionStorage.getItem(SESSION_KEY) === "1") {
       setUnlocked(true);
       setRole(window.sessionStorage.getItem(SESSION_ROLE_KEY) === "demo" ? "demo" : "primary");
     }
-    setMetrics(readMetrics());
+    setAllMetrics(readMetrics());
+    setRealMetrics(readRealMetrics());
+    setUpdatedAt(new Date());
     void fetchValidationSignals().then(setSignals);
   }, []);
+
 
   const funnel = useMemo(() => {
     if (!metrics) return [];
@@ -156,38 +163,67 @@ function FounderMetrics() {
 
   const completionRate = Math.round((metrics.finished / Math.max(1, metrics.started)) * 100);
 
-  const Card = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  const sourceLocal = includeSim
+    ? `${t("metrics.source")}: ${t("metrics.sourceSim")} + ${t("metrics.sourceLocal")}`
+    : `${t("metrics.source")}: ${t("metrics.sourceLocal")}`;
+  const sourceCloud = `${t("metrics.source")}: ${t("metrics.sourceCloud")}`;
+
+  const SourceNote = ({ text }: { text: string }) => (
+    <p className="mt-3 text-[11px] leading-snug text-muted-foreground">{text}</p>
+  );
+
+  const SmallSample = ({ n }: { n: number }) =>
+    n < 30 ? (
+      <span className="mt-2 inline-block rounded-full bg-[var(--gold)]/20 px-2.5 py-1 text-[10px] font-semibold leading-snug text-foreground">
+        {t("metrics.smallSample")} (n={localizeNumber(n, lang)})
+      </span>
+    ) : null;
+
+  const Card = ({
+    title,
+    source,
+    children,
+  }: {
+    title: string;
+    source?: string;
+    children: React.ReactNode;
+  }) => (
     <section className="rounded-3xl border border-border bg-card p-6">
       <h2 className="text-sm font-bold uppercase tracking-wider" style={{ color: "var(--plum)" }}>
         {title}
       </h2>
       <div className="mt-4">{children}</div>
+      {source ? <SourceNote text={source} /> : null}
     </section>
   );
 
-  const ranking = (record: Record<string, number>) => (
-    <ul className="space-y-2">
-      {Object.entries(record)
-        .sort((a, b) => b[1] - a[1])
-        .map(([k, v]) => (
-          <li key={k} className="flex items-center gap-3 text-sm">
-            <span className="w-40 shrink-0 truncate font-medium">{k}</span>
-            <span className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
-              <span
-                className="block h-full rounded-full"
-                style={{
-                  width: `${(v / Math.max(...Object.values(record))) * 100}%`,
-                  background: "var(--plum)",
-                }}
-              />
-            </span>
-            <span className="w-10 text-end tabular-nums text-muted-foreground">
-              {localizeNumber(v, lang)}
-            </span>
-          </li>
-        ))}
-    </ul>
-  );
+  const ranking = (record: Record<string, number>) =>
+    Object.keys(record).length === 0 ? (
+      <p className="text-sm text-muted-foreground">{t("metrics.noRealData")}</p>
+    ) : (
+      <ul className="space-y-2">
+        {Object.entries(record)
+          .sort((a, b) => b[1] - a[1])
+          .map(([k, v]) => (
+            <li key={k} className="flex items-center gap-3 text-sm">
+              <span className="w-40 shrink-0 truncate font-medium">{k}</span>
+              <span className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+                <span
+                  className="block h-full rounded-full"
+                  style={{
+                    width: `${(v / Math.max(...Object.values(record))) * 100}%`,
+                    background: "var(--plum)",
+                  }}
+                />
+              </span>
+              <span className="w-10 text-end tabular-nums text-muted-foreground">
+                {localizeNumber(v, lang)}
+              </span>
+            </li>
+          ))}
+      </ul>
+    );
+
 
   return (
     <div className="min-h-screen" style={{ background: "oklch(0.965 0.008 85)" }}>
@@ -236,6 +272,44 @@ function FounderMetrics() {
           {t("metrics.title")}
         </h1>
 
+        <div className="mt-4 flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-card px-5 py-4">
+          <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            {t("metrics.dataMode")}
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { key: false, label: t("metrics.realOnly") },
+              { key: true, label: t("metrics.includeSim") },
+            ].map((opt) => (
+              <button
+                key={String(opt.key)}
+                type="button"
+                onClick={() => setIncludeSim(opt.key)}
+                className="rounded-full border px-4 py-1.5 text-xs font-semibold"
+                style={
+                  includeSim === opt.key
+                    ? { ...plum, borderColor: "var(--plum)" }
+                    : { borderColor: "var(--border)" }
+                }
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+          <span className="ms-auto text-[11px] text-muted-foreground">
+            {t("metrics.lastUpdated")}:{" "}
+            {updatedAt
+              ? updatedAt.toLocaleString(lang === "fa" ? "fa-IR" : "en-GB", {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                })
+              : "—"}
+          </span>
+          {!includeSim ? (
+            <p className="w-full text-[11px] text-muted-foreground">{t("metrics.simHidden")}</p>
+          ) : null}
+        </div>
+
         <section className="mt-7 grid gap-5 md:grid-cols-3">
           {[
             {
@@ -245,6 +319,7 @@ function FounderMetrics() {
                   ? `${localizeNumber(Math.round((signals.csat_positive / signals.csat_total) * 100), lang)}%`
                   : "—",
               note: `${t("metrics.csatMatch")} · n=${localizeNumber(signals?.csat_total ?? 0, lang)}`,
+              n: signals?.csat_total ?? 0,
             },
             {
               title: t("metrics.nps"),
@@ -253,11 +328,13 @@ function FounderMetrics() {
                   ? localizeNumber(Math.round(signals.nps_avg * 10) / 10, lang)
                   : "—",
               note: `${t("metrics.npsAvg")} · n=${localizeNumber(signals?.nps_total ?? 0, lang)}`,
+              n: signals?.nps_total ?? 0,
             },
             {
               title: t("metrics.emailLeads"),
               value: localizeNumber(signals?.founders_circle ?? 0, lang),
               note: `${t("metrics.responses")} · n=${localizeNumber(signals?.founders_circle ?? 0, lang)}`,
+              n: signals?.founders_circle ?? 0,
             },
           ].map((c) => (
             <div key={c.title} className="rounded-3xl border border-secondary/30 bg-card p-6">
@@ -269,14 +346,20 @@ function FounderMetrics() {
                 {c.value}
               </p>
               <p className="mt-2 text-xs text-muted-foreground">{c.note}</p>
+              <SmallSample n={c.n} />
+              <SourceNote text={sourceCloud} />
             </div>
           ))}
         </section>
 
+
         <p className="mt-4 text-xs text-muted-foreground">{t("metrics.emailVsPay")}</p>
 
         <div className="mt-5 grid gap-5 lg:grid-cols-2">
-          <Card title={t("metrics.registrations")}>
+          <Card title={t("metrics.registrations")} source={sourceLocal}>
+            {metrics.registrations.length === 0 ? (
+              <p className="text-sm text-muted-foreground">{t("metrics.noRealData")}</p>
+            ) : (
             <div className="h-[220px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={metrics.registrations}>
@@ -288,9 +371,10 @@ function FounderMetrics() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
+            )}
           </Card>
 
-          <Card title={t("metrics.completion")}>
+          <Card title={t("metrics.completion")} source={sourceLocal}>
             <p className="text-5xl font-bold tabular-nums" style={{ color: "var(--plum)" }}>
               {localizeNumber(completionRate, lang)}%
             </p>
@@ -298,6 +382,7 @@ function FounderMetrics() {
               {t("metrics.started")}: {localizeNumber(metrics.started, lang)} · {t("metrics.finished")}:{" "}
               {localizeNumber(metrics.finished, lang)}
             </p>
+            <SmallSample n={metrics.started} />
             <div className="mt-4 h-3 overflow-hidden rounded-full bg-muted">
               <div
                 className="h-full rounded-full"
@@ -306,7 +391,7 @@ function FounderMetrics() {
             </div>
           </Card>
 
-          <Card title={t("metrics.funnel")}>
+          <Card title={t("metrics.funnel")} source={sourceLocal}>
             <div className="h-[240px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={funnel} layout="vertical" margin={{ left: 8, right: 16 }}>
@@ -326,7 +411,7 @@ function FounderMetrics() {
             </div>
           </Card>
 
-          <Card title={t("metrics.checkoutSection")}>
+          <Card title={t("metrics.checkoutSection")} source={sourceLocal}>
             <dl className="grid grid-cols-3 gap-4 text-center">
               {[
                 [t("metrics.upgradeClicks"), metrics.upgradeClicks],
@@ -343,9 +428,9 @@ function FounderMetrics() {
             </dl>
           </Card>
 
-          <Card title={t("metrics.nationalities")}>{ranking(metrics.nationalities)}</Card>
-          <Card title={t("metrics.pathways")}>{ranking(metrics.pathways)}</Card>
-          <Card title={t("metrics.countryInterest")}>{ranking(metrics.countryClicks)}</Card>
+          <Card title={t("metrics.nationalities")} source={sourceLocal}>{ranking(metrics.nationalities)}</Card>
+          <Card title={t("metrics.pathways")} source={sourceLocal}>{ranking(metrics.pathways)}</Card>
+          <Card title={t("metrics.countryInterest")} source={sourceLocal}>{ranking(metrics.countryClicks)}</Card>
         </div>
 
         {role === "demo" ? (
