@@ -119,9 +119,9 @@ export const en = {
   "loading.roadmap": "Building your 12-week roadmap…",
   "loading.roadmapSub": "Sequencing steps by phase, priority and responsible institution.",
 
-  "dash.title": "Smart Integration Profile",
+  "dash.title": "Your Smart Integration Profile",
   "dash.overall": "Baseline readiness score",
-  "dash.dim1": "Legal Status",
+  "dash.dim1": "Legal / Status Readiness",
   "dash.dim2": "Economic & Professional Capacity",
   "dash.dim3": "Soft Skills & Psychological Readiness",
   "dash.weight": "weight",
@@ -152,13 +152,13 @@ export const en = {
   "pay.later": "Stay on the free overview",
   "pay.demoNote": "Demo checkout — no payment is taken in this MVP.",
 
-  "road.title": "12-Week Roadmap",
+  "road.title": "Your Personalized 12-Week Roadmap",
   "road.sub":
     "Every roadmap step is linked to the relevant official institution in Finland (such as Migri or DVV).",
-  "road.phase1": "Weeks 1–3 — Legal & Administrative Foundation",
-  "road.phase2": "Weeks 4–6 — Daily Life & Language Stability",
-  "road.phase3": "Weeks 7–9 — Employment & Professional Pathway",
-  "road.phase4": "Weeks 10–12 — Social Belonging & Community",
+  "road.phase1": "Weeks 1–3 — Understand & Prepare",
+  "road.phase2": "Weeks 4–6 — Stabilize",
+  "road.phase3": "Weeks 7–9 — Participate",
+  "road.phase4": "Weeks 10–12 — Connect & Progress",
   "road.institution": "Source institution",
   "road.priority": "Priority",
   "road.high": "High",
@@ -409,6 +409,111 @@ export const en = {
   "metrics.sourceSim": "simulated demo data",
   "metrics.simHidden": "Simulated demo data is hidden in this view.",
   "metrics.noRealData": "No real data recorded yet.",
+
+  // ── Product correction: data → analysis → profile → pathways → roadmap → progress ──
+  "tab.dashboard": "Dashboard",
+  "tab.assessment": "My Assessment",
+  "tab.profile": "My Profile",
+  "tab.roadmap": "My Roadmap",
+  "tab.progress": "Progress",
+  "tab.account": "Account",
+
+  "journey.title": "Your Integration Journey",
+  "journey.s1": "Assessment",
+  "journey.s2": "Profile",
+  "journey.s3": "Pathways",
+  "journey.s4": "Roadmap",
+  "journey.s5": "Progress",
+  "journey.ctaAssessment": "Complete Your Assessment",
+  "journey.ctaRoadmap": "View My Roadmap",
+  "journey.done": "Done",
+  "journey.current": "Current step",
+
+  "readiness.title": "Integration Readiness Indicator",
+  "readiness.high": "High Readiness",
+  "readiness.moderate": "Moderate Readiness",
+  "readiness.developing": "Developing Readiness",
+  "readiness.note":
+    "Calculated from your answers to the 42 assessment questions. It is not a visa probability, immigration eligibility, legal or government score, or psychological diagnosis.",
+
+  "dash.dim3Note":
+    "This is a structured readiness assessment and not a clinical or medical diagnosis.",
+
+  "gap.title": "What Needs Attention?",
+  "gap.gap": "Gap",
+  "gap.why": "Why it matters",
+  "gap.priority": "Priority",
+  "gap.pathway": "Relevant pathway",
+  "gap.action": "Suggested next action",
+  "gap.none": "No priority gaps were identified from your current answers.",
+  "prio.high": "High",
+  "prio.medium": "Medium",
+  "prio.low": "Low",
+
+  "path.title": "Relevant Pathways for You",
+  "path.relevance": "Relevance",
+  "path.institution": "Institution / service",
+  "path.action": "Suggested action",
+  "path.timing": "Suggested timing",
+  "path.weeks": "Weeks",
+  "path.disclaimer":
+    "These are pathway references. MigraGo does not claim government integration, endorsement or API access.",
+
+  "engine.title": "How your roadmap is built",
+  "engine.s1": "Matching",
+  "engine.s2": "Gap-to-Pathway Mapping",
+  "engine.s3": "Prioritization",
+  "engine.s4": "Personalization",
+  "engine.s5": "Sequencing",
+  "engine.s6": "Roadmap Generation",
+  "engine.note":
+    "Every roadmap step comes from your assessment answers, structured rules and pathway data, so you can always see why a specific action appears for you.",
+
+  "ai.title": "AI positioning",
+  "ai.label": "AI-assisted analysis and personalization",
+  "ai.body":
+    "Rules-based decision logic + structured data + evidence-based knowledge + AI-assisted personalization.",
+
+  "road.action": "Action",
+  "road.whyMatters": "Why it matters",
+  "road.pathwayLabel": "Relevant pathway",
+  "road.timing": "Suggested timing",
+  "road.status": "Status",
+  "status.notStarted": "Not Started",
+  "status.inProgress": "In Progress",
+  "status.completed": "Completed",
+  "road.why": "Why this is recommended",
+
+  "prog.title": "Progress",
+  "prog.overall": "Overall roadmap progress",
+  "prog.phase": "Phase progress",
+  "prog.weekly": "Weekly progress",
+  "prog.completedActions": "Completed actions",
+  "prog.remaining": "Remaining priorities",
+  "prog.none": "No actions completed yet.",
+  "prog.noRemaining": "No remaining high-priority actions.",
+  "prog.locked": "Progress becomes available once your roadmap is unlocked.",
+
+  "report.title": "My Integration Report",
+  "report.open": "Open my report",
+  "report.summaryTitle": "Assessment summary",
+  "report.answered": "questions answered of 42",
+  "report.strengths": "Strengths",
+  "report.gaps": "Gaps",
+  "report.priorities": "Priorities",
+  "report.pathways": "Relevant pathways",
+  "report.roadmap": "12-week roadmap",
+  "report.disclaimer": "Disclaimer",
+
+  "assess.title": "My Assessment",
+  "assess.structure": "7 sections · 42 questions",
+  "assess.completed": "Assessment completed",
+  "assess.notCompleted": "Assessment not completed yet",
+  "assess.open": "Open assessment",
+  "assess.answeredOf": "answered of",
+
+  "disclaimer.responsible":
+    "MigraGo provides digital integration pathway support and structured information. It does not provide legal representation, make government decisions, guarantee immigration outcomes, or replace qualified professionals or public authorities.",
 };
 
 export const fa: Record<keyof typeof en, string> = {
@@ -518,9 +623,9 @@ export const fa: Record<keyof typeof en, string> = {
   "loading.roadmap": "در حال ساخت نقشه‌راه ۱۲ هفته‌ای شما…",
   "loading.roadmapSub": "چینش گام‌ها بر اساس فاز، اولویت و نهاد مسئول.",
 
-  "dash.title": "پروفایل هوشمند ادغام",
+  "dash.title": "پروفایل هوشمند ادغام شما",
   "dash.overall": "نمرهٔ پایهٔ آمادگی",
-  "dash.dim1": "وضعیت حقوقی",
+  "dash.dim1": "آمادگی حقوقی / وضعیت اقامت",
   "dash.dim2": "ظرفیت اقتصادی و حرفه‌ای",
   "dash.dim3": "مهارت‌های نرم و آمادگی روانی",
   "dash.weight": "وزن",
@@ -551,13 +656,13 @@ export const fa: Record<keyof typeof en, string> = {
   "pay.later": "ادامه با نمای رایگان",
   "pay.demoNote": "پرداخت نمایشی — در این نسخه هیچ مبلغی دریافت نمی‌شود.",
 
-  "road.title": "نقشه‌راه ۱۲ هفته‌ای",
+  "road.title": "نقشهٔ راه ۱۲ هفته‌ای شخصی‌سازی‌شدهٔ شما",
   "road.sub":
     "هر گام نقشهٔ راه به نهاد رسمی مربوط در فنلاند (مانند Migri یا DVV) متصل است.",
-  "road.phase1": "هفتهٔ ۱ تا ۳ — بنیاد حقوقی و اداری",
-  "road.phase2": "هفتهٔ ۴ تا ۶ — زندگی روزمره و تثبیت زبان",
-  "road.phase3": "هفتهٔ ۷ تا ۹ — اشتغال و مسیر حرفه‌ای",
-  "road.phase4": "هفتهٔ ۱۰ تا ۱۲ — تعلق اجتماعی و جامعهٔ محلی",
+  "road.phase1": "هفتهٔ ۱ تا ۳ — شناخت و آماده‌سازی",
+  "road.phase2": "هفتهٔ ۴ تا ۶ — تثبیت",
+  "road.phase3": "هفتهٔ ۷ تا ۹ — مشارکت",
+  "road.phase4": "هفتهٔ ۱۰ تا ۱۲ — پیوند و پیشرفت",
   "road.institution": "نهاد مرجع",
   "road.priority": "اولویت",
   "road.high": "بالا",
@@ -810,6 +915,111 @@ export const fa: Record<keyof typeof en, string> = {
   "metrics.sourceSim": "دادهٔ شبیه‌سازی‌شدهٔ نمایشی",
   "metrics.simHidden": "داده‌های شبیه‌سازی‌شده در این نما پنهان هستند.",
   "metrics.noRealData": "هنوز دادهٔ واقعی ثبت نشده است.",
+
+  // ── اصلاح محصول: مسیر داده → تحلیل → پروفایل → مسیرها → نقشهٔ راه → پیشرفت ──
+  "tab.dashboard": "داشبورد",
+  "tab.assessment": "ارزیابی من",
+  "tab.profile": "پروفایل من",
+  "tab.roadmap": "نقشهٔ راه من",
+  "tab.progress": "پیشرفت",
+  "tab.account": "حساب کاربری",
+
+  "journey.title": "مسیر ادغام شما",
+  "journey.s1": "ارزیابی",
+  "journey.s2": "پروفایل",
+  "journey.s3": "مسیرها",
+  "journey.s4": "نقشهٔ راه",
+  "journey.s5": "پیشرفت",
+  "journey.ctaAssessment": "ارزیابی خود را کامل کنید",
+  "journey.ctaRoadmap": "نقشهٔ راه من را ببین",
+  "journey.done": "انجام‌شده",
+  "journey.current": "مرحلهٔ کنونی",
+
+  "readiness.title": "شاخص آمادگی ادغام",
+  "readiness.high": "آمادگی بالا",
+  "readiness.moderate": "آمادگی متوسط",
+  "readiness.developing": "آمادگی در حال شکل‌گیری",
+  "readiness.note":
+    "این شاخص از پاسخ‌های ۴۲ پرسش ارزیابی شما محاسبه می‌شود. این عدد احتمال ویزا، واجد شرایط بودن مهاجرتی، نمرهٔ حقوقی یا دولتی و تشخیص روان‌شناختی نیست.",
+
+  "dash.dim3Note":
+    "این یک ارزیابی ساختاریافتهٔ آمادگی است و تشخیص بالینی یا پزشکی محسوب نمی‌شود.",
+
+  "gap.title": "چه چیزی نیاز به توجه دارد؟",
+  "gap.gap": "شکاف",
+  "gap.why": "چرا اهمیت دارد",
+  "gap.priority": "اولویت",
+  "gap.pathway": "مسیر مرتبط",
+  "gap.action": "اقدام پیشنهادی بعدی",
+  "gap.none": "بر پایهٔ پاسخ‌های فعلی شما، شکاف دارای اولویتی شناسایی نشد.",
+  "prio.high": "بالا",
+  "prio.medium": "متوسط",
+  "prio.low": "پایین",
+
+  "path.title": "مسیرهای مرتبط با شما",
+  "path.relevance": "ارتباط با شما",
+  "path.institution": "نهاد / خدمت",
+  "path.action": "اقدام پیشنهادی",
+  "path.timing": "زمان‌بندی پیشنهادی",
+  "path.weeks": "هفتهٔ",
+  "path.disclaimer":
+    "این‌ها ارجاع‌های مسیر هستند. میگراگو ادعای یکپارچگی با نهادهای دولتی، تأیید رسمی از سوی آن‌ها یا دسترسی به API آن‌ها ندارد.",
+
+  "engine.title": "نقشهٔ راه شما چگونه ساخته می‌شود",
+  "engine.s1": "تطبیق",
+  "engine.s2": "نگاشت شکاف به مسیر",
+  "engine.s3": "اولویت‌بندی",
+  "engine.s4": "شخصی‌سازی",
+  "engine.s5": "چینش زمانی",
+  "engine.s6": "تولید نقشهٔ راه",
+  "engine.note":
+    "هر گام نقشهٔ راه از پاسخ‌های ارزیابی شما، قواعد ساختاریافته و دادهٔ مسیرها می‌آید؛ بنابراین همیشه می‌توانید ببینید چرا یک اقدام مشخص برای شما ظاهر شده است.",
+
+  "ai.title": "جایگاه هوش مصنوعی",
+  "ai.label": "تحلیل و شخصی‌سازی به‌کمک هوش مصنوعی",
+  "ai.body":
+    "منطق تصمیم‌گیری مبتنی بر قواعد + دادهٔ ساختاریافته + دانش مبتنی بر شواهد + شخصی‌سازی به‌کمک هوش مصنوعی.",
+
+  "road.action": "اقدام",
+  "road.whyMatters": "چرا اهمیت دارد",
+  "road.pathwayLabel": "مسیر مرتبط",
+  "road.timing": "زمان‌بندی پیشنهادی",
+  "road.status": "وضعیت",
+  "status.notStarted": "شروع‌نشده",
+  "status.inProgress": "در حال انجام",
+  "status.completed": "انجام‌شده",
+  "road.why": "چرا این اقدام پیشنهاد شده است",
+
+  "prog.title": "پیشرفت",
+  "prog.overall": "پیشرفت کلی نقشهٔ راه",
+  "prog.phase": "پیشرفت هر مرحله",
+  "prog.weekly": "پیشرفت هفتگی",
+  "prog.completedActions": "اقدامات انجام‌شده",
+  "prog.remaining": "اولویت‌های باقی‌مانده",
+  "prog.none": "هنوز اقدامی انجام نشده است.",
+  "prog.noRemaining": "اقدام باقی‌ماندهٔ دارای اولویت بالا وجود ندارد.",
+  "prog.locked": "پیشرفت پس از باز شدن نقشهٔ راه در دسترس قرار می‌گیرد.",
+
+  "report.title": "گزارش ادغام من",
+  "report.open": "گزارش من را باز کن",
+  "report.summaryTitle": "خلاصهٔ ارزیابی",
+  "report.answered": "پرسش پاسخ‌داده‌شده از ۴۲ پرسش",
+  "report.strengths": "نقاط قوت",
+  "report.gaps": "شکاف‌ها",
+  "report.priorities": "اولویت‌ها",
+  "report.pathways": "مسیرهای مرتبط",
+  "report.roadmap": "نقشهٔ راه ۱۲ هفته‌ای",
+  "report.disclaimer": "سلب مسئولیت",
+
+  "assess.title": "ارزیابی من",
+  "assess.structure": "۷ بخش · ۴۲ پرسش",
+  "assess.completed": "ارزیابی کامل شده است",
+  "assess.notCompleted": "ارزیابی هنوز کامل نشده است",
+  "assess.open": "باز کردن ارزیابی",
+  "assess.answeredOf": "پاسخ‌داده‌شده از",
+
+  "disclaimer.responsible":
+    "میگراگو پشتیبانی دیجیتال مسیر ادغام و اطلاعات ساختاریافته ارائه می‌دهد. این سرویس نمایندگی حقوقی انجام نمی‌دهد، تصمیم دولتی نمی‌گیرد، نتیجهٔ مهاجرتی را تضمین نمی‌کند و جایگزین متخصصان دارای صلاحیت یا مراجع عمومی نیست.",
 };
 
 const dicts = { en, fa };
