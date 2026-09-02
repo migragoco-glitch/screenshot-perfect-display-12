@@ -18,7 +18,25 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { Check, FileText, HelpCircle, Lock, LogIn, Mail, Pencil, ShieldCheck, Sparkles, Trash2 } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  ClipboardList,
+  Compass,
+  FileText,
+  HelpCircle,
+  Info,
+  Lock,
+  LogIn,
+  Mail,
+  Map as MapIcon,
+  Pencil,
+  ShieldCheck,
+  Sparkles,
+  Target,
+  Trash2,
+  TrendingUp,
+} from "lucide-react";
 import { AppHeader, LanguageSwitch, SiteFooter } from "@/components/BrandHeader";
 import { PenguinLoader } from "@/components/PenguinLoader";
 import {
@@ -31,6 +49,8 @@ import { SupportChannels } from "@/components/SupportChannels";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import { analysisSummary, computeProfile } from "@/lib/scoring";
 import { KNOWLEDGE_TABLE_VERSION, PHASE_TITLE_KEYS, generateRoadmap } from "@/lib/roadmap";
+import { buildGapAnalysis, buildPathways, whyRecommended } from "@/lib/pathways";
+import { QUESTIONS } from "@/lib/questions";
 import { fetchRoadmapProgress, setRoadmapTask } from "@/lib/feedback";
 import { useSession } from "@/lib/session";
 import { trackEvent, useAppState } from "@/lib/store";
@@ -44,7 +64,7 @@ export const Route = createFileRoute("/dashboard")({
       {
         name: "description",
         content:
-          "Your Legal Status, Economic & Professional Capacity and Soft Skills & Psychological Readiness scores plus your evidence-based 12-week Finland roadmap.",
+          "Your Legal / Status Readiness, Economic & Professional Capacity and Soft Skills & Psychological Readiness scores plus your evidence-based 12-week Finland roadmap.",
       },
       { property: "og:title", content: "Smart Integration Profile — MigraGo dashboard" },
       {
@@ -64,17 +84,21 @@ const DIM_COLORS = ["var(--navy)", "var(--teal)", "var(--gold)"];
 /** Phase tints — one brand colour per roadmap phase. */
 const PHASE_COLORS = ["var(--navy)", "var(--teal)", "var(--gold)", "var(--plum)"];
 
-type Tab = "profile" | "roadmap" | "settings";
+const IN_PROGRESS_KEY = "migrago.inProgress";
+
+type Tab = "dashboard" | "assessment" | "profile" | "roadmap" | "progress" | "account";
 
 function Dashboard() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
   const { state, hydrated, pushSnapshot, reset } = useAppState();
-  const [tab, setTab] = useState<Tab>("profile");
+  const [tab, setTab] = useState<Tab>("dashboard");
   const [buildingRoadmap, setBuildingRoadmap] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [payModal, setPayModal] = useState(false);
   const [done, setDone] = useState<Set<string>>(new Set());
+  const [inProgress, setInProgress] = useState<Set<string>>(new Set());
+  const [openWhy, setOpenWhy] = useState<string | null>(null);
   const { user } = useSession();
 
   useEffect(() => {
@@ -84,6 +108,17 @@ function Dashboard() {
     }
     void fetchRoadmapProgress().then(setDone);
   }, [user]);
+
+  useEffect(() => {
+    const raw = window.localStorage.getItem(IN_PROGRESS_KEY);
+    if (raw) {
+      try {
+        setInProgress(new Set(JSON.parse(raw) as string[]));
+      } catch {
+        /* ignore malformed local state */
+      }
+    }
+  }, []);
 
   // Returning from the Founder's Circle email capture + consent step.
   useEffect(() => {
@@ -99,6 +134,9 @@ function Dashboard() {
 
   const profile = useMemo(() => computeProfile(state.answers), [state.answers]);
   const roadmap = useMemo(() => generateRoadmap(profile), [profile]);
+  const allItems = useMemo(() => roadmap.flatMap((p) => p.items), [roadmap]);
+  const gapList = useMemo(() => buildGapAnalysis(profile), [profile]);
+  const pathways = useMemo(() => buildPathways(profile, allItems), [profile, allItems]);
   const locked = state.tier !== "navigator";
 
   useEffect(() => {
@@ -159,21 +197,156 @@ function Dashboard() {
     void navigate({ to: "/consent", search: { upgrade: true } });
   };
 
-  const totalTasks = roadmap.reduce((n, p) => n + p.items.length, 0);
-  const doneCount = roadmap.reduce(
-    (n, p) => n + p.items.filter((i) => done.has(i.id)).length,
-    0,
-  );
+  const totalTasks = allItems.length;
+  const doneCount = allItems.filter((i) => done.has(i.id)).length;
+  const answeredCount = QUESTIONS.filter((q) => state.answers[q.id] !== undefined).length;
 
-  const toggleTask = (id: string) => {
-    const next = new Set(done);
-    const willBeDone = !next.has(id);
-    if (willBeDone) next.add(id);
-    else next.delete(id);
-    setDone(next);
-    if (user) void setRoadmapTask(user.id, id, willBeDone);
+  const readinessLabel =
+    profile.overall >= 75
+      ? t("readiness.high")
+      : profile.overall >= 55
+        ? t("readiness.moderate")
+        : t("readiness.developing");
+
+  const statusOf = (id: string): "completed" | "inProgress" | "notStarted" =>
+    done.has(id) ? "completed" : inProgress.has(id) ? "inProgress" : "notStarted";
+
+  const persistInProgress = (next: Set<string>) => {
+    setInProgress(next);
+    window.localStorage.setItem(IN_PROGRESS_KEY, JSON.stringify([...next]));
   };
 
+  const setStatus = (id: string, status: "completed" | "inProgress" | "notStarted") => {
+    const nextDone = new Set(done);
+    const nextProgress = new Set(inProgress);
+    if (status === "completed") {
+      nextDone.add(id);
+      nextProgress.delete(id);
+    } else if (status === "inProgress") {
+      nextDone.delete(id);
+      nextProgress.add(id);
+    } else {
+      nextDone.delete(id);
+      nextProgress.delete(id);
+    }
+    setDone(nextDone);
+    persistInProgress(nextProgress);
+    if (user) void setRoadmapTask(user.id, id, status === "completed");
+  };
+
+  const priorityLabel = (p: "high" | "medium" | "normal" | "low") =>
+    p === "high" ? t("prio.high") : p === "medium" ? t("prio.medium") : t("prio.low");
+
+  const remainingPriorities = allItems
+    .filter((i) => !done.has(i.id) && i.priority === "high")
+    .slice(0, 6);
+
+  const weeklyProgress = Array.from({ length: 12 }, (_, idx) => {
+    const week = idx + 1;
+    const items = allItems.filter((i) => i.week === week);
+    const completed = items.filter((i) => done.has(i.id)).length;
+    return { week, total: items.length, completed };
+  });
+
+  const tabs: [Tab, string][] = [
+    ["dashboard", t("tab.dashboard")],
+    ["assessment", t("tab.assessment")],
+    ["profile", t("tab.profile")],
+    ["roadmap", t("tab.roadmap")],
+    ["progress", t("tab.progress")],
+    ["account", t("tab.account")],
+  ];
+
+  const journeySteps = [
+    { icon: ClipboardList, label: t("journey.s1"), reached: state.completed },
+    { icon: Target, label: t("journey.s2"), reached: state.completed },
+    { icon: Compass, label: t("journey.s3"), reached: state.completed },
+    { icon: MapIcon, label: t("journey.s4"), reached: !locked },
+    { icon: TrendingUp, label: t("journey.s5"), reached: !locked && doneCount > 0 },
+  ];
+
+  const ReportSection = () => (
+    <section id="integration-report" className="rounded-3xl border border-border bg-card p-6">
+      <h2 className="text-lg">{t("report.title")}</h2>
+
+      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+        {t("report.summaryTitle")}
+      </h3>
+      <p className="mt-2 text-sm text-muted-foreground">
+        {localizeNumber(answeredCount, lang)} {t("report.answered")} ·{" "}
+        {t("readiness.title")}: {localizeNumber(profile.overall, lang)}% — {readinessLabel}
+      </p>
+      <ul className="mt-3 grid gap-1.5 text-sm text-muted-foreground sm:grid-cols-3">
+        {dims.map((d) => (
+          <li key={d.key}>
+            {d.label}: <span className="font-semibold tabular-nums">{localizeNumber(d.value, lang)}%</span>
+          </li>
+        ))}
+      </ul>
+
+      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-secondary">
+        {t("report.strengths")}
+      </h3>
+      <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+        {profile.strengths.length ? (
+          profile.strengths.map((s) => <li key={s.en}>• {s[lang]}</li>)
+        ) : (
+          <li>—</li>
+        )}
+      </ul>
+
+      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-accent-foreground">
+        {t("report.gaps")} · {t("report.priorities")}
+      </h3>
+      <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+        {gapList.length ? (
+          gapList.map((g) => (
+            <li key={g.flag}>
+              • {g.gap[lang]} — {priorityLabel(g.priority)}
+            </li>
+          ))
+        ) : (
+          <li>{t("gap.none")}</li>
+        )}
+      </ul>
+
+      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+        {t("report.pathways")}
+      </h3>
+      <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+        {pathways.map((p) => (
+          <li key={p.institution}>
+            • {p.title[lang]} — {t("path.weeks")} {localizeNumber(p.timing.from, lang)}–
+            {localizeNumber(p.timing.to, lang)}
+          </li>
+        ))}
+      </ul>
+
+      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+        {t("report.roadmap")}
+      </h3>
+      {locked ? (
+        <p className="mt-2 text-sm text-muted-foreground">{t("road.locked")}</p>
+      ) : (
+        <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+          {roadmap.map((phase, i) => (
+            <li key={phase.phase}>
+              • {t(PHASE_TITLE_KEYS[i] ?? "road.phase1")} —{" "}
+              {localizeNumber(phase.items.filter((it) => done.has(it.id)).length, lang)} /{" "}
+              {localizeNumber(phase.items.length, lang)} {t("status.completed")}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+        {t("report.disclaimer")}
+      </h3>
+      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+        {t("disclaimer.responsible")}
+      </p>
+    </section>
+  );
 
   return (
     <div className="min-h-screen">
@@ -182,7 +355,7 @@ function Dashboard() {
       <main className="mx-auto max-w-7xl px-4 py-10 md:px-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="text-2xl md:text-3xl">{t("dash.title")}</h1>
+            <h1 className="text-2xl md:text-3xl">{t("journey.title")}</h1>
             <p className="mt-2 text-xs text-muted-foreground">{t("dash.recalc")}</p>
           </div>
           <Link
@@ -195,13 +368,7 @@ function Dashboard() {
         </div>
 
         <nav className="mt-7 flex flex-wrap gap-2" role="tablist">
-          {(
-            [
-              ["profile", t("dash.profileTab")],
-              ["roadmap", t("dash.roadmapTab")],
-              ["settings", t("dash.settingsTab")],
-            ] as const
-          ).map(([key, label]) => (
+          {tabs.map(([key, label]) => (
             <button
               key={key}
               type="button"
@@ -220,13 +387,154 @@ function Dashboard() {
           ))}
         </nav>
 
-        {/* ── Profile tab ─────────────────────────────── */}
+        {/* ── Dashboard tab ───────────────────────────── */}
+        {tab === "dashboard" ? (
+          <div className="rise-in mt-7 space-y-5">
+            <section className="glass-card rounded-3xl p-6">
+              <h2 className="text-lg">{t("journey.title")}</h2>
+              <ol className="mt-4 flex flex-wrap items-stretch gap-3">
+                {journeySteps.map((s, i) => (
+                  <li
+                    key={s.label}
+                    className={cn(
+                      "flex min-w-[140px] flex-1 items-center gap-3 rounded-2xl border p-3",
+                      s.reached
+                        ? "border-secondary/40 bg-secondary/8"
+                        : "border-border bg-card opacity-70",
+                    )}
+                  >
+                    <s.icon
+                      className={cn("size-4 shrink-0", s.reached ? "text-secondary" : "text-muted-foreground")}
+                      aria-hidden
+                    />
+                    <span className="text-sm font-semibold">{s.label}</span>
+                    {i < journeySteps.length - 1 ? (
+                      <ArrowRight className="ms-auto size-3.5 text-muted-foreground rtl:rotate-180" aria-hidden />
+                    ) : null}
+                  </li>
+                ))}
+              </ol>
+
+              <div className="mt-6 grid gap-5 sm:grid-cols-[220px_1fr] sm:items-center">
+                <div className="rounded-2xl border border-border bg-card p-5 text-center">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                    {t("readiness.title")}
+                  </p>
+                  <p className="mt-2 text-4xl font-bold tabular-nums">
+                    {localizeNumber(profile.overall, lang)}%
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-secondary">{readinessLabel}</p>
+                </div>
+                <div>
+                  <p className="text-xs leading-relaxed text-muted-foreground">
+                    {t("readiness.note")}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    {!state.completed ? (
+                      <Link
+                        to="/assessment"
+                        className="inline-flex items-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-bold text-secondary-foreground"
+                      >
+                        {t("journey.ctaAssessment")}
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setTab("roadmap")}
+                        className="inline-flex items-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-bold text-secondary-foreground"
+                      >
+                        {t("journey.ctaRoadmap")}
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setTab("progress")}
+                      className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold"
+                    >
+                      <FileText className="size-4" aria-hidden />
+                      {t("report.open")}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <div className="grid gap-5 lg:grid-cols-2">
+              <section className="rounded-3xl border border-border bg-card p-6">
+                <h2 className="text-lg">{t("engine.title")}</h2>
+                <ol className="mt-4 space-y-2 text-sm">
+                  {(["engine.s1", "engine.s2", "engine.s3", "engine.s4", "engine.s5", "engine.s6"] as const).map(
+                    (k, i) => (
+                      <li key={k} className="flex items-center gap-3">
+                        <span className="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/8 text-[11px] font-bold text-primary tabular-nums">
+                          {localizeNumber(i + 1, lang)}
+                        </span>
+                        <span className="font-semibold">{t(k)}</span>
+                      </li>
+                    ),
+                  )}
+                </ol>
+                <p className="mt-4 text-xs leading-relaxed text-muted-foreground">{t("engine.note")}</p>
+              </section>
+
+              <section className="rounded-3xl border border-border bg-card p-6">
+                <h2 className="text-lg">{t("ai.title")}</h2>
+                <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-secondary/12 px-3 py-1.5 text-xs font-semibold text-secondary">
+                  <Sparkles className="size-3.5" aria-hidden />
+                  {t("ai.label")}
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{t("ai.body")}</p>
+                <p className="mt-6 rounded-2xl border border-border bg-background p-4 text-xs leading-relaxed text-muted-foreground">
+                  {t("disclaimer.responsible")}
+                </p>
+              </section>
+            </div>
+          </div>
+        ) : null}
+
+        {/* ── My Assessment tab ───────────────────────── */}
+        {tab === "assessment" ? (
+          <div className="rise-in mt-7 max-w-3xl space-y-5">
+            <section className="rounded-3xl border border-border bg-card p-6">
+              <h2 className="text-lg">{t("assess.title")}</h2>
+              <p className="mt-2 text-sm font-semibold">{t("assess.structure")}</p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                {localizeNumber(answeredCount, lang)} {t("assess.answeredOf")}{" "}
+                {localizeNumber(QUESTIONS.length, lang)}
+              </p>
+              <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full bg-secondary transition-all duration-500 ease-out"
+                  style={{ width: `${Math.round((answeredCount / QUESTIONS.length) * 100)}%` }}
+                />
+              </div>
+              <p
+                className={cn(
+                  "mt-4 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-semibold",
+                  state.completed ? "bg-secondary/12 text-secondary" : "bg-accent/25 text-accent-foreground",
+                )}
+              >
+                {state.completed ? t("assess.completed") : t("assess.notCompleted")}
+              </p>
+              <div className="mt-5">
+                <Link
+                  to="/assessment"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground"
+                >
+                  {state.completed ? t("dash.editAnswers") : t("assess.open")}
+                </Link>
+              </div>
+            </section>
+          </div>
+        ) : null}
+
+        {/* ── My Profile tab ──────────────────────────── */}
         {tab === "profile" ? (
           <div className="rise-in mt-7 grid gap-5 lg:grid-cols-3">
             {/* Overall + donut */}
             <section className="glass-card rounded-3xl p-6 lg:col-span-2">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <h2 className="text-lg">{t("dash.composition")}</h2>
+                <h2 className="text-lg">{t("dash.title")}</h2>
                 {locked ? (
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-accent-foreground">
                     <Lock className="size-3" aria-hidden />
@@ -329,6 +637,11 @@ function Dashboard() {
                     <span className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
                       {t("dash.weight")} {localizeNumber(d.weight, lang)}
                     </span>
+                    {d.key === "dim3" ? (
+                      <p className="mt-1.5 text-[10px] leading-relaxed text-muted-foreground">
+                        {t("dash.dim3Note")}
+                      </p>
+                    ) : null}
                   </li>
                 ))}
               </ul>
@@ -399,6 +712,88 @@ function Dashboard() {
               ) : null}
             </div>
 
+            {/* Gap analysis — What Needs Attention? */}
+            <section className="rounded-3xl border border-border bg-card p-6 lg:col-span-3">
+              <h2 className="text-lg">{t("gap.title")}</h2>
+              {gapList.length ? (
+                <ul className="mt-4 grid gap-4 md:grid-cols-2">
+                  {gapList.map((g) => (
+                    <li key={g.flag} className="rounded-2xl border border-border bg-background p-5">
+                      <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
+                        <span
+                          className={cn(
+                            "rounded-full px-2.5 py-0.5",
+                            g.priority === "high"
+                              ? "bg-destructive/12 text-destructive"
+                              : g.priority === "medium"
+                                ? "bg-accent/25 text-accent-foreground"
+                                : "bg-muted text-muted-foreground",
+                          )}
+                        >
+                          {t("gap.priority")}: {priorityLabel(g.priority)}
+                        </span>
+                        <InstitutionBadge institution={g.institution} />
+                      </div>
+                      <h3 className="mt-3 text-sm font-bold">{g.gap[lang]}</h3>
+                      <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                        {t("gap.why")}
+                      </p>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{g.why[lang]}</p>
+                      <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                        {t("gap.action")}
+                      </p>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{g.action[lang]}</p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-3 text-sm text-muted-foreground">{t("gap.none")}</p>
+              )}
+            </section>
+
+            {/* Relevant pathways */}
+            <section className="rounded-3xl border border-border bg-card p-6 lg:col-span-3">
+              <h2 className="text-lg">{t("path.title")}</h2>
+              <ul className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {pathways.map((p) => (
+                  <li key={p.institution} className="rounded-2xl border border-border bg-background p-5">
+                    <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
+                      <span
+                        className={cn(
+                          "rounded-full px-2.5 py-0.5",
+                          p.priority === "high"
+                            ? "bg-destructive/12 text-destructive"
+                            : p.priority === "medium"
+                              ? "bg-accent/25 text-accent-foreground"
+                              : "bg-muted text-muted-foreground",
+                        )}
+                      >
+                        {t("gap.priority")}: {priorityLabel(p.priority)}
+                      </span>
+                      <InstitutionBadge institution={p.institution} />
+                    </div>
+                    <h3 className="mt-3 text-sm font-bold">{p.title[lang]}</h3>
+                    <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      {t("path.relevance")}
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{p.relevance[lang]}</p>
+                    <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      {t("path.action")}
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{p.action[lang]}</p>
+                    <p className="mt-3 text-[11px] font-semibold text-muted-foreground">
+                      {t("path.timing")}: {t("path.weeks")} {localizeNumber(p.timing.from, lang)}–
+                      {localizeNumber(p.timing.to, lang)}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 inline-flex items-start gap-2 text-[11px] leading-relaxed text-muted-foreground">
+                <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+                {t("path.disclaimer")}
+              </p>
+            </section>
+
             {/* Trend — score history over time */}
             <section className="rounded-3xl border border-border bg-card p-6 lg:col-span-3">
               <h2 className="text-lg">{t("dash.history")}</h2>
@@ -437,7 +832,7 @@ function Dashboard() {
           </div>
         ) : null}
 
-        {/* ── Roadmap tab ─────────────────────────────── */}
+        {/* ── My Roadmap tab ──────────────────────────── */}
         {tab === "roadmap" ? (
           <div className="rise-in mt-7">
             <div className="flex flex-wrap items-end justify-between gap-3">
@@ -542,7 +937,8 @@ function Dashboard() {
                         </header>
                         <ol className="mt-4 space-y-3">
                           {phase.items.map((item) => {
-                            const checked = done.has(item.id);
+                            const status = statusOf(item.id);
+                            const checked = status === "completed";
                             return (
                               <li
                                 key={item.id}
@@ -556,7 +952,9 @@ function Dashboard() {
                                     <input
                                       type="checkbox"
                                       checked={checked}
-                                      onChange={() => toggleTask(item.id)}
+                                      onChange={() =>
+                                        setStatus(item.id, checked ? "notStarted" : "completed")
+                                      }
                                       aria-label={`${t("road.done")}: ${item.title[lang]}`}
                                       className="peer size-5 cursor-pointer appearance-none rounded-md border border-border bg-background transition-colors duration-200 ease-out checked:border-secondary checked:bg-secondary"
                                     />
@@ -570,7 +968,8 @@ function Dashboard() {
                                   <div className="min-w-0 flex-1">
                                     <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
                                       <span className="rounded-full bg-primary/8 px-2.5 py-0.5 text-primary">
-                                        {t("road.week")} {localizeNumber(item.week, lang)}
+                                        {t("road.timing")}: {t("road.week")}{" "}
+                                        {localizeNumber(item.week, lang)}
                                       </span>
                                       <span
                                         className={cn(
@@ -582,26 +981,69 @@ function Dashboard() {
                                               : "bg-muted text-muted-foreground",
                                         )}
                                       >
-                                        {t("road.priority")}:{" "}
-                                        {item.priority === "high"
-                                          ? t("road.high")
-                                          : item.priority === "medium"
-                                            ? t("road.medium")
-                                            : t("road.normal")}
+                                        {t("road.priority")}: {priorityLabel(item.priority)}
                                       </span>
                                       <InstitutionBadge institution={item.institution} />
                                     </div>
+                                    <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                                      {t("road.action")}
+                                    </p>
                                     <h4
                                       className={cn(
-                                        "mt-3 text-sm font-bold leading-snug",
+                                        "mt-1 text-sm font-bold leading-snug",
                                         checked && "line-through",
                                       )}
                                     >
                                       {item.title[lang]}
                                     </h4>
-                                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                                    <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                                      {t("road.whyMatters")}
+                                    </p>
+                                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                                       {item.detail[lang]}
                                     </p>
+
+                                    <div className="mt-4 flex flex-wrap items-center gap-2">
+                                      <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                                        {t("road.status")}
+                                      </span>
+                                      {(
+                                        [
+                                          ["notStarted", t("status.notStarted")],
+                                          ["inProgress", t("status.inProgress")],
+                                          ["completed", t("status.completed")],
+                                        ] as const
+                                      ).map(([value, label]) => (
+                                        <button
+                                          key={value}
+                                          type="button"
+                                          aria-pressed={status === value}
+                                          onClick={() => setStatus(item.id, value)}
+                                          className={cn(
+                                            "rounded-full px-3 py-1 text-[11px] font-semibold transition-colors duration-200 ease-out",
+                                            status === value
+                                              ? "bg-primary text-primary-foreground"
+                                              : "border border-border bg-card text-muted-foreground hover:text-foreground",
+                                          )}
+                                        >
+                                          {label}
+                                        </button>
+                                      ))}
+                                    </div>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => setOpenWhy(openWhy === item.id ? null : item.id)}
+                                      className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold text-secondary underline underline-offset-4"
+                                    >
+                                      <Info className="size-3.5" aria-hidden />
+                                      {t("road.why")}
+                                    </button>
+                                    {openWhy === item.id ? (
+                                      <p className="mt-2 rounded-2xl border border-border bg-card p-3 text-xs leading-relaxed text-muted-foreground">
+                                        {whyRecommended(item, profile)[lang]}
+                                      </p>
+                                    ) : null}
                                   </div>
                                 </div>
                               </li>
@@ -621,8 +1063,137 @@ function Dashboard() {
           </div>
         ) : null}
 
-        {/* ── Settings tab ────────────────────────────── */}
-        {tab === "settings" ? (
+        {/* ── Progress tab ────────────────────────────── */}
+        {tab === "progress" ? (
+          <div className="rise-in mt-7 space-y-5">
+            {locked ? (
+              <section className="rounded-3xl border border-dashed border-border bg-muted/50 p-10 text-center">
+                <Lock className="mx-auto size-6 text-muted-foreground" aria-hidden />
+                <p className="mt-4 text-sm font-semibold">{t("prog.locked")}</p>
+              </section>
+            ) : (
+              <>
+                <section className="glass-card rounded-3xl p-6">
+                  <h2 className="text-lg">{t("prog.overall")}</h2>
+                  <p className="mt-3 text-4xl font-bold tabular-nums">
+                    {localizeNumber(
+                      totalTasks ? Math.round((doneCount / totalTasks) * 100) : 0,
+                      lang,
+                    )}
+                    %
+                  </p>
+                  <div className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full rounded-full bg-secondary transition-all duration-500 ease-out"
+                      style={{ width: `${totalTasks ? (doneCount / totalTasks) * 100 : 0}%` }}
+                    />
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    {localizeNumber(doneCount, lang)} / {localizeNumber(totalTasks, lang)}{" "}
+                    {t("road.progress")}
+                  </p>
+                </section>
+
+                <div className="grid gap-5 lg:grid-cols-2">
+                  <section className="rounded-3xl border border-border bg-card p-6">
+                    <h2 className="text-lg">{t("prog.phase")}</h2>
+                    <ul className="mt-4 space-y-4">
+                      {roadmap.map((phase, i) => {
+                        const total = phase.items.length;
+                        const completed = phase.items.filter((it) => done.has(it.id)).length;
+                        const pct = total ? Math.round((completed / total) * 100) : 0;
+                        return (
+                          <li key={phase.phase}>
+                            <div className="flex items-baseline justify-between gap-2 text-sm font-semibold">
+                              <span>{t(PHASE_TITLE_KEYS[i] ?? "road.phase1")}</span>
+                              <span className="tabular-nums">
+                                {localizeNumber(completed, lang)}/{localizeNumber(total, lang)}
+                              </span>
+                            </div>
+                            <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-muted">
+                              <div
+                                className="h-full rounded-full transition-all duration-500 ease-out"
+                                style={{
+                                  width: `${pct}%`,
+                                  backgroundColor: PHASE_COLORS[i] ?? "var(--navy)",
+                                }}
+                              />
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </section>
+
+                  <section className="rounded-3xl border border-border bg-card p-6">
+                    <h2 className="text-lg">{t("prog.weekly")}</h2>
+                    <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
+                      {weeklyProgress.map((w) => (
+                        <li
+                          key={w.week}
+                          className={cn(
+                            "rounded-2xl border p-3 text-center",
+                            w.total && w.completed === w.total
+                              ? "border-secondary/40 bg-secondary/8"
+                              : "border-border bg-background",
+                          )}
+                        >
+                          <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                            {t("road.week")} {localizeNumber(w.week, lang)}
+                          </p>
+                          <p className="mt-1 text-sm font-bold tabular-nums">
+                            {localizeNumber(w.completed, lang)}/{localizeNumber(w.total, lang)}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+
+                  <section className="rounded-3xl border border-border bg-card p-6">
+                    <h2 className="text-lg">{t("prog.completedActions")}</h2>
+                    {doneCount ? (
+                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                        {allItems
+                          .filter((i) => done.has(i.id))
+                          .map((i) => (
+                            <li key={i.id} className="flex items-start gap-2">
+                              <Check className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                              {i.title[lang]}
+                            </li>
+                          ))}
+                      </ul>
+                    ) : (
+                      <p className="mt-3 text-sm text-muted-foreground">{t("prog.none")}</p>
+                    )}
+                  </section>
+
+                  <section className="rounded-3xl border border-border bg-card p-6">
+                    <h2 className="text-lg">{t("prog.remaining")}</h2>
+                    {remainingPriorities.length ? (
+                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                        {remainingPriorities.map((i) => (
+                          <li key={i.id} className="flex items-start gap-2">
+                            <Target className="mt-0.5 size-4 shrink-0 text-destructive" aria-hidden />
+                            <span>
+                              {i.title[lang]} · {t("road.week")} {localizeNumber(i.week, lang)}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="mt-3 text-sm text-muted-foreground">{t("prog.noRemaining")}</p>
+                    )}
+                  </section>
+                </div>
+              </>
+            )}
+
+            <ReportSection />
+          </div>
+        ) : null}
+
+        {/* ── Account tab ─────────────────────────────── */}
+        {tab === "account" ? (
           <div className="rise-in mt-7 max-w-2xl space-y-5">
             <section className="rounded-3xl border border-border bg-card p-6">
               <h2 className="text-lg">{t("set.account")}</h2>
@@ -657,6 +1228,9 @@ function Dashboard() {
                   {t("set.terms")}
                 </Link>
               </div>
+              <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+                {t("disclaimer.responsible")}
+              </p>
             </section>
 
             <section className="rounded-3xl border border-border bg-card p-6">
