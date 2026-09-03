@@ -457,7 +457,7 @@ export const en = {
   "path.timing": "Suggested timing",
   "path.weeks": "Weeks",
   "path.disclaimer":
-    "These are pathway references. MigraGo does not claim government integration, endorsement or API access.",
+    "These are informational references to relevant institutions and resources you may consider — not referral partners, paid providers or booked services. MigraGo does not claim government integration, endorsement or API access.",
 
   "engine.title": "How your roadmap is built",
   "engine.s1": "Matching",
@@ -963,7 +963,7 @@ export const fa: Record<keyof typeof en, string> = {
   "path.timing": "زمان‌بندی پیشنهادی",
   "path.weeks": "هفتهٔ",
   "path.disclaimer":
-    "این‌ها ارجاع‌های مسیر هستند. میگراگو ادعای یکپارچگی با نهادهای دولتی، تأیید رسمی از سوی آن‌ها یا دسترسی به API آن‌ها ندارد.",
+    "این‌ها ارجاع‌های اطلاع‌رسانی به نهادها و منابع مرتبطی هستند که می‌توانید در نظر بگیرید — نه شرکای ارجاع، ارائه‌دهندگان پولی یا خدمات رزروشده. میگراگو ادعای یکپارچگی با نهادهای دولتی، تأیید رسمی از سوی آن‌ها یا دسترسی به API آن‌ها ندارد.",
 
   "engine.title": "نقشهٔ راه شما چگونه ساخته می‌شود",
   "engine.s1": "تطبیق",
