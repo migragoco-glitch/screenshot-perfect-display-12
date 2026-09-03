@@ -148,7 +148,7 @@ export const en = {
   "pay.sub":
     "Your free analysis gives you the general direction. Unlock the full Smart Integration Profile and your 12-week roadmap with SettleSmart Navigator.",
   "pay.teaser": "Locked preview",
-  "pay.unlock": "Unlock for €9.90/month",
+  "pay.unlock": "Unlock for €9.99/month",
   "pay.later": "Stay on the free overview",
   "pay.demoNote": "Demo checkout — no payment is taken in this MVP.",
 
@@ -182,8 +182,8 @@ export const en = {
   "metrics.funnel": "Free → paywall conversion funnel",
   "metrics.wtp": "Willingness-to-pay signal",
   "metrics.upgradeClicks": "\"Upgrade to Navigator\" clicks",
-  "metrics.checkoutStarted": "€9.90 checkouts initiated",
-  "metrics.checkoutDone": "€9.90 checkouts completed",
+  "metrics.checkoutStarted": "€9.99 checkouts initiated",
+  "metrics.checkoutDone": "€9.99 checkouts completed",
   "metrics.nationalities": "Top nationalities (aggregate)",
   "metrics.pathways": "Top Finland pathways selected",
   "metrics.countryInterest": "\"Coming Soon\" country interest",
@@ -307,7 +307,7 @@ export const en = {
   "faq.q2": "What is included in the free tier?",
   "faq.a2":
     "The 42-question assessment, basic analysis and an initial integration-readiness insight. The free Essential tier does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
-  "faq.q3": "What do I get with SettleSmart Navigator (€9.90/month)?",
+  "faq.q3": "What do I get with SettleSmart Navigator (€9.99/month)?",
   "faq.a3":
     "The Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights.",
   "faq.q4": "How is my roadmap generated?",
@@ -331,9 +331,9 @@ export const en = {
   "faq.q10": "How do I get support?",
   "faq.a10":
     "Use the Contact page: email us at migrago.co@gmail.com or start a WhatsApp chat with the team. Both channels are staffed during this MVP stage; an in-app assistant is a planned future capability, not a live feature.",
-  "faq.q11": "What does the €249 Stabilization Package include?",
+  "faq.q11": "What does the €249 MigraGo Advanced Integration Plan include?",
   "faq.a11":
-    "A documented future tier that could extend SettleSmart Navigator with guided connections to relevant institutions and verified service providers, together with progress monitoring during roadmap execution. It is a future product — not available in the current MVP — and there is no purchase flow for it. This tier would only be developed after the core product has been validated and the necessary agreements, permits and technical requirements are in place. It corresponds to the planned Future Ecosystem and institutional-tool capabilities. The current core offering is the free Essential tier and SettleSmart Navigator at €9.90/month.",
+    "A future advanced experience designed to provide deeper integration analysis and a more comprehensive personalized roadmap. Conceptually it would offer a more detailed identification of strengths, gaps and priorities, more comprehensive personalization, a more detailed staged roadmap, relevant institutions and resources presented for information, and a comprehensive downloadable report. It is future / locked — not available in the current MVP — and there is no purchase flow for it. The current core offering is the free Essential tier and SettleSmart Navigator at €9.99/month.",
 
   "contact.title": "Contact us",
   "contact.sub": "Email and WhatsApp are our support channels during this MVP stage. We reply within a few working days.",
@@ -367,7 +367,7 @@ export const en = {
 
   "metrics.emailVsPay":
     "Email captures are a lead-generation signal. Checkouts are the willingness-to-pay signal. They are counted separately.",
-  "metrics.checkoutSection": "€9.90 checkouts (Stripe test mode)",
+  "metrics.checkoutSection": "€9.99 checkouts (Stripe test mode)",
 
   // ── Corrective build: final round ─────────────────────────
   "support.email": "Email",
@@ -564,18 +564,18 @@ export const fa: Record<keyof typeof en, string> = {
     "ارزیابی ۴۲ پرسشی، تحلیل پایه و یک بینش اولیه از آمادگی ادغام.",
   "pricing.freeExcl": "شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
   "pricing.nav": "SettleSmart Navigator",
-  "pricing.navPrice": "۹٫۹۰ یورو",
+  "pricing.navPrice": "۹٫۹۹ یورو",
   "pricing.perMonth": "/ماه",
   "pricing.navDesc":
     "پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر.",
-  "pricing.stab": "بستهٔ تثبیت",
+  "pricing.stab": "طرح پیشرفتهٔ ادغام میگراگو",
   "pricing.stabPrice": "۲۴۹ یورو",
   "pricing.stabDesc":
-    "یک سطح آیندهٔ مستندشده که می‌تواند SettleSmart Navigator را با اتصال راهنمایی‌شده به نهادهای مرتبط و ارائه‌دهندگان خدمات راستی‌آزمایی‌شده، همراه با پایش پیشرفت در حین اجرای نقشهٔ راه، گسترش دهد.",
-  "pricing.stabFutureLabel": "محصول آینده — در نسخهٔ کنونی (MVP) در دسترس نیست",
+    "یک تجربهٔ پیشرفتهٔ آینده که برای ارائهٔ تحلیل عمیق‌تر ادغام و نقشهٔ راه شخصی‌سازی‌شدهٔ جامع‌تر طراحی شده است.",
+  "pricing.stabFutureLabel": "آینده / قفل‌شده — در نسخهٔ کنونی (MVP) در دسترس نیست",
   "pricing.stabFuture":
-    "این سطح تنها پس از اعتبارسنجی محصول اصلی و پس از فراهم‌شدن توافق‌ها، مجوزها و الزامات فنی لازم توسعه خواهد یافت. این سطح با قابلیت‌های برنامه‌ریزی‌شدهٔ زیست‌بوم آینده و ابزارهای نهادی هم‌راستا است. هیچ فرایند خریدی برای آن وجود ندارد.",
-  "pricing.future": "محصول آینده — در نسخهٔ کنونی (MVP) در دسترس نیست",
+    "از نظر مفهومی می‌تواند تحلیل عمیق‌تر ادغام، شناسایی دقیق‌تر نقاط قوت، شکاف‌ها و اولویت‌ها، شخصی‌سازی جامع‌تر، نقشهٔ راه مرحله‌ای و دقیق‌تر، نهادها و منابع مرتبط را به‌صورت اطلاع‌رسانی، و یک گزارش جامع قابل دانلود ارائه دهد. این طرح اکنون قفل است و هیچ فرایند خریدی برای آن وجود ندارد.",
+  "pricing.future": "آینده / قفل‌شده — در نسخهٔ کنونی (MVP) در دسترس نیست",
   "pricing.recommended": "پیشنهاد ما",
   "pricing.upgrade": "ارتقا به Navigator",
 
@@ -652,7 +652,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pay.sub":
     "تحلیل رایگان، جهت کلی مسیر شما را نشان می‌دهد. برای دیدن پروفایل کامل هوشمند ادغام و نقشه‌راه ۱۲ هفته‌ای، اشتراک SettleSmart Navigator را فعال کنید.",
   "pay.teaser": "پیش‌نمایش قفل‌شده",
-  "pay.unlock": "فعال‌سازی با ۹٫۹۰ یورو در ماه",
+  "pay.unlock": "فعال‌سازی با ۹٫۹۹ یورو در ماه",
   "pay.later": "ادامه با نمای رایگان",
   "pay.demoNote": "پرداخت نمایشی — در این نسخه هیچ مبلغی دریافت نمی‌شود.",
 
@@ -686,8 +686,8 @@ export const fa: Record<keyof typeof en, string> = {
   "metrics.funnel": "قیف تبدیل رایگان به صفحهٔ پرداخت",
   "metrics.wtp": "سیگنال تمایل به پرداخت",
   "metrics.upgradeClicks": "کلیک روی «ارتقا به Navigator»",
-  "metrics.checkoutStarted": "پرداخت‌های ۹٫۹۰ یورویی آغازشده",
-  "metrics.checkoutDone": "پرداخت‌های ۹٫۹۰ یورویی تکمیل‌شده",
+  "metrics.checkoutStarted": "پرداخت‌های ۹٫۹۹ یورویی آغازشده",
+  "metrics.checkoutDone": "پرداخت‌های ۹٫۹۹ یورویی تکمیل‌شده",
   "metrics.nationalities": "بیشترین ملیت‌ها (تجمیعی)",
   "metrics.pathways": "پرانتخاب‌ترین مسیرهای فنلاند",
   "metrics.countryInterest": "علاقه به کشورهای «به‌زودی»",
@@ -812,7 +812,7 @@ export const fa: Record<keyof typeof en, string> = {
   "faq.q2": "نسخهٔ رایگان شامل چه چیزهایی است؟",
   "faq.a2":
     "ارزیابی ۴۲ پرسشی، تحلیل پایه و یک بینش اولیه از آمادگی ادغام. سطح رایگان Essential شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
-  "faq.q3": "اشتراک SettleSmart Navigator (ماهانه ۹٫۹۰ یورو) چه چیزی ارائه می‌دهد؟",
+  "faq.q3": "اشتراک SettleSmart Navigator (ماهانه ۹٫۹۹ یورو) چه چیزی ارائه می‌دهد؟",
   "faq.a3":
     "پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر.",
   "faq.q4": "نقشهٔ راه چگونه ساخته می‌شود؟",
@@ -836,9 +836,9 @@ export const fa: Record<keyof typeof en, string> = {
   "faq.q10": "چگونه پشتیبانی بگیرم؟",
   "faq.a10":
     "از صفحهٔ تماس با ما استفاده کنید: رایانامه به نشانی migrago.co@gmail.com یا گفت‌وگوی مستقیم در واتس‌اپ. هر دو کانال در این مرحلهٔ MVP فعال‌اند؛ دستیار درون‌برنامه‌ای یک قابلیت آینده است و اکنون فعال نیست.",
-  "faq.q11": "بستهٔ تثبیت ۲۴۹ یورویی شامل چه چیزهایی است؟",
+  "faq.q11": "طرح پیشرفتهٔ ادغام میگراگو (۲۴۹ یورو) شامل چه چیزهایی است؟",
   "faq.a11":
-    "یک سطح آیندهٔ مستندشده که می‌تواند SettleSmart Navigator را با اتصال راهنمایی‌شده به نهادهای مرتبط و ارائه‌دهندگان خدمات راستی‌آزمایی‌شده، همراه با پایش پیشرفت در حین اجرای نقشهٔ راه، گسترش دهد. این یک محصول آینده است — در نسخهٔ کنونی (MVP) در دسترس نیست و هیچ فرایند خریدی برای آن وجود ندارد. این سطح تنها پس از اعتبارسنجی محصول اصلی و پس از فراهم‌شدن توافق‌ها، مجوزها و الزامات فنی لازم توسعه خواهد یافت و با قابلیت‌های برنامه‌ریزی‌شدهٔ زیست‌بوم آینده و ابزارهای نهادی هم‌راستا است. عرضهٔ اصلی کنونی، سطح رایگان Essential و SettleSmart Navigator با ۹٫۹۰ یورو در ماه است.",
+    "یک تجربهٔ پیشرفتهٔ آینده که برای ارائهٔ تحلیل عمیق‌تر ادغام و نقشهٔ راه شخصی‌سازی‌شدهٔ جامع‌تر طراحی شده است. از نظر مفهومی می‌تواند شناسایی دقیق‌تر نقاط قوت، شکاف‌ها و اولویت‌ها، شخصی‌سازی جامع‌تر، نقشهٔ راه مرحله‌ای و دقیق‌تر، نهادها و منابع مرتبط را به‌صورت اطلاع‌رسانی، و یک گزارش جامع قابل دانلود ارائه دهد. این محصول آینده / قفل‌شده است — در نسخهٔ کنونی (MVP) در دسترس نیست و هیچ فرایند خریدی برای آن وجود ندارد. عرضهٔ اصلی کنونی، سطح رایگان Essential و SettleSmart Navigator با ۹٫۹۹ یورو در ماه است.",
 
 
   "contact.title": "تماس با ما",
@@ -873,7 +873,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "metrics.emailVsPay":
     "ثبت رایانامه سیگنال جذب سرنخ است و پرداخت‌ها سیگنال تمایل واقعی به پرداخت. این دو جداگانه شمارش می‌شوند.",
-  "metrics.checkoutSection": "پرداخت‌های ۹٫۹۰ یورویی (حالت آزمایشی Stripe)",
+  "metrics.checkoutSection": "پرداخت‌های ۹٫۹۹ یورویی (حالت آزمایشی Stripe)",
 
   // ── ویرایش اصلاحی: دور پایانی ─────────────────────────────
   "support.email": "رایانامه",
