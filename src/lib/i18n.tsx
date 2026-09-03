@@ -306,10 +306,10 @@ export const en = {
     "No. You can complete the assessment and see your free overview without an account. Creating an account only saves your roadmap progress so it follows you across devices.",
   "faq.q2": "What is included in the free tier?",
   "faq.a2":
-    "The full 42-question assessment, a brief AI analysis and a general overview of your current status and direction. It does not include the full Smart Integration Profile or the 12-week roadmap.",
+    "The 42-question assessment, basic analysis and an initial integration-readiness insight. The free Essential tier does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
   "faq.q3": "What do I get with SettleSmart Navigator (€9.90/month)?",
   "faq.a3":
-    "All three dimension scores in full, the complete 12-week roadmap with institution-linked steps, live editing and recalculation, and progress tracking.",
+    "The Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights.",
   "faq.q4": "How is my roadmap generated?",
   "faq.a4":
     "Your answers produce three dimension scores and a set of gap flags. Each gap is matched against a curated knowledge table of Finnish procedures and mapped to the institution that actually handles it, then sequenced across four phases over 12 weeks.",
