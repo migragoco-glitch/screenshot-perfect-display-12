@@ -53,24 +53,24 @@ export const en = {
     "Every roadmap step is mapped to the authority or service that actually handles it.",
 
   "pricing.title": "Access tiers",
-  "pricing.free": "Free",
-  "pricing.freePrice": "€0",
+  "pricing.free": "Essential",
+  "pricing.freePrice": "Free",
   "pricing.freeDesc":
-    "Questionnaire + brief AI analysis + a general overview of your current status and direction.",
-  "pricing.freeExcl": "Does not include the full Smart Integration Profile or the 12-Week Roadmap.",
+    "The 42-question assessment, basic analysis and an initial integration-readiness insight.",
+  "pricing.freeExcl": "Does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "€9.90",
   "pricing.perMonth": "/month",
   "pricing.navDesc":
-    "Full Smart Integration Profile (all three dimensions), full 12-Week Roadmap, step-by-step execution guidance, live editing and recalculation.",
+    "The Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights.",
   "pricing.stab": "Stabilization Package",
   "pricing.stabPrice": "€249",
   "pricing.stabDesc":
-    "In addition to SettleSmart Navigator's capabilities, this package guides you toward the relevant government authorities and institutions, as well as a network of verified individuals and organizations — including certified translators and translation offices, lawyers and advisors (financial, tax, career, legal, family), daycare centres, schools, universities, vocational and technical education institutions, and cultural and arts centres. It also includes monitoring and evaluation of your progress, and ongoing support-team guidance to answer questions during roadmap execution.",
-  "pricing.stabFutureLabel": "Future vision (beyond current MVP scope)",
+    "A documented future tier that could extend SettleSmart Navigator with guided connections to relevant institutions and verified service providers, together with progress monitoring during roadmap execution.",
+  "pricing.stabFutureLabel": "Future Product — Not Available in the Current MVP",
   "pricing.stabFuture":
-    "In later development stages — following the necessary coordination, contractual agreements, and relevant licenses/permits with the institutions involved — this package could connect you directly to each institution's service desk at every roadmap phase, including scheduling and assigning a responsible caseworker, and, with your explicit consent, make your information visible on that institution's staff dashboard. This corresponds to the planned Connect+ (B2B) and institutional dashboard (B2G) capabilities, to be developed only after the core product has been validated. This package is not active in the current version.",
-  "pricing.future": "Future · not active",
+    "This tier would only be developed after the core product has been validated and the necessary agreements, permits and technical requirements are in place. It corresponds to the planned Future Ecosystem and institutional-tool capabilities. There is no purchase flow for it.",
+  "pricing.future": "Future Product — Not Available in the Current MVP",
   "pricing.recommended": "Recommended",
   "pricing.upgrade": "Upgrade to Navigator",
 
@@ -306,10 +306,10 @@ export const en = {
     "No. You can complete the assessment and see your free overview without an account. Creating an account only saves your roadmap progress so it follows you across devices.",
   "faq.q2": "What is included in the free tier?",
   "faq.a2":
-    "The full 42-question assessment, a brief AI analysis and a general overview of your current status and direction. It does not include the full Smart Integration Profile or the 12-week roadmap.",
+    "The 42-question assessment, basic analysis and an initial integration-readiness insight. The free Essential tier does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
   "faq.q3": "What do I get with SettleSmart Navigator (€9.90/month)?",
   "faq.a3":
-    "All three dimension scores in full, the complete 12-week roadmap with institution-linked steps, live editing and recalculation, and progress tracking.",
+    "The Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights.",
   "faq.q4": "How is my roadmap generated?",
   "faq.a4":
     "Your answers produce three dimension scores and a set of gap flags. Each gap is matched against a curated knowledge table of Finnish procedures and mapped to the institution that actually handles it, then sequenced across four phases over 12 weeks.",
@@ -333,7 +333,7 @@ export const en = {
     "Use the Contact page: email us at migrago.co@gmail.com or start a WhatsApp chat with the team. Both channels are staffed during this MVP stage; an in-app assistant is a planned future capability, not a live feature.",
   "faq.q11": "What does the €249 Stabilization Package include?",
   "faq.a11":
-    "In addition to SettleSmart Navigator's capabilities, this package guides you toward the relevant government authorities and institutions, as well as a network of verified individuals and organizations — including certified translators and translation offices, lawyers and advisors (financial, tax, career, legal, family), daycare centres, schools, universities, vocational and technical education institutions, and cultural and arts centres. It also includes monitoring and evaluation of your progress, and ongoing support-team guidance during roadmap execution. Future vision (beyond current MVP scope): in later development stages — following the necessary coordination, contractual agreements, and relevant licenses/permits with the institutions involved — this package could connect you directly to each institution's service desk at every roadmap phase, including scheduling and assigning a responsible caseworker, and, with your explicit consent, make your information visible on that institution's staff dashboard. This corresponds to the planned Connect+ (B2B) and institutional dashboard (B2G) capabilities, to be developed only after the core product has been validated. This package is not active in the current version.",
+    "A documented future tier that could extend SettleSmart Navigator with guided connections to relevant institutions and verified service providers, together with progress monitoring during roadmap execution. It is a future product — not available in the current MVP — and there is no purchase flow for it. This tier would only be developed after the core product has been validated and the necessary agreements, permits and technical requirements are in place. It corresponds to the planned Future Ecosystem and institutional-tool capabilities. The current core offering is the free Essential tier and SettleSmart Navigator at €9.90/month.",
 
   "contact.title": "Contact us",
   "contact.sub": "Email and WhatsApp are our support channels during this MVP stage. We reply within a few working days.",
@@ -558,24 +558,24 @@ export const fa: Record<keyof typeof en, string> = {
   "inst.sub": "هر گام نقشه‌راه به مرجع یا سازمانی که واقعاً متولی آن است نسبت داده می‌شود.",
 
   "pricing.title": "سطوح دسترسی",
-  "pricing.free": "رایگان",
-  "pricing.freePrice": "۰ یورو",
+  "pricing.free": "Essential (پایه)",
+  "pricing.freePrice": "رایگان",
   "pricing.freeDesc":
-    "پرسش‌نامه + تحلیل کوتاه هوش مصنوعی + نمای کلی از وضعیت و جهت‌گیری فعلی شما.",
-  "pricing.freeExcl": "شامل پروفایل کامل هوشمند ادغام یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
+    "ارزیابی ۴۲ پرسشی، تحلیل پایه و یک بینش اولیه از آمادگی ادغام.",
+  "pricing.freeExcl": "شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "۹٫۹۰ یورو",
   "pricing.perMonth": "/ماه",
   "pricing.navDesc":
-    "پروفایل کامل هوشمند ادغام (هر سه بُعد)، نقشه‌راه کامل ۱۲ هفته‌ای، راهنمای اجرای گام‌به‌گام، ویرایش زنده و محاسبهٔ مجدد.",
+    "پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر.",
   "pricing.stab": "بستهٔ تثبیت",
   "pricing.stabPrice": "۲۴۹ یورو",
   "pricing.stabDesc":
-    "افزون بر قابلیت‌های SettleSmart Navigator، این بسته کاربر را به نهادها و مراجع دولتی مرتبط و نیز به شبکه‌ای از افراد و سازمان‌های راستی‌آزمایی‌شده راهنمایی می‌کند؛ از جمله مترجمان رسمی و دفاتر ترجمه، وکلا و مشاوران (مالی، مالیاتی، شغلی، حقوقی و خانواده)، مهدکودک‌ها، مدارس، دانشگاه‌ها، مراکز آموزش فنی‌وحرفه‌ای و مراکز فرهنگی و هنری. همچنین شامل پایش و ارزیابی پیشرفت کاربر و راهنمایی مستمر تیم پشتیبانی برای پاسخ به پرسش‌ها در حین اجرای نقشهٔ راه است.",
-  "pricing.stabFutureLabel": "چشم‌انداز آینده (فراتر از دامنهٔ نسخهٔ کنونی)",
+    "یک سطح آیندهٔ مستندشده که می‌تواند SettleSmart Navigator را با اتصال راهنمایی‌شده به نهادهای مرتبط و ارائه‌دهندگان خدمات راستی‌آزمایی‌شده، همراه با پایش پیشرفت در حین اجرای نقشهٔ راه، گسترش دهد.",
+  "pricing.stabFutureLabel": "محصول آینده — در نسخهٔ کنونی (MVP) در دسترس نیست",
   "pricing.stabFuture":
-    "در مراحل بعدی توسعه، این بسته می‌تواند کاربر را در هر مرحله از نقشهٔ راه مستقیماً به میز خدمت مربوط در هر نهاد وصل کند — از جمله زمان‌بندی و تخصیص کارشناس مسئول (بعد از هماهنگی های لازم، عقد قرارداد و اخذ مجوز از نهادهای مذکور) — و با رضایت صریح کاربر، اطلاعات او را در داشبورد کارکنان آن نهاد قابل مشاهده کند. این موضوع با قابلیت‌ های برنامه‌ریزی‌ شدهٔ Connect+ (B2B) و داشبورد نهادی (B2G) هم‌ راستا است و تنها پس از اعتبارسنجی محصول اصلی توسعه خواهد یافت.",
-  "pricing.future": "آینده · غیرفعال",
+    "این سطح تنها پس از اعتبارسنجی محصول اصلی و پس از فراهم‌شدن توافق‌ها، مجوزها و الزامات فنی لازم توسعه خواهد یافت. این سطح با قابلیت‌های برنامه‌ریزی‌شدهٔ زیست‌بوم آینده و ابزارهای نهادی هم‌راستا است. هیچ فرایند خریدی برای آن وجود ندارد.",
+  "pricing.future": "محصول آینده — در نسخهٔ کنونی (MVP) در دسترس نیست",
   "pricing.recommended": "پیشنهاد ما",
   "pricing.upgrade": "ارتقا به Navigator",
 
@@ -811,10 +811,10 @@ export const fa: Record<keyof typeof en, string> = {
     "خیر. ارزیابی و نمای کلی رایگان بدون حساب کاربری در دسترس است. ساخت حساب تنها پیشرفت نقشهٔ راه شما را ذخیره می‌کند تا روی همهٔ دستگاه‌ها همراه‌تان باشد.",
   "faq.q2": "نسخهٔ رایگان شامل چه چیزهایی است؟",
   "faq.a2":
-    "کل ارزیابی ۴۲ پرسشی، تحلیل کوتاه هوش مصنوعی و نمای کلی از وضعیت و جهت‌گیری فعلی شما. پروفایل کامل هوشمند ادغام و نقشه‌راه ۱۲ هفته‌ای در آن نیست.",
+    "ارزیابی ۴۲ پرسشی، تحلیل پایه و یک بینش اولیه از آمادگی ادغام. سطح رایگان Essential شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
   "faq.q3": "اشتراک SettleSmart Navigator (ماهانه ۹٫۹۰ یورو) چه چیزی ارائه می‌دهد؟",
   "faq.a3":
-    "نمرهٔ کامل هر سه بُعد، نقشه‌راه کامل ۱۲ هفته‌ای با گام‌های متصل به نهادهای رسمی، ویرایش زنده و محاسبهٔ مجدد، و پیگیری پیشرفت.",
+    "پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر.",
   "faq.q4": "نقشهٔ راه چگونه ساخته می‌شود؟",
   "faq.a4":
     "پاسخ‌های شما سه نمرهٔ بُعدی و مجموعه‌ای از شکاف‌ها را می‌سازد. هر شکاف با جدول دانش رویه‌های رسمی فنلاند تطبیق داده می‌شود، به نهاد متولی نسبت می‌یابد و سپس در چهار فاز طی ۱۲ هفته چیده می‌شود.",
@@ -838,7 +838,7 @@ export const fa: Record<keyof typeof en, string> = {
     "از صفحهٔ تماس با ما استفاده کنید: رایانامه به نشانی migrago.co@gmail.com یا گفت‌وگوی مستقیم در واتس‌اپ. هر دو کانال در این مرحلهٔ MVP فعال‌اند؛ دستیار درون‌برنامه‌ای یک قابلیت آینده است و اکنون فعال نیست.",
   "faq.q11": "بستهٔ تثبیت ۲۴۹ یورویی شامل چه چیزهایی است؟",
   "faq.a11":
-    "افزون بر قابلیت‌های SettleSmart Navigator، این بسته کاربر را به نهادها و مراجع دولتی مرتبط و نیز به شبکه‌ای از افراد و سازمان‌های راستی‌آزمایی‌شده راهنمایی می‌کند؛ از جمله مترجمان رسمی و دفاتر ترجمه، وکلا و مشاوران (مالی، مالیاتی، شغلی، حقوقی و خانواده)، مهدکودک‌ها، مدارس، دانشگاه‌ها، مراکز آموزش فنی‌وحرفه‌ای و مراکز فرهنگی و هنری. همچنین شامل پایش و ارزیابی پیشرفت کاربر و راهنمایی مستمر تیم پشتیبانی در حین اجرای نقشهٔ راه است. چشم‌انداز آینده (فراتر از دامنهٔ نسخهٔ کنونی): در مراحل بعدی، این بسته می‌تواند کاربر را در هر مرحله از نقشهٔ راه مستقیماً به میز خدمت هر نهاد وصل کند — از جمله زمان‌بندی و تخصیص کارشناس مسئول (بعد از هماهنگی های لازم، عقد قرارداد و اخذ مجوزهای مرتبط از نهادهای مذکور)— و با رضایت صریح کاربر، اطلاعات او را در داشبورد کارکنان آن نهاد نمایان کند (قابلیت‌های برنامه‌ریزی‌شدهٔ Connect+ در حوزهٔ B2B و داشبورد نهادی در حوزهٔ B2G). این بسته در نسخهٔ کنونی فعال نیست.",
+    "یک سطح آیندهٔ مستندشده که می‌تواند SettleSmart Navigator را با اتصال راهنمایی‌شده به نهادهای مرتبط و ارائه‌دهندگان خدمات راستی‌آزمایی‌شده، همراه با پایش پیشرفت در حین اجرای نقشهٔ راه، گسترش دهد. این یک محصول آینده است — در نسخهٔ کنونی (MVP) در دسترس نیست و هیچ فرایند خریدی برای آن وجود ندارد. این سطح تنها پس از اعتبارسنجی محصول اصلی و پس از فراهم‌شدن توافق‌ها، مجوزها و الزامات فنی لازم توسعه خواهد یافت و با قابلیت‌های برنامه‌ریزی‌شدهٔ زیست‌بوم آینده و ابزارهای نهادی هم‌راستا است. عرضهٔ اصلی کنونی، سطح رایگان Essential و SettleSmart Navigator با ۹٫۹۰ یورو در ماه است.",
 
 
   "contact.title": "تماس با ما",
