@@ -26,7 +26,7 @@ export const Route = createFileRoute("/checkout")({
   component: CheckoutPage,
 });
 
-const BASE_PRICE = 9.9;
+const BASE_PRICE = 9.99;
 const DISCOUNT = 0.5;
 
 function CheckoutPage() {
