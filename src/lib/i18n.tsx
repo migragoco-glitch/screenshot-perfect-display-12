@@ -53,24 +53,24 @@ export const en = {
     "Every roadmap step is mapped to the authority or service that actually handles it.",
 
   "pricing.title": "Access tiers",
-  "pricing.free": "Free",
-  "pricing.freePrice": "€0",
+  "pricing.free": "Essential",
+  "pricing.freePrice": "Free",
   "pricing.freeDesc":
-    "Questionnaire + brief AI analysis + a general overview of your current status and direction.",
-  "pricing.freeExcl": "Does not include the full Smart Integration Profile or the 12-Week Roadmap.",
+    "The 42-question assessment, basic analysis and an initial integration-readiness insight.",
+  "pricing.freeExcl": "Does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "€9.90",
   "pricing.perMonth": "/month",
   "pricing.navDesc":
-    "Full Smart Integration Profile (all three dimensions), full 12-Week Roadmap, step-by-step execution guidance, live editing and recalculation.",
+    "The Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights.",
   "pricing.stab": "Stabilization Package",
   "pricing.stabPrice": "€249",
   "pricing.stabDesc":
-    "In addition to SettleSmart Navigator's capabilities, this package guides you toward the relevant government authorities and institutions, as well as a network of verified individuals and organizations — including certified translators and translation offices, lawyers and advisors (financial, tax, career, legal, family), daycare centres, schools, universities, vocational and technical education institutions, and cultural and arts centres. It also includes monitoring and evaluation of your progress, and ongoing support-team guidance to answer questions during roadmap execution.",
-  "pricing.stabFutureLabel": "Future vision (beyond current MVP scope)",
+    "A documented future tier that could extend SettleSmart Navigator with guided connections to relevant institutions and verified service providers, together with progress monitoring during roadmap execution.",
+  "pricing.stabFutureLabel": "Future Product — Not Available in the Current MVP",
   "pricing.stabFuture":
-    "In later development stages — following the necessary coordination, contractual agreements, and relevant licenses/permits with the institutions involved — this package could connect you directly to each institution's service desk at every roadmap phase, including scheduling and assigning a responsible caseworker, and, with your explicit consent, make your information visible on that institution's staff dashboard. This corresponds to the planned Connect+ (B2B) and institutional dashboard (B2G) capabilities, to be developed only after the core product has been validated. This package is not active in the current version.",
-  "pricing.future": "Future · not active",
+    "This tier would only be developed after the core product has been validated and the necessary agreements, permits and technical requirements are in place. It corresponds to the planned Future Ecosystem and institutional-tool capabilities. There is no purchase flow for it.",
+  "pricing.future": "Future Product — Not Available in the Current MVP",
   "pricing.recommended": "Recommended",
   "pricing.upgrade": "Upgrade to Navigator",
 
