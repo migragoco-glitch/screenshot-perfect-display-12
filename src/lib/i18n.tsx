@@ -59,18 +59,18 @@ export const en = {
     "The 42-question assessment, basic analysis and an initial integration-readiness insight.",
   "pricing.freeExcl": "Does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
   "pricing.nav": "SettleSmart Navigator",
-  "pricing.navPrice": "€9.90",
+  "pricing.navPrice": "€9.99",
   "pricing.perMonth": "/month",
   "pricing.navDesc":
     "The Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights.",
-  "pricing.stab": "Stabilization Package",
+  "pricing.stab": "MigraGo Advanced Integration Plan",
   "pricing.stabPrice": "€249",
   "pricing.stabDesc":
-    "A documented future tier that could extend SettleSmart Navigator with guided connections to relevant institutions and verified service providers, together with progress monitoring during roadmap execution.",
-  "pricing.stabFutureLabel": "Future Product — Not Available in the Current MVP",
+    "A future advanced experience designed to provide deeper integration analysis and a more comprehensive personalized roadmap.",
+  "pricing.stabFutureLabel": "Future / Locked — not available in the current MVP",
   "pricing.stabFuture":
-    "This tier would only be developed after the core product has been validated and the necessary agreements, permits and technical requirements are in place. It corresponds to the planned Future Ecosystem and institutional-tool capabilities. There is no purchase flow for it.",
-  "pricing.future": "Future Product — Not Available in the Current MVP",
+    "Conceptually it would offer deeper integration analysis, a more detailed identification of strengths, gaps and priorities, more comprehensive personalization, a more detailed staged roadmap, relevant institutions and resources presented for information, and a comprehensive downloadable report. It is locked today and there is no purchase flow for it.",
+  "pricing.future": "Future / Locked — not available in the current MVP",
   "pricing.recommended": "Recommended",
   "pricing.upgrade": "Upgrade to Navigator",
 
