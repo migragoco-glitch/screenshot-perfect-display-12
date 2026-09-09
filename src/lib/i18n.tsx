@@ -21,7 +21,7 @@ export const en = {
 
   "hero.title": "Know where you stand in your migration journey. Know what comes next.",
   "hero.sub":
-    "MigraGo uses a smart assessment to map your current situation and level of readiness for migration, settlement, and social integration, and then builds a personalized 12-week roadmap for you based on actual laws, procedures, and services.",
+    "MigraGo uses a smart assessment to understand your current situation and readiness for settling and integrating in your destination country, then builds a personalized 12-week roadmap based on relevant laws, procedures, services, and support resources.",
   "hero.badge": "Evidence-based integration pathway",
   "hero.badgeLine1": "Evidence-based integration pathway",
   "hero.badgeLine2": "Informed by Finland's knowledge and social-integration ecosystem",
