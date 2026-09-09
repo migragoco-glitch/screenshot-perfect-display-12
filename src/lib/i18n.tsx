@@ -544,7 +544,7 @@ export const fa: Record<keyof typeof en, string> = {
   "hero.badge": "مسیر ادغام مبتنی بر شواهد",
   "hero.badgeLine1": "مسیر ادغام مبتنی بر شواهد",
   "hero.badgeLine2": "با تکیه بر دانش و زیست بوم ادغام اجتماعی فنلاند ",
-  "hero.time": "۹ تا ۱۲ دقیقه — ۴۲ پرسش — ذخیره و ادامه در هر زمان",
+  "hero.time": "\n",
   "hero.discoverTitle": "با تکمیل ارزیابی MigraGo، ظرف حدود ۱۰ دقیقه:",
   "hero.discoverSub": "این موارد را کشف می‌کنید",
   "hero.discover1": "وضعیت و آمادگی شما",
@@ -552,7 +552,7 @@ export const fa: Record<keyof typeof en, string> = {
   "hero.discover3": "قدم بعدی و منابع",
   "hero.navigatorTitle": "SettleSmart Navigator",
   "hero.navigatorNotice": "MigraGo یک فرم درخواست ویزا یا مشاورهٔ مهاجرتی نیست.",
-  "hero.roadmapStage": "مرحلهٔ ۲ — نقشه‌راه شما",
+  "hero.roadmapStage": "مرحلهٔ دو: نقشه‌راه شما",
   "hero.roadmapWeeks1": "هفتهٔ ۱–۳",
   "hero.roadmapWeeks2": "هفتهٔ ۴–۶",
   "hero.roadmapWeeks3": "هفتهٔ ۷–۹",
@@ -807,7 +807,7 @@ export const fa: Record<keyof typeof en, string> = {
   // ── ویرایش اصلاحی نسخهٔ ۲ ─────────────────────────────────
   "hero.country": "فنلاند",
   "hero.finlandPartner": "با همراهی زیست‌بوم ادغام اجتماعی فنلاند ساخته شده است",
-  "hero.previewTitle": "پروفایل هوشمند شما",
+  "hero.previewTitle": "مرحله یک: پروفایل هوشمند شما",
   "hero.previewNote": "این نمونه صرفاً نمایشی است؛ نمرهٔ شما از پاسخ‌های خودتان محاسبه می‌شود.",
 
   "about.processTitle": "ادغام اجتماعی یک فرایند است...",
