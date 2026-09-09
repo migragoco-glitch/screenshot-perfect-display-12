@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BadgeCheck, Briefcase, Building2, ClipboardList, Compass, House, Hourglass, Info, Route as RouteIcon, Scale, Sparkles, Target, User, Users } from "lucide-react";
+import { ArrowRight, BadgeCheck, Briefcase, Building2, ClipboardList, Compass, House, Hourglass, Info, Route as RouteIcon, Scale, Sparkles, User, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
@@ -154,7 +154,7 @@ function RoadmapPreview() {
 
 const DISCOVER_ITEMS = [
   { key: "hero.discover1", fill: "#3AC8C3", icon: "#021C3B", Icon: User },
-  { key: "hero.discover2", fill: "#02808A", icon: "#FFFFFF", Icon: Target },
+  { key: "hero.discover2", fill: "#02808A", icon: "#FFFFFF", Icon: ClipboardList },
   { key: "hero.discover3", fill: "#CB902C", icon: "#021C3B", Icon: Compass },
 ] as const;
 
@@ -235,7 +235,7 @@ function Landing() {
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Link
                   to="/consent"
-                  className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-card)] transition-colors duration-200 ease-out hover:bg-primary/90"
+                  className="group inline-flex items-center gap-2 rounded-full bg-[var(--navigator-teal)] px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-card)] transition-colors duration-200 ease-out hover:bg-[var(--navigator-teal)]/90"
                 >
                   {t("nav.cta")}
                   <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" aria-hidden />
@@ -246,7 +246,7 @@ function Landing() {
 
             <div className="glass-card relative rounded-3xl p-6 md:p-8">
               <span className="absolute -top-3 start-3 flex size-[26px] items-center justify-center rounded-full border-[1.5px] bg-white" style={{ borderColor: "#CB902C" }} aria-hidden>
-                <img src={arrowMarkAsset.url} alt="" className="size-4 object-contain" />
+                <img src={arrowMarkAsset.url} alt="" className="size-[13px] object-contain" />
               </span>
               <h2 className="text-center text-[18px] font-semibold text-[var(--navigator-teal)]">
                 {t("hero.navigatorTitle")}
@@ -255,18 +255,20 @@ function Landing() {
                 <Info className="size-4 shrink-0 text-[var(--navigator-notice-icon)]" aria-hidden />
                 <span>{t("hero.navigatorNotice")}</span>
               </div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                {t("hero.previewTitle")}
-              </p>
-              <SampleDonut />
-              <div className="mt-5 grid grid-cols-3 gap-3">
-                {SAMPLE.map((d) => (
-                  <MiniDonut key={d.key} label={t(d.key)} value={d.value} color={d.color} />
-                ))}
+              <div className="mt-5 rounded-[10px] border border-border bg-[#F7F4EE] p-4">
+                <p className="text-center text-sm font-semibold text-[var(--navigator-navy)]">
+                  {t("hero.previewTitle")}
+                </p>
+                <SampleDonut />
+                <div className="mt-5 grid grid-cols-3 gap-3">
+                  {SAMPLE.map((d) => (
+                    <MiniDonut key={d.key} label={t(d.key)} value={d.value} color={d.color} />
+                  ))}
+                </div>
+                <p className="mt-5 border-t border-border pt-4 text-xs text-muted-foreground">
+                  {t("hero.previewNote")}
+                </p>
               </div>
-              <p className="mt-5 border-t border-border pt-4 text-xs text-muted-foreground">
-                {t("hero.previewNote")}
-              </p>
               <RoadmapPreview />
               <p className="mt-4 text-center text-xs text-[var(--navigator-navy)] opacity-70">
                 {t("hero.navigatorClosing")}

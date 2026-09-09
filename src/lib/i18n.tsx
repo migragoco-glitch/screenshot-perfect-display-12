@@ -289,7 +289,7 @@ export const en = {
   // ── Corrective build v2 ───────────────────────────────────
   "hero.country": "Finland",
   "hero.finlandPartner": "Built in partnership with Finland's integration ecosystem",
-  "hero.previewTitle": "Sample Smart Integration Profile",
+  "hero.previewTitle": "Your Smart Integration Profile",
   "hero.previewNote": "Illustrative sample — your own scores are calculated from your answers.",
 
   "about.processTitle": "Social integration is a process...",
@@ -807,7 +807,7 @@ export const fa: Record<keyof typeof en, string> = {
   // ── ویرایش اصلاحی نسخهٔ ۲ ─────────────────────────────────
   "hero.country": "فنلاند",
   "hero.finlandPartner": "با همراهی زیست‌بوم ادغام اجتماعی فنلاند ساخته شده است",
-  "hero.previewTitle": "نمونهٔ پروفایل هوشمند ادغام",
+  "hero.previewTitle": "پروفایل هوشمند شما",
   "hero.previewNote": "این نمونه صرفاً نمایشی است؛ نمرهٔ شما از پاسخ‌های خودتان محاسبه می‌شود.",
 
   "about.processTitle": "ادغام اجتماعی یک فرایند است...",
