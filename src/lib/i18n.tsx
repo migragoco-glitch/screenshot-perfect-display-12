@@ -33,7 +33,7 @@ export const en = {
   "hero.discover3": "Next step and resources",
   "hero.navigatorTitle": "SettleSmart Navigator",
   "hero.navigatorNotice": "MigraGo is not a visa application or immigration consultation service.",
-  "hero.roadmapStage": "Stage 2 — Your Roadmap",
+  "hero.roadmapStage": "Stage 2 : Your Roadmap",
   "hero.roadmapWeeks1": "Weeks 1-3",
   "hero.roadmapWeeks2": "Weeks 4-6",
   "hero.roadmapWeeks3": "Weeks 7-9",
