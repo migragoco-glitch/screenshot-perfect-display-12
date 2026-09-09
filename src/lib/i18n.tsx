@@ -519,7 +519,7 @@ export const en = {
 export const fa: Record<keyof typeof en, string> = {
   "nav.country": "کشور",
   "nav.language": "زبان",
-  "nav.cta": "شروع ارزیابی رایگان",
+  "nav.cta": "مسیر شخصی من را بساز",
   "nav.profile": "پروفایل من",
   "nav.dashboard": "داشبورد",
   "nav.comingSoon": "به‌زودی",
