@@ -245,7 +245,7 @@ function Landing() {
             </div>
 
             <div className="glass-card relative rounded-3xl p-6 md:p-8">
-              <span className="absolute -top-3 end-3 flex size-[26px] items-center justify-center rounded-full border-[1.5px] border-[var(--navigator-gold)] bg-card" aria-hidden>
+              <span className="absolute -top-3 start-3 flex size-[26px] items-center justify-center rounded-full border-[1.5px] bg-white" style={{ borderColor: "#CB902C" }} aria-hidden>
                 <img src={arrowMarkAsset.url} alt="" className="size-4 object-contain" />
               </span>
               <h2 className="text-center text-[18px] font-semibold text-[var(--navigator-teal)]">
