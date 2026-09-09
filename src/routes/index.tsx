@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BadgeCheck, Building2, ClipboardList, Compass, Hourglass, Route as RouteIcon, Sparkles } from "lucide-react";
+import { ArrowRight, BadgeCheck, Briefcase, Building2, ClipboardList, Compass, House, Hourglass, Info, Route as RouteIcon, Scale, Sparkles, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import arrowMarkAsset from "@/assets/migrago-arrow.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { useI18n } from "@/lib/i18n";
 import { useAppState } from "@/lib/store";
@@ -116,6 +117,41 @@ function MiniDonut({ label, value, color }: { label: string; value: number; colo
   );
 }
 
+const ROADMAP_PHASES = [
+  { label: "hero.roadmapWeeks1", height: "h-1/4", color: "bg-[var(--navigator-light-teal)] text-[var(--navigator-light-teal)]", icon: Scale },
+  { label: "hero.roadmapWeeks2", height: "h-[45%]", color: "bg-[var(--navigator-teal)] text-[var(--navigator-teal)]", icon: House },
+  { label: "hero.roadmapWeeks3", height: "h-[65%]", color: "bg-[var(--navigator-olive-gold)] text-[var(--navigator-olive-gold)]", icon: Briefcase },
+  { label: "hero.roadmapWeeks4", height: "h-full", color: "bg-[var(--navigator-gold)] text-[var(--navigator-gold)]", icon: Users },
+] as const;
+
+function RoadmapPreview() {
+  const { t } = useI18n();
+
+  return (
+    <div className="mt-6 rounded-2xl bg-[var(--navigator-navy)] px-4 pb-5 pt-4">
+      <p className="text-center text-xs font-semibold text-[var(--navigator-cream)]">
+        {t("hero.roadmapStage")}
+      </p>
+      <div className="mt-5 grid h-44 grid-cols-4 gap-2 sm:gap-3">
+        {ROADMAP_PHASES.map((phase, index) => {
+          const PhaseIcon = phase.icon;
+          return (
+            <div key={phase.label} className="grid min-w-0 grid-rows-[1fr_auto] gap-2">
+              <div className="flex min-h-0 flex-col items-center justify-end">
+                <PhaseIcon className={`mb-2 size-4 shrink-0 ${phase.color.split(" ")[1]}`} aria-hidden />
+                <div className={`w-full rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`} aria-hidden />
+              </div>
+              <span className={`text-center text-[9px] leading-tight text-[var(--navigator-cream)] sm:text-[10px] ${index === 3 ? "font-bold" : "font-medium opacity-80"}`}>
+                {t(phase.label)}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function Landing() {
   const { t, lang } = useI18n();
   const { state } = useAppState();
@@ -165,7 +201,17 @@ function Landing() {
               </div>
             </div>
 
-            <div className="glass-card rounded-3xl p-6 md:p-8">
+            <div className="glass-card relative rounded-3xl p-6 md:p-8">
+              <span className="absolute -top-3 end-3 flex size-[26px] items-center justify-center rounded-full border-[1.5px] border-[var(--navigator-gold)] bg-card" aria-hidden>
+                <img src={arrowMarkAsset.url} alt="" className="size-4 object-contain" />
+              </span>
+              <h2 className="text-center text-[18px] font-semibold text-[var(--navigator-teal)]">
+                {t("hero.navigatorTitle")}
+              </h2>
+              <div className="mt-5 flex items-center gap-2 rounded-xl bg-[var(--navigator-notice)] px-3 py-2.5 text-xs leading-relaxed text-[var(--navigator-notice-text)]">
+                <Info className="size-4 shrink-0 text-[var(--navigator-notice-icon)]" aria-hidden />
+                <span>{t("hero.navigatorNotice")}</span>
+              </div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                 {t("hero.previewTitle")}
               </p>
@@ -177,6 +223,10 @@ function Landing() {
               </div>
               <p className="mt-5 border-t border-border pt-4 text-xs text-muted-foreground">
                 {t("hero.previewNote")}
+              </p>
+              <RoadmapPreview />
+              <p className="mt-4 text-center text-xs text-[var(--navigator-navy)] opacity-70">
+                {t("hero.navigatorClosing")}
               </p>
             </div>
           </div>
