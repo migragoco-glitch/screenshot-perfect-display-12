@@ -67,6 +67,15 @@
   --teal: #2a908f;
   --gold: #c8a96a;
   --plum: #3d2c6b;
+  --navigator-navy: #021c3b;
+  --navigator-teal: #02808a;
+  --navigator-light-teal: #3ac8c3;
+  --navigator-gold: #cb902c;
+  --navigator-olive-gold: #a8862e;
+  --navigator-cream: #faeeda;
+  --navigator-notice: #fbeaf0;
+  --navigator-notice-text: #72243e;
+  --navigator-notice-icon: #993556;
 
   --background: #f8f6f2;
   --foreground: var(--navy);
