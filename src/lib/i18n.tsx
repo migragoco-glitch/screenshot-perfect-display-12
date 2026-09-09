@@ -25,7 +25,7 @@ export const en = {
   "hero.badge": "Evidence-based integration pathway",
   "hero.badgeLine1": "Evidence-based integration pathway",
   "hero.badgeLine2": "Informed by Finland's knowledge and social-integration ecosystem",
-  "hero.time": "9–12 minutes — 42 questions — save and resume anytime",
+  "hero.time": "\n",
   "hero.discoverTitle": "With MigraGo's assessment, in about 10 minutes:",
   "hero.discoverSub": "discover these:",
   "hero.discover1": "Your status and readiness",
