@@ -13,7 +13,7 @@ export type Lang = "en" | "fa";
 export const en = {
   "nav.country": "Country",
   "nav.language": "Language",
-  "nav.cta": "Start your free assessment",
+  "nav.cta": "Build My Personal Pathway",
   "nav.profile": "My Profile",
   "nav.dashboard": "Dashboard",
   "nav.comingSoon": "Coming Soon",
