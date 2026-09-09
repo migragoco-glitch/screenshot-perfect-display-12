@@ -152,6 +152,47 @@ function RoadmapPreview() {
   );
 }
 
+const DISCOVER_ITEMS = [
+  { key: "hero.discover1", fill: "#3AC8C3", icon: "#021C3B", Icon: User },
+  { key: "hero.discover2", fill: "#02808A", icon: "#FFFFFF", Icon: Target },
+  { key: "hero.discover3", fill: "#CB902C", icon: "#021C3B", Icon: Compass },
+] as const;
+
+function DiscoverPreviewCard() {
+  const { t } = useI18n();
+
+  return (
+    <div
+      className="mt-8 rounded-[14px] border p-5 shadow-[0_10px_30px_-12px_rgba(2,28,59,0.45)]"
+      style={{ background: "#021C3B", borderColor: "#1B3A5C" }}
+    >
+      <p className="text-[12px] font-bold text-white">{t("hero.discoverTitle")}</p>
+      <p className="mt-1 text-[9.5px]" style={{ color: "#8FA3B8" }}>
+        {t("hero.discoverSub")}
+      </p>
+      <div className="mt-5 grid grid-cols-3 gap-3">
+        {DISCOVER_ITEMS.map((item) => (
+          <div key={item.key} className="flex flex-col items-center gap-2">
+            <span
+              className="flex size-[52px] items-center justify-center rounded-full"
+              style={{ background: item.fill, boxShadow: `0 0 0 5px ${item.fill}33` }}
+              aria-hidden
+            >
+              <item.Icon className="size-6" style={{ color: item.icon }} />
+            </span>
+            <span
+              className="whitespace-nowrap text-center text-[10px] font-medium"
+              style={{ color: "#E5E9EE" }}
+            >
+              {t(item.key)}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Landing() {
   const { t, lang } = useI18n();
   const { state } = useAppState();
