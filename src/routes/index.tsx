@@ -189,6 +189,8 @@ function Landing() {
               <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
                 {t("hero.sub")}
               </p>
+              <DiscoverPreviewCard />
+
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Link
                   to="/consent"
