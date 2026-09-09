@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BadgeCheck, Briefcase, Building2, ClipboardList, Compass, House, Hourglass, Info, Route as RouteIcon, Scale, Sparkles, Users } from "lucide-react";
+import { ArrowRight, BadgeCheck, Briefcase, Building2, ClipboardList, Compass, House, Hourglass, Info, Route as RouteIcon, Scale, Sparkles, Target, User, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
-import arrowMarkAsset from "@/assets/migrago-arrow.png.asset.json";
+import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { useI18n } from "@/lib/i18n";
 import { useAppState } from "@/lib/store";
