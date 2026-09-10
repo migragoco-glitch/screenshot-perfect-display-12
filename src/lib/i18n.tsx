@@ -53,7 +53,7 @@ export const en = {
 
   "how.title": "How it works",
   "how.s1.t": "Structured assessment",
-  "how.s1.d": "7 sections, 42 questions, autosaved as you go.",
+  "how.s1.d": "A structured assessment determines your current status and readiness along the migration pathway—from pre-migration to arrival, settlement, and integration—across three dimensions and seven levels.",
   "how.s2.t": "Smart Integration Profile",
   "how.s2.d":
     "Legal Status, Economic & Professional Capacity and Soft Skills & Psychological Readiness, each scored 0–100.",
