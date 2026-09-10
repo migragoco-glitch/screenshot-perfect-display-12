@@ -196,7 +196,7 @@ const ROADMAP_PHASES = [
 ] as const;
 
 function RoadmapPreview() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const { ref, entered } = useInViewOnce<HTMLDivElement>();
 
   return (
@@ -213,7 +213,7 @@ function RoadmapPreview() {
                 <PhaseIcon className={`mb-2 size-4 shrink-0 ${phase.color.split(" ")[1]}`} aria-hidden />
                 <div
                   className={`roadmap-bar w-full rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`}
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  style={{ animationDelay: `${(lang === "fa" ? ROADMAP_PHASES.length - 1 - index : index) * 100}ms` }}
                   aria-hidden
                 />
               </div>
@@ -235,7 +235,7 @@ const DISCOVER_ITEMS = [
 ] as const;
 
 function DiscoverPreviewCard() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const { ref, entered } = useInViewOnce<HTMLDivElement>();
 
   return (
@@ -253,7 +253,11 @@ function DiscoverPreviewCard() {
           <div key={item.key} className="flex flex-col items-center gap-2">
             <span
               className="discover-badge flex size-[52px] items-center justify-center rounded-full"
-              style={{ background: item.fill, boxShadow: `0 0 0 5px ${item.fill}33`, animationDelay: `${index * 100}ms` }}
+              style={{
+                background: item.fill,
+                boxShadow: `0 0 0 5px ${item.fill}33`,
+                animationDelay: `${(lang === "fa" ? DISCOVER_ITEMS.length - 1 - index : index) * 100}ms`,
+              }}
               aria-hidden
             >
               <item.Icon className="size-6" style={{ color: item.icon }} />
