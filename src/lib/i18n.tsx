@@ -56,7 +56,7 @@ export const en = {
   "how.s1.d": "A structured assessment determines your current status and readiness along the migration pathway—from pre-migration to arrival, settlement, and integration—across three dimensions and seven levels.",
   "how.s2.t": "Smart Integration Profile",
   "how.s2.d":
-    "Legal Status, Economic & Professional Capacity and Soft Skills & Psychological Readiness, each scored 0–100.",
+    "Your answers are turned into a personalized profile showing your strengths, gaps, and priorities.",
   "how.s3.t": "12-week roadmap",
   "how.s3.d":
     "Every roadmap step is linked to the relevant official institution in Finland (such as Migri or DVV).",
