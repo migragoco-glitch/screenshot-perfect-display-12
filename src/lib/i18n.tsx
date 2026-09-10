@@ -205,7 +205,7 @@ export const en = {
 
   "footer.legal":
     "MigraGo does not replace legal advice or official authorities, and does not guarantee residence or integration outcomes.",
-  "footer.rights": "MigraGo — SettleSmart Navigator",
+  "footer.rights": "MIGRAGO — SETTLESMART NAVIGATOR",
   "footer.tagline": "MigraGo — Smart Guidance — From Pre-Arrival to Sustainable Integration",
   "footer.description":
     "SettleSmart Navigator — Simplifying migration complexity into an actionable, step-by-step roadmap.",
