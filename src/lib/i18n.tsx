@@ -43,7 +43,7 @@ export const en = {
   "about.title": "What MigraGo is",
   "about.definitionTitle": "Definition",
   "about.definition":
-    "A technology-led digital pathway tool that analyzes structured migrant data to assess social-integration readiness.",
+    "A personalized digital navigator that helps you understand your situation, identify your priorities, and know what to do next for settling and integrating in your destination country.",
   "about.missionTitle": "Mission",
   "about.mission":
     "Turning scattered information into a clear, actionable path toward integration.",
