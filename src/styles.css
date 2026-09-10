@@ -282,11 +282,57 @@
   animation: check-pop 260ms ease-out both;
 }
 
+@keyframes navigator-bar-rise {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes navigator-badge-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.roadmap-bar {
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+.navigator-entered .roadmap-bar {
+  animation: navigator-bar-rise 700ms ease-out both;
+}
+
+.discover-badge {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.navigator-entered .discover-badge {
+  animation: navigator-badge-enter 450ms ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .check-pop,
   .rise-in,
   .penguin-track,
-  .penguin-body {
+  .penguin-body,
+  .navigator-entered .roadmap-bar,
+  .navigator-entered .discover-badge {
     animation: none !important;
+  }
+
+  .roadmap-bar,
+  .discover-badge {
+    opacity: 1;
+    transform: none;
   }
 }

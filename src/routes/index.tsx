@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeCheck, Briefcase, Building2, ClipboardList, Compass, House, Hourglass, Info, Route as RouteIcon, Scale, Sparkles, User, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
@@ -33,39 +34,107 @@ export const Route = createFileRoute("/")({
 const INSTITUTIONS = ["Migri", "DVV", "Vero", "Kela", "TE Services", "Valvira / OPH", "International House Helsinki"];
 
 const SAMPLE = [
-  { key: "dash.dim1", value: 65, color: "var(--navy)" },
-  { key: "dash.dim2", value: 74, color: "var(--teal)" },
-  { key: "dash.dim3", value: 81, color: "var(--gold)" },
+  { key: "dash.dim1", value: 65, color: "#3AC8C3" },
+  { key: "dash.dim2", value: 74, color: "#02808A" },
+  { key: "dash.dim3", value: 81, color: "#CB902C" },
 ] as const;
+
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return reduced;
+}
+
+function useInViewOnce<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [entered, setEntered] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || entered) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        setEntered(true);
+        observer.disconnect();
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [entered]);
+
+  return { ref, entered };
+}
+
+function useCountUp(target: number, active: boolean, duration: number) {
+  const reducedMotion = useReducedMotion();
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!active) return;
+    if (reducedMotion) {
+      setValue(target);
+      return;
+    }
+
+    let frame = 0;
+    const startedAt = performance.now();
+    const tick = (now: number) => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      setValue(Math.round(target * (1 - Math.pow(1 - progress, 3))));
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [active, duration, reducedMotion, target]);
+
+  return value;
+}
 
 function SampleDonut() {
   const overall = Math.round((65 * 30 + 74 * 40 + 81 * 30) / 100);
   const data = SAMPLE.map((d) => ({ name: d.key, value: d.value, color: d.color }));
+  const { ref, entered } = useInViewOnce<HTMLDivElement>();
+  const reducedMotion = useReducedMotion();
+  const displayedOverall = useCountUp(overall, entered, 1100);
   return (
-    <div className="relative mt-4 h-52 w-full">
+    <div ref={ref} className="relative mt-4 h-52 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
-          <Pie
-            data={data}
-            dataKey="value"
-            innerRadius="62%"
-            outerRadius="92%"
-            paddingAngle={3}
-            startAngle={90}
-            endAngle={-270}
-            stroke="none"
-            isAnimationActive
-            animationDuration={1400}
-            animationEasing="ease-out"
-          >
-            {data.map((d) => (
-              <Cell key={d.name} fill={d.color} />
-            ))}
-          </Pie>
+          {entered ? (
+            <Pie
+              data={data}
+              dataKey="value"
+              innerRadius="62%"
+              outerRadius="92%"
+              paddingAngle={3}
+              startAngle={90}
+              endAngle={-270}
+              stroke="none"
+              isAnimationActive={!reducedMotion}
+              animationDuration={1100}
+              animationEasing="ease-out"
+            >
+              {data.map((d) => (
+                <Cell key={d.name} fill={d.color} />
+              ))}
+            </Pie>
+          ) : null}
         </PieChart>
       </ResponsiveContainer>
       <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-3xl font-bold tabular-nums">{overall}</span>
+        <span className="text-3xl font-bold tabular-nums">{displayedOverall}</span>
         <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">100</span>
       </div>
     </div>
@@ -77,8 +146,10 @@ function MiniDonut({ label, value, color }: { label: string; value: number; colo
   const stroke = 6;
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
+  const { ref, entered } = useInViewOnce<HTMLDivElement>();
+  const displayedValue = useCountUp(value, entered, 1100);
   return (
-    <div className="flex flex-col items-center gap-1.5">
+    <div ref={ref} className="flex flex-col items-center gap-1.5">
       <div className="relative">
         <svg width={size} height={size} role="img" aria-label={`${label}: ${value}%`}>
           <circle
@@ -98,16 +169,16 @@ function MiniDonut({ label, value, color }: { label: string; value: number; colo
             strokeWidth={stroke}
             strokeLinecap="round"
             strokeDasharray={c}
-            strokeDashoffset={c - (c * value) / 100}
+            strokeDashoffset={entered ? c - (c * value) / 100 : c}
             transform={`rotate(-90 ${size / 2} ${size / 2})`}
-            style={{ transition: "stroke-dashoffset 500ms ease-out" }}
+            style={{ transition: "stroke-dashoffset 1100ms ease-out" }}
           />
         </svg>
         <span
           className="pointer-events-none absolute inset-0 flex items-center justify-center text-[11px] font-bold tabular-nums"
           style={{ color }}
         >
-          {value}
+          {displayedValue}
         </span>
       </div>
       <span className="text-center text-[10px] font-semibold leading-tight text-muted-foreground">
@@ -126,9 +197,10 @@ const ROADMAP_PHASES = [
 
 function RoadmapPreview() {
   const { t } = useI18n();
+  const { ref, entered } = useInViewOnce<HTMLDivElement>();
 
   return (
-    <div className="mt-6 rounded-2xl bg-[var(--navigator-navy)] px-4 pb-5 pt-4">
+    <div ref={ref} className={`mt-6 rounded-2xl bg-[var(--navigator-navy)] px-4 pb-5 pt-4${entered ? " navigator-entered" : ""}`}>
       <p className="text-center text-xs font-semibold text-[var(--navigator-cream)]">
         {t("hero.roadmapStage")}
       </p>
@@ -139,7 +211,11 @@ function RoadmapPreview() {
             <div key={phase.label} className="grid min-w-0 grid-rows-[1fr_auto] gap-2">
               <div className="flex min-h-0 flex-col items-center justify-end">
                 <PhaseIcon className={`mb-2 size-4 shrink-0 ${phase.color.split(" ")[1]}`} aria-hidden />
-                <div className={`w-full rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`} aria-hidden />
+                <div
+                  className={`roadmap-bar w-full rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                  aria-hidden
+                />
               </div>
               <span className={`text-center text-[9px] leading-tight text-[var(--navigator-cream)] sm:text-[10px] ${index === 3 ? "font-bold" : "font-medium opacity-80"}`}>
                 {t(phase.label)}
@@ -160,10 +236,12 @@ const DISCOVER_ITEMS = [
 
 function DiscoverPreviewCard() {
   const { t } = useI18n();
+  const { ref, entered } = useInViewOnce<HTMLDivElement>();
 
   return (
     <div
-      className="mt-8 rounded-[14px] border p-5 shadow-[0_10px_30px_-12px_rgba(2,28,59,0.45)]"
+      ref={ref}
+      className={`mt-8 rounded-[14px] border p-5 shadow-[0_10px_30px_-12px_rgba(2,28,59,0.45)]${entered ? " navigator-entered" : ""}`}
       style={{ background: "#021C3B", borderColor: "#1B3A5C" }}
     >
       <p className="text-[12px] font-bold text-white">{t("hero.discoverTitle")}</p>
@@ -171,11 +249,11 @@ function DiscoverPreviewCard() {
         {t("hero.discoverSub")}
       </p>
       <div className="mt-5 grid grid-cols-3 gap-3">
-        {DISCOVER_ITEMS.map((item) => (
+        {DISCOVER_ITEMS.map((item, index) => (
           <div key={item.key} className="flex flex-col items-center gap-2">
             <span
-              className="flex size-[52px] items-center justify-center rounded-full"
-              style={{ background: item.fill, boxShadow: `0 0 0 5px ${item.fill}33` }}
+              className="discover-badge flex size-[52px] items-center justify-center rounded-full"
+              style={{ background: item.fill, boxShadow: `0 0 0 5px ${item.fill}33`, animationDelay: `${index * 100}ms` }}
               aria-hidden
             >
               <item.Icon className="size-6" style={{ color: item.icon }} />
@@ -262,7 +340,12 @@ function Landing() {
                 <SampleDonut />
                 <div className="mt-5 grid grid-cols-3 gap-3">
                   {SAMPLE.map((d) => (
-                    <MiniDonut key={d.key} label={t(d.key)} value={d.value} color={d.color} />
+                    <MiniDonut
+                      key={d.key}
+                      label={t(d.key)}
+                      value={d.value}
+                      color={d.key === "dash.dim3" ? "#6B8E3A" : d.color}
+                    />
                   ))}
                 </div>
                 <p className="mt-5 border-t border-border pt-4 text-xs text-muted-foreground">
