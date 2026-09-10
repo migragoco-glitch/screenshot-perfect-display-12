@@ -208,7 +208,7 @@ export const en = {
   "footer.rights": "MigraGo — SettleSmart Navigator",
   "footer.tagline": "MigraGo — Smart Guidance — from Pre-Arrival to Sustainable Integration",
   "footer.description":
-    "SettleSmart Navigator — from the complexities of the migration journey to an actionable roadmap.",
+    "SettleSmart Navigator — Simplifying migration complexity into an actionable, step-by-step roadmap.",
   "footer.qrCaption": "Get the App",
   "common.back": "Back",
   "common.continue": "Continue",
