@@ -61,9 +61,9 @@ export const en = {
   "how.s3.d":
     "Your profile is converted into a 12-week roadmap to guide your next steps precisely in accordance with the rules and requirements of the relevant institutions..",
 
-  "inst.title": "Grounded in real institutions",
+  "inst.title": "Aligned with Official and Reference Institutions",
   "inst.sub":
-    "Every roadmap step is mapped to the authority or service that actually handles it.",
+    "Every step of your roadmap is structured directly according to the rules and procedures of its governing authority.",
 
   "pricing.title": "Access tiers",
   "pricing.free": "Essential",
