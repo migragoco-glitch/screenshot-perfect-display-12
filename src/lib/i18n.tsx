@@ -325,7 +325,7 @@ export const en = {
     "The Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights.",
   "faq.q4": "How is my roadmap generated?",
   "faq.a4":
-    "Your answers produce three dimension scores and a set of gap flags. Each gap is matched against a curated knowledge table of Finnish procedures and mapped to the institution that actually handles it, then sequenced across four phases over 12 weeks.",
+    "Your assessment responses evaluate your current status across three core dimensions and identify existing gaps. The system then maps these gaps against the official regulations and procedures of the destination country, structuring the required actions into a 12-week plan across four operational phases..",
   "faq.q5": "Is this legal advice?",
   "faq.a5":
     "No. MigraGo does not replace legal advice or official authorities and does not guarantee residence permits or integration outcomes. Always verify requirements with the responsible institution.",
