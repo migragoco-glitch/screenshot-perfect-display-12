@@ -33,7 +33,7 @@ export const en = {
   "hero.discover3": "Next step and resources",
   "hero.navigatorTitle": "SettleSmart Navigator",
   "hero.navigatorNotice": "MigraGo is not a visa application or immigration consultation service.",
-  "hero.roadmapStage": "Stage 2 : Your Roadmap",
+  "hero.roadmapStage": "Stage 2: Your Roadmap",
   "hero.roadmapWeeks1": "Weeks 1-3",
   "hero.roadmapWeeks2": "Weeks 4-6",
   "hero.roadmapWeeks3": "Weeks 7-9",
@@ -59,7 +59,7 @@ export const en = {
     "Your answers are turned into a personalized profile showing your strengths, gaps, and priorities.",
   "how.s3.t": "12-week roadmap",
   "how.s3.d":
-    "Your profile is converted into a 12-week roadmap to guide your next steps precisely in accordance with the rules and requirements of the relevant institutions..",
+    "Your profile is converted into a 12-week roadmap to guide your next steps precisely in accordance with the rules and requirements of the relevant institutions.",
 
   "inst.title": "Aligned with Official and Reference Institutions",
   "inst.sub":
