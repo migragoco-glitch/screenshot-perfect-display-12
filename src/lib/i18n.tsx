@@ -256,7 +256,7 @@ export const en = {
   "set.privacy": "Privacy Policy",
   "set.terms": "Terms of Service",
   "set.gdpr": "Built with GDPR principles",
-  "set.placeholderNote": "Placeholder document for this prototype — not legal advice.",
+  "set.placeholderNote": "This notice outlines the privacy policy and operational terms of this software and does not constitute formal legal advice, an official opinion, or a legal ruling.",
 
   "road.done": "Done",
   "road.progress": "steps completed",
@@ -281,7 +281,7 @@ export const en = {
 
   "privacy.title": "Privacy Policy",
   "privacy.body":
-    "MigraGo respects your privacy. In the current version of the product (MVP):\n\nYour assessment answers are stored only in your browser and are not sent to our servers.\n\nThe email address you provide for early-access notifications is stored securely and used only for that purpose.\n\nFeedback you submit is stored without any identifying information.\n\nYou can delete your local data at any time from your browser settings.\n\nThis policy will be replaced with a more comprehensive, GDPR-aligned privacy policy as MigraGo's paid features and account system are fully launched. This document does not constitute legal advice.",
+    "MigraGo respects your privacy. In the current version of the product (MVP):\u00a0 Your assessment answers are stored only in your browser and are not sent to our servers. The email address you provide for early-access notifications is stored securely and used only for that purpose. Feedback you submit is stored without any identifying information. You can delete your local data at any time from your browser settings. This policy will be replaced with a more comprehensive, GDPR-aligned privacy policy as MigraGo's paid features and account system are fully launched.\u00a0",
   "terms.title": "Terms of Service",
   "terms.body":
     "This is a placeholder terms document for the MigraGo prototype. MigraGo provides informational guidance only. It does not replace legal advice or official authorities, and it does not guarantee residence permits or integration outcomes. Always verify requirements with the responsible Finnish institution.",
