@@ -567,8 +567,7 @@ export const fa: Record<keyof typeof en, string> = {
   "about.mission":
     "تبدیل اطلاعات پراکنده به یک مسیر روشن و قابل اجرا به سوی ادغام.",
   "about.boundariesTitle": "محدودهٔ مسئولیت",
-  "about.boundaries":
-    "میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و هیچ تضمینی برای دریافت اقامت یا نتیجهٔ ادغام ارائه نمی‌دهد.",
+  "about.boundaries": "\n",
 
   "how.title": "چگونه کار می‌کند",
   "how.s1.t": "ارزیابی ساختارمند",
@@ -723,7 +722,7 @@ export const fa: Record<keyof typeof en, string> = {
   "footer.legal":
     "میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام ارائه نمی‌دهد.",
   "footer.rights": "میگراگو — SettleSmart Navigator",
-  "footer.tagline": "میگراگو — مسیر هوشمند — پیش از ورود تا ادغام پایدار",
+  "footer.tagline": "میگراگو – مسیر هوشمند – پیش از ورود تا ادغام پایدار",
   "footer.description":
     "SettleSmart Navigator — رهیاب هوشمند استقرار – ساده‌سازی پیچیدگی‌های مسیر مهاجرت با نقشه‌راهی عملیاتی و گام‌به‌گام.",
   "footer.qrCaption": "وب‌سایت ما",
