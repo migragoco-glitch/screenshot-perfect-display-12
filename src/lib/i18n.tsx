@@ -49,7 +49,7 @@ export const en = {
     "Turning scattered information into a clear, actionable path toward integration.",
   "about.boundariesTitle": "Boundaries",
   "about.boundaries":
-    "\n",
+    "MigraGo provides a personalized roadmap based on your information and relevant country-specific regulations and procedures. It does not replace legal advice or official authorities, and it does not guarantee residence, integration, or other outcomes.",
 
   "how.title": "How it works",
   "how.s1.t": "Structured assessment",
@@ -567,7 +567,7 @@ export const fa: Record<keyof typeof en, string> = {
   "about.mission":
     "تبدیل اطلاعات پراکنده به یک مسیر روشن و قابل اجرا به سوی ادغام.",
   "about.boundariesTitle": "محدودهٔ مسئولیت",
-  "about.boundaries": "\n",
+  "about.boundaries": "میگراگو بر اساس اطلاعات شما و ضوابط و رویه‌های مرتبط با کشور مقصد، مسیری شخصی‌سازی‌شده ارائه می‌دهد. این محصول جایگزین مشاوره حقوقی یا مراجع رسمی نیست و اقامت، ادغام یا هیچ نتیجه دیگری را تضمین نمی‌کند.",
 
   "how.title": "چگونه کار می‌کند",
   "how.s1.t": "ارزیابی ساختارمند",
