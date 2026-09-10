@@ -289,7 +289,7 @@ export const en = {
   // ── Corrective build v2 ───────────────────────────────────
   "hero.country": "Finland",
   "hero.finlandPartner": "Built in partnership with Finland's integration ecosystem",
-  "hero.previewTitle": "Stage 1:\nYour Smart Integration Profile",
+  "hero.previewTitle": "Stage 1: Your Smart Integration Profile",
   "hero.previewNote": "Illustrative sample — your own scores are calculated from your answers.",
 
   "about.processTitle": "Social integration is a process",
