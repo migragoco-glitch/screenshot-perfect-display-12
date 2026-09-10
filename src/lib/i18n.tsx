@@ -59,7 +59,7 @@ export const en = {
     "Your answers are turned into a personalized profile showing your strengths, gaps, and priorities.",
   "how.s3.t": "12-week roadmap",
   "how.s3.d":
-    "Every roadmap step is linked to the relevant official institution in Finland (such as Migri or DVV).",
+    "Your profile is converted into a 12-week roadmap to guide your next steps precisely in accordance with the rules and requirements of the relevant institutions..",
 
   "inst.title": "Grounded in real institutions",
   "inst.sub":
