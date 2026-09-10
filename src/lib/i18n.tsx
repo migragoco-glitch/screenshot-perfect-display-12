@@ -725,7 +725,7 @@ export const fa: Record<keyof typeof en, string> = {
   "footer.rights": "میگراگو — SettleSmart Navigator",
   "footer.tagline": "میگراگو — مسیر هوشمند — پیش از ورود تا ادغام پایدار",
   "footer.description":
-    "SettleSmart Navigator — رهیاب هوشمند ادغام – ساده‌سازی پیچیدگی‌های مسیر مهاجرت با نقشه‌راهی عملیاتی و گام‌به‌گام.",
+    "SettleSmart Navigator — رهیاب هوشمند استقرار – ساده‌سازی پیچیدگی‌های مسیر مهاجرت با نقشه‌راهی عملیاتی و گام‌به‌گام.",
   "footer.qrCaption": "وب‌سایت ما",
   "common.back": "بازگشت",
   "common.continue": "ادامه",
