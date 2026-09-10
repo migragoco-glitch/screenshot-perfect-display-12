@@ -281,7 +281,7 @@ export const en = {
 
   "privacy.title": "Privacy Policy",
   "privacy.body":
-    "This is a placeholder privacy notice for the MigraGo prototype. Assessment answers are stored in your browser only. Email addresses submitted for early-access pricing are stored securely and used solely to contact you about early access. Feedback responses are stored without any identifying information. You can delete your local data at any time from Settings.",
+    "MigraGo respects your privacy. In the current version of the product (MVP):\n\nYour assessment answers are stored only in your browser and are not sent to our servers.\n\nThe email address you provide for early-access notifications is stored securely and used only for that purpose.\n\nFeedback you submit is stored without any identifying information.\n\nYou can delete your local data at any time from your browser settings.\n\nThis policy will be replaced with a more comprehensive, GDPR-aligned privacy policy as MigraGo's paid features and account system are fully launched. This document does not constitute legal advice.",
   "terms.title": "Terms of Service",
   "terms.body":
     "This is a placeholder terms document for the MigraGo prototype. MigraGo provides informational guidance only. It does not replace legal advice or official authorities, and it does not guarantee residence permits or integration outcomes. Always verify requirements with the responsible Finnish institution.",
@@ -798,7 +798,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "privacy.title": "سیاست حریم خصوصی",
   "privacy.body":
-    "این متن، نسخهٔ نمونه برای پیش‌نمونهٔ MigraGo است. پاسخ‌های ارزیابی تنها در مرورگر شما ذخیره می‌شوند. نشانی رایانامه‌ای که برای قیمت دسترسی زودهنگام ثبت می‌کنید به‌صورت ایمن نگهداری و تنها برای اطلاع‌رسانی دسترسی زودهنگام استفاده می‌شود. پاسخ‌های بازخورد بدون هیچ اطلاعات شناسایی ذخیره می‌شوند. هر زمان بخواهید می‌توانید داده‌های محلی خود را از بخش تنظیمات حذف کنید.",
+    "میگراگو به حریم خصوصی شما اهمیت می‌دهد. در نسخهٔ فعلی محصول (MVP):\n\nپاسخ‌های شما به ارزیابی فقط در مرورگر شما ذخیره می‌شوند و به سرورهای ما ارسال نمی‌شوند.\n\nنشانی رایانامه‌ای که برای اطلاع‌رسانی دسترسی زودهنگام ثبت می‌کنید، به‌صورت ایمن نگهداری و تنها برای همین هدف استفاده می‌شود.\n\nبازخوردهایی که ارسال می‌کنید بدون هیچ اطلاعات شناسایی‌کننده ذخیره می‌شوند.\n\nهر زمان بخواهید، می‌توانید داده‌های محلی خود را از بخش تنظیمات مرورگر حذف کنید.\n\nاین سیاست هم‌زمان با تکمیل بخش‌های پولی و سیستم حساب کاربری میگراگو، با نسخه‌ای جامع‌تر و منطبق با الزامات GDPR جایگزین خواهد شد. این متن جایگزین مشاورهٔ حقوقی نیست.",
   "terms.title": "شرایط استفاده از خدمات",
   "terms.body":
     "این متن، نسخهٔ نمونه برای پیش‌نمونهٔ MigraGo است. MigraGo تنها راهنمایی اطلاع‌رسانی ارائه می‌دهد؛ جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و هیچ تضمینی برای صدور اجازهٔ اقامت یا نتیجهٔ ادغام نمی‌دهد. همیشه الزامات را با نهاد مسئول فنلاندی راستی‌آزمایی کنید.",
