@@ -281,7 +281,7 @@ export const en = {
 
   "privacy.title": "Privacy Policy",
   "privacy.body":
-    "This is a placeholder privacy notice for the MigraGo prototype. Assessment answers are stored in your browser only. Email addresses submitted for early-access pricing are stored securely and used solely to contact you about early access. Feedback responses are stored without any identifying information. You can delete your local data at any time from Settings.",
+    "MigraGo respects your privacy. In the current version of the product (MVP):\n\nYour assessment answers are stored only in your browser and are not sent to our servers.\n\nThe email address you provide for early-access notifications is stored securely and used only for that purpose.\n\nFeedback you submit is stored without any identifying information.\n\nYou can delete your local data at any time from your browser settings.\n\nThis policy will be replaced with a more comprehensive, GDPR-aligned privacy policy as MigraGo's paid features and account system are fully launched. This document does not constitute legal advice.",
   "terms.title": "Terms of Service",
   "terms.body":
     "This is a placeholder terms document for the MigraGo prototype. MigraGo provides informational guidance only. It does not replace legal advice or official authorities, and it does not guarantee residence permits or integration outcomes. Always verify requirements with the responsible Finnish institution.",
