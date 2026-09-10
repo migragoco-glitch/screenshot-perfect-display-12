@@ -292,9 +292,9 @@ export const en = {
   "hero.previewTitle": "Stage 1:\nYour Smart Integration Profile",
   "hero.previewNote": "Illustrative sample — your own scores are calculated from your answers.",
 
-  "about.processTitle": "Social integration is a process...",
+  "about.processTitle": "Social integration is a process",
   "about.processBody":
-    "It begins the moment someone decides to migrate, continues throughout the relocation itself, and carries on after arrival — through adaptation and integration into the new country's social, legal and economic structures. MigraGo measures this full process — before migration, during migration and after arrival — and provides a personalized roadmap.",
+    "Social integration is not a single-step action, but a continuous journey. Your needs and priorities evolve throughout the stages of pre-migration, arrival, settlement, and adaptation to legal, economic, and social frameworks. At every step, MigraGo assesses your status and determines the precise next action in accordance with the rules and procedures of the relevant institutions.",
 
   "country.eu": "Europe / Schengen",
   "country.global": "Global expansion — coming soon",
