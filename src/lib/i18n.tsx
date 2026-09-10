@@ -49,7 +49,7 @@ export const en = {
     "Turning scattered information into a clear, actionable path toward integration.",
   "about.boundariesTitle": "Boundaries",
   "about.boundaries":
-    "MigraGo does not replace legal advice or official authorities, and does not guarantee residence or integration outcomes.",
+    "\n",
 
   "how.title": "How it works",
   "how.s1.t": "Structured assessment",
@@ -206,7 +206,7 @@ export const en = {
   "footer.legal":
     "MigraGo does not replace legal advice or official authorities, and does not guarantee residence or integration outcomes.",
   "footer.rights": "MigraGo — SettleSmart Navigator",
-  "footer.tagline": "MigraGo — Smart Guidance — from Pre-Arrival to Sustainable Integration",
+  "footer.tagline": "MigraGo — Smart Guidance — From Pre-Arrival to Sustainable Integration",
   "footer.description":
     "SettleSmart Navigator — Simplifying migration complexity into an actionable, step-by-step roadmap.",
   "footer.qrCaption": "Get the App",
