@@ -348,7 +348,7 @@ function Landing() {
                       key={d.key}
                       label={t(d.key)}
                       value={d.value}
-                      color={d.key === "dash.dim3" ? "#6B8E3A" : d.color}
+                      color={d.key === "dash.dim3" ? "#CB902C" : d.color}
                     />
                   ))}
                 </div>
