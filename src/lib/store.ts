@@ -277,7 +277,7 @@ export function useAppState() {
     setState(emptyState);
   }, []);
 
-  return { state, hydrated, update, setAnswer, pushSnapshot, reset };
+  return { state, hydrated, update, setAnswer, pushSnapshot, reset, resetAnswers };
 }
 
 // --- Real vs simulated data separation (founder dashboard) ---
