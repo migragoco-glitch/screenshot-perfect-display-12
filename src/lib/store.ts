@@ -149,7 +149,9 @@ function read(): AppState {
   try {
     const raw = window.localStorage.getItem(KEY);
     if (!raw) return emptyState;
-    return { ...emptyState, ...(JSON.parse(raw) as AppState) };
+    const parsed = JSON.parse(raw) as AppState;
+    const history = Array.isArray(parsed?.history) ? parsed.history : [];
+    return { ...emptyState, ...parsed, history, answers: sanitizeAnswers(parsed?.answers) };
   } catch {
     return emptyState;
   }
