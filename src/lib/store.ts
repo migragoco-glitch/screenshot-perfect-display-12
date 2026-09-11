@@ -157,6 +157,20 @@ function read(): AppState {
   }
 }
 
+/** Checks the raw stored answers (pre-sanitization) against the question schema. */
+export function storedAnswersAreConsistent(): boolean {
+  if (typeof window === "undefined") return true;
+  try {
+    const raw = window.localStorage.getItem(KEY);
+    if (!raw) return true;
+    const parsed = JSON.parse(raw) as { answers?: unknown };
+    if (parsed?.answers === undefined) return true;
+    return answersAreConsistent(parsed.answers);
+  } catch {
+    return false;
+  }
+}
+
 function write(state: AppState) {
   window.localStorage.setItem(KEY, JSON.stringify(state));
   window.dispatchEvent(new Event("migrago:state"));
