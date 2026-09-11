@@ -44,6 +44,73 @@ const emptyState: AppState = {
   history: [],
 };
 
+const QUESTION_BY_ID = new Map(QUESTIONS.map((q) => [q.id, q]));
+
+/** Normalizes a single stored answer against the current question schema. */
+function sanitizeAnswer(id: number, raw: unknown): AnswerValue | undefined {
+  const q = QUESTION_BY_ID.get(id);
+  if (!q) return undefined; // orphaned entry from an older assessment version
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return undefined;
+
+  const a = raw as { value?: unknown; detail?: unknown };
+  const optionCount = q.options?.length ?? 0;
+  const inRange = (n: unknown) =>
+    typeof n === "number" && Number.isInteger(n) && n >= 0 && (optionCount === 0 || n < optionCount);
+
+  let value: AnswerValue["value"];
+  switch (q.type) {
+    case "multi": {
+      if (Array.isArray(a.value)) {
+        const cleaned = Array.from(new Set(a.value.filter(inRange) as number[])).sort((x, y) => x - y);
+        if (cleaned.length > 0) value = cleaned;
+      }
+      break;
+    }
+    case "single": {
+      if (inRange(a.value)) value = a.value as number;
+      break;
+    }
+    case "scale": {
+      if (typeof a.value === "number" && Number.isFinite(a.value) && a.value >= 1 && a.value <= 5) {
+        value = a.value;
+      }
+      break;
+    }
+    case "number": {
+      if (typeof a.value === "number" && Number.isFinite(a.value)) value = a.value;
+      break;
+    }
+    case "text":
+    case "country": {
+      if (typeof a.value === "string") value = a.value;
+      break;
+    }
+  }
+
+  const detail = typeof a.detail === "string" ? a.detail : undefined;
+  if (value === undefined && detail === undefined) return undefined;
+  return { ...(value !== undefined ? { value } : {}), ...(detail !== undefined ? { detail } : {}) };
+}
+
+/** Rebuilds the answer map so it always matches the current question structure. */
+export function sanitizeAnswers(raw: unknown): Answers {
+  const out: Answers = {};
+  if (!raw || typeof raw !== "object") return out;
+  for (const [key, val] of Object.entries(raw as Record<string, unknown>)) {
+    const id = Number(key);
+    if (!Number.isInteger(id)) continue;
+    const clean = sanitizeAnswer(id, val);
+    if (clean) out[id] = clean;
+  }
+  return out;
+}
+
+/** True when stored answers already match the sanitized structure exactly. */
+export function answersAreConsistent(raw: unknown): boolean {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return false;
+  return JSON.stringify(raw) === JSON.stringify(sanitizeAnswers(raw));
+}
+
 const seededMetrics: Metrics = {
   registrations: [
     { date: "2026-08", count: 31 },
