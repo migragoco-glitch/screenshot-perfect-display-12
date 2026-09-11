@@ -105,10 +105,21 @@ export function sanitizeAnswers(raw: unknown): Answers {
   return out;
 }
 
-/** True when stored answers already match the sanitized structure exactly. */
+const canonical = (a: AnswerValue | undefined) =>
+  JSON.stringify([a?.value ?? null, a?.detail ?? null]);
+
+/** True when stored answers already match the current question structure. */
 export function answersAreConsistent(raw: unknown): boolean {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return false;
-  return JSON.stringify(raw) === JSON.stringify(sanitizeAnswers(raw));
+  const clean = sanitizeAnswers(raw);
+  const rawKeys = Object.keys(raw as Record<string, unknown>);
+  if (rawKeys.length !== Object.keys(clean).length) return false;
+  for (const key of rawKeys) {
+    const id = Number(key);
+    if (!Number.isInteger(id) || !clean[id]) return false;
+    if (canonical(clean[id]) !== canonical((raw as Answers)[id])) return false;
+  }
+  return true;
 }
 
 const seededMetrics: Metrics = {
