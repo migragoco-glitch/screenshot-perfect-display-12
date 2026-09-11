@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { AnswerValue, Answers } from "./questions";
+import { QUESTIONS } from "./questions";
 
 const KEY = "migrago.state.v1";
 const METRICS_KEY = "migrago.metrics.v1";
