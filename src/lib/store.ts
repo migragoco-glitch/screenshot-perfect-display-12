@@ -241,11 +241,20 @@ export function useAppState() {
 
   const setAnswer = useCallback((id: number, value: AnswerValue) => {
     const current = read();
+    const merged = { ...current.answers, [id]: { ...current.answers[id], ...value } };
     const next: AppState = {
       ...current,
-      answers: { ...current.answers, [id]: { ...current.answers[id], ...value } },
+      answers: sanitizeAnswers(merged),
       registeredAt: current.registeredAt ?? new Date().toISOString(),
     };
+    write(next);
+    setState(next);
+  }, []);
+
+  /** Clears only the stored answers (used when corrupted data is detected). */
+  const resetAnswers = useCallback(() => {
+    const current = read();
+    const next: AppState = { ...current, answers: {}, completed: false };
     write(next);
     setState(next);
   }, []);
