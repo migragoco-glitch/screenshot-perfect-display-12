@@ -29,7 +29,7 @@ import {
   questionsForSection,
 } from "@/lib/questions";
 import { computeProfile } from "@/lib/scoring";
-import { trackEvent, useAppState } from "@/lib/store";
+import { storedAnswersAreConsistent, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/assessment")({
@@ -65,14 +65,25 @@ const DIMENSION_KEY = {
 function Assessment() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const { state, hydrated, setAnswer, update, pushSnapshot } = useAppState();
+  const { state, hydrated, setAnswer, update, pushSnapshot, resetAnswers } = useAppState();
   const [section, setSection] = useState(1);
   const [analyzing, setAnalyzing] = useState(false);
   const [showRequired, setShowRequired] = useState(false);
+  const [corrupted, setCorrupted] = useState(false);
 
   useEffect(() => {
     if (hydrated && !state.consent) void navigate({ to: "/consent" });
   }, [hydrated, state.consent, navigate]);
+
+  // Validate stored answers whenever Step 7 loads; safely reset instead of crashing.
+  useEffect(() => {
+    if (!hydrated || section !== 7) return;
+    if (storedAnswersAreConsistent()) return;
+    resetAnswers();
+    setCorrupted(true);
+    setSection(1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [hydrated, section, resetAnswers]);
 
   const visible = useMemo(() => questionsForSection(section, state.answers), [section, state.answers]);
   const meta = SECTIONS.find((s) => s.id === section);
@@ -244,6 +255,12 @@ function Assessment() {
             />
           ))}
         </div>
+
+        {corrupted ? (
+          <p className="rise-in mt-5 rounded-xl bg-accent/15 p-3 text-sm font-semibold">
+            {t("q.corrupted")}
+          </p>
+        ) : null}
 
         {showRequired ? (
           <p className="rise-in mt-5 rounded-xl bg-destructive/10 p-3 text-sm font-semibold text-destructive">
