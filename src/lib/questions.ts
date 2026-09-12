@@ -40,6 +40,14 @@ export type AnswerValue = {
 };
 export type Answers = Record<number, AnswerValue | undefined>;
 
+/**
+ * Non-answer context that conditional questions may depend on.
+ * `founderTrack` mirrors the Founder & Talent opt-in so the data layer and the
+ * rendered question list share one source of truth for Q39–41 visibility.
+ */
+export type AnswerContext = { founderTrack?: boolean | null };
+
+
 export const SECTIONS: { id: number; title: Bilingual; minutes: number; optional?: boolean }[] = [
   { id: 1, title: { en: "Identity & Current Status", fa: "هویت و وضعیت کنونی" }, minutes: 2 },
   {
