@@ -95,7 +95,7 @@ function sanitizeAnswer(id: number, raw: unknown): AnswerValue | undefined {
 }
 
 /** Rebuilds the answer map so it always matches the current question structure. */
-export function sanitizeAnswers(raw: unknown): Answers {
+export function sanitizeAnswers(raw: unknown, pruneInapplicable = true): Answers {
   const out: Answers = {};
   if (!raw || typeof raw !== "object") return out;
   for (const [key, val] of Object.entries(raw as Record<string, unknown>)) {
@@ -104,6 +104,8 @@ export function sanitizeAnswers(raw: unknown): Answers {
     const clean = sanitizeAnswer(id, val);
     if (clean) out[id] = clean;
   }
+  if (!pruneInapplicable) return out;
+
   // Re-evaluate until stable because one controlling answer can hide another
   // question that controls a later conditional question.
   let changed = true;
@@ -125,7 +127,9 @@ const canonical = (a: AnswerValue | undefined) =>
 /** True when stored answers already match the current question structure. */
 export function answersAreConsistent(raw: unknown): boolean {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return false;
-  const clean = sanitizeAnswers(raw);
+  // Hidden answers may be valid legacy data. They are treated as Not Applicable
+  // at read/score time rather than as structural corruption.
+  const clean = sanitizeAnswers(raw, false);
   const rawKeys = Object.keys(raw as Record<string, unknown>);
   if (rawKeys.length !== Object.keys(clean).length) return false;
   for (const key of rawKeys) {
