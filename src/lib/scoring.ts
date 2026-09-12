@@ -2,6 +2,7 @@ import {
   QUESTIONS,
   isQuestionApplicable,
   subAnswerIndex,
+  type AnswerContext,
   type Answers,
   type Bilingual,
   type Question,
@@ -68,8 +69,8 @@ function num(v: unknown): number | undefined {
 }
 
 /** normalized 0..1 score for one question, or undefined when it doesn't score */
-export function questionScore(q: Question, answers: Answers): number | undefined {
-  if (q.unscored || !isQuestionApplicable(q, answers)) return undefined;
+export function questionScore(q: Question, answers: Answers, ctx?: AnswerContext): number | undefined {
+  if (q.unscored || !isQuestionApplicable(q, answers, ctx)) return undefined;
   const a = answers[q.id];
   if (!a) return undefined;
 
@@ -113,13 +114,13 @@ export function questionScore(q: Question, answers: Answers): number | undefined
   return undefined;
 }
 
-function bucketScore(ids: readonly number[], answers: Answers) {
+function bucketScore(ids: readonly number[], answers: Answers, ctx?: AnswerContext) {
   const values: number[] = [];
   for (const id of ids) {
     const q = QUESTIONS.find((x) => x.id === id);
     if (!q) continue;
-    if (!isQuestionApplicable(q, answers)) continue;
-    const s = questionScore(q, answers);
+    if (!isQuestionApplicable(q, answers, ctx)) continue;
+    const s = questionScore(q, answers, ctx);
     if (s !== undefined) values.push(s);
   }
   if (!values.length) return 0;
@@ -136,10 +137,11 @@ export function computeProfile(
   founderTrack = false,
   region: Region = "undecided",
 ): Profile {
-  const legal = bucketScore(BUCKETS.legal.ids, answers);
-  const professional = bucketScore(BUCKETS.professional.ids, answers);
-  const psychological = bucketScore(BUCKETS.psychological.ids, answers);
-  const bonus = founderTrack ? bucketScore(BUCKETS.bonus.ids, answers) : 0;
+  const ctx: AnswerContext = { founderTrack };
+  const legal = bucketScore(BUCKETS.legal.ids, answers, ctx);
+  const professional = bucketScore(BUCKETS.professional.ids, answers, ctx);
+  const psychological = bucketScore(BUCKETS.psychological.ids, answers, ctx);
+  const bonus = founderTrack ? bucketScore(BUCKETS.bonus.ids, answers, ctx) : 0;
   const overall = Math.round(legal * 0.3 + professional * 0.4 + psychological * 0.3);
 
   const gaps: GapFlag[] = [];
@@ -148,7 +150,7 @@ export function computeProfile(
 
   const applicableAnswer = (id: number) => {
     const q = QUESTIONS.find((candidate) => candidate.id === id);
-    return q && isQuestionApplicable(q, answers) ? answers[id] : undefined;
+    return q && isQuestionApplicable(q, answers, ctx) ? answers[id] : undefined;
   };
   const val = (id: number) => num(applicableAnswer(id)?.value);
   const multi = (id: number) => {

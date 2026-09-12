@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import type { AnswerValue, Answers } from "./questions";
+import type { AnswerContext, AnswerValue, Answers } from "./questions";
 import { QUESTIONS, isQuestionApplicable } from "./questions";
 
 const KEY = "migrago.state.v1";
@@ -97,7 +97,11 @@ function sanitizeAnswer(id: number, raw: unknown): AnswerValue | undefined {
 }
 
 /** Rebuilds the answer map so it always matches the current question structure. */
-export function sanitizeAnswers(raw: unknown, pruneInapplicable = true): Answers {
+export function sanitizeAnswers(
+  raw: unknown,
+  pruneInapplicable = true,
+  ctx?: AnswerContext,
+): Answers {
   const out: Answers = {};
   if (!raw || typeof raw !== "object") return out;
   for (const [key, val] of Object.entries(raw as Record<string, unknown>)) {
@@ -114,7 +118,7 @@ export function sanitizeAnswers(raw: unknown, pruneInapplicable = true): Answers
   while (changed) {
     changed = false;
     for (const q of QUESTIONS) {
-      if (out[q.id] && !isQuestionApplicable(q, out)) {
+      if (out[q.id] && !isQuestionApplicable(q, out, ctx)) {
         delete out[q.id];
         changed = true;
       }
@@ -127,11 +131,11 @@ const canonical = (a: AnswerValue | undefined) =>
   JSON.stringify([a?.value ?? null, a?.detail ?? null]);
 
 /** True when stored answers already match the current question structure. */
-export function answersAreConsistent(raw: unknown): boolean {
+export function answersAreConsistent(raw: unknown, ctx?: AnswerContext): boolean {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return false;
-  // Hidden answers may be valid legacy data. They are treated as Not Applicable
-  // at read/score time rather than as structural corruption.
-  const clean = sanitizeAnswers(raw, false);
+  // Validate with the exact same pruning behaviour used by every read/write, so
+  // the guard checks the data shape that will actually be rendered.
+  const clean = sanitizeAnswers(raw, true, ctx);
   const rawKeys = Object.keys(raw as Record<string, unknown>);
   if (rawKeys.length !== Object.keys(clean).length) return false;
   for (const key of rawKeys) {
@@ -171,7 +175,8 @@ function read(): AppState {
     if (!raw) return emptyState;
     const parsed = JSON.parse(raw) as AppState;
     const history = Array.isArray(parsed?.history) ? parsed.history : [];
-    return { ...emptyState, ...parsed, history, answers: sanitizeAnswers(parsed?.answers) };
+    const ctx: AnswerContext = { founderTrack: parsed?.founderTrack ?? null };
+    return { ...emptyState, ...parsed, history, answers: sanitizeAnswers(parsed?.answers, true, ctx) };
   } catch {
     return emptyState;
   }
@@ -183,9 +188,9 @@ export function storedAnswersAreConsistent(): boolean {
   try {
     const raw = window.localStorage.getItem(KEY);
     if (!raw) return true;
-    const parsed = JSON.parse(raw) as { answers?: unknown };
+    const parsed = JSON.parse(raw) as { answers?: unknown; founderTrack?: boolean | null };
     if (parsed?.answers === undefined) return true;
-    return answersAreConsistent(parsed.answers);
+    return answersAreConsistent(parsed.answers, { founderTrack: parsed?.founderTrack ?? null });
   } catch {
     return false;
   }
@@ -267,8 +272,14 @@ export function useAppState() {
     };
   }, []);
 
+  // A single write resolves both the patch (e.g. the founder-track opt-in) and
+  // the answer pruning it implies, so Step 7 never re-derives its list mid-commit.
   const update = useCallback((patch: Partial<AppState>) => {
-    const next = { ...read(), ...patch };
+    const merged = { ...read(), ...patch };
+    const next: AppState = {
+      ...merged,
+      answers: sanitizeAnswers(merged.answers, true, { founderTrack: merged.founderTrack ?? null }),
+    };
     write(next);
     setState(next);
   }, []);
@@ -278,7 +289,7 @@ export function useAppState() {
     const merged = { ...current.answers, [id]: { ...current.answers[id], ...value } };
     const next: AppState = {
       ...current,
-      answers: sanitizeAnswers(merged),
+      answers: sanitizeAnswers(merged, true, { founderTrack: current.founderTrack ?? null }),
       registeredAt: current.registeredAt ?? new Date().toISOString(),
     };
     write(next);
@@ -290,7 +301,10 @@ export function useAppState() {
     const current = read();
     const answers = { ...current.answers };
     for (const id of ids) delete answers[id];
-    const next: AppState = { ...current, answers: sanitizeAnswers(answers) };
+    const next: AppState = {
+      ...current,
+      answers: sanitizeAnswers(answers, true, { founderTrack: current.founderTrack ?? null }),
+    };
     write(next);
     setState(next);
   }, []);

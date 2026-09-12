@@ -22,7 +22,6 @@ import { LiveProgressPanel } from "@/components/LiveProgressPanel";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import {
   COUNTRIES,
-  FOUNDER_TRACK_IDS,
   QUESTIONS,
   SECTIONS,
   SECTION_DIMENSION,
@@ -66,17 +65,14 @@ const DIMENSION_KEY = {
 function Assessment() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const { state, hydrated, setAnswer, clearAnswers, update, pushSnapshot, resetAnswers } = useAppState();
+  const { state, hydrated, setAnswer, update, pushSnapshot, resetAnswers } = useAppState();
   const [section, setSection] = useState(1);
   const [analyzing, setAnalyzing] = useState(false);
   const [showRequired, setShowRequired] = useState(false);
   const [corrupted, setCorrupted] = useState(false);
-  // Opt-in gate for the Founder & Talent questions (Q39–41).
-  const [founderTrack, setFounderTrack] = useState<boolean | null>(state.founderTrack ?? null);
-
-  useEffect(() => {
-    if (hydrated) setFounderTrack(state.founderTrack ?? null);
-  }, [hydrated, state.founderTrack]);
+  // Opt-in gate for the Founder & Talent questions (Q39–41). Derived straight from
+  // the (already sanitized) stored state so it is final before Step 7 first renders.
+  const founderTrack = state.founderTrack ?? null;
 
   useEffect(() => {
     if (hydrated && !state.consent) void navigate({ to: "/consent" });
@@ -92,13 +88,10 @@ function Assessment() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [hydrated, section, resetAnswers]);
 
-  const visible = useMemo(() => {
-    const list = questionsForSection(section, state.answers);
-    if (section !== 7) return list;
-    return founderTrack === true
-      ? list
-      : list.filter((q) => !FOUNDER_TRACK_IDS.includes(q.id as (typeof FOUNDER_TRACK_IDS)[number]));
-  }, [section, state.answers, founderTrack]);
+  const visible = useMemo(
+    () => questionsForSection(section, state.answers, { founderTrack }),
+    [section, state.answers, founderTrack],
+  );
   const meta = SECTIONS.find((s) => s.id === section);
   const answeredCount = QUESTIONS.filter((q) => isAnswered(q, state.answers[q.id])).length;
   const progress = Math.round((answeredCount / QUESTIONS.length) * 100);
@@ -267,9 +260,8 @@ function Assessment() {
                   type="button"
                   aria-pressed={founderTrack === opt.value}
                   onClick={() => {
-                    setFounderTrack(opt.value);
+                    // One write resolves the opt-in and the pruning of Q39–41 together.
                     update({ founderTrack: opt.value });
-                    if (!opt.value) clearAnswers(FOUNDER_TRACK_IDS);
                   }}
                   className={cn(
                     "rounded-2xl border px-5 py-2.5 text-sm font-semibold transition-all duration-200 ease-out",

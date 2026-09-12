@@ -28,7 +28,8 @@ export type Question = {
   /** second part of the same question (answer index stored in `detail`) */
   sub?: { label: Bilingual; options: Bilingual[]; optionScores?: number[] };
   /** show question only when this predicate passes */
-  showIf?: (answers: Answers) => boolean;
+  showIf?: (answers: Answers, ctx?: AnswerContext) => boolean;
+
   /** excluded from every score bucket */
   unscored?: boolean;
 };
@@ -38,6 +39,14 @@ export type AnswerValue = {
   detail?: string | undefined;
 };
 export type Answers = Record<number, AnswerValue | undefined>;
+
+/**
+ * Non-answer context that conditional questions may depend on.
+ * `founderTrack` mirrors the Founder & Talent opt-in so the data layer and the
+ * rendered question list share one source of truth for Q39–41 visibility.
+ */
+export type AnswerContext = { founderTrack?: boolean | null };
+
 
 export const SECTIONS: { id: number; title: Bilingual; minutes: number; optional?: boolean }[] = [
   { id: 1, title: { en: "Identity & Current Status", fa: "هویت و وضعیت کنونی" }, minutes: 2 },
@@ -650,7 +659,9 @@ export const QUESTIONS: Question[] = [
     detailOn: 1,
     detailType: "number",
     detailLabel: o("Number of people managed", "تعداد افراد تحت مدیریت"),
+    showIf: (_a, ctx) => ctx?.founderTrack === true,
   },
+
   {
     id: 40,
     section: 7,
@@ -665,7 +676,9 @@ export const QUESTIONS: Question[] = [
     ],
     optionScores: [1, 1, 0.9, 0.85, 0.2],
     noneIndex: 4,
+    showIf: (_a, ctx) => ctx?.founderTrack === true,
   },
+
   {
     id: 41,
     section: 7,
@@ -673,7 +686,9 @@ export const QUESTIONS: Question[] = [
     label: o("What is your level of professional recognition?", "سطح شناخته‌شدگی حرفه‌ای شما چقدر است؟"),
     options: [o("Local", "محلی"), o("National", "ملی"), o("International", "بین‌المللی")],
     optionScores: [0.4, 0.7, 1],
+    showIf: (_a, ctx) => ctx?.founderTrack === true,
   },
+
   {
     id: 42,
     section: 7,
@@ -695,13 +710,14 @@ export const QUESTIONS: Question[] = [
 export const FOUNDER_TRACK_IDS = [39, 40, 41] as const;
 
 /** Whether a question applies to the current answer set. Hidden questions are Not Applicable. */
-export function isQuestionApplicable(q: Question, answers: Answers) {
-  return !q.showIf || q.showIf(answers);
+export function isQuestionApplicable(q: Question, answers: Answers, ctx?: AnswerContext) {
+  return !q.showIf || q.showIf(answers, ctx);
 }
 
-export function questionsForSection(section: number, answers: Answers) {
-  return QUESTIONS.filter((q) => q.section === section && isQuestionApplicable(q, answers));
+export function questionsForSection(section: number, answers: Answers, ctx?: AnswerContext) {
+  return QUESTIONS.filter((q) => q.section === section && isQuestionApplicable(q, answers, ctx));
 }
+
 
 export function isAnswered(q: Question, a: AnswerValue | undefined) {
   if (!a) return false;
