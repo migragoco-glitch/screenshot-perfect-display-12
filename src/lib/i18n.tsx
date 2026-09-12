@@ -246,10 +246,6 @@ export const en = {
   "pay.emailSub": "Early access pricing — available for a limited time.",
   "pay.emailLabel": "Your email",
   "pay.emailCta": "Get my code and continue",
-  "pay.counter": "members registered so far",
-  "pay.counterSpots": "early-access places left",
-  "pay.counterFull":
-    "All 100 early-access places are taken — standard pricing applies from here.",
   "pay.emailInvalid": "Please enter a valid email address.",
   "pay.emailThanks": "Your early-access code is reserved. Continuing to checkout…",
   "pay.emailSkip": "Continue at standard pricing",
@@ -780,10 +776,6 @@ export const fa: Record<keyof typeof en, string> = {
   "pay.emailSub": "قیمت دسترسی زودهنگام — برای مدت محدود در دسترس است.",
   "pay.emailLabel": "رایانامهٔ شما",
   "pay.emailCta": "دریافت کد و ادامه",
-  "pay.counter": "عضو تاکنون ثبت‌نام کرده‌اند",
-  "pay.counterSpots": "جایگاه دسترسی زودهنگام باقی مانده است",
-  "pay.counterFull":
-    "هر ۱۰۰ جایگاه دسترسی زودهنگام تکمیل شده است — از این پس قیمت استاندارد اعمال می‌شود.",
   "pay.emailInvalid": "لطفاً یک نشانی رایانامهٔ معتبر وارد کنید.",
   "pay.emailThanks": "کد دسترسی زودهنگام شما رزرو شد. در حال رفتن به مرحلهٔ پرداخت…",
   "pay.emailSkip": "ادامه با قیمت استاندارد",
