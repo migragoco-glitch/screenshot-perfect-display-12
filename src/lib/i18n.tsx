@@ -101,6 +101,11 @@ export const en = {
     "I have read the above and consent to MigraGo processing these answers, including sensitive-adjacent details, to generate my profile and roadmap (GDPR Art. 6/9 lawful basis).",
   "consent.continue": "I consent — start the assessment",
   "consent.back": "Back",
+  "region.label": "Which area of Finland are you planning to settle in?",
+  "region.optional": "Optional — you can skip this. It does not affect your score.",
+  "region.helsinki": "Helsinki metropolitan area (Helsinki, Espoo, Vantaa, Kauniainen)",
+  "region.elsewhere": "Elsewhere in Finland",
+  "region.undecided": "Not yet decided",
 
   "q.progress": "Progress",
   "q.live.title": "Live progress",
@@ -630,6 +635,11 @@ export const fa: Record<keyof typeof en, string> = {
     "متن بالا را خوانده‌ام و رضایت می‌دهم که میگراگو این پاسخ‌ها، از جمله جزئیات نزدیک به دادهٔ حساس، را برای تولید پروفایل و نقشه‌راه من پردازش کند (مبنای قانونی مواد ۶ و ۹ مقررات GDPR).",
   "consent.continue": "رضایت می‌دهم — شروع ارزیابی",
   "consent.back": "بازگشت",
+  "region.label": "قصد دارید در کدام منطقهٔ فنلاند ساکن شوید؟",
+  "region.optional": "اختیاری — می‌توانید از آن عبور کنید. این پرسش بر نمرهٔ شما تأثیری ندارد.",
+  "region.helsinki": "منطقهٔ کلان‌شهری هلسینکی (هلسینکی، اسپو، وانتا، کاونیاینن)",
+  "region.elsewhere": "جای دیگری در فنلاند",
+  "region.undecided": "هنوز تصمیم نگرفته‌ام",
 
   "q.progress": "پیشرفت",
   "q.live.title": "پیشرفت زنده",
