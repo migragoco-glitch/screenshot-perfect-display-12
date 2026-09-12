@@ -28,7 +28,8 @@ export type Question = {
   /** second part of the same question (answer index stored in `detail`) */
   sub?: { label: Bilingual; options: Bilingual[]; optionScores?: number[] };
   /** show question only when this predicate passes */
-  showIf?: (answers: Answers) => boolean;
+  showIf?: (answers: Answers, ctx?: AnswerContext) => boolean;
+
   /** excluded from every score bucket */
   unscored?: boolean;
 };
@@ -695,13 +696,14 @@ export const QUESTIONS: Question[] = [
 export const FOUNDER_TRACK_IDS = [39, 40, 41] as const;
 
 /** Whether a question applies to the current answer set. Hidden questions are Not Applicable. */
-export function isQuestionApplicable(q: Question, answers: Answers) {
-  return !q.showIf || q.showIf(answers);
+export function isQuestionApplicable(q: Question, answers: Answers, ctx?: AnswerContext) {
+  return !q.showIf || q.showIf(answers, ctx);
 }
 
-export function questionsForSection(section: number, answers: Answers) {
-  return QUESTIONS.filter((q) => q.section === section && isQuestionApplicable(q, answers));
+export function questionsForSection(section: number, answers: Answers, ctx?: AnswerContext) {
+  return QUESTIONS.filter((q) => q.section === section && isQuestionApplicable(q, answers, ctx));
 }
+
 
 export function isAnswered(q: Question, a: AnswerValue | undefined) {
   if (!a) return false;
