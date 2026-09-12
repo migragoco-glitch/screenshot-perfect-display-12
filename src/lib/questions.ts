@@ -308,11 +308,8 @@ export const QUESTIONS: Question[] = [
     // Relevant only when the selected pathway or a language requirement makes a
     // certificate meaningful (employment or studies, or English below advanced).
     showIf: (a) => {
-      const pathway = a[36]?.value;
       const english = a[15]?.value;
-      const pathwayRelevant = pathway === 0 || pathway === 1 || pathway === undefined;
-      const languageRelevant = typeof english === "number" && english <= 3;
-      return pathwayRelevant || languageRelevant;
+      return typeof english !== "number" || english <= 3;
     },
   },
 
@@ -378,9 +375,9 @@ export const QUESTIONS: Question[] = [
       o("Nothing prepared yet", "هنوز چیزی آماده نیست"),
     ],
     optionScores: [1, 0.6, 0.3],
-    // Financial-source documentation is requested for every pathway except a
-    // salaried employment pathway, where the employment contract carries it.
-    showIf: (a) => a[36]?.value !== 0,
+    // Documentation is relevant when the user reports a financial source that
+    // needs separate supporting evidence; pathway choice itself never scores.
+    showIf: (a) => a[19]?.value !== 0,
   },
   {
     id: 21,
