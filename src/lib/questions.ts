@@ -404,7 +404,7 @@ export const QUESTIONS: Question[] = [
       "با بودجهٔ کنونی و بدون درآمد جدید، چند ماه می‌توانید در فنلاند هزینه‌های خود را تأمین کنید؟",
     ),
     hint: o(
-      "Income requirements vary by permit type in Finland — check migri.fi for the exact figure.",
+      "Guide: The minimum income requirement by the Finnish Immigration Service (Migri) in 2026 is around €1,200/month for an adult in Helsinki (+€600 for each additional family member), and less in the rest of Finland. Check migri.fi for the exact figure.",
       "راهنما: حداقل مبلغ مورد نیاز ادارهٔ مهاجرت فنلاند (Migri) در سال ۲۰۲۶ برای یک فرد بزرگسال در هلسینکی حدود ۱,۲۰۰ یورو در ماه است (بعلاوهٔ ۶۰۰ یورو به ازای هر عضو اضافی خانواده)، و برای سایر مناطق فنلاند این مبلغ کمتر است. رقم دقیق را در migri.fi ببینید.",
     ),
     options: [
