@@ -128,7 +128,14 @@ function bucketScore(ids: readonly number[], answers: Answers) {
 
 const L = (en: string, fa: string): Bilingual => ({ en, fa });
 
-export function computeProfile(answers: Answers, founderTrack = false): Profile {
+/** Non-scored region preference, captured outside the 42 questions. */
+export type Region = "helsinki" | "elsewhere" | "undecided";
+
+export function computeProfile(
+  answers: Answers,
+  founderTrack = false,
+  region: Region = "undecided",
+): Profile {
   const legal = bucketScore(BUCKETS.legal.ids, answers);
   const professional = bucketScore(BUCKETS.professional.ids, answers);
   const psychological = bucketScore(BUCKETS.psychological.ids, answers);
@@ -226,8 +233,9 @@ export function computeProfile(answers: Answers, founderTrack = false): Profile 
   // Kela is only surfaced when the user's own situation makes it relevant.
   if (basis === 4 || multi(8).some((i) => i === 1 || i === 2 || i === 3) || val(7) === 1)
     gaps.push("kela_relevant");
-  // Without a confirmed Helsinki-region destination, show local municipal services.
-  gaps.push("outside_helsinki");
+  // Region preference (never scored): only decides which settlement-service step is shown.
+  if (region === "helsinki") gaps.push("helsinki_region");
+  else gaps.push("outside_helsinki");
 
   if ((val(38) ?? 2) <= 1) gaps.push("urgent_timeline");
   if (bonus >= 70) {

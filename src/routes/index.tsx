@@ -37,6 +37,7 @@ const INSTITUTIONS = [
   "Vero",
   "Kela",
   "Local Employment Services (via Job Market Finland — tyomarkkinatori.fi)",
+  "International House Helsinki",
   "Valvira / OPH",
   "PRH / YTJ",
   "Business Finland",

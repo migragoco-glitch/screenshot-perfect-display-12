@@ -20,6 +20,8 @@ export type AppState = {
   tier: "free" | "navigator";
   history: ScoreSnapshot[];
   founderTrack?: boolean;
+  /** Optional, non-scored: intended settlement region in Finland. */
+  region?: "helsinki" | "elsewhere" | "undecided";
   registeredAt?: string;
 };
 

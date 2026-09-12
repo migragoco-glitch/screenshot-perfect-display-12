@@ -134,8 +134,8 @@ function Dashboard() {
 
 
   const profile = useMemo(
-    () => computeProfile(state.answers, state.founderTrack === true),
-    [state.answers, state.founderTrack],
+    () => computeProfile(state.answers, state.founderTrack === true, state.region ?? "undecided"),
+    [state.answers, state.founderTrack, state.region],
   );
   const roadmap = useMemo(() => generateRoadmap(profile), [profile]);
   const allItems = useMemo(() => roadmap.flatMap((p) => p.items), [roadmap]);
