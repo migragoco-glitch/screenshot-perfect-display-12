@@ -1,5 +1,5 @@
 import { useI18n, localizeNumber } from "@/lib/i18n";
-import { COUNTRIES, type AnswerValue, type Question } from "@/lib/questions";
+import { COUNTRIES, subAnswerIndex, type AnswerValue, type Question } from "@/lib/questions";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -14,6 +14,7 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
   const selected = answer?.value;
   const showDetail = q.detailOn !== undefined && selected === q.detailOn;
   const isBracket = q.id === 17 || q.id === 21;
+  const subSelected = subAnswerIndex(q, answer);
 
   return (
     <fieldset className="rounded-2xl border border-border/70 bg-card/80 p-5 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_6px_24px_-16px_rgba(11,37,69,0.35)] backdrop-blur-sm md:p-6">
@@ -154,6 +155,31 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
             </div>
           </div>
         ) : null}
+
+        {q.sub ? (
+          <div className="mt-5">
+            <p className="text-[15px] font-semibold leading-relaxed">{q.sub.label[lang]}</p>
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+              {q.sub.options.map((opt, i) => (
+                <button
+                  key={opt.en}
+                  type="button"
+                  aria-pressed={subSelected === i}
+                  onClick={() => onChange({ value: selected, detail: String(i) })}
+                  className={cn(
+                    "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
+                    subSelected === i
+                      ? "border-secondary bg-secondary/12 text-foreground ring-1 ring-secondary/40"
+                      : "border-border bg-background hover:border-secondary/40",
+                  )}
+                >
+                  {opt[lang]}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
 
         {showDetail ? (
           <div className="rise-in mt-3">

@@ -83,7 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Build your Smart Integration Profile and a 12-week Finland settlement roadmap sourced from Migri, DVV, Kela, Vero and TE Services.",
+          "Build your Smart Integration Profile and a 12-week Finland settlement roadmap sourced from Migri, DVV, Kela, Vero and Local Employment Services.",
       },
       { name: "author", content: "MigraGo" },
       { property: "og:title", content: "MigraGo — SettleSmart Navigator for Finland" },

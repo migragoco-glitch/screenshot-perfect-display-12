@@ -753,7 +753,12 @@ function Dashboard() {
 
             {/* Relevant pathways */}
             <section className="rounded-3xl border border-border bg-card p-6 lg:col-span-3">
-              <h2 className="text-lg">{t("path.title")}</h2>
+              <h2 className="text-lg">
+                {profile.gaps.includes("pathway_unconfirmed") ? t("path.titleExplore") : t("path.title")}
+              </h2>
+              {profile.gaps.includes("pathway_unconfirmed") ? (
+                <p className="mt-2 text-xs text-muted-foreground">{t("path.exploreNote")}</p>
+              ) : null}
               <ul className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {pathways.map((p) => (
                   <li key={p.institution} className="rounded-2xl border border-border bg-background p-5">

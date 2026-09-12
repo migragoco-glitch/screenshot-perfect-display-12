@@ -22,6 +22,7 @@ import { LiveProgressPanel } from "@/components/LiveProgressPanel";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import {
   COUNTRIES,
+  FOUNDER_TRACK_IDS,
   QUESTIONS,
   SECTIONS,
   SECTION_DIMENSION,
@@ -70,6 +71,8 @@ function Assessment() {
   const [analyzing, setAnalyzing] = useState(false);
   const [showRequired, setShowRequired] = useState(false);
   const [corrupted, setCorrupted] = useState(false);
+  // Opt-in gate for the Founder & Talent questions (Q39–41).
+  const [founderTrack, setFounderTrack] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (hydrated && !state.consent) void navigate({ to: "/consent" });
@@ -85,7 +88,13 @@ function Assessment() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [hydrated, section, resetAnswers]);
 
-  const visible = useMemo(() => questionsForSection(section, state.answers), [section, state.answers]);
+  const visible = useMemo(() => {
+    const list = questionsForSection(section, state.answers);
+    if (section !== 7) return list;
+    return founderTrack === true
+      ? list
+      : list.filter((q) => !FOUNDER_TRACK_IDS.includes(q.id as (typeof FOUNDER_TRACK_IDS)[number]));
+  }, [section, state.answers, founderTrack]);
   const meta = SECTIONS.find((s) => s.id === section);
   const answeredCount = QUESTIONS.filter((q) => isAnswered(q, state.answers[q.id])).length;
   const progress = Math.round((answeredCount / QUESTIONS.length) * 100);
@@ -240,6 +249,33 @@ function Assessment() {
           <Save className="size-3.5" aria-hidden />
           {t("q.saveResume")}
         </p>
+
+        {section === 7 ? (
+          <div className="mt-7 rounded-2xl border border-border bg-card p-4">
+            <p className="text-[15px] font-semibold leading-relaxed">{t("q.founderTrack")}</p>
+            <div className="mt-3 flex gap-2">
+              {[
+                { label: t("q.founderYes"), value: true },
+                { label: t("q.founderNo"), value: false },
+              ].map((opt) => (
+                <button
+                  key={String(opt.value)}
+                  type="button"
+                  aria-pressed={founderTrack === opt.value}
+                  onClick={() => setFounderTrack(opt.value)}
+                  className={cn(
+                    "rounded-2xl border px-5 py-2.5 text-sm font-semibold transition-all duration-200 ease-out",
+                    founderTrack === opt.value
+                      ? "border-secondary bg-secondary/12 ring-1 ring-secondary/40"
+                      : "border-border bg-background hover:border-secondary/40",
+                  )}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         <div className="mt-7 space-y-4">
           {visible.map((q) => (

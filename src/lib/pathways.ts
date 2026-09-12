@@ -48,7 +48,7 @@ export const GAP_CATALOG: GapEntry[] = [
   {
     flag: "language_weak",
     priority: "high",
-    institution: "TE Services",
+    institution: "Local Employment Services",
     gap: { en: "Language level is below labour-market expectation", fa: "سطح زبان پایین‌تر از انتظار بازار کار است" },
     why: {
       en: "Language capacity affects employment, services and daily life more than any other single factor in the first year.",
@@ -132,7 +132,7 @@ export const GAP_CATALOG: GapEntry[] = [
   {
     flag: "cultural_adaptation",
     priority: "medium",
-    institution: "International House Helsinki",
+    institution: "Local municipality services",
     gap: { en: "Limited familiarity with Finnish norms and services", fa: "آشنایی محدود با هنجارها و خدمات فنلاند" },
     why: {
       en: "Knowing how services, workplaces and communication work locally shortens the time from arrival to participation.",
@@ -146,7 +146,7 @@ export const GAP_CATALOG: GapEntry[] = [
   {
     flag: "employment_gap",
     priority: "medium",
-    institution: "TE Services",
+    institution: "Local Employment Services",
     gap: { en: "Gap in recent employment record", fa: "وقفه در سابقهٔ شغلی اخیر" },
     why: {
       en: "Finnish employers read continuity closely; a first local contract restores references and pension record.",
@@ -256,7 +256,10 @@ export const INSTITUTION_PATHWAY: Record<Institution, Bilingual> = {
   DVV: { en: "Population registration pathway (DVV)", fa: "مسیر ثبت جمعیت (DVV)" },
   Vero: { en: "Taxation pathway (Vero)", fa: "مسیر مالیاتی (Vero)" },
   Kela: { en: "Social security pathway (Kela)", fa: "مسیر تأمین اجتماعی (Kela)" },
-  "TE Services": { en: "Employment & integration services pathway", fa: "مسیر خدمات اشتغال و ادغام" },
+  "Local Employment Services": {
+    en: "Employment services pathway (via Job Market Finland — tyomarkkinatori.fi)",
+    fa: "مسیر خدمات اشتغال (از طریق Job Market Finland — tyomarkkinatori.fi)",
+  },
   "Valvira / OPH": {
     en: "Qualification recognition pathway (Valvira / OPH)",
     fa: "مسیر تأیید مدارک (Valvira / OPH)",
@@ -264,6 +267,18 @@ export const INSTITUTION_PATHWAY: Record<Institution, Bilingual> = {
   "International House Helsinki": {
     en: "One-stop settlement pathway (International House Helsinki)",
     fa: "مسیر یکجای استقرار (International House Helsinki)",
+  },
+  "Local municipality services": {
+    en: "Local municipality / employment area services pathway",
+    fa: "مسیر خدمات شهرداری و منطقهٔ اشتغال محل سکونت",
+  },
+  "PRH / YTJ": {
+    en: "Business registration pathway (PRH / YTJ)",
+    fa: "مسیر ثبت کسب‌وکار (PRH / YTJ)",
+  },
+  "Business Finland": {
+    en: "Start-up entrepreneur eligibility pathway (Business Finland)",
+    fa: "مسیر تأیید صلاحیت کارآفرینی استارتاپی (Business Finland)",
   },
   "Municipal health services": {
     en: "Municipal health & family services pathway",

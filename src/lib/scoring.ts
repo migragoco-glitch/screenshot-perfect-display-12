@@ -1,11 +1,21 @@
-import { QUESTIONS, type Answers, type Bilingual, type Question } from "./questions";
+import { QUESTIONS, subAnswerIndex, type Answers, type Bilingual, type Question } from "./questions";
 
+/**
+ * Locked architecture: 42 questions → 7 levels → 3 dimensions.
+ * Legal / Status Readiness ← Level 1 (family & dependants factors only) + Level 5
+ * Economic & Professional Capacity ← Level 2 + Level 3
+ * Soft Skills & Psychological Readiness ← Level 4
+ * Levels 6 and 7 are context only: pathway matching and roadmap sequencing.
+ */
 export const BUCKETS = {
-  legal: { ids: [1, 2, 3, 4, 5, 6, 7, 8, 30, 31, 32, 33, 34], weight: 30 },
+  legal: { ids: [4, 6, 7, 30, 31, 32, 33, 34], weight: 30 },
   professional: { ids: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], weight: 40 },
-  psychological: { ids: [24, 25, 26, 27, 28, 29, 35, 36, 37, 38], weight: 30 },
-  bonus: { ids: [39, 40, 41, 42], weight: 0 },
+  psychological: { ids: [24, 25, 26, 27, 28, 29], weight: 30 },
+  bonus: { ids: [39, 40, 41], weight: 0 },
 } as const;
+
+/** Roadmap pacing derived from Q42 — never a readiness or eligibility signal. */
+export type Pacing = "explore" | "steady" | "intensive";
 
 export type Profile = {
   overall: number;
@@ -13,6 +23,7 @@ export type Profile = {
   professional: number;
   psychological: number;
   bonus: number;
+  pacing: Pacing;
   gaps: GapFlag[];
   strengths: Bilingual[];
   weaknesses: Bilingual[];
@@ -21,6 +32,7 @@ export type Profile = {
 export type GapFlag =
   | "documents_not_ready"
   | "credential_recognition"
+  | "health_profession"
   | "language_weak"
   | "finance_thin"
   | "finance_docs"
@@ -29,10 +41,16 @@ export type GapFlag =
   | "support_network"
   | "cultural_adaptation"
   | "employment_gap"
+  | "employment_pathway"
   | "family_relocation"
   | "children"
+  | "kela_relevant"
+  | "helsinki_region"
+  | "outside_helsinki"
   | "study_path"
   | "startup_path"
+  | "business_registration"
+  | "pathway_unconfirmed"
   | "talent_track"
   | "urgent_timeline";
 
@@ -68,7 +86,14 @@ export function questionScore(q: Question, answers: Answers): number | undefined
   if (q.type === "single") {
     const v = num(a.value);
     if (v === undefined || !q.optionScores) return undefined;
-    return q.optionScores[v] ?? undefined;
+    const main = q.optionScores[v];
+    if (main === undefined) return undefined;
+    if (q.sub?.optionScores) {
+      const subIndex = subAnswerIndex(q, a);
+      const subScore = subIndex === undefined ? undefined : q.sub.optionScores[subIndex];
+      if (subScore !== undefined) return (main + subScore) / 2;
+    }
+    return main;
   }
 
   if (q.type === "multi") {
@@ -122,17 +147,20 @@ export function computeProfile(answers: Answers): Profile {
     strengths.push(L("Your identity documents are essentially ready.", "مدارک هویتی شما در عمل آماده است."));
   }
 
-  if (val(14) === 0 || val(14) === 2) {
+  // Q14: 0 fully ready … 3 not ready yet, 4 not sure
+  if ((val(14) ?? 0) >= 2) {
     gaps.push("credential_recognition");
     weaknesses.push(
       L(
-        "Your profession likely needs formal credential recognition in Finland.",
-        "حرفهٔ شما احتمالاً نیازمند تأیید رسمی مدارک در فنلاند است.",
+        "Your qualifications may still need formal recognition for your intended pathway.",
+        "مدارک شما ممکن است برای مسیر موردنظرتان به تأیید رسمی نیاز داشته باشد.",
       ),
     );
   }
+  if (val(11) === 1) gaps.push("health_profession");
 
-  if ((val(15) ?? 3) <= 3) {
+  // Q15: 0 beginner … 4 advanced
+  if ((val(15) ?? 2) <= 2) {
     gaps.push("language_weak");
     weaknesses.push(
       L(
@@ -169,15 +197,30 @@ export function computeProfile(answers: Answers): Profile {
   if (val(13) === 4) gaps.push("employment_gap");
   if (multi(8).some((i) => i === 1 || i === 3)) gaps.push("family_relocation");
   if (val(7) === 1 || multi(8).includes(2)) gaps.push("children");
-  if (val(36) === 1) gaps.push("study_path");
-  if (val(36) === 2) gaps.push("startup_path");
+
+  // Q36: 0 employment, 1 studies, 2 start-up, 3 entrepreneurship, 4 family ties, 5 other/not sure
+  const basis = val(36);
+  if (basis === 0) gaps.push("employment_pathway");
+  if (basis === 1) gaps.push("study_path");
+  if (basis === 2) {
+    gaps.push("startup_path");
+    gaps.push("business_registration");
+  }
+  if (basis === 3) gaps.push("business_registration");
+  if (basis === 5 || basis === undefined) gaps.push("pathway_unconfirmed");
+  // Kela is only surfaced when the user's own situation makes it relevant.
+  if (basis === 4 || multi(8).some((i) => i === 1 || i === 2 || i === 3) || val(7) === 1)
+    gaps.push("kela_relevant");
+  // Without a confirmed Helsinki-region destination, show local municipal services.
+  gaps.push("outside_helsinki");
+
   if ((val(38) ?? 2) <= 1) gaps.push("urgent_timeline");
   if (bonus >= 70) {
     gaps.push("talent_track");
     strengths.push(
       L(
-        "Founder/talent signals qualify you for fast-track content.",
-        "نشانه‌های کارآفرینی و استعداد، محتوای مسیر سریع را برای شما فعال می‌کند.",
+        "Founder/talent signals unlock fast-track content to explore.",
+        "نشانه‌های کارآفرینی و استعداد، محتوای مسیر سریع را برای بررسی شما فعال می‌کند.",
       ),
     );
   }
@@ -187,7 +230,11 @@ export function computeProfile(answers: Answers): Profile {
   if ((val(12) ?? 0) >= 3)
     strengths.push(L("Deep professional experience in your field.", "تجربهٔ حرفه‌ای عمیق در حوزهٔ تخصصی شما."));
 
-  return { overall, legal, professional, psychological, bonus, gaps, strengths, weaknesses };
+  // Q42 sets roadmap pacing only — it is never an eligibility indicator.
+  const action = val(42) ?? 3;
+  const pacing: Pacing = action <= 2 ? "explore" : action >= 4 ? "intensive" : "steady";
+
+  return { overall, legal, professional, psychological, bonus, pacing, gaps, strengths, weaknesses };
 }
 
 export function analysisSummary(p: Profile): Bilingual {

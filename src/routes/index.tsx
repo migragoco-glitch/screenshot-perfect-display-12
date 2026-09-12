@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Assess your integration readiness for Finland and get a personalized 12-week roadmap mapped to Migri, DVV, Kela, Vero and TE Services.",
+          "Assess your integration readiness for Finland and get a personalized 12-week roadmap mapped to Migri, DVV, Kela, Vero and Local Employment Services.",
       },
       { property: "og:title", content: "MigraGo — SettleSmart Navigator for Finland" },
       {
@@ -31,7 +31,16 @@ export const Route = createFileRoute("/")({
   component: Landing,
 });
 
-const INSTITUTIONS = ["Migri", "DVV", "Vero", "Kela", "TE Services", "Valvira / OPH", "International House Helsinki"];
+const INSTITUTIONS = [
+  "Migri",
+  "DVV",
+  "Vero",
+  "Kela",
+  "Local Employment Services (via Job Market Finland — tyomarkkinatori.fi)",
+  "Valvira / OPH",
+  "PRH / YTJ",
+  "Business Finland",
+];
 
 const SAMPLE = [
   { key: "dash.dim1", value: 65, color: "#3AC8C3" },
