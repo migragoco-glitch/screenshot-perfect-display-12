@@ -225,7 +225,7 @@ export const en = {
   "nav.signIn": "Sign in",
   "nav.logout": "Log out",
 
-  "auth.subtitle": "Sign in to save your roadmap progress across devices. Your assessment answers stay on this device.",
+  "auth.subtitle": "Signing in does not currently sync your progress across devices. Your assessment answers and roadmap progress are saved only on this device/browser.",
   "auth.email": "Email",
   "auth.password": "Password (min. 8 characters)",
   "auth.signIn": "Sign in",
@@ -257,7 +257,7 @@ export const en = {
 
   "set.account": "Account",
   "set.email": "Signed in as",
-  "set.notSignedIn": "You are not signed in. Sign in to save roadmap progress across devices.",
+  "set.notSignedIn": "You are not signed in. Signing in does not currently sync your roadmap progress across devices — progress is saved only on this device.",
   "set.legal": "Legal",
   "set.privacy": "Privacy Policy",
   "set.terms": "Terms of Service",
@@ -266,7 +266,7 @@ export const en = {
 
   "road.done": "Done",
   "road.progress": "steps completed",
-  "road.signInToSave": "Sign in to save your roadmap progress across all your devices.",
+  "road.signInToSave": "Your progress is currently saved in this browser only. It will not carry over if you switch devices or browsers.",
 
   "nps.title": "How likely are you to recommend MigraGo to another newcomer?",
   "nps.sub": "0 = not at all likely · 10 = extremely likely",
@@ -325,7 +325,7 @@ export const en = {
   "faq.sub": "The short answers to what newcomers ask us most.",
   "faq.q1": "Do I need an account to use MigraGo?",
   "faq.a1":
-    "No. You can complete the assessment and see your free overview without an account. Creating an account only saves your roadmap progress so it follows you across devices.",
+    "No, the assessment and its overview are free to use without an account. Creating an account is being prepared for upcoming features; it does not currently sync your roadmap progress across devices — progress is saved only on the device and browser you use.",
   "faq.q2": "What is included in the free tier?",
   "faq.a2":
     "The 42-question assessment, basic analysis and an initial integration-readiness insight. The free Essential tier does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
@@ -340,7 +340,7 @@ export const en = {
     "No. MigraGo does not replace legal advice or official authorities and does not guarantee residence permits or integration outcomes. Always verify requirements with the responsible institution.",
   "faq.q6": "Where is my data stored, and how do I delete it?",
   "faq.a6":
-    "Assessment answers are stored in your browser. Roadmap progress, feedback responses and early-access emails are stored in our secure backend. You can erase your local data at any time from Settings → Delete all my data.",
+    "Assessment answers and roadmap progress are stored only in your browser, on your device. Feedback you submit and the email address you provide for early-access notifications are stored securely, separately from your assessment data. You can delete all your local data anytime from Settings.",
   "faq.q7": "How accurate are the scores?",
   "faq.a7":
     "The model is transparent and rule-based, not a black box: each question maps to a known weight. It is a readiness indicator, not a prediction of any authority's decision.",
@@ -759,7 +759,7 @@ export const fa: Record<keyof typeof en, string> = {
   "nav.logout": "خروج",
 
   "auth.subtitle":
-    "برای ذخیرهٔ پیشرفت نقشهٔ راه خود روی همهٔ دستگاه‌ها وارد شوید. پاسخ‌های پرسش‌نامه روی همین دستگاه باقی می‌ماند.",
+    "ورود در حال حاضر پیشرفت شما را بین دستگاه‌ها همگام نمی‌کند. پاسخ‌های ارزیابی و پیشرفت نقشه‌راه شما فقط روی همین دستگاه/مرورگر ذخیره می‌شود.",
   "auth.email": "رایانامه",
   "auth.password": "گذرواژه (حداقل ۸ نویسه)",
   "auth.signIn": "ورود",
@@ -791,7 +791,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "set.account": "حساب کاربری",
   "set.email": "واردشده با",
-  "set.notSignedIn": "وارد نشده‌اید. برای ذخیرهٔ پیشرفت نقشهٔ راه روی همهٔ دستگاه‌ها وارد شوید.",
+  "set.notSignedIn": "وارد نشده‌اید. ورود در حال حاضر پیشرفت نقشه‌راه شما را بین دستگاه‌ها همگام نمی‌کند — پیشرفت فقط روی همین دستگاه ذخیره می‌شود.",
   "set.legal": "اسناد حقوقی",
   "set.privacy": "سیاست حریم خصوصی",
   "set.terms": "شرایط استفاده از خدمات",
@@ -800,7 +800,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "road.done": "انجام شد",
   "road.progress": "گام انجام‌شده",
-  "road.signInToSave": "برای ذخیرهٔ پیشرفت نقشهٔ راه روی همهٔ دستگاه‌هایتان وارد شوید.",
+  "road.signInToSave": "پیشرفت شما در حال حاضر فقط در همین مرورگر ذخیره می‌شود و با تعویض دستگاه یا مرورگر منتقل نخواهد شد.",
 
   "nps.title": "چقدر احتمال دارد MigraGo را به مهاجر دیگری معرفی کنید؟",
   "nps.sub": "۰ = اصلاً · ۱۰ = بسیار زیاد",
@@ -859,7 +859,7 @@ export const fa: Record<keyof typeof en, string> = {
   "faq.sub": "پاسخ کوتاه به پرسش‌هایی که تازه‌واردان بیش از همه می‌پرسند.",
   "faq.q1": "برای استفاده از میگراگو باید حساب کاربری بسازم؟",
   "faq.a1":
-    "خیر. ارزیابی و نمای کلی رایگان بدون حساب کاربری در دسترس است. ساخت حساب تنها پیشرفت نقشهٔ راه شما را ذخیره می‌کند تا روی همهٔ دستگاه‌ها همراه‌تان باشد.",
+    "خیر، ارزیابی و نمای کلی آن رایگان و بدون نیاز به حساب کاربری در دسترس است. ساخت حساب کاربری برای ویژگی‌های آینده آماده‌سازی می‌شود؛ در حال حاضر پیشرفت نقشه‌راه شما را بین دستگاه‌ها همگام نمی‌کند — پیشرفت فقط روی همان دستگاه و مرورگری که استفاده می‌کنید ذخیره می‌شود.",
   "faq.q2": "نسخهٔ رایگان شامل چه چیزهایی است؟",
   "faq.a2":
     "ارزیابی ۴۲ پرسشی، تحلیل پایه و یک بینش اولیه از آمادگی ادغام. سطح رایگان Essential شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
@@ -874,7 +874,7 @@ export const fa: Record<keyof typeof en, string> = {
     "خیر. میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام نمی‌دهد. همیشه الزامات را با نهاد مسئول راستی‌آزمایی کنید.",
   "faq.q6": "داده‌های من کجا ذخیره می‌شود و چگونه حذف می‌شود؟",
   "faq.a6":
-    "پاسخ‌های ارزیابی در مرورگر شما ذخیره می‌شود. پیشرفت نقشهٔ راه، بازخوردها و رایانامه‌های دسترسی زودهنگام در بک‌اند امن ما نگهداری می‌شود. هر زمان می‌توانید از بخش تنظیمات، «حذف همهٔ داده‌های من» را اجرا کنید.",
+    "پاسخ‌های ارزیابی و پیشرفت نقشه‌راه فقط در مرورگر شما، روی همان دستگاه ذخیره می‌شوند. بازخوردهایی که ارسال می‌کنید و نشانی رایانامه‌ای که برای اطلاع‌رسانی دسترسی زودهنگام ثبت می‌کنید، جدا از دادهٔ ارزیابی و به‌صورت امن نگهداری می‌شوند. هر زمان می‌توانید تمام دادهٔ محلی خود را از بخش تنظیمات حذف کنید.",
   "faq.q7": "نمره‌ها چقدر دقیق‌اند؟",
   "faq.a7":
     "مدل شفاف و قاعده‌محور است، نه جعبه‌سیاه: هر پرسش وزن مشخصی دارد. این نمره یک شاخص آمادگی است، نه پیش‌بینی تصمیم هیچ مرجع رسمی.",
