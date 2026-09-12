@@ -454,7 +454,7 @@ export const en = {
     "Calculated from your answers to the 42 assessment questions. It is not a visa probability, immigration eligibility, legal or government score, or psychological diagnosis.",
 
   "dash.dim3Note":
-    "This is a structured readiness assessment and not a clinical or medical diagnosis.",
+    "These results reflect self-reported patterns, not a professional evaluation.",
 
   "gap.title": "What Needs Attention?",
   "gap.gap": "Gap",
@@ -494,8 +494,13 @@ export const en = {
   "ai.body":
     "Rules-based decision logic + structured data + evidence-based knowledge + AI-assisted personalization.",
 
-  "road.action": "Action",
+  "road.action": "User Action",
   "road.whyMatters": "Why it matters",
+  "road.relevantAuthority": "Relevant Authority",
+  "road.officialSource": "Official Source",
+  "road.dependency": "Dependency",
+  "road.completionCondition": "Completion Condition",
+  "road.openOfficialSource": "Open official page",
   "road.pathwayLabel": "Relevant pathway",
   "road.timing": "Suggested timing",
   "road.status": "Status",
@@ -979,7 +984,7 @@ export const fa: Record<keyof typeof en, string> = {
     "این شاخص از پاسخ‌های ۴۲ پرسش ارزیابی شما محاسبه می‌شود. این عدد احتمال ویزا، واجد شرایط بودن مهاجرتی، نمرهٔ حقوقی یا دولتی و تشخیص روان‌شناختی نیست.",
 
   "dash.dim3Note":
-    "این یک ارزیابی ساختاریافتهٔ آمادگی است و تشخیص بالینی یا پزشکی محسوب نمی‌شود.",
+    "این نتایج بازتاب الگوهای خوداظهاری شما هستند، نه یک ارزیابی تخصصی.",
 
   "gap.title": "چه چیزی نیاز به توجه دارد؟",
   "gap.gap": "شکاف",
@@ -1019,8 +1024,13 @@ export const fa: Record<keyof typeof en, string> = {
   "ai.body":
     "منطق تصمیم‌گیری مبتنی بر قواعد + دادهٔ ساختاریافته + دانش مبتنی بر شواهد + شخصی‌سازی به‌کمک هوش مصنوعی.",
 
-  "road.action": "اقدام",
+  "road.action": "اقدام کاربر",
   "road.whyMatters": "چرا اهمیت دارد",
+  "road.relevantAuthority": "مرجع مرتبط",
+  "road.officialSource": "منبع رسمی",
+  "road.dependency": "وابستگی",
+  "road.completionCondition": "شرط تکمیل",
+  "road.openOfficialSource": "باز کردن صفحهٔ رسمی",
   "road.pathwayLabel": "مسیر مرتبط",
   "road.timing": "زمان‌بندی پیشنهادی",
   "road.status": "وضعیت",

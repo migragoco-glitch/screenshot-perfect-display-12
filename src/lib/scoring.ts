@@ -1,4 +1,11 @@
-import { QUESTIONS, subAnswerIndex, type Answers, type Bilingual, type Question } from "./questions";
+import {
+  QUESTIONS,
+  isQuestionApplicable,
+  subAnswerIndex,
+  type Answers,
+  type Bilingual,
+  type Question,
+} from "./questions";
 
 /**
  * Locked architecture: 42 questions → 7 levels → 3 dimensions.
@@ -62,7 +69,7 @@ function num(v: unknown): number | undefined {
 
 /** normalized 0..1 score for one question, or undefined when it doesn't score */
 export function questionScore(q: Question, answers: Answers): number | undefined {
-  if (q.unscored) return undefined;
+  if (q.unscored || !isQuestionApplicable(q, answers)) return undefined;
   const a = answers[q.id];
   if (!a) return undefined;
 
@@ -111,7 +118,7 @@ function bucketScore(ids: readonly number[], answers: Answers) {
   for (const id of ids) {
     const q = QUESTIONS.find((x) => x.id === id);
     if (!q) continue;
-    if (q.showIf && !q.showIf(answers)) continue;
+    if (!isQuestionApplicable(q, answers)) continue;
     const s = questionScore(q, answers);
     if (s !== undefined) values.push(s);
   }
@@ -132,8 +139,15 @@ export function computeProfile(answers: Answers): Profile {
   const strengths: Bilingual[] = [];
   const weaknesses: Bilingual[] = [];
 
-  const val = (id: number) => num(answers[id]?.value);
-  const multi = (id: number) => (Array.isArray(answers[id]?.value) ? (answers[id]?.value as number[]) : []);
+  const applicableAnswer = (id: number) => {
+    const q = QUESTIONS.find((candidate) => candidate.id === id);
+    return q && isQuestionApplicable(q, answers) ? answers[id] : undefined;
+  };
+  const val = (id: number) => num(applicableAnswer(id)?.value);
+  const multi = (id: number) => {
+    const value = applicableAnswer(id)?.value;
+    return Array.isArray(value) ? value : [];
+  };
 
   if ((val(34) ?? 3) <= 3) {
     gaps.push("documents_not_ready");
@@ -184,7 +198,8 @@ export function computeProfile(answers: Answers): Profile {
     strengths.push(L("Adequate financial runway for the settling-in period.", "توان مالی کافی برای دورهٔ استقرار."));
   }
 
-  if ((val(20) ?? 0) >= 1) gaps.push("finance_docs");
+  const financeDocumentation = val(20);
+  if (financeDocumentation !== undefined && financeDocumentation >= 1) gaps.push("finance_docs");
   if (val(33) === 1) gaps.push("legal_history");
   if (val(31) === 1) gaps.push("visa_refusal");
   if ((val(26) ?? 3) <= 2) {

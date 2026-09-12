@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { AnswerValue, Answers } from "./questions";
-import { QUESTIONS } from "./questions";
+import { QUESTIONS, isQuestionApplicable } from "./questions";
 
 const KEY = "migrago.state.v1";
 const METRICS_KEY = "migrago.metrics.v1";
@@ -87,7 +87,8 @@ function sanitizeAnswer(id: number, raw: unknown): AnswerValue | undefined {
     }
   }
 
-  const detail = typeof a.detail === "string" ? a.detail : undefined;
+  const detailAllowed = q.sub || (q.detailOn !== undefined && value === q.detailOn);
+  const detail = detailAllowed && typeof a.detail === "string" ? a.detail : undefined;
   if (value === undefined && detail === undefined) return undefined;
   return { ...(value !== undefined ? { value } : {}), ...(detail !== undefined ? { detail } : {}) };
 }
@@ -101,6 +102,18 @@ export function sanitizeAnswers(raw: unknown): Answers {
     if (!Number.isInteger(id)) continue;
     const clean = sanitizeAnswer(id, val);
     if (clean) out[id] = clean;
+  }
+  // Re-evaluate until stable because one controlling answer can hide another
+  // question that controls a later conditional question.
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const q of QUESTIONS) {
+      if (out[q.id] && !isQuestionApplicable(q, out)) {
+        delete out[q.id];
+        changed = true;
+      }
+    }
   }
   return out;
 }
@@ -265,6 +278,16 @@ export function useAppState() {
     setState(next);
   }, []);
 
+  /** Removes answers that have become Not Applicable without touching other progress. */
+  const clearAnswers = useCallback((ids: readonly number[]) => {
+    const current = read();
+    const answers = { ...current.answers };
+    for (const id of ids) delete answers[id];
+    const next: AppState = { ...current, answers: sanitizeAnswers(answers) };
+    write(next);
+    setState(next);
+  }, []);
+
   /** Clears only the stored answers (used when corrupted data is detected). */
   const resetAnswers = useCallback(() => {
     const current = read();
@@ -291,7 +314,7 @@ export function useAppState() {
     setState(emptyState);
   }, []);
 
-  return { state, hydrated, update, setAnswer, pushSnapshot, reset, resetAnswers };
+  return { state, hydrated, update, setAnswer, clearAnswers, pushSnapshot, reset, resetAnswers };
 }
 
 // --- Real vs simulated data separation (founder dashboard) ---

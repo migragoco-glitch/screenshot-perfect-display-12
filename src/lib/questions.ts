@@ -407,6 +407,10 @@ export const QUESTIONS: Question[] = [
       "With your current budget and no new income, how many months could you sustain yourself in Finland?",
       "با بودجهٔ کنونی و بدون درآمد جدید، چند ماه می‌توانید در فنلاند هزینه‌های خود را تأمین کنید؟",
     ),
+    hint: o(
+      "Income requirements vary by permit type in Finland — check migri.fi for the exact figure.",
+      "حداقل درآمد موردنیاز بسته به نوع مجوز اقامت در فنلاند متفاوت است — برای رقم دقیق به migri.fi مراجعه کنید.",
+    ),
     options: [
       o("Less than 1 month", "کمتر از ۱ ماه"),
       o("1–3 months", "۱ تا ۳ ماه"),
@@ -694,8 +698,13 @@ export const QUESTIONS: Question[] = [
 /** Questions shown only when the user opts into the Founder & Talent track. */
 export const FOUNDER_TRACK_IDS = [39, 40, 41] as const;
 
+/** Whether a question applies to the current answer set. Hidden questions are Not Applicable. */
+export function isQuestionApplicable(q: Question, answers: Answers) {
+  return !q.showIf || q.showIf(answers);
+}
+
 export function questionsForSection(section: number, answers: Answers) {
-  return QUESTIONS.filter((q) => q.section === section && (!q.showIf || q.showIf(answers)));
+  return QUESTIONS.filter((q) => q.section === section && isQuestionApplicable(q, answers));
 }
 
 export function isAnswered(q: Question, a: AnswerValue | undefined) {

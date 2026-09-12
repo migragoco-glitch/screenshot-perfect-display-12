@@ -66,7 +66,7 @@ const DIMENSION_KEY = {
 function Assessment() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const { state, hydrated, setAnswer, update, pushSnapshot, resetAnswers } = useAppState();
+  const { state, hydrated, setAnswer, clearAnswers, update, pushSnapshot, resetAnswers } = useAppState();
   const [section, setSection] = useState(1);
   const [analyzing, setAnalyzing] = useState(false);
   const [showRequired, setShowRequired] = useState(false);
@@ -262,7 +262,10 @@ function Assessment() {
                   key={String(opt.value)}
                   type="button"
                   aria-pressed={founderTrack === opt.value}
-                  onClick={() => setFounderTrack(opt.value)}
+                  onClick={() => {
+                    setFounderTrack(opt.value);
+                    if (!opt.value) clearAnswers(FOUNDER_TRACK_IDS);
+                  }}
                   className={cn(
                     "rounded-2xl border px-5 py-2.5 text-sm font-semibold transition-all duration-200 ease-out",
                     founderTrack === opt.value
