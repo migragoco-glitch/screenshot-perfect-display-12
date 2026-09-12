@@ -120,7 +120,7 @@ function Assessment() {
       return;
     }
     setAnalyzing(true);
-    const profile = computeProfile(state.answers, founderTrack === true);
+    const profile = computeProfile(state.answers, founderTrack === true, state.region ?? "undecided");
     const nationality = state.answers[2]?.value;
     const pathwayIndex = state.answers[36]?.value;
     const pathway =

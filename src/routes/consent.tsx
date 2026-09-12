@@ -30,7 +30,7 @@ export const Route = createFileRoute("/consent")({
 
 function ConsentScreen() {
   const { t } = useI18n();
-  const { update } = useAppState();
+  const { state, update } = useAppState();
   const navigate = useNavigate();
   const { upgrade } = Route.useSearch();
   const [checked, setChecked] = useState(false);
@@ -64,7 +64,24 @@ function ConsentScreen() {
             </p>
           ) : null}
 
-          <label className="mt-8 flex cursor-pointer items-start gap-3 rounded-2xl border border-border bg-card p-4">
+          <div className="mt-8 rounded-2xl border border-border bg-card p-4">
+            <label htmlFor="migrago-region" className="text-sm font-semibold">
+              {t("region.label")}
+            </label>
+            <p className="mt-1 text-xs text-muted-foreground">{t("region.optional")}</p>
+            <select
+              id="migrago-region"
+              value={state.region ?? "undecided"}
+              onChange={(e) => update({ region: e.target.value as "helsinki" | "elsewhere" | "undecided" })}
+              className="mt-3 w-full rounded-xl border border-border bg-background px-3 py-2 text-sm"
+            >
+              <option value="undecided">{t("region.undecided")}</option>
+              <option value="helsinki">{t("region.helsinki")}</option>
+              <option value="elsewhere">{t("region.elsewhere")}</option>
+            </select>
+          </div>
+
+          <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-2xl border border-border bg-card p-4">
             <input
               type="checkbox"
               checked={checked}
