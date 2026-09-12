@@ -305,14 +305,10 @@ export const QUESTIONS: Question[] = [
     detailOn: 1,
     detailType: "text",
     detailLabel: o("Type and score", "نوع مدرک و نمره"),
-    // Relevant only when the selected pathway or a language requirement makes a
-    // certificate meaningful (employment or studies, or English below advanced).
+    // Relevant when the reported English level may require supporting evidence.
     showIf: (a) => {
-      const pathway = a[36]?.value;
       const english = a[15]?.value;
-      const pathwayRelevant = pathway === 0 || pathway === 1 || pathway === undefined;
-      const languageRelevant = typeof english === "number" && english <= 3;
-      return pathwayRelevant || languageRelevant;
+      return typeof english !== "number" || english <= 3;
     },
   },
 
@@ -378,9 +374,9 @@ export const QUESTIONS: Question[] = [
       o("Nothing prepared yet", "هنوز چیزی آماده نیست"),
     ],
     optionScores: [1, 0.6, 0.3],
-    // Financial-source documentation is requested for every pathway except a
-    // salaried employment pathway, where the employment contract carries it.
-    showIf: (a) => a[36]?.value !== 0,
+    // Documentation is relevant when the user reports a financial source that
+    // needs separate supporting evidence; pathway choice itself never scores.
+    showIf: (a) => a[19]?.value !== 0,
   },
   {
     id: 21,
@@ -406,6 +402,10 @@ export const QUESTIONS: Question[] = [
     label: o(
       "With your current budget and no new income, how many months could you sustain yourself in Finland?",
       "با بودجهٔ کنونی و بدون درآمد جدید، چند ماه می‌توانید در فنلاند هزینه‌های خود را تأمین کنید؟",
+    ),
+    hint: o(
+      "Income requirements vary by permit type in Finland — check migri.fi for the exact figure.",
+      "حداقل درآمد موردنیاز بسته به نوع مجوز اقامت در فنلاند متفاوت است — برای رقم دقیق به migri.fi مراجعه کنید.",
     ),
     options: [
       o("Less than 1 month", "کمتر از ۱ ماه"),
@@ -694,8 +694,13 @@ export const QUESTIONS: Question[] = [
 /** Questions shown only when the user opts into the Founder & Talent track. */
 export const FOUNDER_TRACK_IDS = [39, 40, 41] as const;
 
+/** Whether a question applies to the current answer set. Hidden questions are Not Applicable. */
+export function isQuestionApplicable(q: Question, answers: Answers) {
+  return !q.showIf || q.showIf(answers);
+}
+
 export function questionsForSection(section: number, answers: Answers) {
-  return QUESTIONS.filter((q) => q.section === section && (!q.showIf || q.showIf(answers)));
+  return QUESTIONS.filter((q) => q.section === section && isQuestionApplicable(q, answers));
 }
 
 export function isAnswered(q: Question, a: AnswerValue | undefined) {

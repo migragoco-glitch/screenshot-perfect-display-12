@@ -45,12 +45,17 @@ export type KnowledgeEntry = {
   institution: Institution;
   title: Bilingual;
   detail: Bilingual;
+  officialSource: string;
+  dependency: Bilingual;
+  completionCondition: Bilingual;
   priority: "high" | "medium" | "normal";
   /** gap flags that make this step relevant; empty = always included */
   requires?: GapFlag[];
 };
 
-export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
+type KnowledgeEntryBase = Omit<KnowledgeEntry, "officialSource" | "dependency" | "completionCondition">;
+
+const KNOWLEDGE_TABLE_BASE: KnowledgeEntryBase[] = [
   // ── Phase 1 · Weeks 1–3 — Legal & Administrative Foundation
   {
     id: "migri-permit",
@@ -483,6 +488,143 @@ export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
     },
   },
 ];
+
+const OFFICIAL_SOURCE: Record<Institution, string> = {
+  Migri: "https://migri.fi/en/home",
+  DVV: "https://dvv.fi/en/individuals",
+  Vero: "https://www.vero.fi/en/individuals/",
+  Kela: "https://www.kela.fi/",
+  "Local Employment Services": "https://tyomarkkinatori.fi/en",
+  "Valvira / OPH": "https://www.oph.fi/en/services/recognition-and-international-comparability-qualifications",
+  "International House Helsinki": "https://ihhelsinki.fi/",
+  "Local municipality services": "https://www.suomi.fi/citizen",
+  "PRH / YTJ": "https://www.ytj.fi/en/",
+  "Business Finland": "https://www.businessfinland.fi/en/do-business-with-finland/startup-in-finland/startup-permit/",
+  "Municipal health services": "https://www.suomi.fi/citizen/health-and-medical-care",
+};
+
+const D = (en: string, fa: string): Bilingual => ({ en, fa });
+
+const ACTION_METADATA: Record<string, { dependency: Bilingual; completionCondition: Bilingual }> = {
+  "migri-permit": {
+    dependency: D("A confirmed intended pathway and the required supporting documents.", "تأیید مسیر موردنظر و آماده‌بودن مدارک پشتیبان لازم."),
+    completionCondition: D("The correct application is submitted with all required attachments.", "درخواست درست همراه همهٔ پیوست‌های لازم ثبت شده باشد."),
+  },
+  "doc-legalization": {
+    dependency: D("Original identity, civil-status and qualification documents.", "اصل مدارک هویتی، وضعیت مدنی و تحصیلی."),
+    completionCondition: D("Required documents are translated and legalized in the form accepted by the relevant authority.", "مدارک لازم با قالب موردپذیرش مرجع مربوط ترجمه و قانونی‌سازی شده باشند."),
+  },
+  "dvv-id-code": {
+    dependency: D("A residence basis and documents accepted by DVV.", "مبنای اقامت و مدارک موردپذیرش DVV."),
+    completionCondition: D("Your Finnish personal identity code and municipality details are recorded.", "کد شناسایی شخصی فنلاندی و اطلاعات شهرداری شما ثبت شده باشد."),
+  },
+  "dvv-family": {
+    dependency: D("Legalized family-status documents and identity records.", "مدارک قانونی‌سازی‌شدهٔ وضعیت خانوادگی و هویتی."),
+    completionCondition: D("Relevant family relationships and dependants appear in the population information system.", "روابط خانوادگی و افراد تحت تکفل مرتبط در سامانهٔ اطلاعات جمعیتی ثبت شده باشند."),
+  },
+  "vero-tax": {
+    dependency: D("A Finnish personal identity code and employment details, where applicable.", "کد شناسایی شخصی فنلاندی و در صورت ارتباط، اطلاعات اشتغال."),
+    completionCondition: D("You have a valid tax card and any required tax number.", "کارت مالیاتی معتبر و شمارهٔ مالیاتی لازم را دریافت کرده باشید."),
+  },
+  "legal-history-advice": {
+    dependency: D("Previous decisions, dates and supporting evidence.", "تصمیم‌های پیشین، تاریخ‌ها و مدارک پشتیبان."),
+    completionCondition: D("A factual explanation file is complete and reviewed before submission.", "پروندهٔ توضیحی مستند کامل و پیش از ثبت مرور شده باشد."),
+  },
+  "finance-evidence": {
+    dependency: D("The financial requirements for your intended permit category.", "شرایط مالی دستهٔ اجازهٔ اقامت موردنظر شما."),
+    completionCondition: D("Every claimed source of funds is supported by current, traceable evidence.", "هر منبع مالی اعلام‌شده با مدرک جاری و قابل‌ردیابی پشتیبانی شود."),
+  },
+  "kela-social": {
+    dependency: D("Residence and work details showing how the move applies to your situation.", "اطلاعات اقامت و کار که وضعیت جابه‌جایی شما را روشن کند."),
+    completionCondition: D("Kela has received the application and issued a coverage decision.", "Kela درخواست را دریافت و تصمیم پوشش را صادر کرده باشد."),
+  },
+  "health-registration": {
+    dependency: D("A registered Finnish address or municipality of residence.", "نشانی ثبت‌شده در فنلاند یا شهرداری محل سکونت."),
+    completionCondition: D("Your assigned care route and local contact details are saved.", "مسیر دریافت خدمات و اطلاعات تماس محلی شما مشخص و ذخیره شده باشد."),
+  },
+  "school-daycare": {
+    dependency: D("A municipality, child records and the intended start date.", "شهرداری محل سکونت، مدارک فرزند و تاریخ شروع موردنظر."),
+    completionCondition: D("The application is submitted and its receipt or placement decision is saved.", "درخواست ثبت و رسید یا تصمیم جایابی آن ذخیره شده باشد."),
+  },
+  "finnish-course": {
+    dependency: D("An initial assessment or contact with local employment and integration services.", "ارزیابی اولیه یا تماس با خدمات محلی اشتغال و ادغام."),
+    completionCondition: D("A suitable course is selected and enrolment or a start date is confirmed.", "دورهٔ مناسب انتخاب و ثبت‌نام یا تاریخ شروع تأیید شده باشد."),
+  },
+  "ihh-onboarding": {
+    dependency: D("A confirmed destination in the Helsinki region.", "مقصد تأییدشده در منطقهٔ هلسینکی."),
+    completionCondition: D("The advisory appointment is completed and next steps are recorded.", "جلسهٔ مشاوره انجام و گام‌های بعدی ثبت شده باشند."),
+  },
+  "municipal-onboarding": {
+    dependency: D("A confirmed municipality or employment area outside the Helsinki region.", "شهرداری یا منطقهٔ اشتغال تأییدشده خارج از منطقهٔ هلسینکی."),
+    completionCondition: D("The local advisory session is completed and referrals are recorded.", "جلسهٔ مشاورهٔ محلی انجام و ارجاع‌های لازم ثبت شده باشند."),
+  },
+  "budget-plan": {
+    dependency: D("Current capital, expected income and realistic housing costs.", "سرمایهٔ کنونی، درآمد موردانتظار و هزینه‌های واقع‌بینانهٔ مسکن."),
+    completionCondition: D("A six-month budget is documented and any relevant benefit conditions have been checked.", "بودجهٔ شش‌ماهه ثبت و شرایط مزایای مرتبط بررسی شده باشد."),
+  },
+  "te-jobseeker": {
+    dependency: D("A pathway that permits job seeking and the required registration details.", "مسیر دارای امکان کاریابی و اطلاعات لازم برای ثبت‌نام."),
+    completionCondition: D("Jobseeker registration is active and an employment plan is agreed.", "ثبت‌نام جویای کار فعال و طرح اشتغال توافق شده باشد."),
+  },
+  "oph-recognition": {
+    dependency: D("Legalized qualification documents and confirmation of the competent authority.", "مدارک تحصیلی قانونی‌سازی‌شده و تعیین مرجع صالح."),
+    completionCondition: D("The recognition application is submitted and its case reference is saved.", "درخواست تأیید مدرک ثبت و شمارهٔ پرونده ذخیره شده باشد."),
+  },
+  "valvira-health-recognition": {
+    dependency: D("Profession-specific documents and the qualification country confirmed with Valvira.", "مدارک مختص حرفه و کشور محل اخذ مدرک که با Valvira بررسی شده باشد."),
+    completionCondition: D("The correct Valvira application is submitted with all requested evidence.", "درخواست درست Valvira همراه همهٔ مدارک خواسته‌شده ثبت شده باشد."),
+  },
+  "cv-finnish-format": {
+    dependency: D("A confirmed employment pathway and current work history.", "مسیر اشتغال تأییدشده و سابقهٔ کاری به‌روز."),
+    completionCondition: D("A tailored CV and application template are ready for Finnish vacancies.", "رزومه و الگوی درخواست متناسب برای فرصت‌های شغلی فنلاند آماده باشد."),
+  },
+  "employment-bridge": {
+    dependency: D("An active jobseeker profile and a defined bridge-role target.", "پروفایل فعال جویای کار و هدف مشخص برای شغل پل‌زننده."),
+    completionCondition: D("Suitable openings are shortlisted and at least one targeted application is submitted.", "فرصت‌های مناسب فهرست و دست‌کم یک درخواست هدفمند ثبت شده باشد."),
+  },
+  "startup-permit": {
+    dependency: D("A start-up pathway choice, team information and a scalable business case.", "انتخاب مسیر استارتاپ، اطلاعات تیم و طرح کسب‌وکار مقیاس‌پذیر."),
+    completionCondition: D("The eligibility submission is complete and sent to Business Finland.", "پروندهٔ صلاحیت کامل و برای Business Finland ارسال شده باشد."),
+  },
+  "business-registration": {
+    dependency: D("A chosen company form and confirmation that entrepreneurship is the intended pathway.", "شکل حقوقی انتخاب‌شده و تأیید کارآفرینی به‌عنوان مسیر موردنظر."),
+    completionCondition: D("The start-up notification is submitted and the Business ID is received.", "اعلام شروع کسب‌وکار ثبت و شناسهٔ کسب‌وکار دریافت شده باشد."),
+  },
+  "study-path": {
+    dependency: D("A study pathway choice and a shortlist of suitable programmes.", "انتخاب مسیر تحصیلی و فهرست کوتاه برنامه‌های مناسب."),
+    completionCondition: D("Admission dates, tuition, insurance and permit-fund requirements are documented.", "تاریخ‌های پذیرش، شهریه، بیمه و شرایط مالی اجازهٔ اقامت ثبت شده باشند."),
+  },
+  "community-network": {
+    dependency: D("A local area and professional field or community interest.", "منطقهٔ محلی و حوزهٔ حرفه‌ای یا علاقهٔ اجتماعی مشخص."),
+    completionCondition: D("You have joined one relevant professional network and one local community group.", "به یک شبکهٔ حرفه‌ای مرتبط و یک گروه اجتماعی محلی پیوسته باشید."),
+  },
+  "support-buddy": {
+    dependency: D("Local service contact details and one trusted support contact.", "اطلاعات تماس خدمات محلی و یک فرد قابل‌اعتماد برای حمایت."),
+    completionCondition: D("A repeatable support routine and appropriate low-threshold service contacts are recorded.", "روتین حمایتی قابل‌تکرار و تماس خدمات کم‌آستانهٔ مناسب ثبت شده باشند."),
+  },
+  "language-practice": {
+    dependency: D("A current language-learning plan or course.", "برنامه یا دورهٔ جاری یادگیری زبان."),
+    completionCondition: D("At least one recurring real-life language practice activity is scheduled.", "دست‌کم یک فعالیت تکرارشوندهٔ تمرین زبان در زندگی واقعی برنامه‌ریزی شده باشد."),
+  },
+  "long-term-status": {
+    dependency: D("Your current permit decision and accurate residence and income records.", "تصمیم اجازهٔ اقامت کنونی و سوابق دقیق اقامت و درآمد."),
+    completionCondition: D("Key extension dates, evidence requirements and reminders are documented.", "تاریخ‌های اصلی تمدید، مدارک لازم و یادآورها ثبت شده باشند."),
+  },
+  "review-profile": {
+    dependency: D("Completed earlier roadmap actions and updated personal records.", "اقدامات قبلی تکمیل‌شده و اطلاعات شخصی به‌روز."),
+    completionCondition: D("Relevant authority records are updated and the MigraGo assessment is completed again.", "اطلاعات مراجع مرتبط به‌روز و ارزیابی میگراگو دوباره تکمیل شده باشد."),
+  },
+};
+
+export const KNOWLEDGE_TABLE: KnowledgeEntry[] = KNOWLEDGE_TABLE_BASE.map((entry) => {
+  const metadata = ACTION_METADATA[entry.id];
+  if (!metadata) throw new Error(`Missing roadmap metadata for ${entry.id}`);
+  return {
+    ...entry,
+    officialSource: OFFICIAL_SOURCE[entry.institution],
+    ...metadata,
+  };
+});
 
 export type RoadmapItem = KnowledgeEntry;
 export type RoadmapPhase = { phase: Phase; items: RoadmapItem[] };

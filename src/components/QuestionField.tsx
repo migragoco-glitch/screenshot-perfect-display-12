@@ -30,6 +30,10 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
         <p className="mt-2 ms-10 text-xs text-muted-foreground">{t("q.bracketNote")}</p>
       ) : null}
 
+      {q.hint ? (
+        <p className="mt-2 ms-10 text-xs text-muted-foreground">{q.hint[lang]}</p>
+      ) : null}
+
       <div className="mt-4 ms-0 md:ms-10">
         {q.type === "number" ? (
           <input

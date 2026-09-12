@@ -23,6 +23,7 @@ import {
   Check,
   ClipboardList,
   Compass,
+  ExternalLink,
   FileText,
   HelpCircle,
   Info,
@@ -132,7 +133,10 @@ function Dashboard() {
   }, [hydrated]);
 
 
-  const profile = useMemo(() => computeProfile(state.answers), [state.answers]);
+  const profile = useMemo(
+    () => computeProfile(state.answers, state.founderTrack === true),
+    [state.answers, state.founderTrack],
+  );
   const roadmap = useMemo(() => generateRoadmap(profile), [profile]);
   const allItems = useMemo(() => roadmap.flatMap((p) => p.items), [roadmap]);
   const gapList = useMemo(() => buildGapAnalysis(profile), [profile]);
@@ -988,7 +992,6 @@ function Dashboard() {
                                       >
                                         {t("road.priority")}: {priorityLabel(item.priority)}
                                       </span>
-                                      <InstitutionBadge institution={item.institution} />
                                     </div>
                                     <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                                       {t("road.action")}
@@ -1006,6 +1009,40 @@ function Dashboard() {
                                     </p>
                                     <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                                       {item.detail[lang]}
+                                    </p>
+
+                                    <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                                      {t("road.relevantAuthority")}
+                                    </p>
+                                    <div className="mt-1">
+                                      <InstitutionBadge institution={item.institution} />
+                                    </div>
+
+                                    <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                                      {t("road.officialSource")}
+                                    </p>
+                                    <a
+                                      href={item.officialSource}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-secondary underline underline-offset-4"
+                                    >
+                                      {t("road.openOfficialSource")}
+                                      <ExternalLink className="size-3.5" aria-hidden />
+                                    </a>
+
+                                    <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                                      {t("road.dependency")}
+                                    </p>
+                                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                                      {item.dependency[lang]}
+                                    </p>
+
+                                    <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                                      {t("road.completionCondition")}
+                                    </p>
+                                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                                      {item.completionCondition[lang]}
                                     </p>
 
                                     <div className="mt-4 flex flex-wrap items-center gap-2">
