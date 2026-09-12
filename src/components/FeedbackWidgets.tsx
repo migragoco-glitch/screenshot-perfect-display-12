@@ -10,7 +10,7 @@ import {
   Users,
   X,
 } from "lucide-react";
-import type { Institution } from "@/lib/roadmap";
+import { INSTITUTION_LABEL, type Institution } from "@/lib/roadmap";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import {
   fetchValidationSignals,
@@ -28,9 +28,12 @@ export const INSTITUTION_ICONS: Record<Institution, typeof Building2> = {
   DVV: Landmark,
   Vero: Banknote,
   Kela: HeartPulse,
-  "TE Services": Briefcase,
+  "Local Employment Services": Briefcase,
   "Valvira / OPH": GraduationCap,
   "International House Helsinki": Users,
+  "Local municipality services": Building2,
+  "PRH / YTJ": Landmark,
+  "Business Finland": Briefcase,
   "Municipal health services": HeartPulse,
 };
 
@@ -41,7 +44,7 @@ export function InstitutionBadge({ institution }: { institution: Institution }) 
     <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary/12 px-2.5 py-0.5 text-secondary">
       <Icon className="size-3" aria-hidden />
       <span className="sr-only">{t("road.institution")}: </span>
-      {institution}
+      {INSTITUTION_LABEL[institution] ?? institution}
     </span>
   );
 }

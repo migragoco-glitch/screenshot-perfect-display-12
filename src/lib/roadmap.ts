@@ -13,10 +13,28 @@ export type Institution =
   | "DVV"
   | "Vero"
   | "Kela"
-  | "TE Services"
+  | "Local Employment Services"
   | "Valvira / OPH"
   | "International House Helsinki"
+  | "Local municipality services"
+  | "PRH / YTJ"
+  | "Business Finland"
   | "Municipal health services";
+
+/** Full public-facing label for each institution. */
+export const INSTITUTION_LABEL: Record<Institution, string> = {
+  Migri: "Migri",
+  DVV: "DVV",
+  Vero: "Vero",
+  Kela: "Kela",
+  "Local Employment Services": "Local Employment Services (via Job Market Finland — tyomarkkinatori.fi)",
+  "Valvira / OPH": "Valvira / OPH",
+  "International House Helsinki": "International House Helsinki",
+  "Local municipality services": "Local municipality / employment area services",
+  "PRH / YTJ": "PRH / YTJ",
+  "Business Finland": "Business Finland",
+  "Municipal health services": "Municipal health services",
+};
 
 export type Phase = 1 | 2 | 3 | 4;
 
@@ -151,6 +169,7 @@ export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
     week: 4,
     institution: "Kela",
     priority: "high",
+    requires: ["kela_relevant"],
     title: {
       en: "Apply for social security coverage and the Kela card",
       fa: "برای پوشش تأمین اجتماعی و کارت Kela درخواست دهید",
@@ -195,7 +214,7 @@ export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
     id: "finnish-course",
     phase: 2,
     week: 5,
-    institution: "TE Services",
+    institution: "Local Employment Services",
     priority: "high",
     requires: ["language_weak", "cultural_adaptation"],
     title: {
@@ -213,6 +232,7 @@ export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
     week: 6,
     institution: "International House Helsinki",
     priority: "normal",
+    requires: ["helsinki_region"],
     title: {
       en: "Book a one-stop settlement advisory session",
       fa: "یک جلسهٔ مشاورهٔ یکجای استقرار رزرو کنید",
@@ -220,6 +240,22 @@ export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
     detail: {
       en: "One visit covers registration guidance, tax, social insurance and employment advice for newcomers in the capital region.",
       fa: "در یک مراجعه، راهنمایی ثبت‌نام، مالیات، بیمهٔ اجتماعی و مشاورهٔ اشتغال برای تازه‌واردان منطقهٔ پایتخت ارائه می‌شود.",
+    },
+  },
+  {
+    id: "municipal-onboarding",
+    phase: 2,
+    week: 6,
+    institution: "Local municipality services",
+    priority: "normal",
+    requires: ["outside_helsinki"],
+    title: {
+      en: "Book a settlement advisory session with your municipality or employment area",
+      fa: "یک جلسهٔ مشاورهٔ استقرار با شهرداری یا منطقهٔ اشتغال محل سکونت خود رزرو کنید",
+    },
+    detail: {
+      en: "Local municipality and employment area services advise on registration, taxation, social insurance and job seeking for newcomers.",
+      fa: "خدمات شهرداری و منطقهٔ اشتغال محل سکونت، در زمینهٔ ثبت‌نام، مالیات، بیمهٔ اجتماعی و کاریابی به تازه‌واردان مشاوره می‌دهند.",
     },
   },
   {
@@ -244,8 +280,9 @@ export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
     id: "te-jobseeker",
     phase: 3,
     week: 7,
-    institution: "TE Services",
+    institution: "Local Employment Services",
     priority: "high",
+    requires: ["employment_pathway", "pathway_unconfirmed", "employment_gap"],
     title: {
       en: "Register as a jobseeker and agree your employment plan",
       fa: "به‌عنوان جویای کار ثبت‌نام کنید و طرح اشتغال خود را نهایی کنید",
@@ -263,20 +300,37 @@ export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
     priority: "high",
     requires: ["credential_recognition"],
     title: {
-      en: "File for recognition of your qualification or professional licence",
-      fa: "برای تأیید مدرک یا پروانهٔ حرفه‌ای خود درخواست دهید",
+      en: "File for recognition of your qualification with the competent authority",
+      fa: "برای تأیید مدرک خود به مرجع صالح درخواست دهید",
     },
     detail: {
-      en: "Regulated health professions go through Valvira; academic and teaching qualifications through the national education agency. Both require legalized degree documents.",
-      fa: "مشاغل تحت نظارت حوزهٔ سلامت از طریق Valvira و مدارک دانشگاهی و آموزشی از طریق سازمان ملی آموزش بررسی می‌شود. هر دو نیازمند مدارک تحصیلی قانونی‌سازی‌شده است.",
+      en: "Academic and teaching qualifications are handled by the Finnish National Agency for Education (OPH); other fields may have their own competent authority. Legalized degree documents are required.",
+      fa: "مدارک دانشگاهی و آموزشی توسط سازمان ملی آموزش فنلاند (OPH) بررسی می‌شود و برخی حوزه‌ها مرجع صالح جداگانه دارند. ارائهٔ مدارک تحصیلی قانونی‌سازی‌شده لازم است.",
+    },
+  },
+  {
+    id: "valvira-health-recognition",
+    phase: 3,
+    week: 7,
+    institution: "Valvira / OPH",
+    priority: "high",
+    requires: ["health_profession"],
+    title: {
+      en: "Apply for healthcare professional recognition with Valvira",
+      fa: "برای تأیید صلاحیت حرفه‌ای حوزهٔ سلامت به Valvira درخواست دهید",
+    },
+    detail: {
+      en: "Regulated healthcare professions are licensed by Valvira. Requirements depend on your profession and where you qualified; Valvira confirms what applies to you.",
+      fa: "مشاغل تحت نظارت حوزهٔ سلامت توسط Valvira پروانه می‌گیرد. شرایط به حرفه و کشور صدور مدرک بستگی دارد؛ Valvira مورد دقیق شما را تأیید می‌کند.",
     },
   },
   {
     id: "cv-finnish-format",
     phase: 3,
     week: 8,
-    institution: "TE Services",
+    institution: "Local Employment Services",
     priority: "medium",
+    requires: ["employment_pathway", "pathway_unconfirmed", "employment_gap"],
     title: {
       en: "Rewrite your CV and application in Finnish hiring format",
       fa: "رزومه و درخواست کاری خود را به قالب استخدامی فنلاند بازنویسی کنید",
@@ -290,7 +344,7 @@ export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
     id: "employment-bridge",
     phase: 3,
     week: 8,
-    institution: "TE Services",
+    institution: "Local Employment Services",
     priority: "medium",
     requires: ["employment_gap"],
     title: {
@@ -306,16 +360,32 @@ export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
     id: "startup-permit",
     phase: 3,
     week: 9,
-    institution: "Migri",
+    institution: "Business Finland",
     priority: "medium",
-    requires: ["startup_path", "talent_track"],
+    requires: ["startup_path"],
     title: {
-      en: "Prepare the startup / specialist fast-track submission",
-      fa: "پروندهٔ مسیر سریع استارتاپ یا متخصص را آماده کنید",
+      en: "Prepare the start-up entrepreneur eligibility submission",
+      fa: "پروندهٔ تأیید صلاحیت کارآفرینی استارتاپی را آماده کنید",
     },
     detail: {
-      en: "Eligibility statement, team and funding evidence, and a scalable business case are assessed before the permit application itself.",
-      fa: "بیانیهٔ واجد شرایط بودن، مدارک تیم و تأمین سرمایه و طرح کسب‌وکار مقیاس‌پذیر، پیش از خود درخواست اجازهٔ اقامت بررسی می‌شود.",
+      en: "For the start-up entrepreneur pathway specifically, Business Finland issues the Eligibility Statement that Migri requires before the residence permit application. Ordinary entrepreneurship follows a different route — confirm which applies with Migri.",
+      fa: "تنها برای مسیر کارآفرینی استارتاپی، Business Finland بیانیهٔ صلاحیت را صادر می‌کند که Migri پیش از درخواست اجازهٔ اقامت آن را می‌خواهد. کارآفرینی معمولی مسیر دیگری دارد — مورد خود را با Migri تأیید کنید.",
+    },
+  },
+  {
+    id: "business-registration",
+    phase: 3,
+    week: 9,
+    institution: "PRH / YTJ",
+    priority: "medium",
+    requires: ["business_registration"],
+    title: {
+      en: "Prepare your business registration through PRH / YTJ",
+      fa: "ثبت کسب‌وکار خود را از طریق PRH / YTJ آماده کنید",
+    },
+    detail: {
+      en: "Company form, trade register filing and Business ID are handled via the YTJ service; tax registrations follow from the same notification.",
+      fa: "شکل حقوقی شرکت، ثبت در دفتر تجاری و دریافت شناسهٔ کسب‌وکار از طریق سامانهٔ YTJ انجام می‌شود؛ ثبت‌های مالیاتی نیز از همان اظهار پیگیری می‌شود.",
     },
   },
   {
@@ -340,7 +410,7 @@ export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
     id: "community-network",
     phase: 4,
     week: 10,
-    institution: "International House Helsinki",
+    institution: "Local municipality services",
     priority: "medium",
     title: {
       en: "Join a professional network and a local community group",
@@ -371,7 +441,7 @@ export const KNOWLEDGE_TABLE: KnowledgeEntry[] = [
     id: "language-practice",
     phase: 4,
     week: 11,
-    institution: "TE Services",
+    institution: "Local Employment Services",
     priority: "medium",
     title: {
       en: "Move from course Finnish to daily-use Finnish",

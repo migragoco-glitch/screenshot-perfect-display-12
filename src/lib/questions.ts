@@ -25,6 +25,8 @@ export type Question = {
   detailType?: "text" | "number";
   /** index of an exclusive "None" option in a multi-select */
   noneIndex?: number;
+  /** second part of the same question (answer index stored in `detail`) */
+  sub?: { label: Bilingual; options: Bilingual[]; optionScores?: number[] };
   /** show question only when this predicate passes */
   showIf?: (answers: Answers) => boolean;
   /** excluded from every score bucket */
@@ -38,39 +40,47 @@ export type AnswerValue = {
 export type Answers = Record<number, AnswerValue | undefined>;
 
 export const SECTIONS: { id: number; title: Bilingual; minutes: number; optional?: boolean }[] = [
-  { id: 1, title: { en: "Identity & Legal Status", fa: "هویت و وضعیت حقوقی" }, minutes: 2 },
-  { id: 2, title: { en: "Human Capital & Career", fa: "سرمایهٔ انسانی و مسیر شغلی" }, minutes: 2 },
-  { id: 3, title: { en: "Financial Capacity & Resilience", fa: "توان و تاب‌آوری مالی" }, minutes: 2 },
+  { id: 1, title: { en: "Identity & Current Status", fa: "هویت و وضعیت کنونی" }, minutes: 2 },
   {
-    id: 4,
-    title: { en: "Psychological Capital & Social Intelligence", fa: "سرمایهٔ روانی و هوش اجتماعی" },
+    id: 2,
+    title: { en: "Education & Professional Capacity", fa: "تحصیلات و توان حرفه‌ای" },
     minutes: 2,
   },
-  { id: 5, title: { en: "Legal History & Compliance", fa: "سابقهٔ حقوقی و تبعیت از قوانین" }, minutes: 1 },
+  { id: 3, title: { en: "Financial Readiness", fa: "آمادگی مالی" }, minutes: 2 },
+  {
+    id: 4,
+    title: { en: "Adaptability & Social Readiness", fa: "انطباق‌پذیری و آمادگی اجتماعی" },
+    minutes: 2,
+  },
+  { id: 5, title: { en: "Legal & Document Readiness", fa: "آمادگی حقوقی و مدارک" }, minutes: 1 },
   {
     id: 6,
     title: {
-      en: "Motivation & Destination Country Strategy",
-      fa: "انگیزه و راهبرد کشور مقصد",
+      en: "Destination & Pathway Strategy",
+      fa: "راهبرد مقصد و مسیر",
     },
     minutes: 1,
   },
   {
     id: 7,
-    title: { en: "Talent & Founder Potential", fa: "توان استعداد و کارآفرینی" },
+    title: { en: "Personal Potential & Action Readiness", fa: "توان فردی و آمادگی اقدام" },
     minutes: 1,
     optional: true,
   },
 ];
 
-/** Which scoring dimension each section feeds into (for the ⓘ header hint). */
+/**
+ * Which scoring dimension each level feeds into (for the ⓘ header hint).
+ * Levels 6 and 7 are context only: they feed pathway matching and roadmap
+ * sequencing, never the three readiness dimensions.
+ */
 export const SECTION_DIMENSION: Record<number, "legal" | "professional" | "psychological" | "bonus"> = {
   1: "legal",
   2: "professional",
   3: "professional",
   4: "psychological",
   5: "legal",
-  6: "psychological",
+  6: "bonus",
   7: "bonus",
 };
 
@@ -82,6 +92,7 @@ export const QUESTIONS: Question[] = [
     id: 1,
     section: 1,
     type: "number",
+    unscored: true,
     label: o("What is your age?", "سن شما چند سال است؟"),
   },
   {
@@ -116,20 +127,20 @@ export const QUESTIONS: Question[] = [
     id: 5,
     section: 1,
     type: "single",
+    unscored: true,
     label: o("What is your current marital status?", "وضعیت تأهل کنونی شما چیست؟"),
     options: [o("Single", "مجرد"), o("Married", "متأهل"), o("Divorced", "جدا شده"), o("Widowed", "همسر از دست داده")],
-    optionScores: [0.8, 1, 0.7, 0.7],
   },
   {
     id: 6,
     section: 1,
     type: "single",
     label: o(
-      "Where was your marriage or divorce officially registered?",
-      "ازدواج یا طلاق شما به‌طور رسمی در کجا ثبت شده است؟",
+      "Is your marriage or divorce officially registered?",
+      "آیا ازدواج یا طلاق شما به‌طور رسمی ثبت شده است؟",
     ),
-    options: [o("Inside Finland", "داخل فنلاند"), o("Outside Finland", "خارج از فنلاند")],
-    optionScores: [1, 0.65],
+    options: [o("Yes", "بله"), o("No", "خیر")],
+    optionScores: [1, 0.5],
     showIf: (a) => {
       const v = a[5]?.value;
       return v === 1 || v === 2;
@@ -150,6 +161,7 @@ export const QUESTIONS: Question[] = [
     id: 8,
     section: 1,
     type: "multi",
+    unscored: true,
     label: o("Who will be relocating to Finland with you?", "چه کسانی همراه شما به فنلاند مهاجرت می‌کنند؟"),
     options: [
       o("Alone", "تنها"),
@@ -158,7 +170,6 @@ export const QUESTIONS: Question[] = [
       o("Parents or other relatives", "والدین یا سایر بستگان"),
       o("Not yet decided", "هنوز تصمیم نگرفته‌ام"),
     ],
-    optionScores: [1, 0.9, 0.8, 0.7, 0.5],
     noneIndex: 4,
   },
 
@@ -239,20 +250,46 @@ export const QUESTIONS: Question[] = [
     section: 2,
     type: "single",
     label: o(
-      "Does your profession require formal credential recognition in Finland?",
-      "آیا حرفهٔ شما در فنلاند نیازمند تأیید رسمی مدارک (Recognition) است؟",
+      "How confident are you that your qualifications and professional credentials are ready for your intended work or study pathway?",
+      "چقدر اطمینان دارید که مدارک تحصیلی و حرفه‌ای شما برای مسیر کاری یا تحصیلی موردنظرتان آماده است؟",
     ),
-    options: [o("Yes", "بله"), o("No", "خیر"), o("I don't know", "نمی‌دانم")],
-    optionScores: [0.6, 1, 0.4],
+    options: [
+      o("Fully ready", "کاملاً آماده"),
+      o("Mostly ready", "تا حد زیادی آماده"),
+      o("Partly ready", "تا حدی آماده"),
+      o("Not ready yet", "هنوز آماده نیست"),
+      o("I'm not sure", "مطمئن نیستم"),
+    ],
+    optionScores: [1, 0.8, 0.55, 0.3, 0.4],
   },
   {
     id: 15,
     section: 2,
-    type: "scale",
-    label: o("What is your English proficiency level?", "سطح مهارت شما در زبان انگلیسی چقدر است؟"),
-    anchors: {
-      low: o("Only simple everyday conversation", "فقط مکالمهٔ سادهٔ روزمره"),
-      high: o("Fully professional/business fluent", "تسلط کامل حرفه‌ای و تجاری"),
+    type: "single",
+    label: o(
+      "How would you describe your current English proficiency for living, working, or studying in Finland?",
+      "سطح کنونی زبان انگلیسی خود را برای زندگی، کار یا تحصیل در فنلاند چگونه توصیف می‌کنید؟",
+    ),
+    options: [
+      o("Beginner", "مبتدی"),
+      o("Basic", "پایه"),
+      o("Intermediate", "متوسط"),
+      o("Upper-intermediate", "بالاتر از متوسط"),
+      o("Advanced", "پیشرفته"),
+    ],
+    optionScores: [0.15, 0.35, 0.6, 0.85, 1],
+    sub: {
+      label: o(
+        "How would you describe your current Finnish or Swedish proficiency?",
+        "سطح کنونی زبان فنلاندی یا سوئدی خود را چگونه توصیف می‌کنید؟",
+      ),
+      options: [
+        o("None", "هیچ"),
+        o("Basic", "پایه"),
+        o("Intermediate", "متوسط"),
+        o("Advanced", "پیشرفته"),
+      ],
+      optionScores: [0.25, 0.55, 0.8, 1],
     },
   },
   {
@@ -268,6 +305,15 @@ export const QUESTIONS: Question[] = [
     detailOn: 1,
     detailType: "text",
     detailLabel: o("Type and score", "نوع مدرک و نمره"),
+    // Relevant only when the selected pathway or a language requirement makes a
+    // certificate meaningful (employment or studies, or English below advanced).
+    showIf: (a) => {
+      const pathway = a[36]?.value;
+      const english = a[15]?.value;
+      const pathwayRelevant = pathway === 0 || pathway === 1 || pathway === undefined;
+      const languageRelevant = typeof english === "number" && english <= 3;
+      return pathwayRelevant || languageRelevant;
+    },
   },
 
   // ── Section 3 ───────────────────────────────────────────────
@@ -332,6 +378,9 @@ export const QUESTIONS: Question[] = [
       o("Nothing prepared yet", "هنوز چیزی آماده نیست"),
     ],
     optionScores: [1, 0.6, 0.3],
+    // Financial-source documentation is requested for every pathway except a
+    // salaried employment pathway, where the employment contract carries it.
+    showIf: (a) => a[36]?.value !== 0,
   },
   {
     id: 21,
@@ -450,13 +499,18 @@ export const QUESTIONS: Question[] = [
   {
     id: 29,
     section: 4,
-    type: "single",
-    label: o("How do you typically behave in new social environments?", "معمولاً در محیط‌های اجتماعی جدید چگونه رفتار می‌کنید؟"),
-    options: [
-      o("I take the initiative to meet people and make friends", "پیش‌قدم می‌شوم و دوست پیدا می‌کنم"),
-      o("I prefer to observe first", "ترجیح می‌دهم ابتدا مشاهده کنم"),
-    ],
-    optionScores: [1, 0.7],
+    type: "scale",
+    label: o(
+      "When entering a new social environment, how comfortable are you starting conversations and building new connections?",
+      "هنگام ورود به یک محیط اجتماعی جدید، تا چه اندازه در آغاز گفت‌وگو و ساختن ارتباط‌های تازه راحت هستید؟",
+    ),
+    anchors: {
+      low: o("I usually need time before connecting", "معمولاً برای ارتباط‌گرفتن به زمان نیاز دارم"),
+      high: o(
+        "I comfortably start conversations and build new connections",
+        "به‌راحتی گفت‌وگو را آغاز می‌کنم و ارتباط‌های تازه می‌سازم",
+      ),
+    },
   },
 
   // ── Section 5 ───────────────────────────────────────────────
@@ -521,11 +575,12 @@ export const QUESTIONS: Question[] = [
     },
   },
 
-  // ── Section 6 ───────────────────────────────────────────────
+  // ── Section 6 — context only (pathway matching & roadmap) ───
   {
     id: 35,
     section: 6,
     type: "single",
+    unscored: true,
     label: o("What is your main reason for choosing Finland?", "دلیل اصلی شما برای انتخاب فنلاند چیست؟"),
     options: [
       o("Safety and quality of life", "امنیت و کیفیت زندگی"),
@@ -533,37 +588,41 @@ export const QUESTIONS: Question[] = [
       o("Education for yourself or your children", "تحصیل خود یا فرزندان"),
       o("Starting a business", "راه‌اندازی کسب‌وکار"),
     ],
-    optionScores: [1, 1, 0.9, 0.9],
   },
   {
     id: 36,
     section: 6,
     type: "single",
-    label: o("Which migration pathway are you considering?", "کدام مسیر مهاجرتی را در نظر دارید؟"),
+    unscored: true,
+    label: o(
+      "What is your main intended basis for moving to Finland?",
+      "مبنای اصلی موردنظر شما برای نقل مکان به فنلاند چیست؟",
+    ),
     options: [
-      o("Work", "کاری"),
-      o("Study", "تحصیلی"),
-      o("Startup", "استارتاپ"),
-      o("Financial self-sufficiency", "خودکفایی مالی"),
-      o("Digital nomad", "کوچ‌نشین دیجیتال"),
+      o("Employment", "اشتغال"),
+      o("Studies", "تحصیل"),
+      o("Start-up entrepreneurship", "کارآفرینی استارتاپی"),
+      o("Entrepreneurship", "کارآفرینی"),
+      o("Family ties", "پیوندهای خانوادگی"),
+      o("Other / Not sure yet", "سایر / هنوز مطمئن نیستم"),
     ],
-    optionScores: [1, 0.9, 0.85, 0.7, 0.7],
   },
   {
     id: 37,
     section: 6,
     type: "single",
+    unscored: true,
     label: o("How long do you intend to stay in Finland?", "قصد دارید چه مدت در فنلاند بمانید؟"),
     options: [
       o("Less than one year", "کمتر از یک سال"),
       o("More than one year / permanent", "بیش از یک سال / دائمی"),
     ],
-    optionScores: [0.6, 1],
   },
   {
     id: 38,
     section: 6,
     type: "single",
+    unscored: true,
     label: o(
       "What is your intended timeframe for leaving your home country and settling in the destination country?",
       "بازهٔ زمانی مورد نظر شما برای خروج از کشور مبدأ و استقرار در کشور مقصد چقدر است؟",
@@ -575,7 +634,6 @@ export const QUESTIONS: Question[] = [
       o("More than 1 year", "بیش از ۱ سال"),
       o("More than 2 years", "بیش از ۲ سال"),
     ],
-    optionScores: [1, 0.95, 0.8, 0.6, 0.5],
   },
 
   // ── Section 7 (bonus) ───────────────────────────────────────
@@ -620,6 +678,8 @@ export const QUESTIONS: Question[] = [
     id: 42,
     section: 7,
     type: "scale",
+    // Action readiness: feeds the pacing/intensity of the 12-week roadmap only.
+    unscored: true,
     label: o(
       "If you received your roadmap today, how ready are you to start acting on it operationally?",
       "اگر امروز نقشه‌راه خود را دریافت کنید، چقدر آمادهٔ اجرای عملی آن هستید؟",
@@ -631,6 +691,9 @@ export const QUESTIONS: Question[] = [
   },
 ];
 
+/** Questions shown only when the user opts into the Founder & Talent track. */
+export const FOUNDER_TRACK_IDS = [39, 40, 41] as const;
+
 export function questionsForSection(section: number, answers: Answers) {
   return QUESTIONS.filter((q) => q.section === section && (!q.showIf || q.showIf(answers)));
 }
@@ -639,7 +702,15 @@ export function isAnswered(q: Question, a: AnswerValue | undefined) {
   if (!a) return false;
   if (q.type === "multi") return Array.isArray(a.value) && a.value.length > 0;
   if (q.type === "text") return typeof a.value === "string" && a.value.trim().length > 1;
+  if (q.sub && !(typeof a.detail === "string" && a.detail !== "")) return false;
   return a.value !== undefined && a.value !== "";
+}
+
+/** Index chosen for the second part of a two-part question, if any. */
+export function subAnswerIndex(q: Question, a: AnswerValue | undefined): number | undefined {
+  if (!q.sub || typeof a?.detail !== "string" || a.detail === "") return undefined;
+  const n = Number(a.detail);
+  return Number.isInteger(n) && n >= 0 && n < q.sub.options.length ? n : undefined;
 }
 
 export const COUNTRIES: Bilingual[] = [

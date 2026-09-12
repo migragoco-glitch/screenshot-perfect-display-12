@@ -304,6 +304,9 @@ export const en = {
   "q.feedsInto": "Answers in this section contribute to your",
   "q.scoreWord": "score",
   "q.bonusNote2": "Optional questions — reported separately from the three core dimensions.",
+  "q.founderTrack": "Would you like to explore the Founder & Talent track?",
+  "q.founderYes": "Yes",
+  "q.founderNo": "No",
   "q.sectionsDone": "sections completed",
   "q.encourage1": "Great start — the first sections are the quickest.",
   "q.encourage2": "You're almost halfway there.",
@@ -465,6 +468,9 @@ export const en = {
   "prio.low": "Low",
 
   "path.title": "Relevant Pathways for You",
+  "path.titleExplore": "Potential Pathways to Explore",
+  "path.exploreNote":
+    "Based on your answers, these pathways may be relevant to explore. Official eligibility must be confirmed with the relevant authority.",
   "path.relevance": "Relevance",
   "path.institution": "Institution / service",
   "path.action": "Suggested action",
@@ -822,6 +828,9 @@ export const fa: Record<keyof typeof en, string> = {
   "q.feedsInto": "پاسخ‌های این بخش در نمرهٔ زیر لحاظ می‌شود:",
   "q.scoreWord": "",
   "q.bonusNote2": "پرسش‌های اختیاری — جدا از سه بُعد اصلی گزارش می‌شود.",
+  "q.founderTrack": "آیا می‌خواهید مسیر «بنیان‌گذار و استعداد» را بررسی کنید؟",
+  "q.founderYes": "بله",
+  "q.founderNo": "خیر",
   "q.sectionsDone": "بخش تکمیل شد",
   "q.encourage1": "شروع خوبی بود — بخش‌های نخست سریع‌تر پیش می‌روند.",
   "q.encourage2": "تقریباً به نیمهٔ راه رسیده‌اید.",
@@ -984,6 +993,9 @@ export const fa: Record<keyof typeof en, string> = {
   "prio.low": "پایین",
 
   "path.title": "مسیرهای مرتبط با شما",
+  "path.titleExplore": "مسیرهای بالقوه برای بررسی",
+  "path.exploreNote":
+    "بر پایهٔ پاسخ‌های شما، بررسی این مسیرها می‌تواند مرتبط باشد. واجد شرایط بودن رسمی باید توسط مرجع مربوط تأیید شود.",
   "path.relevance": "ارتباط با شما",
   "path.institution": "نهاد / خدمت",
   "path.action": "اقدام پیشنهادی",
