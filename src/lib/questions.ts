@@ -405,7 +405,7 @@ export const QUESTIONS: Question[] = [
     ),
     hint: o(
       "Income requirements vary by permit type in Finland — check migri.fi for the exact figure.",
-      "حداقل درآمد موردنیاز بسته به نوع مجوز اقامت در فنلاند متفاوت است — برای رقم دقیق به migri.fi مراجعه کنید.",
+      "راهنما: حداقل مبلغ مورد نیاز ادارهٔ مهاجرت فنلاند (Migri) در سال ۲۰۲۶ برای یک فرد بزرگسال در هلسینکی حدود ۱,۲۰۰ یورو در ماه است (بعلاوهٔ ۶۰۰ یورو به ازای هر عضو اضافی خانواده)، و برای سایر مناطق فنلاند این مبلغ کمتر است. رقم دقیق را در migri.fi ببینید.",
     ),
     options: [
       o("Less than 1 month", "کمتر از ۱ ماه"),
