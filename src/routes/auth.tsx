@@ -14,12 +14,12 @@ export const Route = createFileRoute("/auth")({
       {
         name: "description",
         content:
-          "Sign in to MigraGo to save your 12-week Finland roadmap progress across devices.",
+          "Sign in to MigraGo. Your assessment answers and roadmap progress are saved only on this device/browser.",
       },
       { property: "og:title", content: "Sign in — MigraGo SettleSmart Navigator" },
       {
         property: "og:description",
-        content: "Save and resume your Finland integration roadmap progress.",
+        content: "Your assessment answers and roadmap progress are saved only on this device/browser.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
