@@ -659,7 +659,9 @@ export const QUESTIONS: Question[] = [
     detailOn: 1,
     detailType: "number",
     detailLabel: o("Number of people managed", "تعداد افراد تحت مدیریت"),
+    showIf: (_a, ctx) => ctx?.founderTrack === true,
   },
+
   {
     id: 40,
     section: 7,
@@ -674,7 +676,9 @@ export const QUESTIONS: Question[] = [
     ],
     optionScores: [1, 1, 0.9, 0.85, 0.2],
     noneIndex: 4,
+    showIf: (_a, ctx) => ctx?.founderTrack === true,
   },
+
   {
     id: 41,
     section: 7,
@@ -682,7 +686,9 @@ export const QUESTIONS: Question[] = [
     label: o("What is your level of professional recognition?", "سطح شناخته‌شدگی حرفه‌ای شما چقدر است؟"),
     options: [o("Local", "محلی"), o("National", "ملی"), o("International", "بین‌المللی")],
     optionScores: [0.4, 0.7, 1],
+    showIf: (_a, ctx) => ctx?.founderTrack === true,
   },
+
   {
     id: 42,
     section: 7,
