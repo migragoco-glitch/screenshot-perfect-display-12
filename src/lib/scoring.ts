@@ -128,7 +128,7 @@ function bucketScore(ids: readonly number[], answers: Answers) {
 
 const L = (en: string, fa: string): Bilingual => ({ en, fa });
 
-export function computeProfile(answers: Answers, founderTrack = true): Profile {
+export function computeProfile(answers: Answers, founderTrack = false): Profile {
   const legal = bucketScore(BUCKETS.legal.ids, answers);
   const professional = bucketScore(BUCKETS.professional.ids, answers);
   const psychological = bucketScore(BUCKETS.psychological.ids, answers);
