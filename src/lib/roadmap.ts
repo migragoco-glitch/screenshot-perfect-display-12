@@ -495,11 +495,11 @@ const OFFICIAL_SOURCE: Record<Institution, string> = {
   Vero: "https://www.vero.fi/en/individuals/",
   Kela: "https://www.kela.fi/",
   "Local Employment Services": "https://tyomarkkinatori.fi/en",
-  "Valvira / OPH": "https://www.oph.fi/en/services/recognition-qualifications",
+  "Valvira / OPH": "https://www.oph.fi/en/services/recognition-and-international-comparability-qualifications",
   "International House Helsinki": "https://ihhelsinki.fi/",
   "Local municipality services": "https://www.suomi.fi/citizen",
   "PRH / YTJ": "https://www.ytj.fi/en/",
-  "Business Finland": "https://www.businessfinland.fi/en/do-business-with-finland/startup-in-finland/startup-permit",
+  "Business Finland": "https://www.businessfinland.fi/en/do-business-with-finland/startup-in-finland/startup-permit/",
   "Municipal health services": "https://www.suomi.fi/citizen/health-and-medical-care",
 };
 
