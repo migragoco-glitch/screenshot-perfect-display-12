@@ -65,6 +65,7 @@ function CheckoutPage() {
           <Lock className="size-7 text-secondary" aria-hidden />
           <h1 className="mt-5 text-2xl">{t("checkout.title")}</h1>
           <p className="mt-2 text-sm text-muted-foreground">{t("checkout.sub")}</p>
+          <p className="mt-3 text-sm text-muted-foreground">{t("checkout.confirmation")}</p>
 
           <dl className="mt-7 space-y-3 border-y border-border py-5 text-sm">
             <div className="flex items-center justify-between gap-4">

@@ -243,14 +243,9 @@ export const en = {
   "csat.thanks": "Thank you — your signal was recorded.",
 
   "pay.emailTitle": "Early access pricing",
-  "pay.emailSub":
-    "The first 100 members get SettleSmart Navigator at a special early-access rate.",
+  "pay.emailSub": "Early access pricing — available for a limited time.",
   "pay.emailLabel": "Your email",
   "pay.emailCta": "Get my code and continue",
-  "pay.counter": "members registered so far",
-  "pay.counterSpots": "early-access places left",
-  "pay.counterFull":
-    "All 100 early-access places are taken — standard pricing applies from here.",
   "pay.emailInvalid": "Please enter a valid email address.",
   "pay.emailThanks": "Your early-access code is reserved. Continuing to checkout…",
   "pay.emailSkip": "Continue at standard pricing",
@@ -369,6 +364,7 @@ export const en = {
 
   "checkout.title": "Secure checkout",
   "checkout.sub": "SettleSmart Navigator — full Smart Integration Profile and 12-week roadmap.",
+  "checkout.confirmation": "By continuing, you confirm you'd like to proceed with payment.",
   "checkout.plan": "SettleSmart Navigator (monthly)",
   "checkout.discountLabel": "Early-access discount",
   "checkout.total": "Total due today",
@@ -777,14 +773,9 @@ export const fa: Record<keyof typeof en, string> = {
   "csat.thanks": "سپاسگزاریم — پاسخ شما ثبت شد.",
 
   "pay.emailTitle": "قیمت دسترسی زودهنگام",
-  "pay.emailSub":
-    "صد عضو نخست، SettleSmart Navigator را با نرخ ویژهٔ دسترسی زودهنگام دریافت می‌کنند.",
+  "pay.emailSub": "قیمت دسترسی زودهنگام — برای مدت محدود در دسترس است.",
   "pay.emailLabel": "رایانامهٔ شما",
   "pay.emailCta": "دریافت کد و ادامه",
-  "pay.counter": "عضو تاکنون ثبت‌نام کرده‌اند",
-  "pay.counterSpots": "جایگاه دسترسی زودهنگام باقی مانده است",
-  "pay.counterFull":
-    "هر ۱۰۰ جایگاه دسترسی زودهنگام تکمیل شده است — از این پس قیمت استاندارد اعمال می‌شود.",
   "pay.emailInvalid": "لطفاً یک نشانی رایانامهٔ معتبر وارد کنید.",
   "pay.emailThanks": "کد دسترسی زودهنگام شما رزرو شد. در حال رفتن به مرحلهٔ پرداخت…",
   "pay.emailSkip": "ادامه با قیمت استاندارد",
@@ -904,6 +895,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "checkout.title": "پرداخت امن",
   "checkout.sub": "SettleSmart Navigator — پروفایل کامل هوشمند ادغام و نقشه‌راه ۱۲ هفته‌ای.",
+  "checkout.confirmation": "با ادامه، تأیید می‌کنید که مایل به ادامهٔ پرداخت هستید.",
   "checkout.plan": "SettleSmart Navigator (ماهانه)",
   "checkout.discountLabel": "تخفیف دسترسی زودهنگام",
   "checkout.total": "مبلغ قابل پرداخت",
