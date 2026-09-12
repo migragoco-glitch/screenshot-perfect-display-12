@@ -19,6 +19,7 @@ export type AppState = {
   completed: boolean;
   tier: "free" | "navigator";
   history: ScoreSnapshot[];
+  founderTrack?: boolean;
   registeredAt?: string;
 };
 

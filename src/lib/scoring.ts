@@ -128,11 +128,11 @@ function bucketScore(ids: readonly number[], answers: Answers) {
 
 const L = (en: string, fa: string): Bilingual => ({ en, fa });
 
-export function computeProfile(answers: Answers): Profile {
+export function computeProfile(answers: Answers, founderTrack = true): Profile {
   const legal = bucketScore(BUCKETS.legal.ids, answers);
   const professional = bucketScore(BUCKETS.professional.ids, answers);
   const psychological = bucketScore(BUCKETS.psychological.ids, answers);
-  const bonus = bucketScore(BUCKETS.bonus.ids, answers);
+  const bonus = founderTrack ? bucketScore(BUCKETS.bonus.ids, answers) : 0;
   const overall = Math.round(legal * 0.3 + professional * 0.4 + psychological * 0.3);
 
   const gaps: GapFlag[] = [];

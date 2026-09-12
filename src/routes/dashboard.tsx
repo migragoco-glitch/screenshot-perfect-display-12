@@ -132,7 +132,10 @@ function Dashboard() {
   }, [hydrated]);
 
 
-  const profile = useMemo(() => computeProfile(state.answers), [state.answers]);
+  const profile = useMemo(
+    () => computeProfile(state.answers, state.founderTrack === true),
+    [state.answers, state.founderTrack],
+  );
   const roadmap = useMemo(() => generateRoadmap(profile), [profile]);
   const allItems = useMemo(() => roadmap.flatMap((p) => p.items), [roadmap]);
   const gapList = useMemo(() => buildGapAnalysis(profile), [profile]);

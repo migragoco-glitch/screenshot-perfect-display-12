@@ -72,7 +72,11 @@ function Assessment() {
   const [showRequired, setShowRequired] = useState(false);
   const [corrupted, setCorrupted] = useState(false);
   // Opt-in gate for the Founder & Talent questions (Q39–41).
-  const [founderTrack, setFounderTrack] = useState<boolean | null>(null);
+  const [founderTrack, setFounderTrack] = useState<boolean | null>(state.founderTrack ?? null);
+
+  useEffect(() => {
+    if (hydrated) setFounderTrack(state.founderTrack ?? null);
+  }, [hydrated, state.founderTrack]);
 
   useEffect(() => {
     if (hydrated && !state.consent) void navigate({ to: "/consent" });
@@ -116,7 +120,7 @@ function Assessment() {
       return;
     }
     setAnalyzing(true);
-    const profile = computeProfile(state.answers);
+    const profile = computeProfile(state.answers, founderTrack === true);
     const nationality = state.answers[2]?.value;
     const pathwayIndex = state.answers[36]?.value;
     const pathway =
@@ -264,6 +268,7 @@ function Assessment() {
                   aria-pressed={founderTrack === opt.value}
                   onClick={() => {
                     setFounderTrack(opt.value);
+                    update({ founderTrack: opt.value });
                     if (!opt.value) clearAnswers(FOUNDER_TRACK_IDS);
                   }}
                   className={cn(
