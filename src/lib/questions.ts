@@ -305,8 +305,7 @@ export const QUESTIONS: Question[] = [
     detailOn: 1,
     detailType: "text",
     detailLabel: o("Type and score", "نوع مدرک و نمره"),
-    // Relevant only when the selected pathway or a language requirement makes a
-    // certificate meaningful (employment or studies, or English below advanced).
+    // Relevant when the reported English level may require supporting evidence.
     showIf: (a) => {
       const english = a[15]?.value;
       return typeof english !== "number" || english <= 3;
