@@ -13,7 +13,6 @@ import {
 import { INSTITUTION_LABEL, type Institution } from "@/lib/roadmap";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import {
-  fetchValidationSignals,
   joinFoundersCircle,
   submitCsat,
   submitNps,
@@ -111,7 +110,7 @@ export function CsatWidget() {
   );
 }
 
-/** 4 — Early-access email capture with a real, live signup counter. */
+/** 4 — Early-access email capture. */
 export function FoundersCircleModal({
   open,
   onClose,
@@ -121,21 +120,13 @@ export function FoundersCircleModal({
   onClose: () => void;
   onJoined: () => void;
 }) {
-  const { t, lang } = useI18n();
-  const [count, setCount] = useState<number | null>(null);
+  const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
 
-  useEffect(() => {
-    if (!open) return;
-    void fetchValidationSignals().then((s) => setCount(s.founders_circle));
-  }, [open]);
-
   if (!open) return null;
-
-  const full = count !== null && count >= 100;
 
   const submit = async () => {
     setBusy(true);
@@ -147,10 +138,8 @@ export function FoundersCircleModal({
       return;
     }
     // Email capture is a lead step only: it reserves the discount code.
-    const code = full ? null : "EARLY100";
     window.localStorage.setItem("migrago.earlyAccessEmail", email.trim().toLowerCase());
-    if (code) window.localStorage.setItem("migrago.discountCode", code);
-    else window.localStorage.removeItem("migrago.discountCode");
+    window.localStorage.setItem("migrago.discountCode", "EARLY100");
     trackEvent({ type: "email_captured" });
     setDone(true);
     window.setTimeout(onJoined, 800);
@@ -175,22 +164,7 @@ export function FoundersCircleModal({
           </button>
         </div>
 
-        {full ? (
-          <p className="mt-3 text-sm text-muted-foreground">{t("pay.counterFull")}</p>
-        ) : (
-          <p className="mt-3 text-sm text-muted-foreground">{t("pay.emailSub")}</p>
-        )}
-
-        {count !== null ? (
-          <p
-            className="mt-4 rounded-2xl px-4 py-2.5 text-xs font-semibold"
-            style={{ background: "var(--plum)", color: "oklch(0.97 0.006 85)" }}
-          >
-            {full
-              ? `${localizeNumber(count, lang)} ${t("pay.counter")}`
-              : `${localizeNumber(100 - count, lang)} ${t("pay.counterSpots")} · ${localizeNumber(count, lang)} ${t("pay.counter")}`}
-          </p>
-        ) : null}
+        <p className="mt-3 text-sm text-muted-foreground">{t("pay.emailSub")}</p>
 
         {done ? (
           <p className="mt-5 text-sm font-semibold text-secondary">{t("pay.emailThanks")}</p>
@@ -218,7 +192,11 @@ export function FoundersCircleModal({
             </button>
             <button
               type="button"
-              onClick={onJoined}
+              onClick={() => {
+                window.localStorage.removeItem("migrago.discountCode");
+                window.localStorage.removeItem("migrago.earlyAccessEmail");
+                onJoined();
+              }}
               className="mt-3 w-full text-xs font-semibold text-muted-foreground underline underline-offset-4"
             >
               {t("pay.emailSkip")}

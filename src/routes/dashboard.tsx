@@ -195,10 +195,10 @@ function Dashboard() {
     setPayModal(true);
   };
 
-  // Email captured (or skipped) → the existing Consent screen → unlocked roadmap.
+  // Email captured (or skipped) → checkout. Consent was already collected before assessment.
   const afterEmailCapture = () => {
     setPayModal(false);
-    void navigate({ to: "/consent", search: { upgrade: true } });
+    void navigate({ to: "/checkout" });
   };
 
   const totalTasks = allItems.length;
