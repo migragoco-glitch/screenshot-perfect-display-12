@@ -44,6 +44,8 @@ export type Question = {
 export type AnswerValue = {
   value?: number | string | number[] | undefined;
   detail?: string | undefined;
+  /** selections for a multi-select conditional sub-question */
+  subValue?: number[] | undefined;
 };
 export type Answers = Record<number, AnswerValue | undefined>;
 
@@ -760,21 +762,15 @@ export function subAnswerIndex(q: Question, a: AnswerValue | undefined): number 
 
 /** Option indices chosen for a multi-select second part of a question. */
 export function subAnswerIndexes(q: Question, a: AnswerValue | undefined): number[] {
-  if (!q.sub?.multi || typeof a?.detail !== "string" || a.detail === "") return [];
-  try {
-    const parsed = JSON.parse(a.detail) as unknown;
-    if (!Array.isArray(parsed)) return [];
-    return Array.from(
-      new Set(
-        parsed.filter(
-          (value): value is number =>
-            Number.isInteger(value) && value >= 0 && value < (q.sub?.options.length ?? 0),
-        ),
+  if (!q.sub?.multi || !Array.isArray(a?.subValue)) return [];
+  return Array.from(
+    new Set(
+      a.subValue.filter(
+        (value): value is number =>
+          Number.isInteger(value) && value >= 0 && value < (q.sub?.options.length ?? 0),
       ),
-    ).sort((aIndex, bIndex) => aIndex - bIndex);
-  } catch {
-    return [];
-  }
+    ),
+  ).sort((aIndex, bIndex) => aIndex - bIndex);
 }
 
 export const COUNTRIES: Bilingual[] = [

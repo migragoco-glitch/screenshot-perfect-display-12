@@ -184,7 +184,7 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
                         const next = active
                           ? subSelections.filter((value) => value !== i)
                           : [...subSelections, i].sort((a, b) => a - b);
-                        onChange({ value: selected, detail: JSON.stringify(next) });
+                        onChange({ value: selected, subValue: next });
                         return;
                       }
                       onChange({ value: selected, detail: String(i) });

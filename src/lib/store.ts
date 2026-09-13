@@ -55,7 +55,7 @@ function sanitizeAnswer(id: number, raw: unknown): AnswerValue | undefined {
   if (!q) return undefined; // orphaned entry from an older assessment version
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return undefined;
 
-  const a = raw as { value?: unknown; detail?: unknown };
+  const a = raw as { value?: unknown; detail?: unknown; subValue?: unknown };
   const optionCount = q.options?.length ?? 0;
   const inRange = (n: unknown) =>
     typeof n === "number" && Number.isInteger(n) && n >= 0 && (optionCount === 0 || n < optionCount);
@@ -91,18 +91,23 @@ function sanitizeAnswer(id: number, raw: unknown): AnswerValue | undefined {
   }
 
   const subAllowed = q.sub && (q.sub.showOn === undefined || value === q.sub.showOn);
-  const detailAllowed = subAllowed || (q.detailOn !== undefined && value === q.detailOn);
+  const detailAllowed = (!q.sub?.multi && subAllowed) || (q.detailOn !== undefined && value === q.detailOn);
   const rawDetail = detailAllowed && typeof a.detail === "string" ? a.detail : undefined;
   let detail = rawDetail;
-  if (q.sub?.multi) {
-    const indices = subAnswerIndexes(q, rawDetail === undefined ? undefined : { value, detail: rawDetail });
-    detail = indices.length > 0 ? JSON.stringify(indices) : undefined;
+  let subValue: number[] | undefined;
+  if (q.sub?.multi && subAllowed) {
+    const indices = subAnswerIndexes(q, { value, subValue: a.subValue as number[] | undefined });
+    subValue = indices.length > 0 ? indices : undefined;
   } else if (q.sub) {
     const index = subAnswerIndex(q, rawDetail === undefined ? undefined : { value, detail: rawDetail });
     detail = index === undefined ? undefined : String(index);
   }
-  if (value === undefined && detail === undefined) return undefined;
-  return { ...(value !== undefined ? { value } : {}), ...(detail !== undefined ? { detail } : {}) };
+  if (value === undefined && detail === undefined && subValue === undefined) return undefined;
+  return {
+    ...(value !== undefined ? { value } : {}),
+    ...(detail !== undefined ? { detail } : {}),
+    ...(subValue !== undefined ? { subValue } : {}),
+  };
 }
 
 /** Rebuilds the answer map so it always matches the current question structure. */
@@ -137,7 +142,7 @@ export function sanitizeAnswers(
 }
 
 const canonical = (a: AnswerValue | undefined) =>
-  JSON.stringify([a?.value ?? null, a?.detail ?? null]);
+  JSON.stringify([a?.value ?? null, a?.detail ?? null, a?.subValue ?? null]);
 
 /** True when stored answers already match the current question structure. */
 export function answersAreConsistent(raw: unknown, ctx?: AnswerContext): boolean {
