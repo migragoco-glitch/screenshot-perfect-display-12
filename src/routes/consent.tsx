@@ -49,6 +49,7 @@ function ConsentScreen() {
               {t("consent.p2")}
             </p>
             <p>{t("consent.p3")}</p>
+            <p>{t("consent.selfReport")}</p>
           </div>
 
           <button
