@@ -62,7 +62,41 @@ function FounderMetrics() {
   const [demoAccounts, setDemoAccounts] = useState<DemoAccount[]>([]);
   const [demoLabel, setDemoLabel] = useState("");
   const [demoEmail, setDemoEmail] = useState("");
+  const [responses, setResponses] = useState<FeedbackResponses | null>(null);
+  const [loadingResponses, setLoadingResponses] = useState(false);
   const primaryPassword = useRef("");
+
+  const loadResponses = async () => {
+    if (!primaryPassword.current) return;
+    setLoadingResponses(true);
+    setResponses(await listFeedbackResponses({ data: { password: primaryPassword.current } }));
+    setLoadingResponses(false);
+  };
+
+  const exportCsv = () => {
+    if (!responses) return;
+    const esc = (v: string | number | boolean | null) =>
+      `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const lines = [
+      ["type", "submitted_at", "score", "comment", "session_id"].join(","),
+      ...responses.nps.map((r) =>
+        ["nps", r.created_at, r.score, r.comment ?? "", r.session_id].map(esc).join(","),
+      ),
+      ...responses.csat.map((r) =>
+        ["accuracy", r.created_at, r.positive ? "accurate" : "not_accurate", "", r.session_id]
+          .map(esc)
+          .join(","),
+      ),
+    ];
+    const blob = new Blob(["\uFEFF" + lines.join("\n")], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `migrago-feedback-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
 
   const refreshDemoAccounts = async () => {
     if (!primaryPassword.current) return;
