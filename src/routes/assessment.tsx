@@ -70,6 +70,7 @@ function Assessment() {
   const [analyzing, setAnalyzing] = useState(false);
   const [showRequired, setShowRequired] = useState(false);
   const [corrupted, setCorrupted] = useState(false);
+  const [inconsistencyDismissed, setInconsistencyDismissed] = useState(false);
   // Opt-in gate for the Founder & Talent questions (Q39–41). Derived straight from
   // the (already sanitized) stored state so it is final before Step 7 first renders.
   const founderTrack = state.founderTrack ?? null;
@@ -98,6 +99,14 @@ function Assessment() {
   const sectionComplete = meta?.optional
     ? true
     : visible.every((q) => isAnswered(q, state.answers[q.id]));
+
+  // Gentle, non-blocking consistency flags shown on Step 7 only. Never alters
+  // answers or scores — purely a review prompt for the user.
+  const visaInconsistent = state.answers[30]?.value === 1 && state.answers[31]?.value === 1;
+  const childrenInconsistent =
+    state.answers[7]?.value === 0 &&
+    Array.isArray(state.answers[8]?.value) &&
+    (state.answers[8]?.value as number[]).includes(2);
 
   const encouragement =
     section <= 2 ? t("q.encourage1") : section <= 5 ? t("q.encourage2") : t("q.encourage3");
@@ -291,6 +300,26 @@ function Assessment() {
             />
           ))}
         </div>
+
+        {section === 7 && (visaInconsistent || childrenInconsistent) && !inconsistencyDismissed ? (
+          <div className="rise-in mt-5 rounded-2xl border border-accent/50 bg-accent/10 p-4">
+            {visaInconsistent ? (
+              <p className="text-sm font-semibold">{t("q.inconsistencyVisa")}</p>
+            ) : null}
+            {childrenInconsistent ? (
+              <p className={cn("text-sm font-semibold", visaInconsistent ? "mt-2" : undefined)}>
+                {t("q.inconsistencyChildren")}
+              </p>
+            ) : null}
+            <button
+              type="button"
+              onClick={() => setInconsistencyDismissed(true)}
+              className="mt-3 text-xs font-semibold text-secondary underline underline-offset-4"
+            >
+              {t("q.inconsistencyOk")}
+            </button>
+          </div>
+        ) : null}
 
         {corrupted ? (
           <p className="rise-in mt-5 rounded-xl bg-accent/15 p-3 text-sm font-semibold">

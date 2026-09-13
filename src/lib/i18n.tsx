@@ -94,6 +94,13 @@ export const en = {
     "The visa-refusal question (Q31) and the immigration-violation / unauthorized-overstay question (Q33) are answered on a fixed-choice basis. Where an optional free-text reason is offered, it is used only for roadmap personalization and is never shared with government authorities.",
   "consent.p3":
     "MigraGo does not replace legal advice or official authorities, and does not guarantee residence or integration outcomes. You can request deletion of all of your data at any time from Profile Settings.",
+  "consent.selfReport":
+    "Your roadmap is generated entirely from the answers you provide. MigraGo does not verify the accuracy of your responses. Incomplete or inaccurate answers — whether unintentional or deliberate — may result in a roadmap that does not reflect your actual situation, and responsibility for the accuracy of your answers rests with you.",
+  "q.inconsistencyVisa":
+    "Your answers about prior migration steps (Q30) and visa refusal (Q31) seem inconsistent — please review them.",
+  "q.inconsistencyChildren":
+    "Your answers about dependent children (Q7) and who is relocating with you (Q8) seem inconsistent — please review them.",
+  "q.inconsistencyOk": "My answers are correct — continue",
   "consent.privacy": "Read the short privacy note",
   "consent.privacyBody":
     "We store only the answers you give, plus your score history, to show how your profile evolves. No answer is sold, shared with authorities, or used to identify you in aggregate statistics. Deleting your data removes your answers, scores and roadmap permanently.",
@@ -624,6 +631,13 @@ export const fa: Record<keyof typeof en, string> = {
     "پرسش مربوط به ریجکتی ویزا (پرسش ۳۱) و پرسش مربوط به تخلف مهاجرتی / اقامت غیرمجاز (پرسش ۳۳) صرفاً به‌صورت گزینه‌ای پاسخ داده می‌شوند. در مواردی که شرح اختیاری متنی ارائه شود، تنها برای شخصی‌سازی نقشه‌راه استفاده می‌گردد و هرگز با مراجع دولتی به اشتراک گذاشته نمی‌شود.",
   "consent.p3":
     "میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام نمی‌دهد. شما می‌توانید در هر زمان از بخش تنظیمات پروفایل، حذف کامل داده‌های خود را درخواست کنید.",
+  "consent.selfReport":
+    "نقشه‌راه شما کاملاً بر اساس پاسخ‌هایی که ارائه می‌دهید ساخته می‌شود. MigraGo صحت پاسخ‌های شما را بررسی یا تأیید نمی‌کند. پاسخ ناقص یا نادرست — چه غیرعمد و چه عمدی — می‌تواند به نقشه‌راهی منجر شود که با وضعیت واقعی شما هم‌خوانی ندارد، و مسئولیت صحت پاسخ‌ها بر عهدهٔ خود شماست.",
+  "q.inconsistencyVisa":
+    "پاسخ‌های شما دربارهٔ اقدامات قبلی مهاجرت (پرسش ۳۰) و ریجکتی ویزا (پرسش ۳۱) ناهماهنگ به نظر می‌رسد — لطفاً آن‌ها را بازبینی کنید.",
+  "q.inconsistencyChildren":
+    "پاسخ‌های شما دربارهٔ فرزندان تحت تکفل (پرسش ۷) و همراهان مهاجرت (پرسش ۸) ناهماهنگ به نظر می‌رسد — لطفاً آن‌ها را بازبینی کنید.",
+  "q.inconsistencyOk": "پاسخ‌هایم درست است — ادامه",
   "consent.privacy": "مطالعهٔ یادداشت کوتاه حریم خصوصی",
   "consent.privacyBody":
     "ما تنها پاسخ‌هایی که می‌دهید و تاریخچهٔ نمرهٔ شما را ذخیره می‌کنیم تا روند تحول پروفایل‌تان را نشان دهیم. هیچ پاسخی فروخته نمی‌شود، با مراجع دولتی به اشتراک گذاشته نمی‌شود و برای شناسایی شما در آمار تجمیعی به کار نمی‌رود. حذف داده‌ها، پاسخ‌ها، نمرات و نقشه‌راه شما را برای همیشه پاک می‌کند.",
