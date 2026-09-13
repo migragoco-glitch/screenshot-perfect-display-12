@@ -70,6 +70,7 @@ function Assessment() {
   const [analyzing, setAnalyzing] = useState(false);
   const [showRequired, setShowRequired] = useState(false);
   const [corrupted, setCorrupted] = useState(false);
+  const [inconsistencyDismissed, setInconsistencyDismissed] = useState(false);
   // Opt-in gate for the Founder & Talent questions (Q39–41). Derived straight from
   // the (already sanitized) stored state so it is final before Step 7 first renders.
   const founderTrack = state.founderTrack ?? null;
