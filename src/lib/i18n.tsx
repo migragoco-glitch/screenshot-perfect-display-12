@@ -269,6 +269,7 @@ export const en = {
   "road.done": "Done",
   "road.progress": "steps completed",
   "road.signInToSave": "Your progress is currently saved in this browser only. It will not carry over if you switch devices or browsers.",
+  "road.knowledgeVersion": "Finland institutional data — updated February 2026",
 
   "nps.title": "How likely are you to recommend MigraGo to another newcomer?",
   "nps.sub": "0 = not at all likely · 10 = extremely likely",
@@ -806,6 +807,7 @@ export const fa: Record<keyof typeof en, string> = {
   "road.done": "انجام شد",
   "road.progress": "گام انجام‌شده",
   "road.signInToSave": "پیشرفت شما در حال حاضر فقط در همین مرورگر ذخیره می‌شود و با تعویض دستگاه یا مرورگر منتقل نخواهد شد.",
+  "road.knowledgeVersion": "داده‌های نهادی فنلاند — به‌روزشده فوریهٔ ۲۰۲۶",
 
   "nps.title": "چقدر احتمال دارد MigraGo را به مهاجر دیگری معرفی کنید؟",
   "nps.sub": "۰ = اصلاً · ۱۰ = بسیار زیاد",

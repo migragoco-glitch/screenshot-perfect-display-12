@@ -25,8 +25,15 @@ export type Question = {
   detailType?: "text" | "number";
   /** index of an exclusive "None" option in a multi-select */
   noneIndex?: number;
-  /** second part of the same question (answer index stored in `detail`) */
-  sub?: { label: Bilingual; options: Bilingual[]; optionScores?: number[] };
+  /** second part of the same question (answer index/indices stored in `detail`) */
+  sub?: {
+    label: Bilingual;
+    options: Bilingual[];
+    optionScores?: number[];
+    multi?: boolean;
+    /** main-answer option index that makes this follow-up applicable */
+    showOn?: number;
+  };
   /** show question only when this predicate passes */
   showIf?: (answers: Answers, ctx?: AnswerContext) => boolean;
 
@@ -37,6 +44,8 @@ export type Question = {
 export type AnswerValue = {
   value?: number | string | number[] | undefined;
   detail?: string | undefined;
+  /** selections for a multi-select conditional sub-question */
+  subValue?: number[] | undefined;
 };
 export type Answers = Record<number, AnswerValue | undefined>;
 
@@ -165,6 +174,20 @@ export const QUESTIONS: Question[] = [
     detailOn: 1,
     detailType: "number",
     detailLabel: o("Number of children", "تعداد فرزندان"),
+    sub: {
+      label: o(
+        "What are the ages of your children? (select all that apply)",
+        "سن فرزندان شما چقدر است؟ (همهٔ موارد مرتبط را انتخاب کنید)",
+      ),
+      options: [
+        o("Under 3 (early childhood education)", "زیر ۳ سال (مهدکودک)"),
+        o("3–6 (pre-primary)", "۳ تا ۶ سال (پیش‌دبستانی)"),
+        o("7–15 (compulsory school)", "۷ تا ۱۵ سال (مدرسهٔ اجباری)"),
+        o("16–17 (upper secondary)", "۱۶ تا ۱۷ سال (دبیرستان)"),
+      ],
+      multi: true,
+      showOn: 1,
+    },
   },
   {
     id: 8,
@@ -596,6 +619,7 @@ export const QUESTIONS: Question[] = [
       o("Career growth and income", "رشد شغلی و درآمد"),
       o("Education for yourself or your children", "تحصیل خود یا فرزندان"),
       o("Starting a business", "راه‌اندازی کسب‌وکار"),
+      o("A combination of the above", "ترکیبی از موارد بالا"),
     ],
   },
   {
@@ -723,15 +747,30 @@ export function isAnswered(q: Question, a: AnswerValue | undefined) {
   if (!a) return false;
   if (q.type === "multi") return Array.isArray(a.value) && a.value.length > 0;
   if (q.type === "text") return typeof a.value === "string" && a.value.trim().length > 1;
-  if (q.sub && !(typeof a.detail === "string" && a.detail !== "")) return false;
+  const subApplies = q.sub && (q.sub.showOn === undefined || a.value === q.sub.showOn);
+  if (subApplies && q.sub?.multi && subAnswerIndexes(q, a).length === 0) return false;
+  if (subApplies && !q.sub?.multi && subAnswerIndex(q, a) === undefined) return false;
   return a.value !== undefined && a.value !== "";
 }
 
 /** Index chosen for the second part of a two-part question, if any. */
 export function subAnswerIndex(q: Question, a: AnswerValue | undefined): number | undefined {
-  if (!q.sub || typeof a?.detail !== "string" || a.detail === "") return undefined;
+  if (!q.sub || q.sub.multi || typeof a?.detail !== "string" || a.detail === "") return undefined;
   const n = Number(a.detail);
   return Number.isInteger(n) && n >= 0 && n < q.sub.options.length ? n : undefined;
+}
+
+/** Option indices chosen for a multi-select second part of a question. */
+export function subAnswerIndexes(q: Question, a: AnswerValue | undefined): number[] {
+  if (!q.sub?.multi || !Array.isArray(a?.subValue)) return [];
+  return Array.from(
+    new Set(
+      a.subValue.filter(
+        (value): value is number =>
+          Number.isInteger(value) && value >= 0 && value < (q.sub?.options.length ?? 0),
+      ),
+    ),
+  ).sort((aIndex, bIndex) => aIndex - bIndex);
 }
 
 export const COUNTRIES: Bilingual[] = [

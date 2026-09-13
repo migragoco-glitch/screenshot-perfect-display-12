@@ -2,6 +2,7 @@ import {
   QUESTIONS,
   isQuestionApplicable,
   subAnswerIndex,
+  subAnswerIndexes,
   type AnswerContext,
   type Answers,
   type Bilingual,
@@ -52,6 +53,11 @@ export type GapFlag =
   | "employment_pathway"
   | "family_relocation"
   | "children"
+  | "children_age_under3"
+  | "children_age_3_6"
+  | "children_age_7_15"
+  | "children_age_16_17"
+  | "children_age_unknown"
   | "kela_relevant"
   | "helsinki_region"
   | "outside_helsinki"
@@ -221,6 +227,17 @@ export function computeProfile(
   if (val(13) === 4) gaps.push("employment_gap");
   if (multi(8).some((i) => i === 1 || i === 3)) gaps.push("family_relocation");
   if (val(7) === 1 || multi(8).includes(2)) gaps.push("children");
+  if (val(7) === 1) {
+    const q7 = QUESTIONS.find((question) => question.id === 7);
+    const ages = q7 ? subAnswerIndexes(q7, applicableAnswer(7)) : [];
+    if (ages.includes(0)) gaps.push("children_age_under3");
+    if (ages.includes(1)) gaps.push("children_age_3_6");
+    if (ages.includes(2)) gaps.push("children_age_7_15");
+    if (ages.includes(3)) gaps.push("children_age_16_17");
+    if (ages.length === 0) gaps.push("children_age_unknown");
+  } else if (multi(8).includes(2)) {
+    gaps.push("children_age_unknown");
+  }
 
   // Q36: 0 employment, 1 studies, 2 start-up, 3 entrepreneurship, 4 family ties, 5 other/not sure
   const basis = val(36);
