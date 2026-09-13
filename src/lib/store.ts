@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { AnswerContext, AnswerValue, Answers } from "./questions";
-import { QUESTIONS, isQuestionApplicable } from "./questions";
+import { QUESTIONS, isQuestionApplicable, subAnswerIndex, subAnswerIndexes } from "./questions";
 
 const KEY = "migrago.state.v1";
 const METRICS_KEY = "migrago.metrics.v1";
@@ -90,8 +90,17 @@ function sanitizeAnswer(id: number, raw: unknown): AnswerValue | undefined {
     }
   }
 
-  const detailAllowed = q.sub || (q.detailOn !== undefined && value === q.detailOn);
-  const detail = detailAllowed && typeof a.detail === "string" ? a.detail : undefined;
+  const subAllowed = q.sub && (q.sub.showOn === undefined || value === q.sub.showOn);
+  const detailAllowed = subAllowed || (q.detailOn !== undefined && value === q.detailOn);
+  const rawDetail = detailAllowed && typeof a.detail === "string" ? a.detail : undefined;
+  let detail = rawDetail;
+  if (q.sub?.multi) {
+    const indices = subAnswerIndexes(q, rawDetail === undefined ? undefined : { value, detail: rawDetail });
+    detail = indices.length > 0 ? JSON.stringify(indices) : undefined;
+  } else if (q.sub) {
+    const index = subAnswerIndex(q, rawDetail === undefined ? undefined : { value, detail: rawDetail });
+    detail = index === undefined ? undefined : String(index);
+  }
   if (value === undefined && detail === undefined) return undefined;
   return { ...(value !== undefined ? { value } : {}), ...(detail !== undefined ? { detail } : {}) };
 }

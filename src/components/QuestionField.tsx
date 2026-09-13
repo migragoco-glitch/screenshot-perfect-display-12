@@ -1,5 +1,11 @@
 import { useI18n, localizeNumber } from "@/lib/i18n";
-import { COUNTRIES, subAnswerIndex, type AnswerValue, type Question } from "@/lib/questions";
+import {
+  COUNTRIES,
+  subAnswerIndex,
+  subAnswerIndexes,
+  type AnswerValue,
+  type Question,
+} from "@/lib/questions";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -15,6 +21,8 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
   const showDetail = q.detailOn !== undefined && selected === q.detailOn;
   const isBracket = q.id === 17 || q.id === 21;
   const subSelected = subAnswerIndex(q, answer);
+  const subSelections = subAnswerIndexes(q, answer);
+  const showSub = q.sub && (q.sub.showOn === undefined || selected === q.sub.showOn);
 
   return (
     <fieldset className="rounded-2xl border border-border/70 bg-card/80 p-5 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_6px_24px_-16px_rgba(11,37,69,0.35)] backdrop-blur-sm md:p-6">
@@ -160,26 +168,38 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
           </div>
         ) : null}
 
-        {q.sub ? (
+        {showSub && q.sub ? (
           <div className="mt-5">
             <p className="text-[15px] font-semibold leading-relaxed">{q.sub.label[lang]}</p>
             <div className="mt-3 grid gap-2 sm:grid-cols-2">
-              {q.sub.options.map((opt, i) => (
-                <button
-                  key={opt.en}
-                  type="button"
-                  aria-pressed={subSelected === i}
-                  onClick={() => onChange({ value: selected, detail: String(i) })}
-                  className={cn(
-                    "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
-                    subSelected === i
-                      ? "border-secondary bg-secondary/12 text-foreground ring-1 ring-secondary/40"
-                      : "border-border bg-background hover:border-secondary/40",
-                  )}
-                >
-                  {opt[lang]}
-                </button>
-              ))}
+              {q.sub.options.map((opt, i) => {
+                const active = q.sub?.multi ? subSelections.includes(i) : subSelected === i;
+                return (
+                  <button
+                    key={opt.en}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => {
+                      if (q.sub?.multi) {
+                        const next = active
+                          ? subSelections.filter((value) => value !== i)
+                          : [...subSelections, i].sort((a, b) => a - b);
+                        onChange({ value: selected, detail: JSON.stringify(next) });
+                        return;
+                      }
+                      onChange({ value: selected, detail: String(i) });
+                    }}
+                    className={cn(
+                      "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
+                      active
+                        ? "border-secondary bg-secondary/12 text-foreground ring-1 ring-secondary/40"
+                        : "border-border bg-background hover:border-secondary/40",
+                    )}
+                  >
+                    {opt[lang]}
+                  </button>
+                );
+              })}
             </div>
           </div>
         ) : null}

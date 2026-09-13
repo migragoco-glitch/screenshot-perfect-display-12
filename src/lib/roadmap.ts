@@ -205,7 +205,7 @@ const KNOWLEDGE_TABLE_BASE: KnowledgeEntryBase[] = [
     week: 5,
     institution: "Municipal health services",
     priority: "medium",
-    requires: ["children"],
+    requires: ["children_age_unknown"],
     title: {
       en: "Apply for early childhood education or school placement",
       fa: "برای مهدکودک یا ثبت‌نام مدرسهٔ فرزندان درخواست دهید",
@@ -213,6 +213,70 @@ const KNOWLEDGE_TABLE_BASE: KnowledgeEntryBase[] = [
     detail: {
       en: "Municipal applications have fixed lead times; preparatory education for newly arrived pupils is available in most municipalities.",
       fa: "درخواست‌های شهرداری زمان‌بندی مشخصی دارد؛ در بیشتر شهرداری‌ها آموزش آماده‌سازی برای دانش‌آموزان تازه‌وارد فراهم است.",
+    },
+  },
+  {
+    id: "early-childhood-education",
+    phase: 2,
+    week: 5,
+    institution: "Local municipality services",
+    priority: "medium",
+    requires: ["children_age_under3"],
+    title: {
+      en: "Apply for early childhood education for children under 3",
+      fa: "برای آموزش و مراقبت دوران کودکی فرزندان زیر ۳ سال درخواست دهید",
+    },
+    detail: {
+      en: "Contact your municipality about early childhood education options, application timing and fees for children under 3.",
+      fa: "برای آگاهی از گزینه‌های آموزش و مراقبت دوران کودکی، زمان درخواست و هزینه‌های فرزندان زیر ۳ سال با شهرداری خود تماس بگیرید.",
+    },
+  },
+  {
+    id: "pre-primary-education",
+    phase: 2,
+    week: 5,
+    institution: "Local municipality services",
+    priority: "medium",
+    requires: ["children_age_3_6"],
+    title: {
+      en: "Confirm early childhood or pre-primary placement for children aged 3–6",
+      fa: "محل آموزش دوران کودکی یا پیش‌دبستانی فرزندان ۳ تا ۶ سال را مشخص کنید",
+    },
+    detail: {
+      en: "Ask your municipality which early childhood or pre-primary service applies to each child and submit the appropriate application.",
+      fa: "از شهرداری بپرسید کدام خدمت آموزش دوران کودکی یا پیش‌دبستانی برای هر فرزند مناسب است و درخواست مربوط را ثبت کنید.",
+    },
+  },
+  {
+    id: "compulsory-school",
+    phase: 2,
+    week: 5,
+    institution: "Local municipality services",
+    priority: "medium",
+    requires: ["children_age_7_15"],
+    title: {
+      en: "Arrange compulsory-school placement for children aged 7–15",
+      fa: "برای فرزندان ۷ تا ۱۵ سال جایگاه مدرسهٔ اجباری را هماهنگ کنید",
+    },
+    detail: {
+      en: "Contact the municipal education service about local school placement and preparatory education for newly arrived pupils.",
+      fa: "برای جایابی در مدرسهٔ محلی و آموزش آماده‌سازی دانش‌آموزان تازه‌وارد با خدمات آموزشی شهرداری تماس بگیرید.",
+    },
+  },
+  {
+    id: "upper-secondary-education",
+    phase: 2,
+    week: 5,
+    institution: "Local municipality services",
+    priority: "medium",
+    requires: ["children_age_16_17"],
+    title: {
+      en: "Review upper-secondary pathways for children aged 16–17",
+      fa: "مسیرهای دبیرستانی فرزندان ۱۶ تا ۱۷ سال را بررسی کنید",
+    },
+    detail: {
+      en: "Contact local education guidance to compare general upper-secondary, vocational and preparatory study options.",
+      fa: "برای مقایسهٔ دبیرستان عمومی، آموزش حرفه‌ای و گزینه‌های آمادگی تحصیلی با راهنمایی آموزشی محلی تماس بگیرید.",
     },
   },
   {
@@ -545,6 +609,22 @@ const ACTION_METADATA: Record<string, { dependency: Bilingual; completionConditi
   "school-daycare": {
     dependency: D("A municipality, child records and the intended start date.", "شهرداری محل سکونت، مدارک فرزند و تاریخ شروع موردنظر."),
     completionCondition: D("The application is submitted and its receipt or placement decision is saved.", "درخواست ثبت و رسید یا تصمیم جایابی آن ذخیره شده باشد."),
+  },
+  "early-childhood-education": {
+    dependency: D("A municipality, child records and the intended care start date.", "شهرداری محل سکونت، مدارک فرزند و تاریخ موردنظر شروع مراقبت."),
+    completionCondition: D("The early childhood education application is submitted and its receipt is saved.", "درخواست آموزش و مراقبت دوران کودکی ثبت و رسید آن ذخیره شده باشد."),
+  },
+  "pre-primary-education": {
+    dependency: D("A municipality, child records and the intended education start date.", "شهرداری محل سکونت، مدارک فرزند و تاریخ موردنظر شروع آموزش."),
+    completionCondition: D("The appropriate early childhood or pre-primary application is submitted.", "درخواست مناسب آموزش دوران کودکی یا پیش‌دبستانی ثبت شده باشد."),
+  },
+  "compulsory-school": {
+    dependency: D("A municipality, child records and previous school information.", "شهرداری محل سکونت، مدارک فرزند و اطلاعات مدرسهٔ قبلی."),
+    completionCondition: D("School placement or preparatory education is confirmed.", "جایگاه مدرسه یا آموزش آماده‌سازی تأیید شده باشد."),
+  },
+  "upper-secondary-education": {
+    dependency: D("A municipality, child records and previous study records.", "شهرداری محل سکونت، مدارک فرزند و سوابق تحصیلی پیشین."),
+    completionCondition: D("A suitable upper-secondary pathway and its application steps are confirmed.", "مسیر مناسب دبیرستانی و مراحل درخواست آن مشخص شده باشد."),
   },
   "finnish-course": {
     dependency: D("An initial assessment or contact with local employment and integration services.", "ارزیابی اولیه یا تماس با خدمات محلی اشتغال و ادغام."),

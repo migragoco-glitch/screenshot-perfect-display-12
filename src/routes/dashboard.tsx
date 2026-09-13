@@ -49,7 +49,7 @@ import {
 import { SupportChannels } from "@/components/SupportChannels";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import { analysisSummary, computeProfile } from "@/lib/scoring";
-import { KNOWLEDGE_TABLE_VERSION, PHASE_TITLE_KEYS, generateRoadmap } from "@/lib/roadmap";
+import { PHASE_TITLE_KEYS, generateRoadmap } from "@/lib/roadmap";
 import { buildGapAnalysis, buildPathways, whyRecommended } from "@/lib/pathways";
 import { QUESTIONS } from "@/lib/questions";
 import { fetchRoadmapProgress, setRoadmapTask } from "@/lib/feedback";
@@ -857,7 +857,7 @@ function Dashboard() {
                   </span>
                 ) : null}
                 <span className="rounded-full border border-border bg-card px-3 py-1 text-[11px] font-semibold text-muted-foreground">
-                  knowledge table {KNOWLEDGE_TABLE_VERSION}
+                  {t("road.knowledgeVersion")}
                 </span>
               </div>
             </div>
