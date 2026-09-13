@@ -481,6 +481,86 @@ function FounderMetrics() {
         {role === "primary" ? (
           <section className="mt-6 rounded-3xl border border-border bg-card p-6">
             <h2 className="text-sm font-bold uppercase tracking-wider" style={{ color: "var(--plum)" }}>
+              {t("metrics.respTitle")}
+            </h2>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{t("metrics.respBody")}</p>
+
+            <div className="mt-4 flex flex-wrap gap-3">
+              <button
+                type="button"
+                disabled={loadingResponses}
+                onClick={() => void loadResponses()}
+                className="rounded-full px-5 py-2.5 text-sm font-bold disabled:opacity-50"
+                style={plum}
+              >
+                {t("metrics.respLoad")}
+              </button>
+              {responses && (responses.nps.length > 0 || responses.csat.length > 0) ? (
+                <button
+                  type="button"
+                  onClick={exportCsv}
+                  className="rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold"
+                >
+                  {t("metrics.respExport")}
+                </button>
+              ) : null}
+            </div>
+
+            {responses ? (
+              responses.nps.length === 0 && responses.csat.length === 0 ? (
+                <p className="mt-4 text-sm text-muted-foreground">{t("metrics.respNone")}</p>
+              ) : (
+                <div className="mt-5 space-y-5">
+                  <ul className="space-y-3">
+                    {responses.nps.map((r) => (
+                      <li key={r.id} className="rounded-2xl border border-border bg-muted/50 p-4 text-sm">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <span className="rounded-full bg-primary/10 px-3 py-1 text-[11px] font-bold text-primary">
+                            {t("metrics.respScore")}: {localizeNumber(r.score, lang)}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {t("metrics.respWhen")}: {new Date(r.created_at).toLocaleString()}
+                          </span>
+                        </div>
+                        {r.comment ? (
+                          <p className="mt-2 text-sm leading-relaxed">{r.comment}</p>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {responses.csat.length > 0 ? (
+                    <div>
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                        {t("metrics.respCsat")}
+                      </h3>
+                      <ul className="mt-3 space-y-2">
+                        {responses.csat.map((r) => (
+                          <li
+                            key={r.id}
+                            className="flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-muted/50 p-3 text-xs"
+                          >
+                            <span className="font-bold">
+                              {r.positive ? t("metrics.respPositive") : t("metrics.respNegative")}
+                            </span>
+                            <span className="text-muted-foreground">
+                              {new Date(r.created_at).toLocaleString()}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </div>
+              )
+            ) : null}
+          </section>
+        ) : null}
+
+
+        {role === "primary" ? (
+          <section className="mt-6 rounded-3xl border border-border bg-card p-6">
+            <h2 className="text-sm font-bold uppercase tracking-wider" style={{ color: "var(--plum)" }}>
               {t("metrics.demoTitle")}
             </h2>
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{t("metrics.demoBody")}</p>
