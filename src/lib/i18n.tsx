@@ -617,7 +617,7 @@ export const fa: Record<keyof typeof en, string> = {
   "inst.sub": "هر گام از نقشه‌راه شما، مستقیماً بر اساس ضوابط و رویه‌های سازمان متولی آن تنظیم شده است.",
 
   "pricing.title": "سطوح دسترسی",
-  "pricing.free": "Essential (پایه)",
+  "pricing.free": "\n",
   "pricing.freePrice": "رایگان",
   "pricing.freeDesc":
     "ارزیابی ۴۲ پرسشی، تحلیل پایه و یک بینش اولیه از آمادگی ادغام.",
