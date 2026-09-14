@@ -66,7 +66,7 @@ export const en = {
     "Every step of your roadmap is structured directly according to the rules and procedures of its governing authority.",
 
   "pricing.title": "Access tiers",
-  "pricing.free": "Essential",
+  "pricing.free": "\n",
   "pricing.freePrice": "Free",
   "pricing.freeDesc":
     "The 42-question assessment, basic analysis and an initial integration-readiness insight.",
