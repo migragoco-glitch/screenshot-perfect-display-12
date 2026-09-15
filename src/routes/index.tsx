@@ -129,17 +129,23 @@ function InformationalCard({
 }) {
   const { ref, entered } = useInViewOnce<HTMLElement>();
   const reducedMotion = useReducedMotion();
+  const motionClassName = `${className} transition-[opacity,transform] duration-500 ease-out motion-reduce:transition-none ${
+    entered || reducedMotion ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+  }`;
+  const motionStyle = { transitionDelay: reducedMotion ? "0ms" : `${delay}ms` };
+
+  if (Component === "li") {
+    return (
+      <li ref={ref as React.Ref<HTMLLIElement>} className={motionClassName} style={motionStyle}>
+        {children}
+      </li>
+    );
+  }
 
   return (
-    <Component
-      ref={ref as React.Ref<HTMLElement>}
-      className={`${className} transition-[opacity,transform] duration-500 ease-out motion-reduce:transition-none ${
-        entered || reducedMotion ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
-      }`}
-      style={{ transitionDelay: reducedMotion ? "0ms" : `${delay}ms` }}
-    >
+    <article ref={ref as React.Ref<HTMLElement>} className={motionClassName} style={motionStyle}>
       {children}
-    </Component>
+    </article>
   );
 }
 
