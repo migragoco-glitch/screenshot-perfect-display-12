@@ -336,7 +336,14 @@ function Landing() {
               </div>
             </div>
 
-            <div className="glass-card relative rounded-3xl p-6 md:p-8">
+            <div className="relative">
+              <div
+                className="absolute -end-3 -top-6 bottom-6 w-60 rounded-2xl lg:-end-6 lg:-top-10 lg:bottom-10 lg:w-[26rem]"
+                style={{ backgroundColor: "#02808A" }}
+                aria-hidden
+              />
+              <div className="relative">
+              <div className="glass-card relative rounded-3xl p-6 md:p-8">
               <span className="absolute -top-3 start-3 flex size-[26px] items-center justify-center rounded-full border-[1.5px] bg-white" style={{ borderColor: "#CB902C" }} aria-hidden>
                 <img src={arrowMarkAsset.url} alt="" className="size-[13px] object-contain" />
               </span>
