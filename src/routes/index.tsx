@@ -377,6 +377,8 @@ function Landing() {
               <p className="mt-4 text-center text-xs text-[var(--navigator-navy)] opacity-70">
                 {t("hero.navigatorClosing")}
               </p>
+              </div>
+              </div>
             </div>
           </div>
         </section>
