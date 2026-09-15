@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BadgeCheck, Briefcase, Building2, ClipboardList, Compass, House, Hourglass, Info, Route as RouteIcon, Scale, Sparkles, User, Users } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, CalendarDays, ClipboardList, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, User, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
@@ -114,6 +114,39 @@ function useCountUp(target: number, active: boolean, duration: number) {
   }, [active, duration, reducedMotion, target]);
 
   return value;
+}
+
+function InformationalCard({
+  as: Component,
+  children,
+  className,
+  delay = 0,
+}: {
+  as: "article" | "li";
+  children: React.ReactNode;
+  className: string;
+  delay?: number;
+}) {
+  const { ref, entered } = useInViewOnce<HTMLElement>();
+  const reducedMotion = useReducedMotion();
+  const motionClassName = `${className} transition-[opacity,transform] duration-500 ease-out motion-reduce:transition-none ${
+    entered || reducedMotion ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+  }`;
+  const motionStyle = { transitionDelay: reducedMotion ? "0ms" : `${delay}ms` };
+
+  if (Component === "li") {
+    return (
+      <li ref={ref as React.Ref<HTMLLIElement>} className={motionClassName} style={motionStyle}>
+        {children}
+      </li>
+    );
+  }
+
+  return (
+    <article ref={ref as React.Ref<HTMLElement>} className={motionClassName} style={motionStyle}>
+      {children}
+    </article>
+  );
 }
 
 function SampleDonut() {
@@ -391,29 +424,34 @@ function Landing() {
         <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
           <h2 className="text-2xl md:text-3xl">{t("about.title")}</h2>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {[
-              { t: t("about.definitionTitle"), d: t("about.definition"), icon: Compass },
-              { t: t("about.missionTitle"), d: t("about.mission"), icon: BadgeCheck },
-              { t: t("about.boundariesTitle"), d: t("about.boundaries"), icon: ClipboardList },
-            ].map((b) => (
-              <article key={b.t} className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
-                <b.icon className="size-5 text-secondary" aria-hidden />
+              {[
+                { t: t("about.definitionTitle"), d: t("about.definition"), icon: Compass },
+                { t: t("about.missionTitle"), d: t("about.mission"), icon: Target },
+                { t: t("about.boundariesTitle"), d: t("about.boundaries"), icon: Scale },
+              ].map((b, index) => (
+                <InformationalCard
+                  key={b.t}
+                  as="article"
+                  delay={index * 90}
+                  className="rounded-2xl border border-border bg-card p-6"
+                >
+                  <b.icon className="size-5 text-secondary" strokeWidth={1.75} aria-hidden />
                 <h3 className="mt-4 text-lg">{b.t}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{b.d}</p>
-              </article>
+                </InformationalCard>
             ))}
           </div>
         </section>
 
         {/* Integration is a process */}
         <section className="mx-auto max-w-7xl px-4 pb-4 md:px-8">
-          <article className="rounded-3xl border border-secondary/25 bg-secondary/8 p-8 md:p-10">
-            <RouteIcon className="size-6 text-secondary" aria-hidden />
+          <InformationalCard as="article" className="rounded-3xl border border-secondary/25 bg-secondary/8 p-8 md:p-10">
+            <RefreshCw className="size-6 text-secondary" strokeWidth={1.75} aria-hidden />
             <h2 className="mt-4 text-2xl md:text-3xl">{t("about.processTitle")}</h2>
             <p className="mt-4 max-w-4xl text-sm leading-relaxed text-muted-foreground md:text-base">
               {t("about.processBody")}
             </p>
-          </article>
+          </InformationalCard>
         </section>
 
         {/* How it works */}
@@ -422,17 +460,23 @@ function Landing() {
             <h2 className="text-2xl md:text-3xl">{t("how.title")}</h2>
             <ol className="mt-8 grid gap-5 md:grid-cols-3">
               {[
-                { n: 1, t: t("how.s1.t"), d: t("how.s1.d") },
-                { n: 2, t: t("how.s2.t"), d: t("how.s2.d") },
-                { n: 3, t: t("how.s3.t"), d: t("how.s3.d") },
-              ].map((s) => (
-                <li key={s.n} className="rounded-2xl border border-border bg-card p-6">
+                { n: 1, t: t("how.s1.t"), d: t("how.s1.d"), icon: ClipboardList },
+                { n: 2, t: t("how.s2.t"), d: t("how.s2.d"), icon: Contact },
+                { n: 3, t: t("how.s3.t"), d: t("how.s3.d"), icon: CalendarDays },
+              ].map((s, index) => (
+                <InformationalCard
+                  key={s.n}
+                  as="li"
+                  delay={index * 90}
+                  className="rounded-2xl border border-border bg-card p-6"
+                >
                   <span className="inline-flex size-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
                     {s.n}
                   </span>
+                  <s.icon className="mt-4 size-5 text-secondary" strokeWidth={1.75} aria-hidden />
                   <h3 className="mt-4 text-lg">{s.t}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>
-                </li>
+                </InformationalCard>
               ))}
             </ol>
           </div>
