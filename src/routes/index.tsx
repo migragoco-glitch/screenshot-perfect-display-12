@@ -4,7 +4,7 @@ import { ArrowRight, BadgeCheck, Briefcase, Building2, ClipboardList, Compass, H
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, type TKey } from "@/lib/i18n";
 import { useAppState } from "@/lib/store";
 
 // Trigger rebuild after prior changes
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/")({
   component: Landing,
 });
 
-const INSTITUTIONS = [
+const INSTITUTIONS: { name: string; url: string; aria: TKey }[] = [
   { name: "Migri", url: "https://migri.fi", aria: "inst.a.migri" },
   { name: "DVV", url: "https://dvv.fi", aria: "inst.a.dvv" },
   { name: "Vero", url: "https://www.vero.fi", aria: "inst.a.vero" },
