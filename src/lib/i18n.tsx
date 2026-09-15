@@ -64,6 +64,15 @@ export const en = {
   "inst.title": "Aligned with Official and Reference Institutions",
   "inst.sub":
     "Every step of your roadmap is structured directly according to the rules and procedures of its governing authority.",
+  "inst.a.migri": "Visit Migri official website (opens in a new tab)",
+  "inst.a.dvv": "Visit DVV — Digital and Population Information Agency — official website (opens in a new tab)",
+  "inst.a.vero": "Visit Vero — Finnish Tax Administration — official website (opens in a new tab)",
+  "inst.a.kela": "Visit Kela official website (opens in a new tab)",
+  "inst.a.employment": "Visit Job Market Finland — Employment Services — official website (opens in a new tab)",
+  "inst.a.valvira": "Visit Valvira / OPH official website (opens in a new tab)",
+  "inst.a.prh": "Visit PRH / YTJ official website (opens in a new tab)",
+  "inst.a.bf": "Visit Business Finland official website (opens in a new tab)",
+  "inst.a.ihh": "Visit International House Helsinki official website (opens in a new tab)",
 
   "pricing.title": "Access tiers",
   "pricing.free": "\n",
@@ -615,6 +624,15 @@ export const fa: Record<keyof typeof en, string> = {
 
   "inst.title": "منطبق با نهادهای رسمی و مرجع",
   "inst.sub": "هر گام از نقشه‌راه شما، مستقیماً بر اساس ضوابط و رویه‌های سازمان متولی آن تنظیم شده است.",
+  "inst.a.migri": "مشاهده وب‌سایت رسمی Migri (اداره مهاجرت فنلاند) — در تب جدید باز می‌شود",
+  "inst.a.dvv": "مشاهده وب‌سایت رسمی DVV (آژانس اطلاعات جمعیت و دیجیتال) — در تب جدید باز می‌شود",
+  "inst.a.vero": "مشاهده وب‌سایت رسمی Vero (اداره مالیات فنلاند) — در تب جدید باز می‌شود",
+  "inst.a.kela": "مشاهده وب‌سایت رسمی Kela — در تب جدید باز می‌شود",
+  "inst.a.employment": "مشاهده وب‌سایت رسمی بازار کار فنلاند (خدمات اشتغال) — در تب جدید باز می‌شود",
+  "inst.a.valvira": "مشاهده وب‌سایت رسمی Valvira / OPH — در تب جدید باز می‌شود",
+  "inst.a.prh": "مشاهده وب‌سایت رسمی PRH / YTJ — در تب جدید باز می‌شود",
+  "inst.a.bf": "مشاهده وب‌سایت رسمی Business Finland — در تب جدید باز می‌شود",
+  "inst.a.ihh": "مشاهده وب‌سایت رسمی International House Helsinki — در تب جدید باز می‌شود",
 
   "pricing.title": "سطوح دسترسی",
   "pricing.free": "\n",

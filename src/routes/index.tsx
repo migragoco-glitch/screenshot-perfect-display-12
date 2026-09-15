@@ -4,7 +4,7 @@ import { ArrowRight, BadgeCheck, Briefcase, Building2, ClipboardList, Compass, H
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, type TKey } from "@/lib/i18n";
 import { useAppState } from "@/lib/store";
 
 // Trigger rebuild after prior changes
@@ -31,16 +31,20 @@ export const Route = createFileRoute("/")({
   component: Landing,
 });
 
-const INSTITUTIONS = [
-  "Migri",
-  "DVV",
-  "Vero",
-  "Kela",
-  "Local Employment Services (via Job Market Finland — tyomarkkinatori.fi)",
-  "International House Helsinki",
-  "Valvira / OPH",
-  "PRH / YTJ",
-  "Business Finland",
+const INSTITUTIONS: { name: string; url: string; aria: TKey }[] = [
+  { name: "Migri", url: "https://migri.fi", aria: "inst.a.migri" },
+  { name: "DVV", url: "https://dvv.fi", aria: "inst.a.dvv" },
+  { name: "Vero", url: "https://www.vero.fi", aria: "inst.a.vero" },
+  { name: "Kela", url: "https://www.kela.fi", aria: "inst.a.kela" },
+  {
+    name: "Local Employment Services (via Job Market Finland — tyomarkkinatori.fi)",
+    url: "https://www.tyomarkkinatori.fi",
+    aria: "inst.a.employment",
+  },
+  { name: "International House Helsinki", url: "https://ihhelsinki.fi", aria: "inst.a.ihh" },
+  { name: "Valvira / OPH", url: "https://www.valvira.fi", aria: "inst.a.valvira" },
+  { name: "PRH / YTJ", url: "https://www.ytj.fi", aria: "inst.a.prh" },
+  { name: "Business Finland", url: "https://www.businessfinland.fi", aria: "inst.a.bf" },
 ];
 
 const SAMPLE = [
@@ -436,17 +440,25 @@ function Landing() {
 
         {/* Institutions */}
         <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
-          <div className="rounded-3xl p-8 md:p-10" style={{ background: "var(--plum)", color: "oklch(0.97 0.006 85)" }}>
+          <div
+            className="rounded-3xl p-8 shadow-[0_10px_30px_-14px_rgba(2,28,59,0.5)] transition-shadow duration-300 ease-out hover:shadow-[0_24px_50px_-16px_rgba(2,28,59,0.65)] md:p-10"
+            style={{ background: "var(--plum)", color: "oklch(0.97 0.006 85)" }}
+          >
             <h2 className="text-2xl md:text-3xl">{t("inst.title")}</h2>
             <p className="mt-3 max-w-2xl text-sm opacity-85">{t("inst.sub")}</p>
-            <ul className="mt-7 flex flex-wrap gap-2.5">
-              {INSTITUTIONS.map((i) => (
-                <li
-                  key={i}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/25 px-3.5 py-1.5 text-xs font-semibold"
-                >
-                  <Building2 className="size-3.5" aria-hidden />
-                  {i}
+            <ul className="mt-7 flex flex-wrap gap-3">
+              {INSTITUTIONS.map((inst) => (
+                <li key={inst.name}>
+                  <a
+                    href={inst.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={t(inst.aria)}
+                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#CB902C] px-4 text-xs font-bold text-[#021C3B] shadow-[0_3px_10px_rgba(2,28,59,0.4)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F8F6F2]"
+                  >
+                    <Building2 className="size-3.5 shrink-0" aria-hidden />
+                    {inst.name}
+                  </a>
                 </li>
               ))}
             </ul>
