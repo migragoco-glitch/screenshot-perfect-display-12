@@ -32,15 +32,19 @@ export const Route = createFileRoute("/")({
 });
 
 const INSTITUTIONS = [
-  "Migri",
-  "DVV",
-  "Vero",
-  "Kela",
-  "Local Employment Services (via Job Market Finland — tyomarkkinatori.fi)",
-  "International House Helsinki",
-  "Valvira / OPH",
-  "PRH / YTJ",
-  "Business Finland",
+  { name: "Migri", url: "https://migri.fi", aria: "inst.a.migri" },
+  { name: "DVV", url: "https://dvv.fi", aria: "inst.a.dvv" },
+  { name: "Vero", url: "https://www.vero.fi", aria: "inst.a.vero" },
+  { name: "Kela", url: "https://www.kela.fi", aria: "inst.a.kela" },
+  {
+    name: "Local Employment Services (via Job Market Finland — tyomarkkinatori.fi)",
+    url: "https://www.tyomarkkinatori.fi",
+    aria: "inst.a.employment",
+  },
+  { name: "International House Helsinki", url: "https://ihhelsinki.fi", aria: "inst.a.ihh" },
+  { name: "Valvira / OPH", url: "https://www.valvira.fi", aria: "inst.a.valvira" },
+  { name: "PRH / YTJ", url: "https://www.ytj.fi", aria: "inst.a.prh" },
+  { name: "Business Finland", url: "https://www.businessfinland.fi", aria: "inst.a.bf" },
 ];
 
 const SAMPLE = [
