@@ -440,17 +440,25 @@ function Landing() {
 
         {/* Institutions */}
         <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
-          <div className="rounded-3xl p-8 md:p-10" style={{ background: "var(--plum)", color: "oklch(0.97 0.006 85)" }}>
+          <div
+            className="rounded-3xl p-8 shadow-[0_10px_30px_-14px_rgba(2,28,59,0.5)] transition-shadow duration-300 ease-out hover:shadow-[0_24px_50px_-16px_rgba(2,28,59,0.65)] md:p-10"
+            style={{ background: "var(--plum)", color: "oklch(0.97 0.006 85)" }}
+          >
             <h2 className="text-2xl md:text-3xl">{t("inst.title")}</h2>
             <p className="mt-3 max-w-2xl text-sm opacity-85">{t("inst.sub")}</p>
-            <ul className="mt-7 flex flex-wrap gap-2.5">
-              {INSTITUTIONS.map((i) => (
-                <li
-                  key={i}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/25 px-3.5 py-1.5 text-xs font-semibold"
-                >
-                  <Building2 className="size-3.5" aria-hidden />
-                  {i}
+            <ul className="mt-7 flex flex-wrap gap-3">
+              {INSTITUTIONS.map((inst) => (
+                <li key={inst.name}>
+                  <a
+                    href={inst.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={t(inst.aria)}
+                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#CB902C] px-4 text-xs font-bold text-[#021C3B] shadow-[0_3px_10px_rgba(2,28,59,0.4)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F8F6F2]"
+                  >
+                    <Building2 className="size-3.5 shrink-0" aria-hidden />
+                    {inst.name}
+                  </a>
                 </li>
               ))}
             </ul>
