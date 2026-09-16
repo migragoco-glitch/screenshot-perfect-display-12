@@ -52,8 +52,8 @@ import {
 } from "@/components/FeedbackWidgets";
 import { SupportChannels } from "@/components/SupportChannels";
 import { localizeNumber, useI18n } from "@/lib/i18n";
-import { analysisSummary, computeProfile } from "@/lib/scoring";
-import { PHASE_TITLE_KEYS, generateRoadmap } from "@/lib/roadmap";
+import { analysisSummary, computeProfile, type GapFlag } from "@/lib/scoring";
+import { KNOWLEDGE_TABLE, PHASE_TITLE_KEYS, generateRoadmap, type Phase } from "@/lib/roadmap";
 import { buildGapAnalysis, buildPathways, whyRecommended } from "@/lib/pathways";
 import { FOUNDER_TRACK_IDS, QUESTIONS, isAnswered } from "@/lib/questions";
 import { fetchRoadmapProgress, setRoadmapTask } from "@/lib/feedback";
@@ -122,6 +122,10 @@ const ROADMAP_PHASES = [
     icon: Users,
   },
 ] as const;
+
+function phaseForGap(flag: GapFlag): Phase | undefined {
+  return KNOWLEDGE_TABLE.find((entry) => entry.requires?.includes(flag))?.phase;
+}
 
 const IN_PROGRESS_KEY = "migrago.inProgress";
 
@@ -763,8 +767,25 @@ function Dashboard() {
               <h2 className="text-lg">{t("gap.title")}</h2>
               {gapList.length ? (
                 <ul className="mt-4 grid gap-4 md:grid-cols-2">
-                  {gapList.map((g) => (
-                    <li key={g.flag} className="rounded-2xl border border-border bg-background p-5">
+                  {gapList.map((g) => {
+                    const phase = phaseForGap(g.flag);
+                    const phaseColor = phase ? ROADMAP_PHASES[phase - 1]?.value : undefined;
+                    return (
+                    <li
+                      key={g.flag}
+                      className="rounded-2xl border border-border p-5 transition-colors duration-200 ease-out"
+                      style={phaseColor ? {
+                        borderLeftColor: phaseColor,
+                        borderLeftWidth: "4px",
+                        background: `color-mix(in oklab, ${phaseColor} 7%, var(--card))`,
+                      } : undefined}
+                      onMouseEnter={(event) => {
+                        if (phaseColor) event.currentTarget.style.background = `color-mix(in oklab, ${phaseColor} 10%, var(--card))`;
+                      }}
+                      onMouseLeave={(event) => {
+                        if (phaseColor) event.currentTarget.style.background = `color-mix(in oklab, ${phaseColor} 7%, var(--card))`;
+                      }}
+                    >
                       <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
                         <span
                           className={cn(
@@ -790,7 +811,8 @@ function Dashboard() {
                       </p>
                       <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{g.action[lang]}</p>
                     </li>
-                  ))}
+                    );
+                  })}
                 </ul>
               ) : (
                 <p className="mt-3 text-sm text-muted-foreground">{t("gap.none")}</p>
@@ -935,14 +957,14 @@ function Dashboard() {
                       {ROADMAP_PHASES.map((phase) => {
                         const PhaseIcon = phase.icon;
                         return (
-                          <div key={phase.label} className="grid min-w-0 grid-rows-[1fr_auto] gap-2">
-                            <div className="flex min-h-0 flex-col items-center justify-end">
+                          <div key={phase.label} className="grid min-w-0 grid-rows-[1fr_28px] gap-2">
+                            <div className="relative min-h-0">
                               <PhaseIcon
-                                className={`mb-2 size-4 shrink-0 ${phase.color.split(" ")[1]}`}
+                                className={`absolute start-1/2 top-0 size-4 -translate-x-1/2 rtl:translate-x-1/2 ${phase.color.split(" ")[1]}`}
                                 aria-hidden
                               />
                               <div
-                                className={`w-full rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`}
+                                className={`absolute inset-x-0 bottom-0 rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`}
                                 aria-hidden
                               />
                             </div>
