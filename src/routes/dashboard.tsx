@@ -928,7 +928,7 @@ function Dashboard() {
 
         {/* ── My Roadmap tab ──────────────────────────── */}
         {tab === "roadmap" ? (
-          <div className="rise-in mt-7">
+          <div className="navigator-entered rise-in mt-7">
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <h2 className="text-xl md:text-2xl">{t("road.title")}</h2>
