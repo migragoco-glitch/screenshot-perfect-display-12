@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   CartesianGrid,
   Cell,
@@ -20,12 +20,14 @@ import {
 } from "recharts";
 import {
   ArrowRight,
+  ArrowRightLeft,
   Briefcase,
   Check,
   ClipboardList,
   Compass,
   ExternalLink,
   FileText,
+  Flag,
   HelpCircle,
   House,
   Info,
@@ -33,13 +35,17 @@ import {
   LogIn,
   Mail,
   Map as MapIcon,
+  MapPin,
   Pencil,
+  Puzzle,
   Scale,
   ShieldCheck,
   Sparkles,
   Target,
   Trash2,
   TrendingUp,
+  ListChecks,
+  UserCircle,
   Users,
 } from "lucide-react";
 import { AppHeader, LanguageSwitch, SiteFooter } from "@/components/BrandHeader";
@@ -132,6 +138,51 @@ function phaseColorForTiming(from: number, to: number) {
   return fromPhase === toPhase
     ? ROADMAP_PHASES[fromPhase - 1]?.value ?? "var(--navigator-teal)"
     : "var(--navigator-teal)";
+}
+
+function PhaseCard({
+  children,
+  phase,
+  timing,
+  hoverTint = false,
+}: {
+  children: ReactNode;
+  phase?: Phase | undefined;
+  timing?: { from: number; to: number };
+  hoverTint?: boolean;
+}) {
+  const phaseColor = phase
+    ? ROADMAP_PHASES[phase - 1]?.value ?? "var(--navigator-teal)"
+    : timing
+      ? phaseColorForTiming(timing.from, timing.to)
+      : "var(--navigator-teal)";
+
+  return (
+    <li
+      className="rounded-2xl border border-border p-5 transition-colors duration-200 ease-out"
+      style={{
+        borderLeftColor: phaseColor,
+        borderLeftWidth: "4px",
+        background: `color-mix(in oklab, ${phaseColor} 7%, var(--card))`,
+      }}
+      onMouseEnter={
+        hoverTint
+          ? (event) => {
+              event.currentTarget.style.background = `color-mix(in oklab, ${phaseColor} 10%, var(--card))`;
+            }
+          : undefined
+      }
+      onMouseLeave={
+        hoverTint
+          ? (event) => {
+              event.currentTarget.style.background = `color-mix(in oklab, ${phaseColor} 7%, var(--card))`;
+            }
+          : undefined
+      }
+    >
+      {children}
+    </li>
+  );
 }
 
 const IN_PROGRESS_KEY = "migrago.inProgress";
@@ -313,12 +364,21 @@ function Dashboard() {
   ];
 
   const journeySteps = [
-    { icon: ClipboardList, label: t("journey.s1"), reached: state.completed },
-    { icon: Target, label: t("journey.s2"), reached: state.completed },
-    { icon: Compass, label: t("journey.s3"), reached: state.completed },
-    { icon: MapIcon, label: t("journey.s4"), reached: !locked },
-    { icon: TrendingUp, label: t("journey.s5"), reached: !locked && doneCount > 0 },
+    { icon: ClipboardList, label: t("journey.s1"), reached: state.completed, color: "var(--navigator-light-teal)" },
+    { icon: Target, label: t("journey.s2"), reached: state.completed, color: "var(--navigator-teal)" },
+    { icon: Compass, label: t("journey.s3"), reached: state.completed, color: "var(--navigator-olive-gold)" },
+    { icon: MapIcon, label: t("journey.s4"), reached: !locked, color: "var(--navigator-gold)" },
+    { icon: TrendingUp, label: t("journey.s5"), reached: !locked && doneCount > 0, color: "var(--navigator-navy)" },
   ];
+
+  const roadmapBuildSteps = [
+    { key: "engine.s1", icon: Puzzle, color: "var(--navigator-teal)" },
+    { key: "engine.s2", icon: MapPin, color: "var(--navigator-light-teal)" },
+    { key: "engine.s3", icon: ListChecks, color: "var(--navigator-olive-gold)" },
+    { key: "engine.s4", icon: UserCircle, color: "var(--navigator-gold)" },
+    { key: "engine.s5", icon: ArrowRightLeft, color: "var(--navigator-teal)" },
+    { key: "engine.s6", icon: Flag, color: "var(--navigator-light-teal)" },
+  ] as const;
 
   const ReportSection = () => (
     <section id="integration-report" className="rounded-3xl border border-border bg-card p-6">
@@ -454,15 +514,15 @@ function Dashboard() {
                 {journeySteps.map((s, i) => (
                   <li
                     key={s.label}
-                    className={cn(
-                      "flex min-w-[140px] flex-1 items-center gap-3 rounded-2xl border p-3",
-                       s.reached
-                         ? "border-[var(--navigator-teal)]/35 bg-[var(--navigator-teal)]/10 text-[var(--navigator-teal)]"
-                         : "border-[var(--navigator-teal)]/15 bg-[var(--navigator-teal)]/8 text-[var(--navigator-teal)] opacity-55",
-                    )}
+                    className={cn("flex min-w-[140px] flex-1 items-center gap-3 rounded-2xl border p-3", !s.reached && "opacity-55")}
+                    style={{
+                      borderColor: `color-mix(in oklab, ${s.color} ${s.reached ? 35 : 18}%, transparent)`,
+                      background: `color-mix(in oklab, ${s.color} ${s.reached ? 10 : 7}%, var(--card))`,
+                      color: s.color,
+                    }}
                   >
                     <s.icon
-                       className="size-4 shrink-0 text-[var(--navigator-teal)]"
+                      className="size-4 shrink-0"
                       aria-hidden
                     />
                     <span className="text-sm font-semibold">{s.label}</span>
@@ -521,27 +581,31 @@ function Dashboard() {
               <section className="rounded-3xl border border-border bg-card p-6">
                 <h2 className="text-lg">{t("engine.title")}</h2>
                 <ol className="mt-4 space-y-2 text-sm">
-                  {(["engine.s1", "engine.s2", "engine.s3", "engine.s4", "engine.s5", "engine.s6"] as const).map(
-                    (k, i) => (
-                      <li key={k} className="flex items-center gap-3">
-                        <span className="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/8 text-[11px] font-bold text-primary tabular-nums">
-                          {localizeNumber(i + 1, lang)}
+                  {roadmapBuildSteps.map((step) => (
+                      <li key={step.key} className="flex items-center gap-3">
+                        <span
+                          className="inline-flex size-7 shrink-0 items-center justify-center rounded-full"
+                          style={{
+                            color: step.color,
+                            background: `color-mix(in oklab, ${step.color} 12%, var(--card))`,
+                          }}
+                        >
+                          <step.icon className="size-4" strokeWidth={1.8} aria-hidden />
                         </span>
-                        <span className="font-semibold">{t(k)}</span>
+                        <span className="font-semibold">{t(step.key)}</span>
                       </li>
-                    ),
-                  )}
+                    ))}
                 </ol>
                 <p className="mt-4 text-xs leading-relaxed text-muted-foreground">{t("engine.note")}</p>
               </section>
 
               <section className="rounded-3xl border border-border bg-card p-6">
                 <h2 className="text-lg">{t("ai.title")}</h2>
-                <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-secondary/12 px-3 py-1.5 text-xs font-semibold text-secondary">
-                  <Sparkles className="size-3.5" aria-hidden />
+                <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-[var(--navigator-gold)]/12 px-3 py-1.5 text-xs font-semibold text-[var(--navigator-gold)]">
+                  <Sparkles className="size-3.5 text-[var(--navigator-gold)]" aria-hidden />
                   {t("ai.label")}
                 </p>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{t("ai.body")}</p>
+                <p className="mt-4 rounded-2xl bg-[var(--navigator-teal)]/8 p-4 text-sm leading-relaxed text-muted-foreground">{t("ai.body")}</p>
                 <p className="mt-6 rounded-2xl border border-border bg-background p-4 text-xs leading-relaxed text-muted-foreground">
                   {t("disclaimer.responsible")}
                 </p>
@@ -779,23 +843,8 @@ function Dashboard() {
                 <ul className="mt-4 grid gap-4 md:grid-cols-2">
                   {gapList.map((g) => {
                     const phase = phaseForGap(g.flag);
-                    const phaseColor = phase ? ROADMAP_PHASES[phase - 1]?.value : undefined;
                     return (
-                    <li
-                      key={g.flag}
-                      className="rounded-2xl border border-border p-5 transition-colors duration-200 ease-out"
-                      style={phaseColor ? {
-                        borderLeftColor: phaseColor,
-                        borderLeftWidth: "4px",
-                        background: `color-mix(in oklab, ${phaseColor} 7%, var(--card))`,
-                      } : undefined}
-                      onMouseEnter={(event) => {
-                        if (phaseColor) event.currentTarget.style.background = `color-mix(in oklab, ${phaseColor} 10%, var(--card))`;
-                      }}
-                      onMouseLeave={(event) => {
-                        if (phaseColor) event.currentTarget.style.background = `color-mix(in oklab, ${phaseColor} 7%, var(--card))`;
-                      }}
-                    >
+                    <PhaseCard key={g.flag} phase={phase} hoverTint>
                       <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
                         <span
                           className={cn(
@@ -820,7 +869,7 @@ function Dashboard() {
                         {t("gap.action")}
                       </p>
                       <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{g.action[lang]}</p>
-                    </li>
+                    </PhaseCard>
                     );
                   })}
                 </ul>
@@ -839,17 +888,8 @@ function Dashboard() {
               ) : null}
               <ul className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {pathways.map((p) => {
-                  const phaseColor = phaseColorForTiming(p.timing.from, p.timing.to);
                   return (
-                  <li
-                    key={p.institution}
-                    className="rounded-2xl border border-border p-5"
-                    style={{
-                      borderLeftColor: phaseColor,
-                      borderLeftWidth: "4px",
-                      background: `color-mix(in oklab, ${phaseColor} 7%, var(--card))`,
-                    }}
-                  >
+                  <PhaseCard key={p.institution} timing={p.timing}>
                     <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
                       <span
                         className={cn(
@@ -878,7 +918,7 @@ function Dashboard() {
                       {t("path.timing")}: {t("path.weeks")} {localizeNumber(p.timing.from, lang)}–
                       {localizeNumber(p.timing.to, lang)}
                     </p>
-                  </li>
+                  </PhaseCard>
                   );
                 })}
               </ul>
