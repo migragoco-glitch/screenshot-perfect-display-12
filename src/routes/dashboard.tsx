@@ -514,7 +514,7 @@ function Dashboard() {
                 {journeySteps.map((s, i) => (
                   <li
                     key={s.label}
-                    className="flex min-w-[140px] flex-1 items-center gap-3 rounded-2xl border p-3 text-white"
+                    className="flex min-w-[140px] flex-1 items-center gap-3 rounded-2xl border p-3 text-[var(--journey-pill-foreground)]"
                     style={{
                       borderColor: s.color,
                       background:
@@ -540,7 +540,7 @@ function Dashboard() {
                   className="rounded-2xl border border-[color-mix(in_oklab,var(--navigator-navy)_12%,transparent)] bg-[var(--readiness-cream)] p-5 text-center"
                   style={{
                     boxShadow:
-                      "4px 4px 10px color-mix(in oklab, var(--navigator-navy) 16%, transparent), -3px -3px 8px color-mix(in oklab, white 80%, transparent)",
+                      "4px 4px 10px color-mix(in oklab, var(--navigator-navy) 16%, transparent), -3px -3px 8px color-mix(in oklab, var(--readiness-highlight) 80%, transparent)",
                   }}
                 >
                   <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">

@@ -78,6 +78,8 @@
   --navigator-notice: #fbeaf0;
   --navigator-notice-text: #72243e;
   --navigator-notice-icon: #993556;
+  --journey-pill-foreground: #ffffff;
+  --readiness-highlight: #ffffff;
 
   --background: #f8f6f2;
   --foreground: var(--navy);
