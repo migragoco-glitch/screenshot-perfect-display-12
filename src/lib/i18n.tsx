@@ -161,6 +161,7 @@ export const en = {
   "dash.dim3": "Soft Skills & Psychological Readiness",
   "dash.weight": "weight",
   "dash.bonus": "Bonus Pathway Indicator",
+  "dash.bonusNotAnswered": "Optional — not answered yet",
   "dash.bonusNote":
     "Talent & Founder potential — reported separately, never part of the 100-point base score.",
   "dash.composition": "Dimension composition",
@@ -720,6 +721,7 @@ export const fa: Record<keyof typeof en, string> = {
   "dash.dim3": "مهارت‌های نرم و آمادگی روانی",
   "dash.weight": "وزن",
   "dash.bonus": "شاخص مسیر مکمل",
+  "dash.bonusNotAnswered": "اختیاری — هنوز پاسخ داده نشده",
   "dash.bonusNote":
     "توان استعداد و کارآفرینی — جداگانه گزارش می‌شود و هرگز بخشی از نمرهٔ پایهٔ ۱۰۰ نیست.",
   "dash.composition": "ترکیب ابعاد",
