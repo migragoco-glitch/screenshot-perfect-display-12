@@ -769,7 +769,7 @@ function Dashboard() {
                 <ul className="mt-4 grid gap-4 md:grid-cols-2">
                   {gapList.map((g) => {
                     const phase = phaseForGap(g.flag);
-                    const phaseColor = phase ? ROADMAP_PHASES[phase - 1].value : undefined;
+                    const phaseColor = phase ? ROADMAP_PHASES[phase - 1]?.value : undefined;
                     return (
                     <li
                       key={g.flag}
