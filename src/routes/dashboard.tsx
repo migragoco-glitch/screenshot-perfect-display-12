@@ -228,7 +228,7 @@ function Dashboard() {
     window.localStorage.removeItem("migrago.justUpgraded");
     setTab("roadmap");
     setBuildingRoadmap(true);
-    const id = window.setTimeout(() => setBuildingRoadmap(false), 2600);
+    const id = window.setTimeout(() => setBuildingRoadmap(false), 4000);
     return () => window.clearTimeout(id);
   }, [hydrated]);
 
@@ -265,7 +265,12 @@ function Dashboard() {
   if (!hydrated) return null;
 
   if (buildingRoadmap) {
-    return <PenguinLoader messages={[t("loading.roadmapSub"), t("loading.roadmap")]} />;
+    return (
+      <PenguinLoader
+        messages={[t("loading.roadmapSub"), t("loading.roadmap")]}
+        durationMs={4000}
+      />
+    );
   }
 
   const dims = [
@@ -1107,9 +1112,9 @@ function Dashboard() {
                                         className={cn(
                                           "rounded-full px-2.5 py-0.5",
                                           item.priority === "high"
-                                            ? "bg-destructive/12 text-destructive"
+                                            ? "bg-destructive text-destructive-foreground"
                                             : item.priority === "medium"
-                                              ? "bg-[var(--navigator-gold)]/20 text-[var(--navigator-navy)]"
+                                              ? "bg-[var(--navigator-gold)] text-[var(--navigator-navy)]"
                                               : "bg-muted text-muted-foreground",
                                         )}
                                       >
@@ -1138,7 +1143,7 @@ function Dashboard() {
                                       {t("road.relevantAuthority")}
                                     </p>
                                     <div className="mt-1">
-                                      <InstitutionBadge institution={item.institution} />
+                                      <InstitutionBadge institution={item.institution} solid />
                                     </div>
 
                                     <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
@@ -1188,7 +1193,7 @@ function Dashboard() {
                                             "rounded-full px-3 py-1 text-[11px] font-semibold transition-colors duration-200 ease-out",
                                             status === value
                                               ? value === "inProgress"
-                                                ? "bg-[var(--navigator-gold)] text-[var(--navigator-navy)]"
+                                                 ? "bg-[var(--navigator-gold)] text-primary-foreground"
                                                 : value === "completed"
                                                   ? "bg-[var(--navigator-teal)] text-primary-foreground"
                                                   : "bg-primary text-primary-foreground"
@@ -1242,46 +1247,46 @@ function Dashboard() {
               </section>
             ) : (
               <>
-                <section className="glass-card rounded-3xl border-[var(--navigator-teal)]/20 p-6">
-                  <h2 className="text-lg text-[var(--navigator-teal)]">{t("prog.overall")}</h2>
-                  <p className="mt-3 text-4xl font-bold text-[var(--navigator-teal)] tabular-nums">
+                <section className="rounded-3xl border border-[var(--navigator-teal)] bg-[var(--navigator-teal)] p-6 text-primary-foreground">
+                  <h2 className="text-lg text-primary-foreground">{t("prog.overall")}</h2>
+                  <p className="mt-3 text-4xl font-bold text-primary-foreground tabular-nums">
                     {localizeNumber(
                       totalTasks ? Math.round((doneCount / totalTasks) * 100) : 0,
                       lang,
                     )}
                     %
                   </p>
-                  <div className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-muted">
+                  <div className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-background/30">
                     <div
-                      className="h-full rounded-full bg-[var(--navigator-teal)] transition-all duration-500 ease-out"
+                      className="h-full rounded-full bg-primary-foreground transition-all duration-500 ease-out"
                       style={{ width: `${totalTasks ? (doneCount / totalTasks) * 100 : 0}%` }}
                     />
                   </div>
-                  <p className="mt-2 text-xs text-muted-foreground">
+                  <p className="mt-2 text-xs text-primary-foreground">
                     {localizeNumber(doneCount, lang)} / {localizeNumber(totalTasks, lang)}{" "}
                     {t("road.progress")}
                   </p>
                 </section>
 
                 <div className="grid gap-5 lg:grid-cols-2">
-                  <section className="rounded-3xl border border-[var(--navigator-teal)]/20 bg-card p-6">
-                    <h2 className="text-lg text-[var(--navigator-teal)]">{t("prog.phase")}</h2>
+                  <section className="rounded-3xl border border-[var(--navigator-gold)] bg-[var(--navigator-gold)] p-6 text-[var(--navigator-navy)]">
+                    <h2 className="text-lg text-[var(--navigator-navy)]">{t("prog.phase")}</h2>
                     <ul className="mt-4 space-y-4">
                       {roadmap.map((phase, i) => {
                         const total = phase.items.length;
                         const completed = phase.items.filter((it) => done.has(it.id)).length;
                         const pct = total ? Math.round((completed / total) * 100) : 0;
                         return (
-                          <li key={phase.phase}>
+                            <li key={phase.phase} className="rounded-xl bg-[var(--navigator-navy)]/8 p-2.5">
                             <div className="flex items-baseline justify-between gap-2 text-sm font-semibold">
-                                <span style={{ color: ROADMAP_PHASES[i]?.value ?? "var(--navigator-teal)" }}>
+                                <span className="text-[var(--navigator-navy)]">
                                   {t(PHASE_TITLE_KEYS[i] ?? "road.phase1")}
                                 </span>
                               <span className="tabular-nums">
                                 {localizeNumber(completed, lang)}/{localizeNumber(total, lang)}
                               </span>
                             </div>
-                            <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-muted">
+                            <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-background/55">
                               <div
                                 className="h-full rounded-full transition-all duration-500 ease-out"
                                 style={{
@@ -1299,23 +1304,30 @@ function Dashboard() {
                   <section className="rounded-3xl border border-[var(--navigator-gold)]/25 bg-card p-6">
                     <h2 className="text-lg text-[var(--navigator-gold)]">{t("prog.weekly")}</h2>
                     <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
-                      {weeklyProgress.map((w) => (
+                      {weeklyProgress.map((w) => {
+                        const hasProgress = w.completed > 0;
+                        const phaseColor = phaseColorForTiming(w.week, w.week);
+                        return (
                         <li
                           key={w.week}
-                          className="rounded-2xl border p-3 text-center"
+                          className={cn(
+                            "rounded-2xl border p-3 text-center",
+                            hasProgress && "text-primary-foreground",
+                          )}
                           style={{
-                            borderColor: `color-mix(in oklab, ${phaseColorForTiming(w.week, w.week)} ${w.total && w.completed === w.total ? "45%" : "22%"}, var(--border))`,
-                            background: `color-mix(in oklab, ${phaseColorForTiming(w.week, w.week)} ${w.total && w.completed === w.total ? "10%" : "6%"}, var(--card))`,
+                            borderColor: hasProgress ? phaseColor : "var(--border)",
+                            background: hasProgress ? phaseColor : "var(--card)",
                           }}
                         >
-                          <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                          <p className={cn("text-[10px] font-semibold uppercase tracking-wide", hasProgress ? "text-primary-foreground" : "text-muted-foreground")}>
                             {t("road.week")} {localizeNumber(w.week, lang)}
                           </p>
                           <p className="mt-1 text-sm font-bold tabular-nums">
                             {localizeNumber(w.completed, lang)}/{localizeNumber(w.total, lang)}
                           </p>
                         </li>
-                      ))}
+                        );
+                      })}
                     </ul>
                   </section>
 
@@ -1337,13 +1349,13 @@ function Dashboard() {
                     )}
                   </section>
 
-                  <section className="rounded-3xl border border-[var(--navigator-gold)]/25 bg-[var(--navigator-gold)]/5 p-6">
-                    <h2 className="text-lg text-[var(--navigator-gold)]">{t("prog.remaining")}</h2>
+                  <section className="rounded-3xl border border-destructive bg-destructive p-6 text-destructive-foreground">
+                    <h2 className="text-lg text-destructive-foreground">{t("prog.remaining")}</h2>
                     {remainingPriorities.length ? (
-                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                      <ul className="mt-3 space-y-2 text-sm text-destructive-foreground">
                         {remainingPriorities.map((i) => (
                           <li key={i.id} className="flex items-start gap-2">
-                            <Target className="mt-0.5 size-4 shrink-0 text-destructive" aria-hidden />
+                            <Target className="mt-0.5 size-4 shrink-0 text-destructive-foreground" aria-hidden />
                             <span>
                               {i.title[lang]} · {t("road.week")} {localizeNumber(i.week, lang)}
                             </span>
@@ -1351,7 +1363,7 @@ function Dashboard() {
                         ))}
                       </ul>
                     ) : (
-                      <p className="mt-3 text-sm text-muted-foreground">{t("prog.noRemaining")}</p>
+                      <p className="mt-3 text-sm text-destructive-foreground">{t("prog.noRemaining")}</p>
                     )}
                   </section>
                 </div>
