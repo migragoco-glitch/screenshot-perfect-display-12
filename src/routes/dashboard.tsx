@@ -958,17 +958,15 @@ function Dashboard() {
                         const PhaseIcon = phase.icon;
                         return (
                           <div key={phase.label} className="grid min-w-0 grid-rows-[1fr_auto] gap-2">
-                            <div className="grid min-h-0 grid-rows-[24px_1fr] items-end">
+                            <div className="relative min-h-0">
                               <PhaseIcon
-                                className={`mx-auto mb-2 size-4 shrink-0 self-start ${phase.color.split(" ")[1]}`}
+                                className={`absolute start-1/2 top-0 size-4 -translate-x-1/2 rtl:translate-x-1/2 ${phase.color.split(" ")[1]}`}
                                 aria-hidden
                               />
-                              <div className="flex h-full items-end">
-                                <div
-                                  className={`w-full rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`}
-                                  aria-hidden
-                                />
-                              </div>
+                              <div
+                                className={`absolute inset-x-0 bottom-0 rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`}
+                                aria-hidden
+                              />
                             </div>
                             <span className="text-center text-[9px] font-medium leading-tight text-muted-foreground sm:text-[10px]">
                               {t(phase.label)}
