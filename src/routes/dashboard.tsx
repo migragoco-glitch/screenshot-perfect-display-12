@@ -52,7 +52,7 @@ import {
 } from "@/components/FeedbackWidgets";
 import { SupportChannels } from "@/components/SupportChannels";
 import { localizeNumber, useI18n } from "@/lib/i18n";
-import { analysisSummary, computeProfile } from "@/lib/scoring";
+import { analysisSummary, computeProfile, type GapFlag } from "@/lib/scoring";
 import { KNOWLEDGE_TABLE, PHASE_TITLE_KEYS, generateRoadmap, type Phase } from "@/lib/roadmap";
 import { buildGapAnalysis, buildPathways, whyRecommended } from "@/lib/pathways";
 import { FOUNDER_TRACK_IDS, QUESTIONS, isAnswered } from "@/lib/questions";
@@ -123,7 +123,7 @@ const ROADMAP_PHASES = [
   },
 ] as const;
 
-function phaseForGap(flag: (typeof import("@/lib/scoring"))["GapFlag"]): Phase | undefined {
+function phaseForGap(flag: GapFlag): Phase | undefined {
   return KNOWLEDGE_TABLE.find((entry) => entry.requires?.includes(flag))?.phase;
 }
 
