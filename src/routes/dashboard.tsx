@@ -147,7 +147,7 @@ function PhaseCard({
   hoverTint = false,
 }: {
   children: ReactNode;
-  phase?: Phase;
+  phase?: Phase | undefined;
   timing?: { from: number; to: number };
   hoverTint?: boolean;
 }) {
