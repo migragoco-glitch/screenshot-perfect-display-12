@@ -709,10 +709,10 @@ export const fa: Record<keyof typeof en, string> = {
   "q.selectCountry": "کشور را انتخاب کنید",
   "q.bracketNote": "تنها بر پایهٔ بازهٔ عددی — هرگز رقم دقیق پرسیده نمی‌شود.",
 
-  "loading.analyzing": "در حال تحلیل پاسخ‌های شما...",
-  "loading.analyzingSub": "در حال تطبیق پروفایل شما با پایگاه دانش نهادهای مرجع فنلاند...",
-  "loading.roadmap": "در حال ساخت نقشه‌راه ۱۲ هفته‌ای شما...",
-  "loading.roadmapSub": "در حال اولویت‌بندی و ترتیب‌گذاری...",
+  "loading.analyzing": "در حال تحلیل پاسخ‌های شما…",
+  "loading.analyzingSub": "در حال تطبیق پروفایل شما با پایگاه دانش نهادهای مرجع فنلاند…",
+  "loading.roadmap": "در حال ساخت نقشه‌راه ۱۲ هفته‌ای شما…",
+  "loading.roadmapSub": "در حال اولویت‌بندی و ترتیب‌گذاری…",
 
   "dash.title": "پروفایل هوشمند ادغام شما",
   "dash.overall": "نمرهٔ پایهٔ آمادگی",
