@@ -90,8 +90,6 @@ const DIM_COLORS = [
   "var(--navigator-gold)",
 ];
 
-/** Phase tints — one brand colour per roadmap phase. */
-const PHASE_COLORS = ["var(--navy)", "var(--teal)", "var(--gold)", "var(--plum)"];
 const ROADMAP_PHASES = [
   {
     label: "hero.roadmapWeeks1",
@@ -124,7 +122,16 @@ const ROADMAP_PHASES = [
 ] as const;
 
 function phaseForGap(flag: GapFlag): Phase | undefined {
+  if (flag === "urgent_timeline") return 1;
   return KNOWLEDGE_TABLE.find((entry) => entry.requires?.includes(flag))?.phase;
+}
+
+function phaseColorForTiming(from: number, to: number) {
+  const fromPhase = Math.min(4, Math.max(1, Math.ceil(from / 3)));
+  const toPhase = Math.min(4, Math.max(1, Math.ceil(to / 3)));
+  return fromPhase === toPhase
+    ? ROADMAP_PHASES[fromPhase - 1]?.value ?? "var(--navigator-teal)"
+    : "var(--navigator-teal)";
 }
 
 const IN_PROGRESS_KEY = "migrago.inProgress";
@@ -315,7 +322,7 @@ function Dashboard() {
 
   const ReportSection = () => (
     <section id="integration-report" className="rounded-3xl border border-border bg-card p-6">
-      <h2 className="text-lg">{t("report.title")}</h2>
+      <h2 className="text-lg text-[var(--navigator-teal)]">{t("report.title")}</h2>
 
       <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
         {t("report.summaryTitle")}
@@ -327,7 +334,10 @@ function Dashboard() {
       <ul className="mt-3 grid gap-1.5 text-sm text-muted-foreground sm:grid-cols-3">
         {dims.map((d) => (
           <li key={d.key}>
-            {d.label}: <span className="font-semibold tabular-nums">{localizeNumber(d.value, lang)}%</span>
+            {d.label}:{" "}
+            <span className="font-semibold tabular-nums" style={{ color: d.color }}>
+              {localizeNumber(d.value, lang)}%
+            </span>
           </li>
         ))}
       </ul>
@@ -446,13 +456,13 @@ function Dashboard() {
                     key={s.label}
                     className={cn(
                       "flex min-w-[140px] flex-1 items-center gap-3 rounded-2xl border p-3",
-                      s.reached
-                        ? "border-secondary/40 bg-secondary/8"
-                        : "border-border bg-card opacity-70",
+                       s.reached
+                         ? "border-[var(--navigator-teal)]/35 bg-[var(--navigator-teal)]/10 text-[var(--navigator-teal)]"
+                         : "border-[var(--navigator-teal)]/15 bg-[var(--navigator-teal)]/8 text-[var(--navigator-teal)] opacity-55",
                     )}
                   >
                     <s.icon
-                      className={cn("size-4 shrink-0", s.reached ? "text-secondary" : "text-muted-foreground")}
+                       className="size-4 shrink-0 text-[var(--navigator-teal)]"
                       aria-hidden
                     />
                     <span className="text-sm font-semibold">{s.label}</span>
@@ -828,8 +838,18 @@ function Dashboard() {
                 <p className="mt-2 text-xs text-muted-foreground">{t("path.exploreNote")}</p>
               ) : null}
               <ul className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {pathways.map((p) => (
-                  <li key={p.institution} className="rounded-2xl border border-border bg-background p-5">
+                {pathways.map((p) => {
+                  const phaseColor = phaseColorForTiming(p.timing.from, p.timing.to);
+                  return (
+                  <li
+                    key={p.institution}
+                    className="rounded-2xl border border-border p-5"
+                    style={{
+                      borderLeftColor: phaseColor,
+                      borderLeftWidth: "4px",
+                      background: `color-mix(in oklab, ${phaseColor} 7%, var(--card))`,
+                    }}
+                  >
                     <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
                       <span
                         className={cn(
@@ -859,7 +879,8 @@ function Dashboard() {
                       {localizeNumber(p.timing.to, lang)}
                     </p>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
               <p className="mt-4 inline-flex items-start gap-2 text-[11px] leading-relaxed text-muted-foreground">
                 <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden />
@@ -951,24 +972,22 @@ function Dashboard() {
             ) : (
               <>
                 <section className="mt-6 grid gap-5 lg:grid-cols-[280px_1fr]">
-                  <div className="rounded-3xl border border-border bg-card p-5">
-                    <h3 className="text-sm font-bold">{t("road.composition")}</h3>
+                  <div className="rounded-2xl bg-[var(--navigator-navy)] px-4 pb-5 pt-4">
+                    <h3 className="text-center text-xs font-semibold text-[var(--navigator-cream)]">{t("road.composition")}</h3>
                     <div className="mt-5 grid h-44 grid-cols-4 gap-2 sm:gap-3">
-                      {ROADMAP_PHASES.map((phase) => {
+                      {ROADMAP_PHASES.map((phase, index) => {
                         const PhaseIcon = phase.icon;
                         return (
-                          <div key={phase.label} className="grid min-w-0 grid-rows-[1fr_28px] gap-2">
-                            <div className="relative min-h-0">
-                              <PhaseIcon
-                                className={`absolute start-1/2 top-0 size-4 -translate-x-1/2 rtl:translate-x-1/2 ${phase.color.split(" ")[1]}`}
-                                aria-hidden
-                              />
+                          <div key={phase.label} className="grid min-w-0 grid-rows-[1fr_auto] gap-2">
+                            <div className="flex min-h-0 flex-col items-center justify-end">
+                              <PhaseIcon className={`mb-2 size-4 shrink-0 ${phase.color.split(" ")[1]}`} aria-hidden />
                               <div
-                                className={`absolute inset-x-0 bottom-0 rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`}
+                                className={`roadmap-bar w-full rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`}
+                                style={{ animationDelay: `${(lang === "fa" ? ROADMAP_PHASES.length - 1 - index : index) * 100}ms` }}
                                 aria-hidden
                               />
                             </div>
-                            <span className="text-center text-[9px] font-medium leading-tight text-muted-foreground sm:text-[10px]">
+                            <span className={`text-center text-[9px] leading-tight text-[var(--navigator-cream)] sm:text-[10px] ${index === 3 ? "font-bold" : "font-medium opacity-80"}`}>
                               {t(phase.label)}
                             </span>
                           </div>
@@ -1167,7 +1186,7 @@ function Dashboard() {
 
         {/* ── Progress tab ────────────────────────────── */}
         {tab === "progress" ? (
-          <div className="rise-in mt-7 space-y-5">
+          <div className="navigator-entered rise-in mt-7 space-y-5">
             {locked ? (
               <section className="rounded-3xl border border-dashed border-border bg-muted/50 p-10 text-center">
                 <Lock className="mx-auto size-6 text-muted-foreground" aria-hidden />
@@ -1175,9 +1194,9 @@ function Dashboard() {
               </section>
             ) : (
               <>
-                <section className="glass-card rounded-3xl p-6">
-                  <h2 className="text-lg">{t("prog.overall")}</h2>
-                  <p className="mt-3 text-4xl font-bold tabular-nums">
+                <section className="glass-card rounded-3xl border-[var(--navigator-teal)]/20 p-6">
+                  <h2 className="text-lg text-[var(--navigator-teal)]">{t("prog.overall")}</h2>
+                  <p className="mt-3 text-4xl font-bold text-[var(--navigator-teal)] tabular-nums">
                     {localizeNumber(
                       totalTasks ? Math.round((doneCount / totalTasks) * 100) : 0,
                       lang,
@@ -1186,7 +1205,7 @@ function Dashboard() {
                   </p>
                   <div className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-muted">
                     <div
-                      className="h-full rounded-full bg-secondary transition-all duration-500 ease-out"
+                      className="h-full rounded-full bg-[var(--navigator-teal)] transition-all duration-500 ease-out"
                       style={{ width: `${totalTasks ? (doneCount / totalTasks) * 100 : 0}%` }}
                     />
                   </div>
@@ -1197,8 +1216,8 @@ function Dashboard() {
                 </section>
 
                 <div className="grid gap-5 lg:grid-cols-2">
-                  <section className="rounded-3xl border border-border bg-card p-6">
-                    <h2 className="text-lg">{t("prog.phase")}</h2>
+                  <section className="rounded-3xl border border-[var(--navigator-teal)]/20 bg-card p-6">
+                    <h2 className="text-lg text-[var(--navigator-teal)]">{t("prog.phase")}</h2>
                     <ul className="mt-4 space-y-4">
                       {roadmap.map((phase, i) => {
                         const total = phase.items.length;
@@ -1207,7 +1226,9 @@ function Dashboard() {
                         return (
                           <li key={phase.phase}>
                             <div className="flex items-baseline justify-between gap-2 text-sm font-semibold">
-                              <span>{t(PHASE_TITLE_KEYS[i] ?? "road.phase1")}</span>
+                                <span style={{ color: ROADMAP_PHASES[i]?.value ?? "var(--navigator-teal)" }}>
+                                  {t(PHASE_TITLE_KEYS[i] ?? "road.phase1")}
+                                </span>
                               <span className="tabular-nums">
                                 {localizeNumber(completed, lang)}/{localizeNumber(total, lang)}
                               </span>
@@ -1217,7 +1238,7 @@ function Dashboard() {
                                 className="h-full rounded-full transition-all duration-500 ease-out"
                                 style={{
                                   width: `${pct}%`,
-                                  backgroundColor: PHASE_COLORS[i] ?? "var(--navy)",
+                                  backgroundColor: ROADMAP_PHASES[i]?.value ?? "var(--navigator-teal)",
                                 }}
                               />
                             </div>
@@ -1227,18 +1248,17 @@ function Dashboard() {
                     </ul>
                   </section>
 
-                  <section className="rounded-3xl border border-border bg-card p-6">
-                    <h2 className="text-lg">{t("prog.weekly")}</h2>
+                  <section className="rounded-3xl border border-[var(--navigator-gold)]/25 bg-card p-6">
+                    <h2 className="text-lg text-[var(--navigator-gold)]">{t("prog.weekly")}</h2>
                     <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
                       {weeklyProgress.map((w) => (
                         <li
                           key={w.week}
-                          className={cn(
-                            "rounded-2xl border p-3 text-center",
-                            w.total && w.completed === w.total
-                              ? "border-secondary/40 bg-secondary/8"
-                              : "border-border bg-background",
-                          )}
+                          className="rounded-2xl border p-3 text-center"
+                          style={{
+                            borderColor: `color-mix(in oklab, ${phaseColorForTiming(w.week, w.week)} ${w.total && w.completed === w.total ? "45%" : "22%"}, var(--border))`,
+                            background: `color-mix(in oklab, ${phaseColorForTiming(w.week, w.week)} ${w.total && w.completed === w.total ? "10%" : "6%"}, var(--card))`,
+                          }}
                         >
                           <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                             {t("road.week")} {localizeNumber(w.week, lang)}
@@ -1251,15 +1271,15 @@ function Dashboard() {
                     </ul>
                   </section>
 
-                  <section className="rounded-3xl border border-border bg-card p-6">
-                    <h2 className="text-lg">{t("prog.completedActions")}</h2>
+                  <section className="rounded-3xl border border-[var(--navigator-teal)]/20 bg-[var(--navigator-teal)]/5 p-6">
+                    <h2 className="text-lg text-[var(--navigator-teal)]">{t("prog.completedActions")}</h2>
                     {doneCount ? (
                       <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                         {allItems
                           .filter((i) => done.has(i.id))
                           .map((i) => (
                             <li key={i.id} className="flex items-start gap-2">
-                              <Check className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                              <Check className="mt-0.5 size-4 shrink-0 text-[var(--navigator-teal)]" aria-hidden />
                               {i.title[lang]}
                             </li>
                           ))}
@@ -1269,8 +1289,8 @@ function Dashboard() {
                     )}
                   </section>
 
-                  <section className="rounded-3xl border border-border bg-card p-6">
-                    <h2 className="text-lg">{t("prog.remaining")}</h2>
+                  <section className="rounded-3xl border border-[var(--navigator-gold)]/25 bg-[var(--navigator-gold)]/5 p-6">
+                    <h2 className="text-lg text-[var(--navigator-gold)]">{t("prog.remaining")}</h2>
                     {remainingPriorities.length ? (
                       <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
                         {remainingPriorities.map((i) => (
