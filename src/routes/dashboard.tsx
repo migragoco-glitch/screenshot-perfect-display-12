@@ -38,6 +38,7 @@ import {
   MapPin,
   Pencil,
   Puzzle,
+  Route as RouteIcon,
   Scale,
   ShieldCheck,
   Sparkles,
@@ -135,6 +136,7 @@ function phaseForGap(flag: GapFlag): Phase | undefined {
 function phaseColorForTiming(from: number, to: number) {
   const fromPhase = Math.min(4, Math.max(1, Math.ceil(from / 3)));
   const toPhase = Math.min(4, Math.max(1, Math.ceil(to / 3)));
+  if (fromPhase === 4 && toPhase === 4) return "var(--navigator-olive)";
   return fromPhase === toPhase
     ? ROADMAP_PHASES[fromPhase - 1]?.value ?? "var(--navigator-teal)"
     : "var(--navigator-teal)";
@@ -380,7 +382,7 @@ function Dashboard() {
     { key: "engine.s1", icon: Puzzle, color: "var(--navigator-teal)" },
     { key: "engine.s2", icon: MapPin, color: "var(--navigator-light-teal)" },
     { key: "engine.s3", icon: ListChecks, color: "var(--navigator-olive-gold)" },
-    { key: "engine.s4", icon: UserCircle, color: "var(--navigator-gold)" },
+    { key: "engine.s4", icon: UserCircle, color: "var(--navigator-teal)" },
     { key: "engine.s5", icon: ArrowRightLeft, color: "var(--navigator-teal)" },
     { key: "engine.s6", icon: Flag, color: "var(--navigator-light-teal)" },
   ] as const;
@@ -389,12 +391,15 @@ function Dashboard() {
     <section id="integration-report" className="rounded-3xl border border-border bg-card p-6">
       <h2 className="text-lg text-[var(--navigator-teal)]">{t("report.title")}</h2>
 
-      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+      <h3 className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--navigator-teal)]">
+        <ClipboardList className="size-4" aria-hidden />
         {t("report.summaryTitle")}
       </h3>
       <p className="mt-2 text-sm text-muted-foreground">
         {localizeNumber(answeredCount, lang)} {t("report.answered")} ·{" "}
-        {t("readiness.title")}: {localizeNumber(profile.overall, lang)}% — {readinessLabel}
+        <span className="font-semibold text-[var(--navigator-gold)]">
+          {t("readiness.title")}: {localizeNumber(profile.overall, lang)}% — {readinessLabel}
+        </span>
       </p>
       <ul className="mt-3 grid gap-1.5 text-sm text-muted-foreground sm:grid-cols-3">
         {dims.map((d) => (
@@ -407,7 +412,8 @@ function Dashboard() {
         ))}
       </ul>
 
-      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-secondary">
+      <h3 className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--navigator-teal)]">
+        <ShieldCheck className="size-4" aria-hidden />
         {t("report.strengths")}
       </h3>
       <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
@@ -418,14 +424,22 @@ function Dashboard() {
         )}
       </ul>
 
-      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-accent-foreground">
+      <h3 className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--navigator-teal)]">
+        <ListChecks className="size-4" aria-hidden />
         {t("report.gaps")} · {t("report.priorities")}
       </h3>
       <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
         {gapList.length ? (
           gapList.map((g) => (
-            <li key={g.flag}>
-              • {g.gap[lang]} — {priorityLabel(g.priority)}
+            <li key={g.flag} className="flex items-start gap-2">
+              <span
+                className={cn(
+                  "mt-2 size-1.5 shrink-0 rounded-full",
+                  g.priority === "high" ? "bg-destructive" : "bg-[var(--navigator-teal)]",
+                )}
+                aria-hidden
+              />
+              <span>{g.gap[lang]} — {priorityLabel(g.priority)}</span>
             </li>
           ))
         ) : (
@@ -433,7 +447,8 @@ function Dashboard() {
         )}
       </ul>
 
-      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+      <h3 className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--navigator-teal)]">
+        <Compass className="size-4" aria-hidden />
         {t("report.pathways")}
       </h3>
       <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
@@ -445,7 +460,8 @@ function Dashboard() {
         ))}
       </ul>
 
-      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+      <h3 className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--navigator-teal)]">
+        <RouteIcon className="size-4" aria-hidden />
         {t("report.roadmap")}
       </h3>
       {locked ? (
@@ -462,7 +478,8 @@ function Dashboard() {
         </ul>
       )}
 
-      <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+      <h3 className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--navigator-teal)]">
+        <Info className="size-4" aria-hidden />
         {t("report.disclaimer")}
       </h3>
       <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
@@ -614,8 +631,8 @@ function Dashboard() {
 
               <section className="rounded-3xl border border-border bg-card p-6">
                 <h2 className="text-lg">{t("ai.title")}</h2>
-                <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-[var(--navigator-gold)]/12 px-3 py-1.5 text-xs font-semibold text-[var(--navigator-gold)]">
-                  <Sparkles className="size-3.5 text-[var(--navigator-gold)]" aria-hidden />
+                <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-[var(--navigator-teal)]/12 px-3 py-1.5 text-xs font-semibold text-[var(--navigator-teal)]">
+                  <Sparkles className="size-3.5 text-[var(--navigator-teal)]" aria-hidden />
                   {t("ai.label")}
                 </p>
                 <p className="mt-4 rounded-2xl bg-[var(--navigator-teal)]/8 p-4 text-sm leading-relaxed text-muted-foreground">{t("ai.body")}</p>
@@ -839,7 +856,7 @@ function Dashboard() {
                     type="button"
                     onClick={openPaywall}
 
-                    className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-bold text-accent-foreground transition-opacity duration-200 ease-out hover:opacity-90"
+                    className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-bold text-secondary-foreground transition-opacity duration-200 ease-out hover:opacity-90"
                   >
                     <Sparkles className="size-4" aria-hidden />
                     {t("pay.unlock")}
@@ -865,7 +882,7 @@ function Dashboard() {
                             g.priority === "high"
                               ? "bg-destructive/12 text-destructive"
                               : g.priority === "medium"
-                                ? "bg-[var(--navigator-gold)]/20 text-[var(--navigator-navy)]"
+                                ? "bg-[var(--navigator-olive)]/20 text-[var(--navigator-navy)]"
                                 : "bg-muted text-muted-foreground",
                           )}
                         >
@@ -910,7 +927,7 @@ function Dashboard() {
                           p.priority === "high"
                             ? "bg-destructive/12 text-destructive"
                             : p.priority === "medium"
-                              ? "bg-[var(--navigator-gold)]/20 text-[var(--navigator-navy)]"
+                              ? "bg-[var(--navigator-olive)]/20 text-[var(--navigator-navy)]"
                               : "bg-muted text-muted-foreground",
                         )}
                       >
@@ -1079,9 +1096,9 @@ function Dashboard() {
                                   checked && "opacity-70",
                                 )}
                                 style={{
-                                  borderLeftColor: ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)",
+                                  borderLeftColor: i === 3 ? "var(--navigator-olive)" : ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)",
                                   borderLeftWidth: "4px",
-                                  background: `color-mix(in oklab, ${ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)"} 7%, var(--card))`,
+                                  background: `color-mix(in oklab, ${i === 3 ? "var(--navigator-olive)" : ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)"} 7%, var(--card))`,
                                 }}
                               >
                                 <div className="flex items-start gap-3">
@@ -1114,7 +1131,7 @@ function Dashboard() {
                                           item.priority === "high"
                                             ? "bg-destructive text-destructive-foreground"
                                             : item.priority === "medium"
-                                              ? "bg-[var(--navigator-gold)] text-[var(--navigator-navy)]"
+                                              ? "bg-[var(--navigator-olive)] text-[var(--navigator-navy)]"
                                               : "bg-muted text-muted-foreground",
                                         )}
                                       >
@@ -1143,7 +1160,7 @@ function Dashboard() {
                                       {t("road.relevantAuthority")}
                                     </p>
                                     <div className="mt-1">
-                                      <InstitutionBadge institution={item.institution} solid />
+                                      <InstitutionBadge institution={item.institution} />
                                     </div>
 
                                     <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
@@ -1193,7 +1210,7 @@ function Dashboard() {
                                             "rounded-full px-3 py-1 text-[11px] font-semibold transition-colors duration-200 ease-out",
                                             status === value
                                               ? value === "inProgress"
-                                                 ? "bg-[var(--navigator-gold)] text-primary-foreground"
+                                                 ? "bg-[var(--navigator-olive)] text-[var(--navigator-navy)]"
                                                 : value === "completed"
                                                   ? "bg-[var(--navigator-teal)] text-primary-foreground"
                                                   : "bg-primary text-primary-foreground"
@@ -1269,17 +1286,17 @@ function Dashboard() {
                 </section>
 
                 <div className="grid gap-5 lg:grid-cols-2">
-                  <section className="rounded-3xl border border-[var(--navigator-gold)] bg-[var(--navigator-gold)] p-6 text-[var(--navigator-navy)]">
-                    <h2 className="text-lg text-[var(--navigator-navy)]">{t("prog.phase")}</h2>
+                  <section className="rounded-3xl border border-[var(--navigator-navy)] bg-[var(--navigator-navy)] p-6 text-[var(--navigator-cream)]">
+                    <h2 className="text-lg text-[var(--navigator-cream)]">{t("prog.phase")}</h2>
                     <ul className="mt-4 space-y-4">
                       {roadmap.map((phase, i) => {
                         const total = phase.items.length;
                         const completed = phase.items.filter((it) => done.has(it.id)).length;
                         const pct = total ? Math.round((completed / total) * 100) : 0;
                         return (
-                            <li key={phase.phase} className="rounded-xl bg-[var(--navigator-navy)]/8 p-2.5">
+                            <li key={phase.phase} className="rounded-xl bg-background/10 p-2.5">
                             <div className="flex items-baseline justify-between gap-2 text-sm font-semibold">
-                                <span className="text-[var(--navigator-navy)]">
+                                <span className="text-[var(--navigator-cream)]">
                                   {t(PHASE_TITLE_KEYS[i] ?? "road.phase1")}
                                 </span>
                               <span className="tabular-nums">
@@ -1291,7 +1308,10 @@ function Dashboard() {
                                 className="h-full rounded-full transition-all duration-500 ease-out"
                                 style={{
                                   width: `${pct}%`,
-                                  backgroundColor: ROADMAP_PHASES[i]?.value ?? "var(--navigator-teal)",
+                                  backgroundColor:
+                                    i === 3
+                                      ? "var(--navigator-olive)"
+                                      : ROADMAP_PHASES[i]?.value ?? "var(--navigator-teal)",
                                 }}
                               />
                             </div>
@@ -1301,8 +1321,8 @@ function Dashboard() {
                     </ul>
                   </section>
 
-                  <section className="rounded-3xl border border-[var(--navigator-gold)]/25 bg-card p-6">
-                    <h2 className="text-lg text-[var(--navigator-gold)]">{t("prog.weekly")}</h2>
+                  <section className="rounded-3xl border border-[var(--navigator-teal)]/25 bg-card p-6">
+                    <h2 className="text-lg text-[var(--navigator-teal)]">{t("prog.weekly")}</h2>
                     <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
                       {weeklyProgress.map((w) => {
                         const hasProgress = w.completed > 0;
@@ -1349,13 +1369,13 @@ function Dashboard() {
                     )}
                   </section>
 
-                  <section className="rounded-3xl border border-destructive bg-destructive p-6 text-destructive-foreground">
-                    <h2 className="text-lg text-destructive-foreground">{t("prog.remaining")}</h2>
+                  <section className="rounded-3xl border border-border border-s-4 border-s-destructive bg-[var(--readiness-cream)] p-6 text-[var(--navigator-navy)]">
+                    <h2 className="text-lg text-[var(--navigator-navy)]">{t("prog.remaining")}</h2>
                     {remainingPriorities.length ? (
-                      <ul className="mt-3 space-y-2 text-sm text-destructive-foreground">
+                      <ul className="mt-3 space-y-2 text-sm text-[var(--navigator-navy)]">
                         {remainingPriorities.map((i) => (
                           <li key={i.id} className="flex items-start gap-2">
-                            <Target className="mt-0.5 size-4 shrink-0 text-destructive-foreground" aria-hidden />
+                              <Target className="mt-0.5 size-4 shrink-0 text-destructive" aria-hidden />
                             <span>
                               {i.title[lang]} · {t("road.week")} {localizeNumber(i.week, lang)}
                             </span>
@@ -1363,7 +1383,7 @@ function Dashboard() {
                         ))}
                       </ul>
                     ) : (
-                      <p className="mt-3 text-sm text-destructive-foreground">{t("prog.noRemaining")}</p>
+                      <p className="mt-3 text-sm text-[var(--navigator-navy)]">{t("prog.noRemaining")}</p>
                     )}
                   </section>
                 </div>

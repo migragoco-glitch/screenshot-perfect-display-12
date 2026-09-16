@@ -38,24 +38,18 @@ export const INSTITUTION_ICONS: Record<Institution, typeof Building2> = {
 
 export function InstitutionBadge({
   institution,
-  solid = false,
 }: {
   institution: Institution;
-  solid?: boolean;
 }) {
   const { t } = useI18n();
   const Icon = INSTITUTION_ICONS[institution] ?? Building2;
   return (
-    <span
-      className={
-        solid
-          ? "inline-flex items-center gap-1.5 rounded-full bg-[var(--navigator-teal)] px-2.5 py-0.5 text-primary-foreground"
-          : "inline-flex items-center gap-1.5 rounded-full bg-secondary/12 px-2.5 py-0.5 text-secondary"
-      }
-    >
-      <Icon className="size-3" aria-hidden />
-      <span className="sr-only">{t("road.institution")}: </span>
-      {INSTITUTION_LABEL[institution] ?? institution}
+    <span className="inline-flex rounded-lg bg-plum p-1">
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--navigator-gold)] px-2.5 py-0.5 text-[var(--navigator-navy)]">
+        <Icon className="size-3" aria-hidden />
+        <span className="sr-only">{t("road.institution")}: </span>
+        {INSTITUTION_LABEL[institution] ?? institution}
+      </span>
     </span>
   );
 }
@@ -198,7 +192,7 @@ export function FoundersCircleModal({
               type="button"
               disabled={busy}
               onClick={() => void submit()}
-              className="mt-4 w-full rounded-full bg-accent px-5 py-3 text-sm font-bold text-accent-foreground disabled:opacity-40"
+              className="mt-4 w-full rounded-full bg-secondary px-5 py-3 text-sm font-bold text-secondary-foreground disabled:opacity-40"
             >
               {t("pay.emailCta")}
             </button>

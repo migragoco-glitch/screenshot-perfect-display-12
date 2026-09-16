@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Briefcase, Building2, CalendarDays, ClipboardList, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, User, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
-import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
+import arrowMarkAsset from "@/assets/migrago-arrow.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { useI18n, type TKey } from "@/lib/i18n";
 import { useAppState } from "@/lib/store";
@@ -278,7 +278,7 @@ function RoadmapPreview() {
 const DISCOVER_ITEMS = [
   { key: "hero.discover1", fill: "#3AC8C3", icon: "#021C3B", Icon: User },
   { key: "hero.discover2", fill: "#02808A", icon: "#FFFFFF", Icon: ClipboardList },
-  { key: "hero.discover3", fill: "#CB902C", icon: "#021C3B", Icon: Compass },
+  { key: "hero.discover3", fill: "#6B8E3A", icon: "#021C3B", Icon: Compass },
 ] as const;
 
 function DiscoverPreviewCard() {
@@ -381,7 +381,7 @@ function Landing() {
               />
               <div className="relative">
               <div className="glass-card relative rounded-3xl p-6 md:p-8">
-              <span className="absolute -top-3 start-3 flex size-[26px] items-center justify-center rounded-full border-[1.5px] bg-[var(--navigator-light-teal)]" style={{ borderColor: "#CB902C" }} aria-hidden>
+              <span className="absolute -top-3 start-3 flex size-[26px] items-center justify-center rounded-full border-[1.5px] border-[var(--navigator-olive)] bg-[var(--navigator-light-teal)]" aria-hidden>
                 <img src={arrowMarkAsset.url} alt="" className="size-[13px] object-contain" />
               </span>
               <h2 className="text-center text-[18px] font-semibold text-[var(--navigator-teal)]">
