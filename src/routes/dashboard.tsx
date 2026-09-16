@@ -265,7 +265,7 @@ function Dashboard() {
   if (!hydrated) return null;
 
   if (buildingRoadmap) {
-    return <PenguinLoader title={t("loading.roadmap")} subtitle={t("loading.roadmapSub")} />;
+    return <PenguinLoader messages={[t("loading.roadmapSub"), t("loading.roadmap")]} />;
   }
 
   const dims = [
@@ -366,7 +366,7 @@ function Dashboard() {
   const journeySteps = [
     { icon: ClipboardList, label: t("journey.s1"), reached: state.completed, color: "var(--navigator-light-teal)" },
     { icon: Target, label: t("journey.s2"), reached: state.completed, color: "var(--navigator-teal)" },
-    { icon: Compass, label: t("journey.s3"), reached: state.completed, color: "var(--navigator-olive-gold)" },
+    { icon: Compass, label: t("journey.s3"), reached: state.completed, color: "var(--navigator-olive)" },
     { icon: MapIcon, label: t("journey.s4"), reached: !locked, color: "var(--navigator-gold)" },
     { icon: TrendingUp, label: t("journey.s5"), reached: !locked && doneCount > 0, color: "var(--navigator-navy)" },
   ];
@@ -514,11 +514,13 @@ function Dashboard() {
                 {journeySteps.map((s, i) => (
                   <li
                     key={s.label}
-                    className={cn("flex min-w-[140px] flex-1 items-center gap-3 rounded-2xl border p-3", !s.reached && "opacity-55")}
+                    className="flex min-w-[140px] flex-1 items-center gap-3 rounded-2xl border p-3 text-white"
                     style={{
-                      borderColor: `color-mix(in oklab, ${s.color} ${s.reached ? 35 : 18}%, transparent)`,
-                      background: `color-mix(in oklab, ${s.color} ${s.reached ? 10 : 7}%, var(--card))`,
-                      color: s.color,
+                      borderColor: s.color,
+                      background:
+                        i === journeySteps.length - 1 && !s.reached
+                          ? `color-mix(in oklab, ${s.color} 58%, var(--card))`
+                          : s.color,
                     }}
                   >
                     <s.icon
@@ -527,14 +529,20 @@ function Dashboard() {
                     />
                     <span className="text-sm font-semibold">{s.label}</span>
                     {i < journeySteps.length - 1 ? (
-                      <ArrowRight className="ms-auto size-3.5 text-muted-foreground rtl:rotate-180" aria-hidden />
+                      <ArrowRight className="ms-auto size-3.5 opacity-75 rtl:rotate-180" aria-hidden />
                     ) : null}
                   </li>
                 ))}
               </ol>
 
               <div className="mt-6 grid gap-5 sm:grid-cols-[220px_1fr] sm:items-center">
-                <div className="rounded-2xl border border-border bg-card p-5 text-center">
+                <div
+                  className="rounded-2xl border border-[color-mix(in_oklab,var(--navigator-navy)_12%,transparent)] bg-[var(--readiness-cream)] p-5 text-center"
+                  style={{
+                    boxShadow:
+                      "4px 4px 10px color-mix(in oklab, var(--navigator-navy) 16%, transparent), -3px -3px 8px color-mix(in oklab, white 80%, transparent)",
+                  }}
+                >
                   <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     {t("readiness.title")}
                   </p>
