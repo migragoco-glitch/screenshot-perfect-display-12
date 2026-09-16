@@ -213,7 +213,7 @@ function FounderMetrics() {
 
   const SmallSample = ({ n }: { n: number }) =>
     n < 30 ? (
-      <span className="mt-2 inline-block rounded-full bg-[var(--gold)]/20 px-2.5 py-1 text-[10px] font-semibold leading-snug text-foreground">
+      <span className="mt-2 inline-block rounded-full bg-[var(--navigator-olive)]/20 px-2.5 py-1 text-[10px] font-semibold leading-snug text-foreground">
         {t("metrics.smallSample")} (n={localizeNumber(n, lang)})
       </span>
     ) : null;
@@ -294,8 +294,8 @@ function FounderMetrics() {
             <ShieldAlert className="size-4" aria-hidden />
             {t("metrics.banner")}
           </p>
-          <div className="rounded-2xl border border-[var(--gold)] bg-[var(--gold)]/12 px-5 py-3">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--gold)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-primary">
+          <div className="rounded-2xl border border-[var(--navigator-olive)] bg-[var(--navigator-olive)]/12 px-5 py-3">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--navigator-olive)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--navigator-navy)]">
               <FlaskConical className="size-3.5" aria-hidden />
               {t("metrics.prototype")}
             </span>
