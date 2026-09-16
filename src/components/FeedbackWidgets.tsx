@@ -42,14 +42,10 @@ export function InstitutionBadge({
   institution: Institution;
 }) {
   const { t } = useI18n();
-  const Icon = INSTITUTION_ICONS[institution] ?? Building2;
   return (
-    <span className="inline-flex rounded-lg bg-plum p-1">
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--navigator-gold)] px-2.5 py-0.5 text-[var(--navigator-navy)]">
-        <Icon className="size-3" aria-hidden />
-        <span className="sr-only">{t("road.institution")}: </span>
-        {INSTITUTION_LABEL[institution] ?? institution}
-      </span>
+    <span className="inline-flex rounded-full bg-plum px-3 py-1 text-[var(--navigator-gold)]">
+      <span className="sr-only">{t("road.institution")}: </span>
+      {INSTITUTION_LABEL[institution] ?? institution}
     </span>
   );
 }

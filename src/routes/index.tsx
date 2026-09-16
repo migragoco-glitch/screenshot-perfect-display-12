@@ -238,7 +238,7 @@ function MiniDonut({ label, value, color }: { label: string; value: number; colo
 const ROADMAP_PHASES = [
   { label: "hero.roadmapWeeks1", height: "h-1/4", color: "bg-[var(--navigator-light-teal)] text-[var(--navigator-light-teal)]", icon: Scale },
   { label: "hero.roadmapWeeks2", height: "h-[45%]", color: "bg-[var(--navigator-teal)] text-[var(--navigator-teal)]", icon: House },
-  { label: "hero.roadmapWeeks3", height: "h-[65%]", color: "bg-[var(--navigator-olive-gold)] text-[var(--navigator-olive-gold)]", icon: Briefcase },
+  { label: "hero.roadmapWeeks3", height: "h-[65%]", color: "bg-[var(--navigator-olive)] text-[var(--navigator-olive)]", icon: Briefcase },
   { label: "hero.roadmapWeeks4", height: "h-full", color: "bg-[var(--navigator-gold)] text-[var(--navigator-gold)]", icon: Users },
 ] as const;
 
@@ -522,7 +522,7 @@ function Landing() {
             </article>
 
             <article className="relative rounded-2xl border-2 border-secondary bg-card p-7 shadow-[var(--shadow-lift)]">
-              <span className="absolute -top-3 start-7 rounded-full bg-accent px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-accent-foreground">
+              <span className="absolute -top-3 start-7 rounded-full bg-[var(--navigator-gold)] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[var(--navigator-navy)]">
                 {t("pricing.recommended")}
               </span>
               <h3 className="text-lg">{t("pricing.nav")}</h3>
