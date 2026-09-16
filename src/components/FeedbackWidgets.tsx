@@ -36,11 +36,23 @@ export const INSTITUTION_ICONS: Record<Institution, typeof Building2> = {
   "Municipal health services": HeartPulse,
 };
 
-export function InstitutionBadge({ institution }: { institution: Institution }) {
+export function InstitutionBadge({
+  institution,
+  solid = false,
+}: {
+  institution: Institution;
+  solid?: boolean;
+}) {
   const { t } = useI18n();
   const Icon = INSTITUTION_ICONS[institution] ?? Building2;
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary/12 px-2.5 py-0.5 text-secondary">
+    <span
+      className={
+        solid
+          ? "inline-flex items-center gap-1.5 rounded-full bg-[var(--navigator-teal)] px-2.5 py-0.5 text-primary-foreground"
+          : "inline-flex items-center gap-1.5 rounded-full bg-secondary/12 px-2.5 py-0.5 text-secondary"
+      }
+    >
       <Icon className="size-3" aria-hidden />
       <span className="sr-only">{t("road.institution")}: </span>
       {INSTITUTION_LABEL[institution] ?? institution}

@@ -113,7 +113,12 @@ function Assessment() {
   const dimensionKey = DIMENSION_KEY[SECTION_DIMENSION[section] ?? "legal"];
 
   if (analyzing) {
-    return <PenguinLoader messages={[t("loading.analyzing"), t("loading.analyzingSub")]} />;
+    return (
+      <PenguinLoader
+        messages={[t("loading.analyzing"), t("loading.analyzingSub")]}
+        durationMs={2600}
+      />
+    );
   }
 
   const submit = () => {

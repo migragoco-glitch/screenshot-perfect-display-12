@@ -219,7 +219,7 @@
     );
 }
 
-/* Penguin walking loader (used only for AI analysis + roadmap generation) */
+/* Penguin sliding loader (used only for AI analysis + roadmap generation) */
 @keyframes penguin-walk-across {
   0% {
     transform: translateX(-110%);
@@ -229,35 +229,12 @@
   }
 }
 
-@keyframes penguin-gait {
-  0% {
-    transform: rotate(-2.5deg) translateY(0);
-  }
-  25% {
-    transform: rotate(2deg) translateY(-3px);
-  }
-  50% {
-    transform: rotate(-2deg) translateY(0);
-  }
-  75% {
-    transform: rotate(2.5deg) translateY(-4px);
-  }
-  100% {
-    transform: rotate(-2.5deg) translateY(0);
-  }
-}
-
 .penguin-lane {
   container-type: inline-size;
 }
 
 .penguin-track {
-  animation: penguin-walk-across 4.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  will-change: transform;
-}
-
-.penguin-body {
-  animation: penguin-gait 0.72s ease-in-out infinite;
+  animation: penguin-walk-across var(--penguin-duration, 4s) ease-in-out both;
   will-change: transform;
 }
 
@@ -338,7 +315,6 @@
   .check-pop,
   .rise-in,
   .penguin-track,
-  .penguin-body,
   .navigator-entered .roadmap-bar,
   .navigator-entered .discover-badge {
     animation: none !important;

@@ -1,28 +1,37 @@
 import penguin from "@/assets/penguin-walk.png.asset.json";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 
 /**
  * The mascot appears ONLY here: while the AI analyzes the questionnaire and
  * while the 12-week roadmap is generated. It walks horizontally across the
  * screen — never a static image, never a persistent character.
  */
-export function PenguinLoader({ messages }: { messages: readonly [string, string] }) {
+export function PenguinLoader({
+  messages,
+  durationMs,
+}: {
+  messages: readonly [string, string];
+  durationMs: number;
+}) {
   const [stage, setStage] = useState(0);
 
   useEffect(() => {
-    const id = window.setTimeout(() => setStage(1), 1300);
+    const id = window.setTimeout(() => setStage(1), durationMs / 2);
     return () => window.clearTimeout(id);
-  }, []);
+  }, [durationMs]);
 
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center px-4">
       <div className="penguin-lane w-full max-w-2xl overflow-hidden">
-        <div className="penguin-track w-28 md:w-32">
+        <div
+          className="penguin-track w-28 md:w-32"
+          style={{ "--penguin-duration": `${durationMs}ms` } as CSSProperties}
+        >
           <img
             src={penguin.url}
             alt=""
             aria-hidden
-            className="penguin-body w-full select-none"
+            className="w-full select-none"
             draggable={false}
           />
         </div>
