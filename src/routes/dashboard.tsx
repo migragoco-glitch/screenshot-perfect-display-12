@@ -20,23 +20,27 @@ import {
 } from "recharts";
 import {
   ArrowRight,
+  Briefcase,
   Check,
   ClipboardList,
   Compass,
   ExternalLink,
   FileText,
   HelpCircle,
+  House,
   Info,
   Lock,
   LogIn,
   Mail,
   Map as MapIcon,
   Pencil,
+  Scale,
   ShieldCheck,
   Sparkles,
   Target,
   Trash2,
   TrendingUp,
+  Users,
 } from "lucide-react";
 import { AppHeader, LanguageSwitch, SiteFooter } from "@/components/BrandHeader";
 import { PenguinLoader } from "@/components/PenguinLoader";
@@ -51,7 +55,7 @@ import { localizeNumber, useI18n } from "@/lib/i18n";
 import { analysisSummary, computeProfile } from "@/lib/scoring";
 import { PHASE_TITLE_KEYS, generateRoadmap } from "@/lib/roadmap";
 import { buildGapAnalysis, buildPathways, whyRecommended } from "@/lib/pathways";
-import { QUESTIONS } from "@/lib/questions";
+import { FOUNDER_TRACK_IDS, QUESTIONS, isAnswered } from "@/lib/questions";
 import { fetchRoadmapProgress, setRoadmapTask } from "@/lib/feedback";
 import { useSession } from "@/lib/session";
 import { trackEvent, useAppState } from "@/lib/store";
@@ -80,10 +84,44 @@ export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
 });
 
-const DIM_COLORS = ["var(--navy)", "var(--teal)", "var(--gold)"];
+const DIM_COLORS = [
+  "var(--navigator-teal)",
+  "var(--navigator-light-teal)",
+  "var(--navigator-gold)",
+];
 
 /** Phase tints — one brand colour per roadmap phase. */
 const PHASE_COLORS = ["var(--navy)", "var(--teal)", "var(--gold)", "var(--plum)"];
+const ROADMAP_PHASES = [
+  {
+    label: "hero.roadmapWeeks1",
+    height: "h-1/4",
+    color: "bg-[var(--navigator-light-teal)] text-[var(--navigator-light-teal)]",
+    value: "var(--navigator-light-teal)",
+    icon: Scale,
+  },
+  {
+    label: "hero.roadmapWeeks2",
+    height: "h-[45%]",
+    color: "bg-[var(--navigator-teal)] text-[var(--navigator-teal)]",
+    value: "var(--navigator-teal)",
+    icon: House,
+  },
+  {
+    label: "hero.roadmapWeeks3",
+    height: "h-[65%]",
+    color: "bg-[var(--navigator-olive-gold)] text-[var(--navigator-olive-gold)]",
+    value: "var(--navigator-olive-gold)",
+    icon: Briefcase,
+  },
+  {
+    label: "hero.roadmapWeeks4",
+    height: "h-full",
+    color: "bg-[var(--navigator-gold)] text-[var(--navigator-gold)]",
+    value: "var(--navigator-gold)",
+    icon: Users,
+  },
+] as const;
 
 const IN_PROGRESS_KEY = "migrago.inProgress";
 
@@ -185,10 +223,12 @@ function Dashboard() {
     professional: h.professional,
     psychological: h.psychological,
   }));
-  const phaseComposition = roadmap.map((p, i) => ({
-    name: t(PHASE_TITLE_KEYS[i] ?? "road.phase1"),
-    value: 25,
-  }));
+  const bonusAnswered =
+    state.founderTrack === true &&
+    FOUNDER_TRACK_IDS.every((id) => {
+      const question = QUESTIONS.find((candidate) => candidate.id === id);
+      return question ? isAnswered(question, state.answers[id]) : false;
+    });
 
   const openPaywall = () => {
     trackEvent({ type: "upgrade_click" });
@@ -590,9 +630,9 @@ function Dashboard() {
                       >
                         <defs>
                           <linearGradient id="dimGradient" x1="0" y1="0" x2="1" y2="1">
-                            <stop offset="0%" stopColor="var(--navy)" stopOpacity={0.55} />
-                            <stop offset="50%" stopColor="var(--teal)" stopOpacity={0.5} />
-                            <stop offset="100%" stopColor="var(--gold)" stopOpacity={0.55} />
+                            <stop offset="0%" stopColor={DIM_COLORS[0]} stopOpacity={0.55} />
+                            <stop offset="50%" stopColor={DIM_COLORS[1]} stopOpacity={0.5} />
+                            <stop offset="100%" stopColor={DIM_COLORS[2]} stopOpacity={0.55} />
                           </linearGradient>
                         </defs>
                         <PolarGrid stroke="var(--border)" />
@@ -600,7 +640,7 @@ function Dashboard() {
                         <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
                         <Radar
                           dataKey="value"
-                          stroke="var(--teal)"
+                          stroke="var(--navigator-teal)"
                           strokeWidth={2}
                           fill="url(#dimGradient)"
                           fillOpacity={1}
@@ -689,8 +729,10 @@ function Dashboard() {
 
               <section className="rounded-3xl border border-border bg-card p-6">
                 <h2 className="text-lg">{t("dash.bonus")}</h2>
-                <p className="mt-2 text-4xl font-bold text-secondary tabular-nums">
-                  {localizeNumber(profile.bonus, lang)}%
+                <p className="mt-2 text-4xl font-bold text-[var(--navigator-teal)] tabular-nums">
+                  {bonusAnswered
+                    ? `${localizeNumber(profile.bonus, lang)}%`
+                    : t("dash.bonusNotAnswered")}
                 </p>
                 <p className="mt-2 text-xs text-muted-foreground">{t("dash.bonusNote")}</p>
               </section>
@@ -730,7 +772,7 @@ function Dashboard() {
                             g.priority === "high"
                               ? "bg-destructive/12 text-destructive"
                               : g.priority === "medium"
-                                ? "bg-accent/25 text-accent-foreground"
+                                ? "bg-[var(--navigator-gold)]/20 text-[var(--navigator-navy)]"
                                 : "bg-muted text-muted-foreground",
                           )}
                         >
@@ -773,7 +815,7 @@ function Dashboard() {
                           p.priority === "high"
                             ? "bg-destructive/12 text-destructive"
                             : p.priority === "medium"
-                              ? "bg-accent/25 text-accent-foreground"
+                              ? "bg-[var(--navigator-gold)]/20 text-[var(--navigator-navy)]"
                               : "bg-muted text-muted-foreground",
                         )}
                       >
@@ -889,41 +931,28 @@ function Dashboard() {
                 <section className="mt-6 grid gap-5 lg:grid-cols-[280px_1fr]">
                   <div className="rounded-3xl border border-border bg-card p-5">
                     <h3 className="text-sm font-bold">{t("road.composition")}</h3>
-                    <div className="mt-2 h-[170px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                          <Pie
-                            data={phaseComposition}
-                            dataKey="value"
-                            innerRadius={45}
-                            outerRadius={75}
-                            paddingAngle={2}
-                            stroke="none"
-                          >
-                            {phaseComposition.map((_, i) => (
-                              <Cell
-                                key={i}
-                                fill={[DIM_COLORS[0], DIM_COLORS[1], DIM_COLORS[2], "var(--plum)"][i]}
+                    <div className="mt-5 grid h-44 grid-cols-4 gap-2 sm:gap-3">
+                      {ROADMAP_PHASES.map((phase) => {
+                        const PhaseIcon = phase.icon;
+                        return (
+                          <div key={phase.label} className="grid min-w-0 grid-rows-[1fr_auto] gap-2">
+                            <div className="flex min-h-0 flex-col items-center justify-end">
+                              <PhaseIcon
+                                className={`mb-2 size-4 shrink-0 ${phase.color.split(" ")[1]}`}
+                                aria-hidden
                               />
-                            ))}
-                          </Pie>
-                          <Tooltip />
-                        </PieChart>
-                      </ResponsiveContainer>
+                              <div
+                                className={`w-full rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`}
+                                aria-hidden
+                              />
+                            </div>
+                            <span className="text-center text-[9px] font-medium leading-tight text-muted-foreground sm:text-[10px]">
+                              {t(phase.label)}
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
-                    <ul className="mt-2 space-y-1.5 text-[11px] text-muted-foreground">
-                      {phaseComposition.map((p, i) => (
-                        <li key={p.name} className="flex items-center gap-2">
-                          <span
-                            className="size-2 shrink-0 rounded-full"
-                            style={{
-                              backgroundColor: [DIM_COLORS[0], DIM_COLORS[1], DIM_COLORS[2], "var(--plum)"][i],
-                            }}
-                          />
-                          {p.name} · {localizeNumber(25, lang)}%
-                        </li>
-                      ))}
-                    </ul>
                   </div>
 
                   <div className="space-y-5">
@@ -932,8 +961,8 @@ function Dashboard() {
                         key={phase.phase}
                         className="rounded-3xl border p-6"
                         style={{
-                          borderColor: `color-mix(in oklab, ${PHASE_COLORS[i] ?? "var(--navy)"} 35%, transparent)`,
-                          background: `color-mix(in oklab, ${PHASE_COLORS[i] ?? "var(--navy)"} 7%, var(--card))`,
+                          borderColor: `color-mix(in oklab, ${ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)"} 35%, transparent)`,
+                          background: `color-mix(in oklab, ${ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)"} 7%, var(--card))`,
                         }}
                       >
                         <header className="flex flex-wrap items-center justify-between gap-2">
@@ -952,9 +981,14 @@ function Dashboard() {
                               <li
                                 key={item.id}
                                 className={cn(
-                                  "rounded-2xl border border-border/70 bg-background p-4 transition-opacity duration-200 ease-out",
+                                  "rounded-2xl border border-border/70 p-4 transition-opacity duration-200 ease-out",
                                   checked && "opacity-70",
                                 )}
+                                style={{
+                                  borderLeftColor: ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)",
+                                  borderLeftWidth: "4px",
+                                  background: `color-mix(in oklab, ${ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)"} 7%, var(--card))`,
+                                }}
                               >
                                 <div className="flex items-start gap-3">
                                   <label className="relative mt-0.5 inline-flex size-5 shrink-0 cursor-pointer items-center justify-center">
@@ -965,7 +999,7 @@ function Dashboard() {
                                         setStatus(item.id, checked ? "notStarted" : "completed")
                                       }
                                       aria-label={`${t("road.done")}: ${item.title[lang]}`}
-                                      className="peer size-5 cursor-pointer appearance-none rounded-md border border-border bg-background transition-colors duration-200 ease-out checked:border-secondary checked:bg-secondary"
+                                      className="peer size-5 cursor-pointer appearance-none rounded-md border border-border bg-background transition-colors duration-200 ease-out checked:border-[var(--navigator-teal)] checked:bg-[var(--navigator-teal)]"
                                     />
                                     {checked ? (
                                       <Check
@@ -986,7 +1020,7 @@ function Dashboard() {
                                           item.priority === "high"
                                             ? "bg-destructive/12 text-destructive"
                                             : item.priority === "medium"
-                                              ? "bg-accent/25 text-accent-foreground"
+                                              ? "bg-[var(--navigator-gold)]/20 text-[var(--navigator-navy)]"
                                               : "bg-muted text-muted-foreground",
                                         )}
                                       >
@@ -1064,7 +1098,11 @@ function Dashboard() {
                                           className={cn(
                                             "rounded-full px-3 py-1 text-[11px] font-semibold transition-colors duration-200 ease-out",
                                             status === value
-                                              ? "bg-primary text-primary-foreground"
+                                              ? value === "inProgress"
+                                                ? "bg-[var(--navigator-gold)] text-[var(--navigator-navy)]"
+                                                : value === "completed"
+                                                  ? "bg-[var(--navigator-teal)] text-primary-foreground"
+                                                  : "bg-primary text-primary-foreground"
                                               : "border border-border bg-card text-muted-foreground hover:text-foreground",
                                           )}
                                         >
