@@ -148,11 +148,11 @@ export const en = {
   "q.selectCountry": "Select a country",
   "q.bracketNote": "Bracket-based only — we never ask for an exact figure.",
 
-  "loading.analyzing": "Analyzing your answers…",
+  "loading.analyzing": "Analyzing your answers...",
   "loading.analyzingSub":
-    "Matching your profile against the Finnish institutional knowledge base.",
-  "loading.roadmap": "Building your 12-week roadmap…",
-  "loading.roadmapSub": "Sequencing steps by phase, priority and responsible institution.",
+    "Matching your profile with Finland's institutional knowledge base...",
+  "loading.roadmap": "Building your 12-week roadmap...",
+  "loading.roadmapSub": "Sequencing your priorities...",
 
   "dash.title": "Your Smart Integration Profile",
   "dash.overall": "Baseline readiness score",
@@ -710,9 +710,9 @@ export const fa: Record<keyof typeof en, string> = {
   "q.bracketNote": "تنها بر پایهٔ بازهٔ عددی — هرگز رقم دقیق پرسیده نمی‌شود.",
 
   "loading.analyzing": "در حال تحلیل پاسخ‌های شما…",
-  "loading.analyzingSub": "تطبیق پروفایل شما با پایگاه دانش نهادهای رسمی فنلاند.",
+  "loading.analyzingSub": "در حال تطبیق پروفایل شما با پایگاه دانش نهادهای مرجع فنلاند…",
   "loading.roadmap": "در حال ساخت نقشه‌راه ۱۲ هفته‌ای شما…",
-  "loading.roadmapSub": "چینش گام‌ها بر اساس فاز، اولویت و نهاد مسئول.",
+  "loading.roadmapSub": "در حال اولویت‌بندی و ترتیب‌گذاری…",
 
   "dash.title": "پروفایل هوشمند ادغام شما",
   "dash.overall": "نمرهٔ پایهٔ آمادگی",

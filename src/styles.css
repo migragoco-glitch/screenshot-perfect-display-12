@@ -72,10 +72,14 @@
   --navigator-light-teal: #3ac8c3;
   --navigator-gold: #cb902c;
   --navigator-olive-gold: #a8862e;
+  --navigator-olive: #6b8e3a;
   --navigator-cream: #faeeda;
+  --readiness-cream: #f7efe5;
   --navigator-notice: #fbeaf0;
   --navigator-notice-text: #72243e;
   --navigator-notice-icon: #993556;
+  --journey-pill-foreground: #ffffff;
+  --readiness-highlight: #ffffff;
 
   --background: #f8f6f2;
   --foreground: var(--navy);
@@ -218,32 +222,42 @@
 /* Penguin walking loader (used only for AI analysis + roadmap generation) */
 @keyframes penguin-walk-across {
   0% {
-    transform: translateX(-15%);
+    transform: translateX(-110%);
   }
   100% {
-    transform: translateX(115%);
+    transform: translateX(100cqw);
   }
 }
 
 @keyframes penguin-gait {
   0% {
-    transform: rotate(-3deg) translateY(0);
+    transform: rotate(-2.5deg) translateY(0);
+  }
+  25% {
+    transform: rotate(2deg) translateY(-3px);
   }
   50% {
+    transform: rotate(-2deg) translateY(0);
+  }
+  75% {
     transform: rotate(2.5deg) translateY(-4px);
   }
   100% {
-    transform: rotate(-3deg) translateY(0);
+    transform: rotate(-2.5deg) translateY(0);
   }
 }
 
+.penguin-lane {
+  container-type: inline-size;
+}
+
 .penguin-track {
-  animation: penguin-walk-across 4.5s ease-in-out infinite;
+  animation: penguin-walk-across 4.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   will-change: transform;
 }
 
 .penguin-body {
-  animation: penguin-gait 1.1s ease-in-out infinite;
+  animation: penguin-gait 0.72s ease-in-out infinite;
   will-change: transform;
 }
 
