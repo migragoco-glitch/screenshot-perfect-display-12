@@ -161,7 +161,7 @@ export function SiteFooter() {
     <footer className="border-t border-border/70 bg-primary text-primary-foreground">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 md:grid-cols-2 md:px-8">
         <div className="flex flex-col items-start gap-4">
-          <div className="inline-flex w-fit items-center gap-3.5 rounded-xl bg-white p-3">
+          <div className="inline-flex w-fit items-center gap-3.5 rounded-xl bg-white p-3 shadow-[var(--shadow-card)]">
             <img
               src={logoAsset.url}
               alt="MigraGo — SettleSmart Navigator"

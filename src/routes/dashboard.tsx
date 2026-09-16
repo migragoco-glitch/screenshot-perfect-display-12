@@ -115,8 +115,8 @@ const ROADMAP_PHASES = [
   {
     label: "hero.roadmapWeeks3",
     height: "h-[65%]",
-    color: "bg-[var(--navigator-olive-gold)] text-[var(--navigator-olive-gold)]",
-    value: "var(--navigator-olive-gold)",
+    color: "bg-[var(--navigator-olive)] text-[var(--navigator-olive)]",
+    value: "var(--navigator-olive)",
     icon: Briefcase,
   },
   {
@@ -1160,21 +1160,16 @@ function Dashboard() {
                                       {t("road.relevantAuthority")}
                                     </p>
                                     <div className="mt-1">
-                                      <InstitutionBadge institution={item.institution} />
+                                      <a
+                                        href={item.officialSource}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-[var(--navigator-gold)] bg-plum px-3 py-1.5 text-sm font-semibold text-[var(--navigator-gold)] shadow-[var(--shadow-card)] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                                      >
+                                        {item.institution}
+                                        <ExternalLink className="size-3.5 shrink-0" aria-hidden />
+                                      </a>
                                     </div>
-
-                                    <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-                                      {t("road.officialSource")}
-                                    </p>
-                                    <a
-                                      href={item.officialSource}
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      className="mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-secondary underline underline-offset-4"
-                                    >
-                                      {t("road.openOfficialSource")}
-                                      <ExternalLink className="size-3.5" aria-hidden />
-                                    </a>
 
                                     <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                                       {t("road.dependency")}

@@ -234,7 +234,7 @@
 }
 
 .penguin-track {
-  animation: penguin-walk-across var(--penguin-duration, 4s) ease-in-out both;
+  animation: penguin-walk-across 4.5s ease-in-out both;
   will-change: transform;
 }
 

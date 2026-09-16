@@ -1,5 +1,5 @@
 import penguin from "@/assets/penguin-walk.png.asset.json";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * The mascot appears ONLY here: while the AI analyzes the questionnaire and
@@ -23,10 +23,7 @@ export function PenguinLoader({
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center px-4">
       <div className="penguin-lane w-full max-w-2xl overflow-hidden">
-        <div
-          className="penguin-track w-28 md:w-32"
-          style={{ "--penguin-duration": `${durationMs}ms` } as CSSProperties}
-        >
+        <div className="penguin-track w-28 md:w-32">
           <img
             src={penguin.url}
             alt=""
