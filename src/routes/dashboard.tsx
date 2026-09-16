@@ -957,7 +957,7 @@ function Dashboard() {
                       {ROADMAP_PHASES.map((phase) => {
                         const PhaseIcon = phase.icon;
                         return (
-                          <div key={phase.label} className="grid min-w-0 grid-rows-[1fr_auto] gap-2">
+                          <div key={phase.label} className="grid min-w-0 grid-rows-[1fr_28px] gap-2">
                             <div className="relative min-h-0">
                               <PhaseIcon
                                 className={`absolute start-1/2 top-0 size-4 -translate-x-1/2 rtl:translate-x-1/2 ${phase.color.split(" ")[1]}`}
