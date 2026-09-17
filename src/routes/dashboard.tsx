@@ -1336,27 +1336,38 @@ function Dashboard() {
                         const phaseColor = ROADMAP_PHASES[Math.ceil(w.week / 3) - 1]?.value ?? "var(--navigator-teal)";
                         const completionRatio = w.total ? w.completed / w.total : 0;
                         const fillStrength = Math.round(10 + completionRatio * 90);
+                        const empty = w.total === 0;
                         return (
                         <li
                           key={w.week}
                           className={cn(
                             "rounded-2xl border p-3 text-center",
-                            "text-[var(--navigator-navy)]",
+                            empty ? "text-muted-foreground" : "text-[var(--navigator-navy)]",
                           )}
-                          style={{
-                            borderColor: `color-mix(in oklab, ${phaseColor} 55%, var(--border))`,
-                            background: `color-mix(in oklab, ${phaseColor} ${fillStrength}%, var(--card))`,
-                          }}
+                          style={
+                            empty
+                              ? { borderColor: "var(--border)", background: "var(--muted)" }
+                              : {
+                                  borderColor: `color-mix(in oklab, ${phaseColor} 55%, var(--border))`,
+                                  background: `color-mix(in oklab, ${phaseColor} ${fillStrength}%, var(--card))`,
+                                }
+                          }
                         >
-                          <p className="text-[10px] font-semibold uppercase tracking-wide text-[var(--navigator-navy)]">
+                          <p className={cn(
+                            "text-[10px] font-semibold uppercase tracking-wide",
+                            empty ? "text-muted-foreground" : "text-[var(--navigator-navy)]",
+                          )}>
                             {t("road.week")} {localizeNumber(w.week, lang)}
                           </p>
                           <p className="mt-1 text-sm font-bold tabular-nums">
-                            {localizeNumber(w.completed, lang)}/{localizeNumber(w.total, lang)}
+                            {empty
+                              ? "—"
+                              : `${localizeNumber(w.completed, lang)}/${localizeNumber(w.total, lang)}`}
                           </p>
                         </li>
                         );
                       })}
+
                     </ul>
                   </section>
 
