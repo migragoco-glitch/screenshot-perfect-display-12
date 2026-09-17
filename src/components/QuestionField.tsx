@@ -14,9 +14,10 @@ type Props = {
   index: number;
   answer: AnswerValue | undefined;
   onChange: (value: AnswerValue) => void;
+  levelColor: string;
 };
 
-export function QuestionField({ question: q, index, answer, onChange }: Props) {
+export function QuestionField({ question: q, index, answer, onChange, levelColor }: Props) {
   const { lang, t } = useI18n();
   const selected = answer?.value;
   const showDetail = q.detailOn !== undefined && selected === q.detailOn;
@@ -28,13 +29,14 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
   return (
     <fieldset
       className={cn(
-        "rounded-2xl border border-border/70 bg-card/80 p-5 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_6px_24px_-16px_rgba(11,37,69,0.35)] backdrop-blur-sm md:p-6",
+        "assessment-question-card rounded-2xl border p-5 shadow-[var(--shadow-card)] backdrop-blur-sm md:p-6",
         q.showIf && "conditional-reveal",
       )}
+      style={{ "--assessment-level-color": levelColor } as React.CSSProperties}
     >
       <legend className="sr-only">{q.label[lang]}</legend>
       <div className="flex items-start gap-3">
-        <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/8 text-xs font-bold text-primary">
+        <span className="assessment-question-number mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold">
           {localizeNumber(index, lang)}
         </span>
         <p className="text-[15px] font-semibold leading-relaxed">{q.label[lang]}</p>

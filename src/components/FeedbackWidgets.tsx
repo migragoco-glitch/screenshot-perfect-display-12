@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import {
-  Banknote,
+  BadgeCheck,
   Briefcase,
   Building2,
+  ExternalLink,
   GraduationCap,
-  HeartPulse,
-  Landmark,
-  Stamp,
-  Users,
+  House,
+  ReceiptText,
+  Rocket,
+  ShieldPlus,
+  Stethoscope,
+  Store,
   X,
 } from "lucide-react";
 import { INSTITUTION_LABEL, type Institution } from "@/lib/roadmap";
@@ -23,29 +26,55 @@ const CSAT_KEY = "migrago.csat.done";
 const NPS_KEY = "migrago.nps.done";
 
 export const INSTITUTION_ICONS: Record<Institution, typeof Building2> = {
-  Migri: Stamp,
-  DVV: Landmark,
-  Vero: Banknote,
-  Kela: HeartPulse,
+  Migri: BadgeCheck,
+  DVV: Building2,
+  Vero: ReceiptText,
+  Kela: ShieldPlus,
   "Local Employment Services": Briefcase,
-  "Valvira / OPH": GraduationCap,
-  "International House Helsinki": Users,
+  "Valvira / OPH": Stethoscope,
+  "International House Helsinki": House,
   "Local municipality services": Building2,
-  "PRH / YTJ": Landmark,
-  "Business Finland": Briefcase,
-  "Municipal health services": HeartPulse,
+  "PRH / YTJ": Store,
+  "Business Finland": Rocket,
+  "Municipal health services": Stethoscope,
 };
 
 export function InstitutionBadge({
   institution,
+  href,
+  displayName,
 }: {
   institution: Institution;
+  href?: string;
+  displayName?: string;
 }) {
   const { t } = useI18n();
-  return (
-    <span className="inline-flex rounded-full bg-plum px-3 py-1 text-[var(--navigator-gold)]">
+  const Icon = INSTITUTION_ICONS[institution] ?? GraduationCap;
+  const content = (
+    <>
+      <Icon className="size-3.5 shrink-0" strokeWidth={1.9} aria-hidden />
       <span className="sr-only">{t("road.institution")}: </span>
-      {INSTITUTION_LABEL[institution] ?? institution}
+      <span>{displayName ?? INSTITUTION_LABEL[institution] ?? institution}</span>
+      {href ? <ExternalLink className="size-3.5 shrink-0" aria-hidden /> : null}
+    </>
+  );
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1.5 rounded-full bg-[var(--institution-tint)] px-3 py-1.5 text-sm font-semibold text-[var(--institution-purple)] transition-[background-color,box-shadow,transform,color] duration-200 ease-out hover:bg-[var(--institution-tint-hover)] hover:shadow-[var(--shadow-card)] active:translate-y-px active:bg-[var(--institution-purple)] active:text-[var(--institution-active-foreground)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--institution-tint)] px-3 py-1 text-[var(--institution-purple)]">
+      {content}
     </span>
   );
 }
