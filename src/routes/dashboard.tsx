@@ -1095,9 +1095,9 @@ function Dashboard() {
                                   checked && "opacity-70",
                                 )}
                                 style={{
-                                  borderLeftColor: i === 3 ? "var(--navigator-olive)" : ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)",
+                                  borderLeftColor: ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)",
                                   borderLeftWidth: "4px",
-                                  background: `color-mix(in oklab, ${i === 3 ? "var(--navigator-olive)" : ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)"} 7%, var(--card))`,
+                                  background: `color-mix(in oklab, ${ROADMAP_PHASES[i]?.value ?? "var(--navigator-light-teal)"} 7%, var(--card))`,
                                 }}
                               >
                                 <div className="flex items-start gap-3">
