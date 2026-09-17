@@ -16,7 +16,6 @@ import {
   Wallet,
 } from "lucide-react";
 import { AppHeader } from "@/components/BrandHeader";
-import { PenguinLoader } from "@/components/PenguinLoader";
 import { QuestionField } from "@/components/QuestionField";
 import { LiveProgressPanel } from "@/components/LiveProgressPanel";
 import { AssessmentGuideMoment } from "@/components/AssessmentGuideMoment";
@@ -62,6 +61,16 @@ const DIMENSION_KEY = {
   psychological: "dash.dim3",
   bonus: "dash.bonus",
 } as const;
+
+const LEVEL_DESCRIPTION_KEYS = [
+  "q.levelDescription.1",
+  "q.levelDescription.2",
+  "q.levelDescription.3",
+  "q.levelDescription.4",
+  "q.levelDescription.5",
+  "q.levelDescription.6",
+  "q.levelDescription.7",
+] as const;
 
 type GuidedView = "companion" | "intro" | "questions" | "complete";
 
@@ -164,6 +173,7 @@ function Assessment() {
 
   useEffect(() => {
     if (guidedView !== "complete") return;
+    if (section === 7) return;
     const id = window.setTimeout(() => {
       const next = Math.min(7, section + 1);
       setSection(next);
@@ -184,10 +194,9 @@ function Assessment() {
 
   if (analyzing) {
     return (
-      <PenguinLoader
-        messages={[t("loading.analyzing"), t("loading.analyzingSub")]}
-        durationMs={2600}
-      />
+      <div className="assessment-complete flex min-h-screen items-center justify-center px-4 text-center" role="status" aria-live="polite">
+        <h2 className="max-w-2xl text-xl font-bold md:text-2xl">{t("loading.analyzing")}</h2>
+      </div>
     );
   }
 
@@ -196,30 +205,33 @@ function Assessment() {
       setShowRequired(true);
       return;
     }
-    setAnalyzing(true);
-    const profile = computeProfile(state.answers, founderTrack === true, state.region ?? "undecided");
-    const nationality = state.answers[2]?.value;
-    const pathwayIndex = state.answers[36]?.value;
-    const pathway =
-      typeof pathwayIndex === "number"
-        ? QUESTIONS.find((q) => q.id === 36)?.options?.[pathwayIndex]?.en
-        : undefined;
-    trackEvent({
-      type: "finish",
-      ...(typeof nationality === "string" ? { nationality } : {}),
-      ...(pathway ? { pathway } : {}),
-    });
-    trackEvent({ type: "paywall_view" });
-    pushSnapshot({
-      overall: profile.overall,
-      legal: profile.legal,
-      professional: profile.professional,
-      psychological: profile.psychological,
-    });
-    update({ completed: true });
+    setGuidedView("complete");
     window.setTimeout(() => {
-      void navigate({ to: "/dashboard" });
-    }, 2600);
+      setAnalyzing(true);
+      const profile = computeProfile(state.answers, founderTrack === true, state.region ?? "undecided");
+      const nationality = state.answers[2]?.value;
+      const pathwayIndex = state.answers[36]?.value;
+      const pathway =
+        typeof pathwayIndex === "number"
+          ? QUESTIONS.find((q) => q.id === 36)?.options?.[pathwayIndex]?.en
+          : undefined;
+      trackEvent({
+        type: "finish",
+        ...(typeof nationality === "string" ? { nationality } : {}),
+        ...(pathway ? { pathway } : {}),
+      });
+      trackEvent({ type: "paywall_view" });
+      pushSnapshot({
+        overall: profile.overall,
+        legal: profile.legal,
+        professional: profile.professional,
+        psychological: profile.psychological,
+      });
+      update({ completed: true });
+      window.setTimeout(() => {
+        void navigate({ to: "/dashboard" });
+      }, 2600);
+    }, 1400);
   };
 
   const goNext = () => {
@@ -328,7 +340,7 @@ function Assessment() {
             </p>
             <h1 className="mt-2 text-2xl md:text-3xl">{meta?.title[lang]}</h1>
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
-              {t(`q.levelDescription.${section}`)}
+              {t(LEVEL_DESCRIPTION_KEYS[section - 1] ?? "q.levelDescription.1")}
             </p>
             <button
               type="button"
