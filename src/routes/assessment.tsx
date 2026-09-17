@@ -124,7 +124,7 @@ function CompactProgressRing({ pct, answers }: { pct: number; answers: Answers }
             fill="none"
             stroke={DIMENSION_PROGRESS_COLORS[index]}
             strokeWidth={stroke}
-            strokeLinecap="round"
+            strokeLinecap={completion > 0 ? "round" : "butt"}
             strokeDasharray={`${paintedLength} ${circumference - paintedLength}`}
             strokeDashoffset={-segmentOffset}
             transform={`rotate(-90 ${size / 2} ${size / 2})`}

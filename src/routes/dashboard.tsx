@@ -1333,7 +1333,7 @@ function Dashboard() {
                     <h2 className="text-lg text-[var(--navigator-navy)]">{t("prog.weekly")}</h2>
                     <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
                       {weeklyProgress.map((w) => {
-                        const phaseColor = phaseColorForTiming(w.week, w.week);
+                        const phaseColor = ROADMAP_PHASES[Math.ceil(w.week / 3) - 1]?.value ?? "var(--navigator-teal)";
                         const completionRatio = w.total ? w.completed / w.total : 0;
                         const fillStrength = Math.round(10 + completionRatio * 90);
                         return (

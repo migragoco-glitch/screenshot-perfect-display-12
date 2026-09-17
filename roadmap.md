@@ -4,4 +4,4 @@
 - [x] Apply the four phase colors dynamically across all three Progress summaries.
 - [x] Correct the desktop assessment ring mapping to teal, light teal, and gold.
 - [x] Convert the mobile assessment ring to three live dimension-color segments.
-- [ ] Verify English and Persian views, progress states, and preview health.
+- [x] Verify English and Persian views, progress states, and preview health.

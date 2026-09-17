@@ -68,7 +68,7 @@ function SegmentedDonut({ pct, size, progress, label }: { pct: number; size: num
               fill="none"
               stroke={DIM_COLORS[index]}
               strokeWidth={stroke}
-              strokeLinecap="round"
+              strokeLinecap={value > 0 ? "round" : "butt"}
               strokeDasharray={`${paintedLength} ${circumference - paintedLength}`}
               strokeDashoffset={-index * (segmentLength + gap)}
               transform={`rotate(-90 ${size / 2} ${size / 2})`}
