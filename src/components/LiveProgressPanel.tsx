@@ -59,25 +59,7 @@ export function LiveProgressPanel({ answers }: { answers: Answers }) {
   }, [answers, t]);
 
   return (
-    <>
-      {/* Mobile: live progress bar (wrapper is sticky in assessment.tsx) */}
-      <div className="lg:hidden">
-        <div className="rounded-2xl border border-border/70 bg-card/70 px-4 py-3 shadow-sm backdrop-blur-md">
-          <div className="flex items-center justify-between text-[11px] font-semibold text-muted-foreground">
-            <span>{t("q.live.title")}</span>
-            <span>{t("q.live.inProgress")}</span>
-          </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
-            <div
-              className="h-full rounded-full transition-[width] duration-500 ease-out"
-              style={{ width: `${overall}%`, backgroundColor: "var(--teal)" }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Desktop: glassmorphic live progress panel */}
-      <aside className="sticky top-[96px] hidden rounded-3xl border border-border/60 bg-card/60 p-5 shadow-[0_8px_30px_-12px_rgba(11,37,69,0.25)] backdrop-blur-xl lg:block">
+    <aside className="sticky top-[96px] hidden rounded-3xl border border-border/60 bg-card/60 p-5 shadow-[0_8px_30px_-12px_rgba(11,37,69,0.25)] backdrop-blur-xl lg:block">
         <h2 className="text-sm font-bold">{t("q.live.title")}</h2>
         <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">{t("q.live.note")}</p>
 
@@ -94,7 +76,6 @@ export function LiveProgressPanel({ answers }: { answers: Answers }) {
         <p className="mt-5 rounded-xl bg-secondary/8 px-3 py-2 text-center text-[11px] font-semibold text-secondary">
           {t("q.live.inProgress")}
         </p>
-      </aside>
-    </>
+    </aside>
   );
 }

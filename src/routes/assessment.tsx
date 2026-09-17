@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -19,6 +19,7 @@ import { AppHeader } from "@/components/BrandHeader";
 import { PenguinLoader } from "@/components/PenguinLoader";
 import { QuestionField } from "@/components/QuestionField";
 import { LiveProgressPanel } from "@/components/LiveProgressPanel";
+import { AssessmentGuideMoment } from "@/components/AssessmentGuideMoment";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import {
   COUNTRIES,
@@ -62,6 +63,36 @@ const DIMENSION_KEY = {
   bonus: "dash.bonus",
 } as const;
 
+type GuidedView = "companion" | "intro" | "questions" | "complete";
+
+function CompactProgressRing({ pct }: { pct: number }) {
+  const size = 54;
+  const stroke = 5;
+  const radius = (size - stroke) / 2;
+  const circumference = 2 * Math.PI * radius;
+  return (
+    <svg width={size} height={size} role="img" aria-label={`${pct}%`} className="shrink-0">
+      <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--muted)" strokeWidth={stroke} />
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={radius}
+        fill="none"
+        stroke="var(--teal)"
+        strokeWidth={stroke}
+        strokeLinecap="round"
+        strokeDasharray={circumference}
+        strokeDashoffset={circumference - (circumference * pct) / 100}
+        transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        className="transition-[stroke-dashoffset] duration-500 ease-out"
+      />
+      <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" className="fill-foreground text-[11px] font-bold">
+        {pct}%
+      </text>
+    </svg>
+  );
+}
+
 function Assessment() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
@@ -71,6 +102,9 @@ function Assessment() {
   const [showRequired, setShowRequired] = useState(false);
   const [corrupted, setCorrupted] = useState(false);
   const [inconsistencyDismissed, setInconsistencyDismissed] = useState(false);
+  const [guidedView, setGuidedView] = useState<GuidedView>("companion");
+  const [companionMoment, setCompanionMoment] = useState<"start" | "mid" | "near">("start");
+  const seenLevels = useRef(new Set<number>());
   // Opt-in gate for the Founder & Talent questions (Q39–41). Derived straight from
   // the (already sanitized) stored state so it is final before Step 7 first renders.
   const founderTrack = state.founderTrack ?? null;
@@ -108,9 +142,45 @@ function Assessment() {
     Array.isArray(state.answers[8]?.value) &&
     (state.answers[8]?.value as number[]).includes(2);
 
-  const encouragement =
-    section <= 2 ? t("q.encourage1") : section <= 5 ? t("q.encourage2") : t("q.encourage3");
   const dimensionKey = DIMENSION_KEY[SECTION_DIMENSION[section] ?? "legal"];
+
+  const completedLevels = useMemo(
+    () =>
+      SECTIONS.map((level) => {
+        const questions = questionsForSection(level.id, state.answers, { founderTrack });
+        return level.optional || questions.every((q) => isAnswered(q, state.answers[q.id]));
+      }),
+    [state.answers, founderTrack],
+  );
+
+  useEffect(() => {
+    if (guidedView !== "companion") return;
+    const id = window.setTimeout(() => {
+      setGuidedView("intro");
+      seenLevels.current.add(section);
+    }, 1800);
+    return () => window.clearTimeout(id);
+  }, [guidedView, section]);
+
+  useEffect(() => {
+    if (guidedView !== "complete") return;
+    const id = window.setTimeout(() => {
+      const next = Math.min(7, section + 1);
+      setSection(next);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (section === 4) {
+        setCompanionMoment("mid");
+        setGuidedView("companion");
+      } else if (section === 6) {
+        setCompanionMoment("near");
+        setGuidedView("companion");
+      } else {
+        seenLevels.current.add(next);
+        setGuidedView("intro");
+      }
+    }, 1400);
+    return () => window.clearTimeout(id);
+  }, [guidedView, section]);
 
   if (analyzing) {
     return (
@@ -158,7 +228,14 @@ function Assessment() {
       return;
     }
     setShowRequired(false);
-    setSection((s) => Math.min(7, s + 1));
+    setGuidedView("complete");
+  };
+
+  const moveToSection = (next: number) => {
+    setSection(next);
+    setShowRequired(false);
+    setGuidedView(seenLevels.current.has(next) ? "questions" : "intro");
+    seenLevels.current.add(next);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -168,7 +245,7 @@ function Assessment() {
 
       <div className="lg:sticky top-[68px] z-30 border-b border-border/70 bg-background/90 backdrop-blur-md">
         <div className="mx-auto max-w-4xl px-4 py-3 md:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-muted-foreground">
+          <div className="hidden flex-wrap items-center justify-between gap-2 text-xs font-semibold text-muted-foreground md:flex">
             <span>
               {t("q.section")} {localizeNumber(section, lang)} {t("q.of")} {localizeNumber(7, lang)} —{" "}
               {meta?.title[lang]}
@@ -178,13 +255,13 @@ function Assessment() {
               {t("q.progress")} {localizeNumber(progress, lang)}%
             </span>
           </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
-            <div
-              className="h-full rounded-full transition-[width] duration-300 ease-out"
-              style={{ width: `${progress}%`, backgroundColor: "var(--teal)" }}
-            />
+          <div className="flex items-center gap-3 md:hidden">
+            <CompactProgressRing pct={progress} />
+            <p className="text-sm font-bold leading-snug">
+              {t("q.level")} {localizeNumber(section, lang)} {t("q.of")} {localizeNumber(7, lang)} — {meta?.title[lang]}
+            </p>
           </div>
-          <ol className="mt-3 flex gap-1.5">
+          <ol className="mt-3 flex gap-1.5" aria-label={t("q.levelProgress")}>
             {SECTIONS.map((s) => {
               const Icon = SECTION_ICONS[s.id - 1] ?? Star;
               const status = s.id < section ? "done" : s.id === section ? "current" : "todo";
@@ -192,7 +269,7 @@ function Assessment() {
                 <li key={s.id} className="flex-1">
                   <button
                     type="button"
-                    onClick={() => setSection(s.id)}
+                    onClick={() => moveToSection(s.id)}
                     aria-current={status === "current" ? "step" : undefined}
                     aria-label={`${t("q.section")} ${s.id}: ${s.title[lang]}`}
                     className="flex w-full flex-col items-center gap-1"
@@ -200,7 +277,7 @@ function Assessment() {
                     <Icon
                       className={cn(
                         "size-3.5 transition-colors duration-200 ease-out",
-                        status === "done"
+                        completedLevels[s.id - 1]
                           ? "text-secondary"
                           : status === "current"
                             ? "text-accent"
@@ -211,7 +288,7 @@ function Assessment() {
                     <span
                       className={cn(
                         "h-1.5 w-full rounded-full transition-colors duration-200 ease-out",
-                        status === "done"
+                        completedLevels[s.id - 1]
                           ? "bg-secondary"
                           : status === "current"
                             ? "bg-accent"
@@ -225,13 +302,45 @@ function Assessment() {
           </ol>
           <p className="mt-2 text-[11px] font-medium text-muted-foreground">
             {localizeNumber(section - 1, lang)} {t("q.of")} {localizeNumber(7, lang)}{" "}
-            {t("q.sectionsDone")} — {encouragement}
+            {t("q.sectionsDone")}
           </p>
         </div>
       </div>
 
       <div className="mx-auto flex max-w-4xl flex-col gap-6 px-4 py-10 md:px-8 lg:grid lg:max-w-6xl lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
         <main className="min-w-0">
+        {guidedView === "companion" ? (
+          <AssessmentGuideMoment message={t(`q.companion.${companionMoment}`)} />
+        ) : guidedView === "complete" ? (
+          <div className="assessment-complete flex min-h-[52vh] items-center justify-center text-center" role="status" aria-live="polite">
+            <p className="text-xl font-bold text-secondary md:text-2xl">
+              ✓ {meta?.title[lang]} {t("q.levelComplete")}
+            </p>
+          </div>
+        ) : guidedView === "intro" ? (
+          <section className="assessment-intro flex min-h-[52vh] flex-col items-center justify-center text-center">
+            {(() => {
+              const Icon = SECTION_ICONS[section - 1] ?? Star;
+              return <Icon className="size-10 text-secondary" strokeWidth={1.7} aria-hidden />;
+            })()}
+            <p className="mt-5 text-xs font-bold uppercase text-secondary">
+              {t("q.level")} {localizeNumber(section, lang)} {t("q.of")} {localizeNumber(7, lang)}
+            </p>
+            <h1 className="mt-2 text-2xl md:text-3xl">{meta?.title[lang]}</h1>
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
+              {t(`q.levelDescription.${section}`)}
+            </p>
+            <button
+              type="button"
+              onClick={() => setGuidedView("questions")}
+              className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 hover:bg-secondary/90"
+            >
+              {t("q.beginLevel")}
+              <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+            </button>
+          </section>
+        ) : (
+        <>
         <h1 className="text-2xl md:text-3xl">{meta?.title[lang]}</h1>
         <p
           className="mt-3 inline-flex items-start gap-2 rounded-2xl border border-secondary/25 bg-secondary/8 px-3.5 py-2 text-xs text-muted-foreground"
@@ -342,7 +451,7 @@ function Assessment() {
           <button
             type="button"
             disabled={section === 1}
-            onClick={() => setSection((s) => Math.max(1, s - 1))}
+            onClick={() => moveToSection(Math.max(1, section - 1))}
             className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted disabled:opacity-40"
           >
             <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
@@ -377,6 +486,8 @@ function Assessment() {
             ? COUNTRIES.find((c) => c.en === state.answers[2]?.value)?.[lang]
             : null}
         </p>
+        </>
+        )}
         </main>
         <div className="sticky top-[20rem] z-30 order-first lg:static lg:order-none">
           <LiveProgressPanel answers={state.answers} />
