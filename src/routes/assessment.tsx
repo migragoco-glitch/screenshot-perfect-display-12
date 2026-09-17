@@ -148,7 +148,7 @@ function Assessment() {
     () =>
       SECTIONS.map((level) => {
         const questions = questionsForSection(level.id, state.answers, { founderTrack });
-        return level.optional || questions.every((q) => isAnswered(q, state.answers[q.id]));
+        return questions.length > 0 && questions.every((q) => isAnswered(q, state.answers[q.id]));
       }),
     [state.answers, founderTrack],
   );
