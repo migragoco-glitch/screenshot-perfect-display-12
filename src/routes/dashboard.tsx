@@ -25,7 +25,6 @@ import {
   Check,
   ClipboardList,
   Compass,
-  ExternalLink,
   FileText,
   Flag,
   HelpCircle,
