@@ -722,12 +722,35 @@ export function generateRoadmap(profile: Profile): RoadmapPhase[] {
   );
 
   const phases: Phase[] = [1, 2, 3, 4];
-  return phases.map((phase) => ({
-    phase,
-    items: matched
+  return phases.map((phase) => {
+    const ordered = matched
       .filter((e) => e.phase === phase)
-      .sort((a, b) => a.week - b.week || priorityRank[a.priority] - priorityRank[b.priority]),
-  }));
+      .sort((a, b) => a.week - b.week || priorityRank[a.priority] - priorityRank[b.priority]);
+
+    // Re-sequence the surviving items evenly across this phase's 3-week span,
+    // so filtered-out conditional items never leave a fixed week empty.
+    const firstWeek = (phase - 1) * 3 + 1;
+    const base = Math.floor(ordered.length / 3);
+    const remainder = ordered.length % 3;
+    const perWeek = [
+      base + (remainder > 0 ? 1 : 0),
+      base + (remainder > 1 ? 1 : 0),
+      base,
+    ];
+
+    const items: RoadmapItem[] = [];
+    let index = 0;
+    perWeek.forEach((count, offset) => {
+      for (let n = 0; n < count; n += 1) {
+        const item = ordered[index];
+        index += 1;
+        if (item) items.push({ ...item, week: firstWeek + offset });
+      }
+    });
+
+    return { phase, items };
+  });
 }
+
 
 export const PHASE_TITLE_KEYS = ["road.phase1", "road.phase2", "road.phase3", "road.phase4"] as const;
