@@ -27,6 +27,7 @@ import {
   SECTION_DIMENSION,
   isAnswered,
   questionsForSection,
+  type Answers,
 } from "@/lib/questions";
 import { BUCKETS, computeProfile } from "@/lib/scoring";
 import { storedAnswersAreConsistent, trackEvent, useAppState } from "@/lib/store";
@@ -90,13 +91,13 @@ const DIMENSION_PROGRESS_COLORS = [
   "var(--navigator-gold)",
 ] as const;
 
-function dimensionCompletion(ids: readonly number[], answers: typeof QUESTIONS extends never ? never : Parameters<typeof isAnswered>[1] extends never ? never : Record<number, never>) {
+function dimensionCompletion(ids: readonly number[], answers: Answers) {
   const applicable = QUESTIONS.filter((question) => ids.includes(question.id) && (!question.showIf || question.showIf(answers)));
   if (!applicable.length) return 0;
   return applicable.filter((question) => isAnswered(question, answers[question.id])).length / applicable.length;
 }
 
-function CompactProgressRing({ pct, answers }: { pct: number; answers: Parameters<typeof QUESTIONS[number]["showIf"]>[0] }) {
+function CompactProgressRing({ pct, answers }: { pct: number; answers: Answers }) {
   const size = 54;
   const stroke = 5;
   const radius = (size - stroke) / 2;
