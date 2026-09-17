@@ -3,8 +3,12 @@ import { QUESTIONS, type Answers, isAnswered } from "@/lib/questions";
 import { BUCKETS } from "@/lib/scoring";
 import { useI18n } from "@/lib/i18n";
 
-/** Same color mapping as the dashboard donut/radar. */
-const DIM_COLORS = ["var(--navy)", "var(--teal)", "var(--gold)"];
+/** Same color mapping as the homepage Smart Integration Profile. */
+const DIM_COLORS = [
+  "var(--navigator-teal)",
+  "var(--navigator-light-teal)",
+  "var(--navigator-gold)",
+];
 
 function completion(ids: readonly number[], answers: Answers) {
   const qs = QUESTIONS.filter((q) => ids.includes(q.id) && (!q.showIf || q.showIf(answers)));
@@ -42,6 +46,47 @@ function Donut({ pct, size, color, label }: { pct: number; size: number; color: 
   );
 }
 
+function SegmentedDonut({ pct, size, progress, label }: { pct: number; size: number; progress: number[]; label: string }) {
+  const stroke = 10;
+  const radius = (size - stroke) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const gap = 5;
+  const segmentLength = (circumference - gap * 3) / 3;
+
+  return (
+    <div className="flex flex-col items-center gap-1.5">
+      <svg width={size} height={size} role="img" aria-label={`${label}: ${pct}%`}>
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--muted)" strokeWidth={stroke} />
+        {progress.map((value, index) => {
+          const paintedLength = segmentLength * (value / 100);
+          return (
+            <circle
+              key={DIM_COLORS[index]}
+              cx={size / 2}
+              cy={size / 2}
+              r={radius}
+              fill="none"
+              stroke={DIM_COLORS[index]}
+              strokeWidth={stroke}
+              strokeLinecap={value > 0 ? "round" : "butt"}
+              strokeDasharray={`${paintedLength} ${circumference - paintedLength}`}
+              strokeDashoffset={-index * (segmentLength + gap)}
+              transform={`rotate(-90 ${size / 2} ${size / 2})`}
+              style={{ transition: "stroke-dasharray 500ms cubic-bezier(0.16, 1, 0.3, 1)" }}
+            />
+          );
+        })}
+        <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" className="fill-foreground text-sm font-bold">
+          {pct}%
+        </text>
+      </svg>
+      <span className="max-w-[7rem] text-center text-[10px] font-semibold leading-tight text-muted-foreground">
+        {label}
+      </span>
+    </div>
+  );
+}
+
 export function LiveProgressPanel({ answers }: { answers: Answers }) {
   const { t } = useI18n();
 
@@ -64,7 +109,7 @@ export function LiveProgressPanel({ answers }: { answers: Answers }) {
         <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground">{t("q.live.note")}</p>
 
         <div className="mt-5 flex justify-center">
-          <Donut pct={overall} size={128} color="var(--teal)" label={t("q.live.overall")} />
+          <SegmentedDonut pct={overall} size={128} progress={dims.map((dimension) => dimension.pct)} label={t("q.live.overall")} />
         </div>
 
         <div className="mt-5 grid grid-cols-3 gap-2">
