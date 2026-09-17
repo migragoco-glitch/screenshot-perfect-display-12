@@ -72,6 +72,16 @@ const LEVEL_DESCRIPTION_KEYS = [
   "q.levelDescription.7",
 ] as const;
 
+const LEVEL_COLORS = [
+  "var(--navigator-light-teal)",
+  "var(--navigator-teal)",
+  "var(--navigator-dark-teal)",
+  "var(--navigator-olive)",
+  "var(--navigator-navy)",
+  "var(--navigator-olive-gold)",
+  "var(--navigator-gold)",
+] as const;
+
 type GuidedView = "companion" | "intro" | "questions" | "complete";
 
 function CompactProgressRing({ pct }: { pct: number }) {
@@ -277,6 +287,8 @@ function Assessment() {
             {SECTIONS.map((s) => {
               const Icon = SECTION_ICONS[s.id - 1] ?? Star;
               const status = s.id < section ? "done" : s.id === section ? "current" : "todo";
+              const reached = completedLevels[s.id - 1] || status === "current";
+              const levelColor = LEVEL_COLORS[s.id - 1] ?? "var(--navigator-teal)";
               return (
                 <li key={s.id} className="flex-1">
                   <button
@@ -287,25 +299,13 @@ function Assessment() {
                     className="flex w-full flex-col items-center gap-1"
                   >
                     <Icon
-                      className={cn(
-                        "size-3.5 transition-colors duration-200 ease-out",
-                        completedLevels[s.id - 1]
-                          ? "text-secondary"
-                          : status === "current"
-                            ? "text-accent"
-                            : "text-muted-foreground/50",
-                      )}
+                      className="size-3.5 transition-colors duration-200 ease-out"
+                      style={{ color: reached ? levelColor : "color-mix(in oklab, var(--muted-foreground) 50%, transparent)" }}
                       aria-hidden
                     />
                     <span
-                      className={cn(
-                        "h-1.5 w-full rounded-full transition-colors duration-200 ease-out",
-                        completedLevels[s.id - 1]
-                          ? "bg-secondary"
-                          : status === "current"
-                            ? "bg-accent"
-                            : "bg-muted-foreground/25",
-                      )}
+                      className="h-1.5 w-full rounded-full transition-colors duration-200 ease-out"
+                      style={{ backgroundColor: reached ? levelColor : "color-mix(in oklab, var(--muted-foreground) 25%, transparent)" }}
                     />
                   </button>
                 </li>
@@ -333,9 +333,9 @@ function Assessment() {
           <section className="assessment-intro flex min-h-[52vh] flex-col items-center justify-center text-center">
             {(() => {
               const Icon = SECTION_ICONS[section - 1] ?? Star;
-              return <Icon className="size-10 text-secondary" strokeWidth={1.7} aria-hidden />;
+               return <Icon className="size-10" style={{ color: LEVEL_COLORS[section - 1] }} strokeWidth={1.7} aria-hidden />;
             })()}
-            <p className="mt-5 text-xs font-bold uppercase text-secondary">
+            <p className="mt-5 text-xs font-bold uppercase" style={{ color: LEVEL_COLORS[section - 1] }}>
               {t("q.level")} {localizeNumber(section, lang)} {t("q.of")} {localizeNumber(7, lang)}
             </p>
             <h1 className="mt-2 text-2xl md:text-3xl">{meta?.title[lang]}</h1>
@@ -419,6 +419,7 @@ function Assessment() {
               question={q}
               index={q.id}
               answer={state.answers[q.id]}
+              levelColor={LEVEL_COLORS[section - 1] ?? "var(--navigator-teal)"}
               onChange={(v) => {
                 setAnswer(q.id, v);
                 setShowRequired(false);

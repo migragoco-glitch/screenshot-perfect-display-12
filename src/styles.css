@@ -70,6 +70,7 @@
   --navigator-navy: #021c3b;
   --navigator-teal: #02808a;
   --navigator-light-teal: #3ac8c3;
+  --navigator-dark-teal: #1e8e6e;
   --navigator-gold: #cb902c;
   --navigator-olive-gold: #a8862e;
   --navigator-olive: #6b8e3a;
@@ -78,6 +79,10 @@
   --navigator-notice: #fbeaf0;
   --navigator-notice-text: #72243e;
   --navigator-notice-icon: #993556;
+  --institution-tint: #efe9f5;
+  --institution-tint-hover: #e4d9ed;
+  --institution-purple: #3d2b6b;
+  --institution-active-foreground: #ffffff;
   --journey-pill-foreground: #ffffff;
   --readiness-highlight: #ffffff;
 
@@ -320,6 +325,16 @@
 
 .option-check-active svg {
   animation: check-pop 240ms ease-out both;
+}
+
+.assessment-question-card {
+  border-color: color-mix(in oklab, var(--assessment-level-color) 22%, var(--border));
+  background: color-mix(in oklab, var(--assessment-level-color) 7%, var(--card));
+}
+
+.assessment-question-number {
+  color: var(--assessment-level-color);
+  background: color-mix(in oklab, var(--assessment-level-color) 14%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

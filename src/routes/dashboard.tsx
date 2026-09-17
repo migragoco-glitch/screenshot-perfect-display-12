@@ -25,7 +25,6 @@ import {
   Check,
   ClipboardList,
   Compass,
-  ExternalLink,
   FileText,
   Flag,
   HelpCircle,
@@ -1160,15 +1159,11 @@ function Dashboard() {
                                       {t("road.relevantAuthority")}
                                     </p>
                                     <div className="mt-1">
-                                      <a
+                                      <InstitutionBadge
+                                        institution={item.institution}
                                         href={item.officialSource}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-[var(--navigator-gold)] bg-plum px-3 py-1.5 text-sm font-semibold text-[var(--navigator-gold)] shadow-[var(--shadow-card)] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-                                      >
-                                        {item.institution}
-                                        <ExternalLink className="size-3.5 shrink-0" aria-hidden />
-                                      </a>
+                                        displayName={item.institution}
+                                      />
                                     </div>
 
                                     <p className="mt-3 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
