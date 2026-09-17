@@ -273,6 +273,65 @@
   animation: check-pop 260ms ease-out both;
 }
 
+@keyframes assessment-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes assessment-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.conditional-reveal {
+  animation: assessment-reveal 300ms ease-out both;
+}
+
+.assessment-companion,
+.assessment-intro,
+.assessment-complete {
+  animation: assessment-fade 280ms ease-out both;
+}
+
+.option-check {
+  display: inline-flex;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 1.25rem;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  color: var(--secondary-foreground);
+  transition: background-color 220ms ease, border-color 220ms ease, transform 220ms ease;
+}
+
+.option-check-active {
+  border-color: var(--teal);
+  background-color: var(--teal);
+  transform: scale(1.04);
+}
+
+.option-check-active svg {
+  animation: check-pop 240ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .conditional-reveal,
+  .assessment-companion,
+  .assessment-intro,
+  .assessment-complete,
+  .option-check-active svg {
+    animation: none;
+  }
+}
+
 @keyframes navigator-bar-rise {
   from {
     transform: scaleY(0);

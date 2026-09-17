@@ -7,6 +7,7 @@ import {
   type Question,
 } from "@/lib/questions";
 import { cn } from "@/lib/utils";
+import { Check } from "lucide-react";
 
 type Props = {
   question: Question;
@@ -25,7 +26,12 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
   const showSub = q.sub && (q.sub.showOn === undefined || selected === q.sub.showOn);
 
   return (
-    <fieldset className="rounded-2xl border border-border/70 bg-card/80 p-5 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_6px_24px_-16px_rgba(11,37,69,0.35)] backdrop-blur-sm md:p-6">
+    <fieldset
+      className={cn(
+        "rounded-2xl border border-border/70 bg-card/80 p-5 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_6px_24px_-16px_rgba(11,37,69,0.35)] backdrop-blur-sm md:p-6",
+        q.showIf && "conditional-reveal",
+      )}
+    >
       <legend className="sr-only">{q.label[lang]}</legend>
       <div className="flex items-start gap-3">
         <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/8 text-xs font-bold text-primary">
@@ -94,7 +100,12 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
                     : "border-border bg-background hover:border-secondary/40",
                 )}
               >
-                {opt[lang]}
+                <span className="flex items-center gap-2.5">
+                  <span className={cn("option-check", selected === i && "option-check-active")} aria-hidden>
+                    {selected === i ? <Check className="size-3.5" strokeWidth={3} /> : null}
+                  </span>
+                  <span>{opt[lang]}</span>
+                </span>
               </button>
             ))}
           </div>
@@ -130,7 +141,12 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
                     disabled && "cursor-not-allowed opacity-40",
                   )}
                 >
-                  {opt[lang]}
+                  <span className="flex items-center gap-2.5">
+                    <span className={cn("option-check", active && "option-check-active")} aria-hidden>
+                      {active ? <Check className="size-3.5" strokeWidth={3} /> : null}
+                    </span>
+                    <span>{opt[lang]}</span>
+                  </span>
                 </button>
               );
             })}
@@ -153,7 +169,10 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
                       : "border-border bg-background hover:border-secondary/40",
                   )}
                 >
-                  {localizeNumber(n, lang)}
+                  <span className="flex items-center justify-center gap-1.5">
+                    <span>{localizeNumber(n, lang)}</span>
+                    {selected === n ? <Check className="check-pop size-3.5" strokeWidth={3} aria-hidden /> : null}
+                  </span>
                 </button>
               ))}
             </div>
@@ -169,7 +188,7 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
         ) : null}
 
         {showSub && q.sub ? (
-          <div className="mt-5">
+          <div className="conditional-reveal mt-5">
             <p className="text-[15px] font-semibold leading-relaxed">{q.sub.label[lang]}</p>
             <div className="mt-3 grid gap-2 sm:grid-cols-2">
               {q.sub.options.map((opt, i) => {
@@ -196,7 +215,12 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
                         : "border-border bg-background hover:border-secondary/40",
                     )}
                   >
-                    {opt[lang]}
+                    <span className="flex items-center gap-2.5">
+                      <span className={cn("option-check", active && "option-check-active")} aria-hidden>
+                        {active ? <Check className="size-3.5" strokeWidth={3} /> : null}
+                      </span>
+                      <span>{opt[lang]}</span>
+                    </span>
                   </button>
                 );
               })}
@@ -206,7 +230,7 @@ export function QuestionField({ question: q, index, answer, onChange }: Props) {
 
 
         {showDetail ? (
-          <div className="rise-in mt-3">
+          <div className="conditional-reveal mt-3">
             <label className="block text-xs font-semibold text-muted-foreground">
               {q.detailLabel?.[lang] ?? t("q.detail")}
             </label>
