@@ -28,7 +28,7 @@ import {
   isAnswered,
   questionsForSection,
 } from "@/lib/questions";
-import { computeProfile } from "@/lib/scoring";
+import { BUCKETS, computeProfile } from "@/lib/scoring";
 import { storedAnswersAreConsistent, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -84,27 +84,53 @@ const LEVEL_COLORS = [
 
 type GuidedView = "companion" | "intro" | "questions" | "complete";
 
-function CompactProgressRing({ pct }: { pct: number }) {
+const DIMENSION_PROGRESS_COLORS = [
+  "var(--navigator-teal)",
+  "var(--navigator-light-teal)",
+  "var(--navigator-gold)",
+] as const;
+
+function dimensionCompletion(ids: readonly number[], answers: typeof QUESTIONS extends never ? never : Parameters<typeof isAnswered>[1] extends never ? never : Record<number, never>) {
+  const applicable = QUESTIONS.filter((question) => ids.includes(question.id) && (!question.showIf || question.showIf(answers)));
+  if (!applicable.length) return 0;
+  return applicable.filter((question) => isAnswered(question, answers[question.id])).length / applicable.length;
+}
+
+function CompactProgressRing({ pct, answers }: { pct: number; answers: Parameters<typeof QUESTIONS[number]["showIf"]>[0] }) {
   const size = 54;
   const stroke = 5;
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
+  const gap = 3;
+  const segmentLength = (circumference - gap * 3) / 3;
+  const dimensionProgress = [
+    dimensionCompletion(BUCKETS.legal.ids, answers),
+    dimensionCompletion(BUCKETS.professional.ids, answers),
+    dimensionCompletion(BUCKETS.psychological.ids, answers),
+  ];
   return (
     <svg width={size} height={size} role="img" aria-label={`${pct}%`} className="shrink-0">
       <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--muted)" strokeWidth={stroke} />
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={radius}
-        fill="none"
-        stroke="var(--teal)"
-        strokeWidth={stroke}
-        strokeLinecap="round"
-        strokeDasharray={circumference}
-        strokeDashoffset={circumference - (circumference * pct) / 100}
-        transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        className="transition-[stroke-dashoffset] duration-500 ease-out"
-      />
+      {dimensionProgress.map((completion, index) => {
+        const paintedLength = segmentLength * completion;
+        const segmentOffset = index * (segmentLength + gap);
+        return (
+          <circle
+            key={DIMENSION_PROGRESS_COLORS[index]}
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke={DIMENSION_PROGRESS_COLORS[index]}
+            strokeWidth={stroke}
+            strokeLinecap="round"
+            strokeDasharray={`${paintedLength} ${circumference - paintedLength}`}
+            strokeDashoffset={-segmentOffset}
+            transform={`rotate(-90 ${size / 2} ${size / 2})`}
+            className="transition-[stroke-dasharray] duration-500 ease-out"
+          />
+        );
+      })}
       <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" className="fill-foreground text-[11px] font-bold">
         {pct}%
       </text>
@@ -278,7 +304,7 @@ function Assessment() {
             </span>
           </div>
           <div className="flex items-center gap-3 md:hidden">
-            <CompactProgressRing pct={progress} />
+            <CompactProgressRing pct={progress} answers={state.answers} />
             <p className="text-sm font-bold leading-snug">
               {t("q.level")} {localizeNumber(section, lang)} {t("q.of")} {localizeNumber(7, lang)} — {meta?.title[lang]}
             </p>

@@ -3,8 +3,12 @@ import { QUESTIONS, type Answers, isAnswered } from "@/lib/questions";
 import { BUCKETS } from "@/lib/scoring";
 import { useI18n } from "@/lib/i18n";
 
-/** Same color mapping as the dashboard donut/radar. */
-const DIM_COLORS = ["var(--navy)", "var(--teal)", "var(--gold)"];
+/** Same color mapping as the homepage Smart Integration Profile. */
+const DIM_COLORS = [
+  "var(--navigator-teal)",
+  "var(--navigator-light-teal)",
+  "var(--navigator-gold)",
+];
 
 function completion(ids: readonly number[], answers: Answers) {
   const qs = QUESTIONS.filter((q) => ids.includes(q.id) && (!q.showIf || q.showIf(answers)));

@@ -1,7 +1,7 @@
 # Current roadmap
 
-- [x] Apply the seven requested level colors to assessment progress, intros, and question cards.
-- [x] Redesign My Profile institution badges as static icon-led light-purple capsules.
-- [x] Redesign My Roadmap institution links with matching icons and interactive states.
-- [x] Verify English/Persian assessment and dashboard views without altering desktop rings.
-- [x] Confirm preview health and clean build.
+- [x] Match My Roadmap’s high-priority badge to My Profile.
+- [x] Apply the four phase colors dynamically across all three Progress summaries.
+- [x] Correct the desktop assessment ring mapping to teal, light teal, and gold.
+- [x] Convert the mobile assessment ring to three live dimension-color segments.
+- [ ] Verify English and Persian views, progress states, and preview health.

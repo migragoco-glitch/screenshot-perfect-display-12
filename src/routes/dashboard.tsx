@@ -1128,7 +1128,7 @@ function Dashboard() {
                                         className={cn(
                                           "rounded-full px-2.5 py-0.5",
                                           item.priority === "high"
-                                            ? "bg-destructive text-destructive-foreground"
+                                            ? "bg-destructive/12 text-destructive"
                                             : item.priority === "medium"
                                               ? "bg-[var(--navigator-olive)] text-[var(--navigator-navy)]"
                                               : "bg-muted text-muted-foreground",
@@ -1254,54 +1254,72 @@ function Dashboard() {
               </section>
             ) : (
               <>
-                <section className="rounded-3xl border border-[var(--navigator-teal)] bg-[var(--navigator-teal)] p-6 text-primary-foreground">
-                  <h2 className="text-lg text-primary-foreground">{t("prog.overall")}</h2>
-                  <p className="mt-3 text-4xl font-bold text-primary-foreground tabular-nums">
+                <section className="rounded-3xl border border-border bg-card p-6 text-[var(--navigator-navy)]">
+                  <h2 className="text-lg text-[var(--navigator-navy)]">{t("prog.overall")}</h2>
+                  <p className="mt-3 text-4xl font-bold text-[var(--navigator-navy)] tabular-nums">
                     {localizeNumber(
                       totalTasks ? Math.round((doneCount / totalTasks) * 100) : 0,
                       lang,
                     )}
                     %
                   </p>
-                  <div className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-background/30">
+                  <div
+                    className="mt-3 h-2.5 w-full overflow-hidden rounded-full"
+                    style={{
+                      background:
+                        "linear-gradient(to right, color-mix(in oklab, var(--navigator-light-teal) 18%, var(--card)) 0 25%, color-mix(in oklab, var(--navigator-teal) 18%, var(--card)) 25% 50%, color-mix(in oklab, var(--navigator-olive) 18%, var(--card)) 50% 75%, color-mix(in oklab, var(--navigator-gold) 18%, var(--card)) 75% 100%)",
+                    }}
+                  >
                     <div
-                      className="h-full rounded-full bg-primary-foreground transition-all duration-500 ease-out"
-                      style={{ width: `${totalTasks ? (doneCount / totalTasks) * 100 : 0}%` }}
+                      className="h-full rounded-full transition-all duration-500 ease-out"
+                      style={{
+                        width: `${totalTasks ? (doneCount / totalTasks) * 100 : 0}%`,
+                        background:
+                          "linear-gradient(to right, var(--navigator-light-teal) 0 25%, var(--navigator-teal) 25% 50%, var(--navigator-olive) 50% 75%, var(--navigator-gold) 75% 100%)",
+                      }}
                     />
                   </div>
-                  <p className="mt-2 text-xs text-primary-foreground">
+                  <p className="mt-2 text-xs text-[var(--navigator-navy)]">
                     {localizeNumber(doneCount, lang)} / {localizeNumber(totalTasks, lang)}{" "}
                     {t("road.progress")}
                   </p>
                 </section>
 
                 <div className="grid gap-5 lg:grid-cols-2">
-                  <section className="rounded-3xl border border-[var(--navigator-navy)] bg-[var(--navigator-navy)] p-6 text-[var(--navigator-cream)]">
-                    <h2 className="text-lg text-[var(--navigator-cream)]">{t("prog.phase")}</h2>
+                  <section className="rounded-3xl border border-border bg-card p-6 text-[var(--navigator-navy)]">
+                    <h2 className="text-lg text-[var(--navigator-navy)]">{t("prog.phase")}</h2>
                     <ul className="mt-4 space-y-4">
                       {roadmap.map((phase, i) => {
                         const total = phase.items.length;
                         const completed = phase.items.filter((it) => done.has(it.id)).length;
                         const pct = total ? Math.round((completed / total) * 100) : 0;
                         return (
-                            <li key={phase.phase} className="rounded-xl bg-background/10 p-2.5">
+                            <li
+                              key={phase.phase}
+                              className="rounded-xl p-2.5"
+                              style={{
+                                background: `color-mix(in oklab, ${ROADMAP_PHASES[i]?.value ?? "var(--navigator-teal)"} 9%, var(--card))`,
+                              }}
+                            >
                             <div className="flex items-baseline justify-between gap-2 text-sm font-semibold">
-                                <span className="text-[var(--navigator-cream)]">
+                                <span style={{ color: ROADMAP_PHASES[i]?.value ?? "var(--navigator-teal)" }}>
                                   {t(PHASE_TITLE_KEYS[i] ?? "road.phase1")}
                                 </span>
-                              <span className="tabular-nums">
+                              <span className="tabular-nums" style={{ color: ROADMAP_PHASES[i]?.value ?? "var(--navigator-teal)" }}>
                                 {localizeNumber(completed, lang)}/{localizeNumber(total, lang)}
                               </span>
                             </div>
-                            <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-background/55">
+                            <div
+                              className="mt-1.5 h-2 w-full overflow-hidden rounded-full"
+                              style={{
+                                background: `color-mix(in oklab, ${ROADMAP_PHASES[i]?.value ?? "var(--navigator-teal)"} 20%, var(--card))`,
+                              }}
+                            >
                               <div
                                 className="h-full rounded-full transition-all duration-500 ease-out"
                                 style={{
                                   width: `${pct}%`,
-                                  backgroundColor:
-                                    i === 3
-                                      ? "var(--navigator-olive)"
-                                      : ROADMAP_PHASES[i]?.value ?? "var(--navigator-teal)",
+                                  backgroundColor: ROADMAP_PHASES[i]?.value ?? "var(--navigator-teal)",
                                 }}
                               />
                             </div>
@@ -1311,25 +1329,26 @@ function Dashboard() {
                     </ul>
                   </section>
 
-                  <section className="rounded-3xl border border-[var(--navigator-teal)]/25 bg-card p-6">
-                    <h2 className="text-lg text-[var(--navigator-teal)]">{t("prog.weekly")}</h2>
+                  <section className="rounded-3xl border border-border bg-card p-6">
+                    <h2 className="text-lg text-[var(--navigator-navy)]">{t("prog.weekly")}</h2>
                     <ul className="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4">
                       {weeklyProgress.map((w) => {
-                        const hasProgress = w.completed > 0;
                         const phaseColor = phaseColorForTiming(w.week, w.week);
+                        const completionRatio = w.total ? w.completed / w.total : 0;
+                        const fillStrength = Math.round(10 + completionRatio * 90);
                         return (
                         <li
                           key={w.week}
                           className={cn(
                             "rounded-2xl border p-3 text-center",
-                            hasProgress && "text-primary-foreground",
+                            "text-[var(--navigator-navy)]",
                           )}
                           style={{
-                            borderColor: hasProgress ? phaseColor : "var(--border)",
-                            background: hasProgress ? phaseColor : "var(--card)",
+                            borderColor: `color-mix(in oklab, ${phaseColor} 55%, var(--border))`,
+                            background: `color-mix(in oklab, ${phaseColor} ${fillStrength}%, var(--card))`,
                           }}
                         >
-                          <p className={cn("text-[10px] font-semibold uppercase tracking-wide", hasProgress ? "text-primary-foreground" : "text-muted-foreground")}>
+                          <p className="text-[10px] font-semibold uppercase tracking-wide text-[var(--navigator-navy)]">
                             {t("road.week")} {localizeNumber(w.week, lang)}
                           </p>
                           <p className="mt-1 text-sm font-bold tabular-nums">
