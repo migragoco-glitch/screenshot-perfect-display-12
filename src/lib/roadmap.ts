@@ -730,13 +730,20 @@ export function generateRoadmap(profile: Profile): RoadmapPhase[] {
     // Re-sequence the surviving items evenly across this phase's 3-week span,
     // so filtered-out conditional items never leave a fixed week empty.
     const firstWeek = (phase - 1) * 3 + 1;
+    // Balanced spread across ALL 3 weeks of the phase — never front-loaded:
+    // 1 item → middle week; 2 items → first + last week; 3+ → as even as possible.
     const base = Math.floor(ordered.length / 3);
     const remainder = ordered.length % 3;
-    const perWeek = [
-      base + (remainder > 0 ? 1 : 0),
-      base + (remainder > 1 ? 1 : 0),
-      base,
-    ];
+    const perWeek =
+      ordered.length === 1
+        ? [0, 1, 0]
+        : ordered.length === 2
+          ? [1, 0, 1]
+          : [
+              base + (remainder > 0 ? 1 : 0),
+              base + (remainder > 1 ? 1 : 0),
+              base,
+            ];
 
     const items: RoadmapItem[] = [];
     let index = 0;
