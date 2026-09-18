@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Briefcase, Building2, CalendarDays, ClipboardList, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, User, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
-import arrowMarkAsset from "@/assets/migrago-arrow.png.asset.json";
+import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { useI18n, type TKey } from "@/lib/i18n";
 import { useAppState } from "@/lib/store";
@@ -50,7 +50,7 @@ const INSTITUTIONS: { name: string; url: string; aria: TKey }[] = [
 const SAMPLE = [
   { key: "dash.dim1", value: 65, color: "#3AC8C3" },
   { key: "dash.dim2", value: 74, color: "#02808A" },
-  { key: "dash.dim3", value: 81, color: "#C8A96A" },
+  { key: "dash.dim3", value: 81, color: "#CB902C" },
 ] as const;
 
 function useReducedMotion() {
@@ -239,7 +239,7 @@ const ROADMAP_PHASES = [
   { label: "hero.roadmapWeeks1", height: "h-1/4", color: "bg-[var(--navigator-light-teal)] text-[var(--navigator-light-teal)]", icon: Scale },
   { label: "hero.roadmapWeeks2", height: "h-[45%]", color: "bg-[var(--navigator-teal)] text-[var(--navigator-teal)]", icon: House },
   { label: "hero.roadmapWeeks3", height: "h-[65%]", color: "bg-[var(--navigator-olive)] text-[var(--navigator-olive)]", icon: Briefcase },
-  { label: "hero.roadmapWeeks4", height: "h-full", color: "bg-[var(--navigator-gold)] text-[var(--navigator-gold)]", icon: Users },
+  { label: "hero.roadmapWeeks4", height: "h-full", color: "bg-[#CB902C] text-[#CB902C]", icon: Users },
 ] as const;
 
 function RoadmapPreview() {
@@ -381,8 +381,8 @@ function Landing() {
               />
               <div className="relative">
               <div className="glass-card relative rounded-3xl p-6 md:p-8">
-              <span className="absolute -top-3 start-3 flex size-[26px] items-center justify-center rounded-full border-[1.5px] border-[var(--navigator-olive)] bg-[var(--navigator-light-teal)]" aria-hidden>
-                <img src={arrowMarkAsset.url} alt="" className="size-[13px] object-contain" />
+              <span className="absolute -top-3 start-3 flex size-[26px] items-center justify-center rounded-full bg-[var(--navigator-light-teal)]" aria-hidden>
+                <img src={arrowMarkAsset.url} alt="" className="h-4 w-auto object-contain" />
               </span>
               <h2 className="text-center text-[18px] font-semibold text-[var(--navigator-teal)]">
                 {t("hero.navigatorTitle")}
@@ -402,7 +402,7 @@ function Landing() {
                       key={d.key}
                       label={t(d.key)}
                       value={d.value}
-                      color={d.key === "dash.dim3" ? "#C8A96A" : d.color}
+                      color={d.color}
                     />
                   ))}
                 </div>
@@ -498,7 +498,7 @@ function Landing() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={t(inst.aria)}
-                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#E3B457] bg-transparent px-4 text-xs font-bold text-[#E3B457] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[#C8A96A] hover:bg-[#C8A96A] hover:text-[#021C3B] hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:border-[#C8A96A] focus-visible:bg-[#C8A96A] focus-visible:text-[#021C3B] focus-visible:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F8F6F2] active:translate-y-0 active:bg-[#C8A96A] active:text-[#021C3B]"
+                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#C8A96A] bg-transparent px-4 text-xs font-bold text-[#C8A96A] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[#C8A96A] hover:bg-[#C8A96A] hover:text-[#021C3B] hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:border-[#C8A96A] focus-visible:bg-[#C8A96A] focus-visible:text-[#021C3B] focus-visible:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F8F6F2] active:translate-y-0 active:bg-[#C8A96A] active:text-[#021C3B]"
                   >
                     <Building2 className="size-3.5 shrink-0" aria-hidden />
                     {inst.name}
@@ -522,7 +522,7 @@ function Landing() {
             </article>
 
             <article className="relative rounded-2xl border-2 border-secondary bg-card p-7 shadow-[var(--shadow-lift)]">
-              <span className="absolute -top-3 start-7 rounded-full bg-[var(--navigator-gold)] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[var(--navigator-navy)]">
+              <span className="absolute -top-3 start-7 rounded-full bg-[#C8A96A] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[var(--navigator-navy)]">
                 {t("pricing.recommended")}
               </span>
               <h3 className="text-lg">{t("pricing.nav")}</h3>
