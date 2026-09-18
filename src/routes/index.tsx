@@ -50,7 +50,7 @@ const INSTITUTIONS: { name: string; url: string; aria: TKey }[] = [
 const SAMPLE = [
   { key: "dash.dim1", value: 65, color: "#3AC8C3" },
   { key: "dash.dim2", value: 74, color: "#02808A" },
-  { key: "dash.dim3", value: 81, color: "#CB902C" },
+  { key: "dash.dim3", value: 81, color: "#C8A96A" },
 ] as const;
 
 function useReducedMotion() {
@@ -402,7 +402,7 @@ function Landing() {
                       key={d.key}
                       label={t(d.key)}
                       value={d.value}
-                      color={d.key === "dash.dim3" ? "#CB902C" : d.color}
+                      color={d.key === "dash.dim3" ? "#C8A96A" : d.color}
                     />
                   ))}
                 </div>
@@ -498,7 +498,7 @@ function Landing() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={t(inst.aria)}
-                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#E3B457] bg-transparent px-4 text-xs font-bold text-[#E3B457] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[#CB902C] hover:bg-[#CB902C] hover:text-[#021C3B] hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:border-[#CB902C] focus-visible:bg-[#CB902C] focus-visible:text-[#021C3B] focus-visible:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F8F6F2] active:translate-y-0 active:bg-[#CB902C] active:text-[#021C3B]"
+                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#E3B457] bg-transparent px-4 text-xs font-bold text-[#E3B457] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[#C8A96A] hover:bg-[#C8A96A] hover:text-[#021C3B] hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:border-[#C8A96A] focus-visible:bg-[#C8A96A] focus-visible:text-[#021C3B] focus-visible:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F8F6F2] active:translate-y-0 active:bg-[#C8A96A] active:text-[#021C3B]"
                   >
                     <Building2 className="size-3.5 shrink-0" aria-hidden />
                     {inst.name}
