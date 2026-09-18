@@ -19,6 +19,7 @@ import { AppHeader } from "@/components/BrandHeader";
 import { QuestionField } from "@/components/QuestionField";
 import { LiveProgressPanel } from "@/components/LiveProgressPanel";
 import { AssessmentGuideMoment } from "@/components/AssessmentGuideMoment";
+import { PenguinLoader } from "@/components/PenguinLoader";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import {
   COUNTRIES,
@@ -231,9 +232,7 @@ function Assessment() {
 
   if (analyzing) {
     return (
-      <div className="assessment-complete flex min-h-screen items-center justify-center px-4 text-center" role="status" aria-live="polite">
-        <h2 className="max-w-2xl text-xl font-bold md:text-2xl">{t("loading.analyzing")}</h2>
-      </div>
+      <PenguinLoader messages={[t("loading.analyzing")]} durationMs={2600} fullScreen />
     );
   }
 

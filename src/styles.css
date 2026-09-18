@@ -224,25 +224,6 @@
     );
 }
 
-/* Penguin sliding loader (used only for AI analysis + roadmap generation) */
-@keyframes penguin-walk-across {
-  0% {
-    transform: translateX(-110%);
-  }
-  100% {
-    transform: translateX(100cqw);
-  }
-}
-
-.penguin-lane {
-  container-type: inline-size;
-}
-
-.penguin-track {
-  animation: penguin-walk-across 4.5s ease-in-out both;
-  will-change: transform;
-}
-
 @keyframes rise-in {
   from {
     opacity: 0;
@@ -388,7 +369,6 @@
 @media (prefers-reduced-motion: reduce) {
   .check-pop,
   .rise-in,
-  .penguin-track,
   .navigator-entered .roadmap-bar,
   .navigator-entered .discover-badge {
     animation: none !important;
