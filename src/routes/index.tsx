@@ -50,7 +50,7 @@ const INSTITUTIONS: { name: string; url: string; aria: TKey }[] = [
 const SAMPLE = [
   { key: "dash.dim1", value: 65, color: "#3AC8C3" },
   { key: "dash.dim2", value: 74, color: "#02808A" },
-  { key: "dash.dim3", value: 81, color: "#CB902C" },
+  { key: "dash.dim3", value: 81, color: "var(--navigator-gold)" },
 ] as const;
 
 function useReducedMotion() {
@@ -239,7 +239,7 @@ const ROADMAP_PHASES = [
   { label: "hero.roadmapWeeks1", height: "h-1/4", color: "bg-[var(--navigator-light-teal)] text-[var(--navigator-light-teal)]", icon: Scale },
   { label: "hero.roadmapWeeks2", height: "h-[45%]", color: "bg-[var(--navigator-teal)] text-[var(--navigator-teal)]", icon: House },
   { label: "hero.roadmapWeeks3", height: "h-[65%]", color: "bg-[var(--navigator-olive)] text-[var(--navigator-olive)]", icon: Briefcase },
-  { label: "hero.roadmapWeeks4", height: "h-full", color: "bg-[#CB902C] text-[#CB902C]", icon: Users },
+  { label: "hero.roadmapWeeks4", height: "h-full", color: "bg-[var(--navigator-gold)] text-[var(--navigator-gold)]", icon: Users },
 ] as const;
 
 function RoadmapPreview() {
