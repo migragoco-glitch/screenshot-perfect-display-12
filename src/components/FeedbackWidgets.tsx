@@ -65,7 +65,7 @@ export function InstitutionBadge({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 rounded-full bg-[var(--institution-tint)] px-3 py-1.5 text-sm font-semibold text-[var(--institution-purple)] transition-[background-color,box-shadow,transform,color] duration-200 ease-out hover:bg-[var(--institution-tint-hover)] hover:shadow-[var(--shadow-card)] active:translate-y-px active:bg-[var(--institution-purple)] active:text-[var(--institution-active-foreground)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        className="inline-flex items-center gap-1.5 rounded-full border border-[#C8A96A] bg-transparent px-3 py-1.5 text-sm font-semibold text-[#C8A96A] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[#C8A96A] hover:bg-[#C8A96A] hover:text-[#021C3B] hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:border-[#C8A96A] focus-visible:bg-[#C8A96A] focus-visible:text-[#021C3B] focus-visible:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:translate-y-0 active:bg-[#C8A96A] active:text-[#021C3B]"
       >
         {content}
       </a>
