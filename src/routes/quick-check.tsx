@@ -11,7 +11,6 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
-import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { InstitutionBadge } from "@/components/FeedbackWidgets";
 import { QuestionField } from "@/components/QuestionField";
@@ -277,7 +276,7 @@ function QuickCheck() {
                     {t("qc.pathway")} · {t("qc.dimDocuments")} · {t("qc.dimLanguage")} · {t("qc.dimFinances")}
                   </p>
                 </div>
-                <div className="rounded-2xl border border-border bg-muted/50 p-4">
+                <div className="qc-card rounded-2xl border border-border bg-muted/50 p-4">
                   <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
                     <Info className="size-3.5" aria-hidden />
                     {t("qc.unknownTitle")}
@@ -290,7 +289,7 @@ function QuickCheck() {
             </section>
 
             {/* Readiness overview */}
-            <section className="mt-5 rounded-3xl border border-border bg-card p-6">
+            <section className="qc-card mt-5 rounded-3xl border border-border bg-card p-6">
               <h2 className="text-lg">{t("qc.prelimProfile")}</h2>
               <p className="mt-3 text-sm text-muted-foreground">
                 <span className="font-semibold text-foreground">{t("qc.pathway")}:</span>{" "}
@@ -302,7 +301,7 @@ function QuickCheck() {
                 {bands.map(({ labelKey, band, Icon }) => (
                   <li
                     key={labelKey}
-                    className={cn("rounded-2xl border p-4", BAND_STYLE[band])}
+                    className={cn("qc-card rounded-2xl border p-4", BAND_STYLE[band])}
                   >
                     <Icon className="size-5" aria-hidden />
                     <p className="mt-2 text-sm font-semibold">{t(labelKey)}</p>
@@ -314,7 +313,7 @@ function QuickCheck() {
 
             {/* Recommended next steps */}
             {result.actionKeys.length > 0 ? (
-              <section className="mt-5 rounded-3xl border border-border bg-card p-6">
+              <section className="qc-card mt-5 rounded-3xl border border-border bg-card p-6">
                 <h2 className="text-lg">{t("qc.actionsTitle")}</h2>
                 <ol className="mt-4 space-y-3">
                   {result.actionKeys.map((key, i) => (
@@ -330,14 +329,14 @@ function QuickCheck() {
             ) : null}
 
             {/* Official resources */}
-            <section className="mt-5 rounded-3xl border border-border bg-card p-6">
+            <section className="qc-card mt-5 rounded-3xl border border-border bg-card p-6">
               <h2 className="text-lg">{t("qc.resourcesTitle")}</h2>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("qc.resourcesSub")}</p>
               <ul className="mt-4 space-y-3">
                 {RESOURCES.map(({ institution, descKey }) => (
                   <li
                     key={institution}
-                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-muted/30 px-4 py-3"
+                    className="qc-card flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-muted/30 px-4 py-3"
                   >
                     <p className="max-w-md text-sm text-muted-foreground">{t(descKey)}</p>
                     <InstitutionBadge institution={institution} href={OFFICIAL_SOURCE[institution]} />
@@ -370,7 +369,7 @@ function QuickCheck() {
               </Link>
             </div>
 
-            <section className="mt-6 rounded-3xl border-2 border-secondary/40 bg-card p-6">
+            <section className="qc-card mt-6 rounded-3xl border-2 border-secondary/40 bg-card p-6">
               <h2 className="text-lg">{t("qc.upgradeTitle")}</h2>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("qc.upgradeDesc")}</p>
               <p className="mt-3 text-sm font-semibold text-foreground">
