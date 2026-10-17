@@ -135,7 +135,7 @@ function QuickCheck() {
                 <span className="font-semibold text-foreground">{t("qc.pathway")}:</span>{" "}
                 {result.pathwayIndex === null
                   ? t("qc.band.unknown")
-                  : (QUICK_CHECK_QUESTIONS[0].options?.[result.pathwayIndex]?.[lang] ?? "")}
+                  : (QUICK_CHECK_QUESTIONS[0]?.options?.[result.pathwayIndex]?.[lang] ?? "")}
               </p>
               <ul className="mt-4 space-y-2">
                 {bands.map(({ labelKey, band }) => (
