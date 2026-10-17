@@ -515,7 +515,7 @@ function Landing() {
         <section className="mx-auto max-w-7xl px-4 pb-20 md:px-8">
           <h2 className="text-2xl md:text-3xl">{t("pricing.title")}</h2>
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
-            <article className="rounded-2xl border border-border bg-card p-7">
+            <article className="rounded-2xl border-2 border-[var(--navigator-gold)] bg-card p-7">
               <h3 className="text-lg">{t("pricing.free")}</h3>
               <p className="mt-3 text-3xl font-bold">{t("pricing.freePrice")}</p>
               <p className="mt-4 text-sm text-muted-foreground">{t("pricing.freeDesc")}</p>
