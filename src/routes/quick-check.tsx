@@ -1,11 +1,23 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Compass, Info, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  Baby,
+  Compass,
+  FileText,
+  Info,
+  Languages,
+  Sparkles,
+  Users,
+  Wallet,
+} from "lucide-react";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
+import { InstitutionBadge } from "@/components/FeedbackWidgets";
 import { QuestionField } from "@/components/QuestionField";
 import { useI18n } from "@/lib/i18n";
 import { isAnswered } from "@/lib/questions";
 import { computePreliminary, QUICK_CHECK_QUESTIONS, type PreliminaryBand } from "@/lib/preliminary";
+import { OFFICIAL_SOURCE, type Institution } from "@/lib/roadmap";
 import { useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -42,6 +54,23 @@ const BAND_LABEL = {
   unknown: "qc.band.unknown",
 } as const;
 
+/** Thematic icon per quick-check question, keyed by the existing question ID. */
+const QUESTION_ICONS: Record<number, typeof Compass> = {
+  36: Compass,
+  8: Users,
+  7: Baby,
+  34: FileText,
+  15: Languages,
+  22: Wallet,
+};
+
+const RESOURCES: { institution: Institution; descKey: string }[] = [
+  { institution: "Migri", descKey: "qc.resMigriDesc" },
+  { institution: "Study in Finland", descKey: "qc.resStudyDesc" },
+  { institution: "InfoFinland", descKey: "qc.resInfoDesc" },
+  { institution: "Valvira / OPH", descKey: "qc.resEdufiDesc" },
+];
+
 function QuickCheck() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
@@ -58,9 +87,9 @@ function QuickCheck() {
   const result = computePreliminary(state.answers);
 
   const bands = [
-    { labelKey: "qc.dimDocuments", band: result.documents },
-    { labelKey: "qc.dimLanguage", band: result.language },
-    { labelKey: "qc.dimFinances", band: result.finances },
+    { labelKey: "qc.dimDocuments", band: result.documents, Icon: FileText },
+    { labelKey: "qc.dimLanguage", band: result.language, Icon: Languages },
+    { labelKey: "qc.dimFinances", band: result.finances, Icon: Wallet },
   ] as const;
 
   return (
@@ -69,8 +98,18 @@ function QuickCheck() {
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 md:px-8 md:py-14">
         {view === "questions" ? (
           <>
-            <Compass className="size-7 text-secondary" aria-hidden />
-            <h1 className="mt-4 text-2xl md:text-3xl">{t("qc.title")}</h1>
+            <div className="flex items-center gap-4">
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-secondary/10">
+                <Compass className="size-6 text-secondary" aria-hidden />
+              </span>
+              <div>
+                <h1 className="text-2xl md:text-3xl">{t("qc.title")}</h1>
+                <p className="mt-1 text-xs font-semibold text-muted-foreground">
+                  {answeredCount} / {QUICK_CHECK_QUESTIONS.length} {t("qc.answered")} ·{" "}
+                  {QUICK_CHECK_QUESTIONS.length - answeredCount} {t("qc.remaining")}
+                </p>
+              </div>
+            </div>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
               {t("qc.sub")}
             </p>
@@ -88,22 +127,50 @@ function QuickCheck() {
                   style={{ width: `${(answeredCount / QUICK_CHECK_QUESTIONS.length) * 100}%` }}
                 />
               </div>
+              <ol className="mt-3 flex items-center justify-between" aria-hidden>
+                {QUICK_CHECK_QUESTIONS.map((q, i) => {
+                  const StepIcon = QUESTION_ICONS[q.id] ?? Compass;
+                  const done = isAnswered(q, state.answers[q.id]);
+                  return (
+                    <li
+                      key={q.id}
+                      className={cn(
+                        "flex size-8 items-center justify-center rounded-full border transition-colors duration-300",
+                        done
+                          ? "border-secondary bg-secondary text-secondary-foreground"
+                          : "border-border bg-card text-muted-foreground",
+                      )}
+                    >
+                      <StepIcon className="size-4" />
+                      <span className="sr-only">{i + 1}</span>
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
 
             <div className="mt-8 space-y-4">
-              {QUICK_CHECK_QUESTIONS.map((q, i) => (
-                <QuestionField
-                  key={q.id}
-                  question={q}
-                  index={i + 1}
-                  answer={state.answers[q.id]}
-                  levelColor="var(--navigator-teal)"
-                  onChange={(v) => {
-                    setAnswer(q.id, v);
-                    setShowRequired(false);
-                  }}
-                />
-              ))}
+              {QUICK_CHECK_QUESTIONS.map((q, i) => {
+                const StepIcon = QUESTION_ICONS[q.id] ?? Compass;
+                return (
+                  <div key={q.id}>
+                    <p className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                      <StepIcon className="size-3.5 text-secondary" aria-hidden />
+                      {t("qc.question")} {i + 1} / {QUICK_CHECK_QUESTIONS.length}
+                    </p>
+                    <QuestionField
+                      question={q}
+                      index={i + 1}
+                      answer={state.answers[q.id]}
+                      levelColor="var(--navigator-teal)"
+                      onChange={(v) => {
+                        setAnswer(q.id, v);
+                        setShowRequired(false);
+                      }}
+                    />
+                  </div>
+                );
+              })}
             </div>
 
             {showRequired ? (
@@ -138,14 +205,47 @@ function QuickCheck() {
           </>
         ) : (
           <>
-            <Sparkles className="size-7 text-secondary" aria-hidden />
-            <h1 className="mt-4 text-2xl md:text-3xl">{t("qc.resultTitle")}</h1>
-            <p className="mt-2 inline-flex items-start gap-2 rounded-2xl border border-secondary/25 bg-secondary/8 px-3.5 py-2 text-xs text-muted-foreground">
-              <Info className="mt-0.5 size-3.5 shrink-0 text-secondary" aria-hidden />
-              {t("qc.indicative")}
-            </p>
+            {/* Hero — Migration Compass */}
+            <section className="rounded-3xl border border-border bg-card p-6 md:p-8">
+              <div className="flex items-center gap-4">
+                <span className="relative flex size-14 shrink-0 items-center justify-center rounded-full bg-secondary/10">
+                  <Compass className="size-7 text-secondary" aria-hidden />
+                  <span
+                    className="absolute -bottom-0.5 -end-0.5 flex size-5 items-center justify-center rounded-full bg-[var(--navigator-gold)] text-[10px] font-bold text-[var(--navigator-navy)]"
+                    aria-hidden
+                  >
+                    6
+                  </span>
+                </span>
+                <div>
+                  <h1 className="text-2xl md:text-3xl">{t("qc.resultTitle")}</h1>
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{t("qc.indicative")}</p>
+                </div>
+              </div>
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-2xl border border-secondary/30 bg-secondary/5 p-4">
+                  <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-secondary">
+                    <Sparkles className="size-3.5" aria-hidden />
+                    {t("qc.assessedLabel")}
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {t("qc.pathway")} · {t("qc.dimDocuments")} · {t("qc.dimLanguage")} · {t("qc.dimFinances")}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-border bg-muted/50 p-4">
+                  <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                    <Info className="size-3.5" aria-hidden />
+                    {t("qc.unknownTitle")}
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {t("qc.unknownLegal")} · {t("qc.unknownProfessional")} · {t("qc.unknownPsychological")}
+                  </p>
+                </div>
+              </div>
+            </section>
 
-            <section className="mt-7 rounded-3xl border border-border bg-card p-6">
+            {/* Readiness overview */}
+            <section className="mt-5 rounded-3xl border border-border bg-card p-6">
               <h2 className="text-lg">{t("qc.prelimProfile")}</h2>
               <p className="mt-3 text-sm text-muted-foreground">
                 <span className="font-semibold text-foreground">{t("qc.pathway")}:</span>{" "}
@@ -153,44 +253,60 @@ function QuickCheck() {
                   ? t("qc.band.unknown")
                   : (QUICK_CHECK_QUESTIONS[0]?.options?.[result.pathwayIndex]?.[lang] ?? "")}
               </p>
-              <ul className="mt-4 space-y-2">
-                {bands.map(({ labelKey, band }) => (
+              <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+                {bands.map(({ labelKey, band, Icon }) => (
                   <li
                     key={labelKey}
-                    className={cn(
-                      "flex items-center justify-between rounded-2xl border px-4 py-2.5 text-sm font-semibold",
-                      BAND_STYLE[band],
-                    )}
+                    className={cn("rounded-2xl border p-4", BAND_STYLE[band])}
                   >
-                    <span>{t(labelKey)}</span>
-                    <span>{t(BAND_LABEL[band])}</span>
+                    <Icon className="size-5" aria-hidden />
+                    <p className="mt-2 text-sm font-semibold">{t(labelKey)}</p>
+                    <p className="mt-1 text-xs font-bold uppercase tracking-wider">{t(BAND_LABEL[band])}</p>
                   </li>
                 ))}
               </ul>
             </section>
 
+            {/* Recommended next steps */}
             {result.actionKeys.length > 0 ? (
               <section className="mt-5 rounded-3xl border border-border bg-card p-6">
                 <h2 className="text-lg">{t("qc.actionsTitle")}</h2>
-                <ul className="mt-3 list-disc space-y-2 ps-5 text-sm leading-relaxed text-muted-foreground">
-                  {result.actionKeys.map((key) => (
-                    <li key={key}>{t(key)}</li>
+                <ol className="mt-4 space-y-3">
+                  {result.actionKeys.map((key, i) => (
+                    <li key={key} className="flex items-start gap-3">
+                      <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-xs font-bold text-secondary">
+                        {i + 1}
+                      </span>
+                      <p className="pt-1 text-sm leading-relaxed text-muted-foreground">{t(key)}</p>
+                    </li>
                   ))}
-                </ul>
+                </ol>
               </section>
             ) : null}
 
+            {/* Official resources */}
             <section className="mt-5 rounded-3xl border border-border bg-card p-6">
-              <h2 className="text-lg">{t("qc.unknownTitle")}</h2>
-              <ul className="mt-3 list-disc space-y-2 ps-5 text-sm leading-relaxed text-muted-foreground">
-                <li>{t("qc.unknownLegal")}</li>
-                <li>{t("qc.unknownProfessional")}</li>
-                <li>{t("qc.unknownPsychological")}</li>
+              <h2 className="text-lg">{t("qc.resourcesTitle")}</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("qc.resourcesSub")}</p>
+              <ul className="mt-4 space-y-3">
+                {RESOURCES.map(({ institution, descKey }) => (
+                  <li
+                    key={institution}
+                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-muted/30 px-4 py-3"
+                  >
+                    <p className="max-w-md text-sm text-muted-foreground">{t(descKey)}</p>
+                    <InstitutionBadge institution={institution} href={OFFICIAL_SOURCE[institution]} />
+                  </li>
+                ))}
               </ul>
             </section>
 
             <p className="mt-5 rounded-2xl border border-accent/50 bg-accent/10 p-4 text-xs leading-relaxed text-muted-foreground">
               {t("qc.disclaimer")}
+            </p>
+
+            <p className="mt-3 rounded-2xl border border-border bg-muted/40 p-4 text-xs leading-relaxed text-muted-foreground">
+              {t("qc.storageNote")}
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
@@ -237,4 +353,3 @@ function QuickCheck() {
     </div>
   );
 }
-
