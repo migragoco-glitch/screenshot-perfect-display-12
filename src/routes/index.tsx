@@ -545,8 +545,8 @@ function Landing() {
                 {t("pricing.recommended")}
               </span>
               <h3 className="flex items-center gap-2 text-lg">
-                <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: DISCOVER_ITEMS[2].fill }} aria-hidden>
-                  <Compass className="size-4" style={{ color: DISCOVER_ITEMS[2].icon }} />
+                <span className="flex size-[26px] shrink-0 items-center justify-center rounded-full bg-[var(--navigator-light-teal)]" aria-hidden>
+                  <img src={arrowMarkAsset.url} alt="" className="h-4 w-auto object-contain" />
                 </span>
                 {t("pricing.nav")}
               </h3>

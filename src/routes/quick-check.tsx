@@ -68,43 +68,62 @@ const QUESTION_ICONS: Record<number, typeof Compass> = {
 const QUESTION_COLORS = [
   "var(--navigator-light-teal)",
   "var(--navigator-teal)",
-  "var(--navigator-dark-teal)",
+  "var(--plum)",
   "var(--navigator-olive)",
   "var(--navigator-olive-gold)",
   "var(--navigator-gold)",
 ];
 
-function QuickCheckRing({ done, count }: { done: boolean[]; count: number }) {
-  const size = 132;
-  const stroke = 12;
-  const r = (size - stroke) / 2;
+function QuickCheckRing({ done, count, lang }: { done: boolean[]; count: number; lang: string }) {
+  const size = 236;
+  const stroke = 16;
+  const r = 68;
+  const iconR = 100;
   const c = 2 * Math.PI * r;
-  const gap = 6;
-  const seg = (c - gap * done.length) / done.length;
+  const gap = 8;
+  const n = done.length;
+  const seg = (c - gap * n) / n;
+  const fmt = (v: number) => (lang === "fa" ? v.toLocaleString("fa-IR") : String(v));
   return (
-    <svg width={size} height={size} aria-hidden>
-      {done.map((d, i) => (
-        <circle
-          key={i}
-          cx={size / 2}
-          cy={size / 2}
-          r={r}
-          fill="none"
-          stroke={d ? QUESTION_COLORS[i] : "var(--muted)"}
-          strokeWidth={stroke}
-          strokeDasharray={`${seg} ${c - seg}`}
-          strokeDashoffset={-i * (seg + gap)}
-          transform={`rotate(-90 ${size / 2} ${size / 2})`}
-          style={{ transition: "stroke 300ms ease-out" }}
-        />
-      ))}
-      <text x="50%" y="47%" dominantBaseline="middle" textAnchor="middle" className="fill-foreground text-2xl font-bold">
-        {count}
-      </text>
-      <text x="50%" y="64%" dominantBaseline="middle" textAnchor="middle" className="fill-muted-foreground text-[10px] font-semibold">
-        / {done.length}
-      </text>
-    </svg>
+    <div className="relative" style={{ width: size, height: size }} aria-hidden>
+      <svg width={size} height={size}>
+        {done.map((d, i) => (
+          <circle
+            key={i}
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            fill="none"
+            stroke={QUESTION_COLORS[i]}
+            strokeOpacity={d ? 1 : 0.16}
+            strokeWidth={stroke}
+            strokeLinecap="butt"
+            strokeDasharray={`${seg} ${c - seg}`}
+            strokeDashoffset={-(i * (seg + gap) + gap / 2)}
+            transform={`rotate(-90 ${size / 2} ${size / 2})`}
+            style={{ transition: "stroke-opacity 300ms ease-out" }}
+          />
+        ))}
+        <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" className="fill-foreground text-2xl font-bold" direction="ltr">
+          {lang === "fa" ? `${fmt(count)}/${fmt(n)}` : `${count}/${n}`}
+        </text>
+      </svg>
+      {QUICK_CHECK_QUESTIONS.map((q, i) => {
+        const StepIcon = QUESTION_ICONS[q.id] ?? Compass;
+        const angle = ((-90 + (i + 0.5) * (360 / n)) * Math.PI) / 180;
+        const x = size / 2 + iconR * Math.cos(angle);
+        const y = size / 2 + iconR * Math.sin(angle);
+        return (
+          <span
+            key={q.id}
+            className="absolute flex size-9 items-center justify-center rounded-full text-white shadow-sm transition-opacity duration-300"
+            style={{ left: x - 18, top: y - 18, backgroundColor: QUESTION_COLORS[i], opacity: done[i] ? 1 : 0.4 }}
+          >
+            <StepIcon className="size-4" />
+          </span>
+        );
+      })}
+    </div>
   );
 }
 
@@ -165,32 +184,12 @@ function QuickCheck() {
                   {answeredCount} / {QUICK_CHECK_QUESTIONS.length}
                 </span>
               </div>
-              <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-8">
+              <div className="mt-4 flex justify-center">
                 <QuickCheckRing
                   done={QUICK_CHECK_QUESTIONS.map((q) => isAnswered(q, state.answers[q.id]))}
                   count={answeredCount}
+                  lang={lang}
                 />
-                <ol className="grid grid-cols-3 gap-3" aria-hidden>
-                  {QUICK_CHECK_QUESTIONS.map((q, i) => {
-                    const StepIcon = QUESTION_ICONS[q.id] ?? Compass;
-                    const done = isAnswered(q, state.answers[q.id]);
-                    const color = QUESTION_COLORS[i]!;
-                    return (
-                      <li
-                        key={q.id}
-                        className="flex size-10 items-center justify-center rounded-full border-2 transition-colors duration-300"
-                        style={{
-                          borderColor: color,
-                          backgroundColor: done ? color : "transparent",
-                          color: done ? "var(--journey-pill-foreground)" : color,
-                        }}
-                      >
-                        <StepIcon className="size-4" />
-                        <span className="sr-only">{i + 1}</span>
-                      </li>
-                    );
-                  })}
-                </ol>
               </div>
             </div>
 
