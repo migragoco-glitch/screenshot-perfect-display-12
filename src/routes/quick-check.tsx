@@ -14,7 +14,7 @@ import {
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { InstitutionBadge } from "@/components/FeedbackWidgets";
 import { QuestionField } from "@/components/QuestionField";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, type TKey } from "@/lib/i18n";
 import { isAnswered } from "@/lib/questions";
 import { computePreliminary, QUICK_CHECK_QUESTIONS, type PreliminaryBand } from "@/lib/preliminary";
 import { OFFICIAL_SOURCE, type Institution } from "@/lib/roadmap";
@@ -64,7 +64,7 @@ const QUESTION_ICONS: Record<number, typeof Compass> = {
   22: Wallet,
 };
 
-const RESOURCES: { institution: Institution; descKey: string }[] = [
+const RESOURCES: { institution: Institution; descKey: TKey }[] = [
   { institution: "Migri", descKey: "qc.resMigriDesc" },
   { institution: "Study in Finland", descKey: "qc.resStudyDesc" },
   { institution: "InfoFinland", descKey: "qc.resInfoDesc" },
