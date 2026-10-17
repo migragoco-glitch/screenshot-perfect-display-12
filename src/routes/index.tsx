@@ -325,6 +325,7 @@ function DiscoverPreviewCard() {
 function Landing() {
   const { t, lang } = useI18n();
   const { state } = useAppState();
+  const hasSavedProgress = Object.keys(state.answers).length > 0;
 
   return (
     <div className="min-h-screen">
