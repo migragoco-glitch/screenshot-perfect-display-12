@@ -17,6 +17,13 @@ export const QUICK_CHECK_QUESTIONS = QUICK_CHECK_IDS.map(
 
 export type PreliminaryBand = "ready" | "partial" | "unknown";
 
+export type PreliminaryActionKey =
+  | "qc.actionPathway"
+  | "qc.actionDocuments"
+  | "qc.actionLanguage"
+  | "qc.actionFinances"
+  | "qc.actionChildren";
+
 export type PreliminaryResult = {
   /** Q36 option index, or null when not answered. */
   pathwayIndex: number | null;
@@ -24,7 +31,7 @@ export type PreliminaryResult = {
   language: PreliminaryBand;
   finances: PreliminaryBand;
   /** i18n keys for indicative initial actions, derived only from answers given. */
-  actionKeys: string[];
+  actionKeys: PreliminaryActionKey[];
 };
 
 export function computePreliminary(answers: Answers): PreliminaryResult {
@@ -49,7 +56,7 @@ export function computePreliminary(answers: Answers): PreliminaryResult {
   const finances: PreliminaryBand =
     typeof runway !== "number" ? "unknown" : runway >= 2 ? "ready" : "partial";
 
-  const actionKeys: string[] = [];
+  const actionKeys: PreliminaryActionKey[] = [];
   if (pathwayIndex === null || pathwayIndex === 5) actionKeys.push("qc.actionPathway");
   if (documents !== "ready") actionKeys.push("qc.actionDocuments");
   if (language !== "ready") actionKeys.push("qc.actionLanguage");
