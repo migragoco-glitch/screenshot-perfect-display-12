@@ -711,7 +711,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.free": "\n",
   "pricing.freePrice": "رایگان",
   "pricing.freeDesc":
-    "ثبت‌نام و شروع رایگان\nپروفایل اولیه و گام‌های پیشنهادی نخست فقط با پاسخ به شش سوال\n\n",
+    "ثبت‌نام و شروع رایگان \nپروفایل اولیه و گام‌های پیشنهادی نخست فقط با پاسخ به شش سوال\nدسترسی مستقیم به سایت نهادهای رسمی و مرجع منطبق با هر گام پیشنهادی",
   "pricing.freeExcl": "\n",
   "pricing.freeCta": "شروع رایگان با بررسی سریع",
   "pricing.freeCtaContinue": "شروع مسیر رایگان",
@@ -719,7 +719,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.navPrice": "۹٫۹۹ یورو",
   "pricing.perMonth": "/ماه",
   "pricing.navDesc":
-    "پروفایل هوشمند ادغام\n مسیر شخصی‌سازی‌ شدهٔ شما\n نقشه‌راه ۱۲ هفته‌ایی\nپیگیری پیشرفت و بینش‌های عملی گسترده‌تر",
+    "پروفایل هوشمند ادغام \n مسیر شخصی‌سازی‌ شدهٔ شما  \nنقشه‌ راه ۱۲ هفته‌ایی\n پیگیری پیشرفت و بینش‌های عملی گسترده‌تر",
   "pricing.stab": "طرح پیشرفتهٔ ادغام میگراگو",
   "pricing.stabPrice": "۲۴۹ یورو",
   "pricing.stabDesc":
