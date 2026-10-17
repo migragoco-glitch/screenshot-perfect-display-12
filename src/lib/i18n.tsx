@@ -259,6 +259,44 @@ export const en = {
   "csat.no": "Not really",
   "csat.thanks": "Thank you — your signal was recorded.",
 
+  "qc.title": "Quick check — 6 questions, about 2 minutes",
+  "qc.sub":
+    "A short first look at your situation. Your answers here are saved and pre-fill the full assessment, so you never answer twice.",
+  "qc.submit": "See my preliminary result",
+  "qc.skipToFull": "Skip ahead to the full assessment",
+  "qc.resultTitle": "Your preliminary profile",
+  "qc.indicative":
+    "Indicative only — based on the 6 questions you just answered, not the full 42-question assessment.",
+  "qc.prelimProfile": "Preliminary profile",
+  "qc.pathway": "Intended pathway",
+  "qc.dimDocuments": "Document readiness",
+  "qc.dimLanguage": "Language readiness",
+  "qc.dimFinances": "Financial runway",
+  "qc.band.ready": "Looks ready",
+  "qc.band.partial": "Needs attention",
+  "qc.band.unknown": "Not yet assessed",
+  "qc.actionsTitle": "Your first recommended steps",
+  "qc.actionPathway":
+    "Confirm which residence-permit category fits your situation on Migri's Enter Finland service.",
+  "qc.actionDocuments":
+    "Start official translation, notarization and apostille of your core identity and education documents.",
+  "qc.actionLanguage":
+    "Begin or continue Finnish or Swedish studies — even basic levels widen work and study options.",
+  "qc.actionFinances":
+    "Plan your financial runway against Migri's income requirement (about €1,200/month for an adult in Helsinki).",
+  "qc.actionChildren":
+    "Look into early childhood education or school registration for your children with your future municipality.",
+  "qc.unknownTitle": "Not yet assessed",
+  "qc.unknownLegal": "Your legal status and residence-permit history in detail",
+  "qc.unknownProfessional": "Your education, career and professional capacity",
+  "qc.unknownPsychological": "Your psychological and social readiness",
+  "qc.disclaimer":
+    "This preliminary result is indicative only. It is not a legal determination, not immigration advice, and not a guarantee of eligibility for any permit. The full assessment and official authorities (such as Migri) provide the complete picture.",
+  "qc.continueFull": "Continue to the full assessment",
+  "qc.backHome": "Back to homepage",
+  "qc.signInNote": "Optional: create an account to keep your progress tied to your login on this device.",
+  "qc.signIn": "Sign in or create account",
+
   "pay.emailTitle": "Early access pricing",
   "pay.emailSub": "Early access pricing — available for a limited time.",
   "pay.emailLabel": "Your email",
@@ -833,6 +871,44 @@ export const fa: Record<keyof typeof en, string> = {
   "csat.partly": "تا حدی",
   "csat.no": "چندان نه",
   "csat.thanks": "سپاسگزاریم — پاسخ شما ثبت شد.",
+
+  "qc.title": "بررسی سریع — ۶ پرسش، حدود ۲ دقیقه",
+  "qc.sub":
+    "نگاهی کوتاه و اولیه به وضعیت شما. پاسخ‌هایتان ذخیره می‌شود و پرسشنامهٔ کامل را پیش‌پر می‌کند، پس هیچ پرسشی را دوباره پاسخ نمی‌دهید.",
+  "qc.submit": "مشاهدهٔ نتیجهٔ اولیهٔ من",
+  "qc.skipToFull": "رفتن مستقیم به پرسشنامهٔ کامل",
+  "qc.resultTitle": "پروفایل اولیهٔ شما",
+  "qc.indicative":
+    "صرفاً راهنما — بر اساس همین ۶ پرسش، نه پرسشنامهٔ کامل ۴۲ پرسشی.",
+  "qc.prelimProfile": "پروفایل اولیه",
+  "qc.pathway": "مسیر موردنظر",
+  "qc.dimDocuments": "آمادگی مدارک",
+  "qc.dimLanguage": "آمادگی زبانی",
+  "qc.dimFinances": "پشتوانهٔ مالی",
+  "qc.band.ready": "آماده به نظر می‌رسد",
+  "qc.band.partial": "نیاز به توجه دارد",
+  "qc.band.unknown": "هنوز ارزیابی نشده",
+  "qc.actionsTitle": "نخستین گام‌های پیشنهادی شما",
+  "qc.actionPathway":
+    "در سامانهٔ Enter Finland ادارهٔ مهاجرت فنلاند (Migri) بررسی کنید کدام دستهٔ اجازهٔ اقامت با وضعیت شما مطابقت دارد.",
+  "qc.actionDocuments":
+    "ترجمهٔ رسمی، تأیید محضری و آپوستیل مدارک اصلی هویتی و تحصیلی خود را آغاز کنید.",
+  "qc.actionLanguage":
+    "یادگیری زبان فنلاندی یا سوئدی را آغاز یا ادامه دهید — حتی سطح پایه، گزینه‌های کار و تحصیل را گسترش می‌دهد.",
+  "qc.actionFinances":
+    "پشتوانهٔ مالی خود را با حداقل درآمد مورد نیاز Migri (حدود ۱,۲۰۰ یورو در ماه برای یک بزرگسال در هلسینکی) بسنجید.",
+  "qc.actionChildren":
+    "در مورد ثبت‌نام فرزندانتان در مهدکودک یا مدرسه از طریق شهرداری محل سکونت آینده اطلاعات کسب کنید.",
+  "qc.unknownTitle": "هنوز ارزیابی نشده",
+  "qc.unknownLegal": "جزئیات وضعیت حقوقی و سابقهٔ اجازهٔ اقامت شما",
+  "qc.unknownProfessional": "تحصیلات، سابقهٔ کار و توان حرفه‌ای شما",
+  "qc.unknownPsychological": "آمادگی روانی و اجتماعی شما",
+  "qc.disclaimer":
+    "این نتیجهٔ اولیه صرفاً راهنماست؛ تعیین وضعیت حقوقی، مشاورهٔ مهاجرتی یا تضمین واجدشرایط‌بودن برای هیچ نوع اجازهٔ اقامتی نیست. پرسشنامهٔ کامل و مراجع رسمی (مانند Migri) تصویر کامل را ارائه می‌دهند.",
+  "qc.continueFull": "ادامه به پرسشنامهٔ کامل",
+  "qc.backHome": "بازگشت به صفحهٔ اصلی",
+  "qc.signInNote": "اختیاری: برای پیوند پیشرفت خود به حساب کاربری در همین دستگاه، حساب بسازید.",
+  "qc.signIn": "ورود یا ساخت حساب",
 
   "pay.emailTitle": "قیمت دسترسی زودهنگام",
   "pay.emailSub": "قیمت دسترسی زودهنگام — برای مدت محدود در دسترس است.",

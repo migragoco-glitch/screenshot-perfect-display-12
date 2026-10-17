@@ -106,7 +106,7 @@ function ConsentScreen() {
                 }
                 update({ consent: true });
                 trackEvent({ type: "start" });
-                void navigate({ to: "/assessment" });
+                void navigate({ to: "/quick-check" });
               }}
               className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors duration-200 ease-out hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
             >
