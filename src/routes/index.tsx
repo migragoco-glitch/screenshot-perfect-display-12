@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, ClipboardCheck, ClipboardList, Landmark, Route, UserRoundCheck, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, User, Users } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, ClipboardCheck, ClipboardList, Landmark, Route as RouteIcon, UserRoundCheck, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, User, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
@@ -547,7 +547,7 @@ function Landing() {
                 <span className="text-sm font-medium text-muted-foreground">{t("pricing.perMonth")}</span>
               </p>
               <ul className="mt-5 flex-1 space-y-4">
-                {([[UserRoundCheck, "pricing.navF1"], [Route, "pricing.navF2"], [CalendarDays, "pricing.navF3"], [ChartLine, "pricing.navF4"]] as const).map(([Icon, k]) => (
+                {([[UserRoundCheck, "pricing.navF1"], [RouteIcon, "pricing.navF2"], [CalendarDays, "pricing.navF3"], [ChartLine, "pricing.navF4"]] as const).map(([Icon, k]) => (
                   <li key={k} className="flex items-start gap-3">
                     <Icon className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
                     <p className="text-sm font-semibold text-foreground">{t(k)}</p>
