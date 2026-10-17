@@ -565,7 +565,7 @@ function Landing() {
               </ul>
               <Link
                 to={state.consent ? "/assessment" : "/consent"}
-                search={state.consent ? undefined : { next: "assessment" }}
+                search={state.consent ? {} : { next: "assessment" }}
                 className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary active:scale-[0.98]"
               >
                 {t("nav.cta")}
