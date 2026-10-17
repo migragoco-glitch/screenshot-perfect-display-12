@@ -78,15 +78,15 @@ export const en = {
   "pricing.free": "\n",
   "pricing.freePrice": "Free",
   "pricing.freeDesc":
-    "Registration and onboarding, the 6-question Quick Check, a preliminary profile and initial action recommendations — plus the full 42-question assessment with a basic readiness overview.",
-  "pricing.freeExcl": "Does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
+    "Register and get started free\nA preliminary profile and first-step recommendations with answers to just six questions\n\n",
+  "pricing.freeExcl": "\n",
   "pricing.freeCta": "Start free with the Quick Check",
-  "pricing.freeCtaContinue": "Continue your free progress",
+  "pricing.freeCtaContinue": "Start your free journey",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "€9.99",
   "pricing.perMonth": "/month",
   "pricing.navDesc":
-    "The Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights.",
+    "Smart Integration Profile\n Your personalized pathway\n Your 12-week roadmap\nProgress tracking and expanded actionable insights",
   "pricing.stab": "MigraGo Advanced Integration Plan",
   "pricing.stabPrice": "€249",
   "pricing.stabDesc":
@@ -711,15 +711,15 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.free": "\n",
   "pricing.freePrice": "رایگان",
   "pricing.freeDesc":
-    "ثبت‌نام و شروع کار، بررسی سریع ۶ پرسشی، پروفایل اولیه و گام‌های پیشنهادی نخست — به‌علاوهٔ پرسشنامهٔ کامل ۴۲ پرسشی با نمای کلی پایه از آمادگی.",
-  "pricing.freeExcl": "شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
+    "ثبت‌نام و شروع رایگان\nپروفایل اولیه و گام‌های پیشنهادی نخست فقط با پاسخ به شش سوال\n\n",
+  "pricing.freeExcl": "\n",
   "pricing.freeCta": "شروع رایگان با بررسی سریع",
-  "pricing.freeCtaContinue": "ادامهٔ پیشرفت رایگان شما",
+  "pricing.freeCtaContinue": "شروع مسیر رایگان",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "۹٫۹۹ یورو",
   "pricing.perMonth": "/ماه",
   "pricing.navDesc":
-    "پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر.",
+    "پروفایل هوشمند ادغام\n مسیر شخصی‌سازی‌ شدهٔ شما\n نقشه‌راه ۱۲ هفته‌ایی\nپیگیری پیشرفت و بینش‌های عملی گسترده‌تر",
   "pricing.stab": "طرح پیشرفتهٔ ادغام میگراگو",
   "pricing.stabPrice": "۲۴۹ یورو",
   "pricing.stabDesc":
