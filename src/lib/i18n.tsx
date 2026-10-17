@@ -290,7 +290,7 @@ export const en = {
   "qc.skipToFull": "Skip ahead to the full assessment",
   "qc.resultTitle": "Your preliminary profile",
   "qc.indicative":
-    "Indicative only — based on the 6 questions you just answered, not the full 42-question assessment.",
+    "Complete this preliminary assessment to gain a clearer picture of your circumstances, strengths, and needs, helping you better understand the migration and settlement pathway that may suit you.",
   "qc.prelimProfile": "Preliminary profile",
   "qc.pathway": "Intended pathway",
   "qc.dimDocuments": "Document readiness",
@@ -932,7 +932,7 @@ export const fa: Record<keyof typeof en, string> = {
   "qc.skipToFull": "رفتن مستقیم به پرسشنامهٔ کامل",
   "qc.resultTitle": "پروفایل اولیهٔ شما",
   "qc.indicative":
-    "صرفاً راهنما — بر اساس همین ۶ پرسش، نه پرسشنامهٔ کامل ۴۲ پرسشی.",
+    "با تکمیل این ارزیابی اولیه، تصویری روشن از شرایط، توانمندی‌ها و نیازهای شما به دست می‌آید تا مسیر مناسب مهاجرت و زندگی در کشور مقصد را بهتر بشناسید.",
   "qc.prelimProfile": "پروفایل اولیه",
   "qc.pathway": "مسیر موردنظر",
   "qc.dimDocuments": "آمادگی مدارک",

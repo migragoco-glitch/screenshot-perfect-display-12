@@ -11,7 +11,6 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
-import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { InstitutionBadge } from "@/components/FeedbackWidgets";
 import { QuestionField } from "@/components/QuestionField";
@@ -85,6 +84,9 @@ function QuickCheckRing({ done, count, lang }: { done: boolean[]; count: number;
   const n = done.length;
   const seg = (c - gap * n) / n;
   const fmt = (v: number) => (lang === "fa" ? v.toLocaleString("fa-IR") : String(v));
+  const nextIdx = done.findIndex((d) => !d);
+  const targetIdx = nextIdx === -1 ? n - 1 : nextIdx;
+  const needleAngle = (targetIdx + 0.5) * (360 / n);
   return (
     <div className="relative" style={{ width: size, height: size }} aria-hidden>
       <div className="qc-ring-spin absolute inset-0">
@@ -123,7 +125,18 @@ function QuickCheckRing({ done, count, lang }: { done: boolean[]; count: number;
         );
       })}
       </div>
-      <span className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-foreground" dir="ltr">
+      {/* Compass needle — visual cue only, points at the next unanswered question */}
+      <span
+        className="qc-needle absolute inset-0 flex items-center justify-center"
+        style={{ transform: `rotate(${needleAngle}deg)` }}
+      >
+        <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden>
+          <polygon points="32,6 37,32 27,32" fill="var(--gold)" />
+          <polygon points="32,58 37,32 27,32" fill="var(--muted-foreground)" fillOpacity="0.35" />
+          <circle cx="32" cy="32" r="4" fill="var(--gold)" stroke="var(--card)" strokeWidth="1.5" />
+        </svg>
+      </span>
+      <span className="absolute inset-x-0 flex items-center justify-center text-sm font-bold text-foreground" style={{ top: "62%" }} dir="ltr">
         {lang === "fa" ? `${fmt(count)}/${fmt(n)}` : `${count}/${n}`}
       </span>
     </div>
@@ -248,18 +261,13 @@ function QuickCheck() {
         ) : (
           <>
             {/* Hero — Migration Compass */}
-            <section className="rounded-3xl border border-border bg-card p-6 md:p-8">
-              <div className="flex items-center gap-4">
-                <span className="flex size-[40px] shrink-0 items-center justify-center rounded-full bg-[var(--navigator-light-teal)]" aria-hidden>
-                  <img src={arrowMarkAsset.url} alt="" className="h-[25px] w-auto object-contain" />
-                </span>
-                <div>
-                  <h1 className="text-2xl md:text-3xl">{t("qc.resultTitle")}</h1>
-                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{t("qc.indicative")}</p>
-                </div>
+            <section className="qc-card rounded-3xl border border-border bg-card p-6 md:p-8">
+              <div>
+                <h1 className="text-2xl md:text-3xl">{t("qc.resultTitle")}</h1>
+                <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">{t("qc.indicative")}</p>
               </div>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border border-secondary/30 bg-secondary/5 p-4">
+                <div className="qc-card rounded-2xl border border-secondary/30 bg-secondary/5 p-4">
                   <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-secondary">
                     <Sparkles className="size-3.5" aria-hidden />
                     {t("qc.assessedLabel")}
@@ -268,7 +276,7 @@ function QuickCheck() {
                     {t("qc.pathway")} · {t("qc.dimDocuments")} · {t("qc.dimLanguage")} · {t("qc.dimFinances")}
                   </p>
                 </div>
-                <div className="rounded-2xl border border-border bg-muted/50 p-4">
+                <div className="qc-card rounded-2xl border border-border bg-muted/50 p-4">
                   <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
                     <Info className="size-3.5" aria-hidden />
                     {t("qc.unknownTitle")}
@@ -281,7 +289,7 @@ function QuickCheck() {
             </section>
 
             {/* Readiness overview */}
-            <section className="mt-5 rounded-3xl border border-border bg-card p-6">
+            <section className="qc-card mt-5 rounded-3xl border border-border bg-card p-6">
               <h2 className="text-lg">{t("qc.prelimProfile")}</h2>
               <p className="mt-3 text-sm text-muted-foreground">
                 <span className="font-semibold text-foreground">{t("qc.pathway")}:</span>{" "}
@@ -293,7 +301,7 @@ function QuickCheck() {
                 {bands.map(({ labelKey, band, Icon }) => (
                   <li
                     key={labelKey}
-                    className={cn("rounded-2xl border p-4", BAND_STYLE[band])}
+                    className={cn("qc-card rounded-2xl border p-4", BAND_STYLE[band])}
                   >
                     <Icon className="size-5" aria-hidden />
                     <p className="mt-2 text-sm font-semibold">{t(labelKey)}</p>
@@ -305,7 +313,7 @@ function QuickCheck() {
 
             {/* Recommended next steps */}
             {result.actionKeys.length > 0 ? (
-              <section className="mt-5 rounded-3xl border border-border bg-card p-6">
+              <section className="qc-card mt-5 rounded-3xl border border-border bg-card p-6">
                 <h2 className="text-lg">{t("qc.actionsTitle")}</h2>
                 <ol className="mt-4 space-y-3">
                   {result.actionKeys.map((key, i) => (
@@ -321,14 +329,14 @@ function QuickCheck() {
             ) : null}
 
             {/* Official resources */}
-            <section className="mt-5 rounded-3xl border border-border bg-card p-6">
+            <section className="qc-card mt-5 rounded-3xl border border-border bg-card p-6">
               <h2 className="text-lg">{t("qc.resourcesTitle")}</h2>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("qc.resourcesSub")}</p>
               <ul className="mt-4 space-y-3">
                 {RESOURCES.map(({ institution, descKey }) => (
                   <li
                     key={institution}
-                    className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-muted/30 px-4 py-3"
+                    className="qc-card flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-muted/30 px-4 py-3"
                   >
                     <p className="max-w-md text-sm text-muted-foreground">{t(descKey)}</p>
                     <InstitutionBadge institution={institution} href={OFFICIAL_SOURCE[institution]} />
@@ -361,7 +369,7 @@ function QuickCheck() {
               </Link>
             </div>
 
-            <section className="mt-6 rounded-3xl border-2 border-secondary/40 bg-card p-6">
+            <section className="qc-card mt-6 rounded-3xl border-2 border-secondary/40 bg-card p-6">
               <h2 className="text-lg">{t("qc.upgradeTitle")}</h2>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("qc.upgradeDesc")}</p>
               <p className="mt-3 text-sm font-semibold text-foreground">
