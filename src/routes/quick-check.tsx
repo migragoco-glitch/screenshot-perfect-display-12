@@ -37,7 +37,7 @@ const BAND_STYLE: Record<PreliminaryBand, string> = {
 };
 
 function QuickCheck() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const navigate = useNavigate();
   const { state, hydrated, setAnswer } = useAppState();
   const [view, setView] = useState<"questions" | "result">("questions");
@@ -129,9 +129,7 @@ function QuickCheck() {
                 <span className="font-semibold text-foreground">{t("qc.pathway")}:</span>{" "}
                 {result.pathwayIndex === null
                   ? t("qc.bandUnknown")
-                  : QUICK_CHECK_QUESTIONS[0].options?.[result.pathwayIndex]?.[
-                      useI18nLang()
-                    ]}
+                  : QUICK_CHECK_QUESTIONS[0].options?.[result.pathwayIndex]?.[lang]}
               </p>
               <ul className="mt-4 space-y-2">
                 {bands.map(({ labelKey, band }) => (
@@ -203,7 +201,3 @@ function QuickCheck() {
   );
 }
 
-/** Language hook usable inside render expressions without re-subscribing. */
-function useI18nLang() {
-  return useI18n().lang;
-}
