@@ -1308,7 +1308,10 @@ type Ctx = {
   pick: <T>(v: { en: T; fa: T }) => T;
 };
 
-const LangContext = createContext<Ctx | null>(null);
+// Reuse one context across hot reloads so editing translations never splits
+// the provider and its consumers into two different context instances.
+const g = globalThis as { __migragoLangContext?: React.Context<Ctx | null> };
+const LangContext = (g.__migragoLangContext ??= createContext<Ctx | null>(null));
 const STORAGE_KEY = "migrago.lang";
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
