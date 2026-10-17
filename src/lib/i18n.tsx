@@ -80,6 +80,8 @@ export const en = {
   "pricing.freeDesc":
     "Registration and onboarding, the 6-question Quick Check, a preliminary profile and initial action recommendations — plus the full 42-question assessment with a basic readiness overview.",
   "pricing.freeExcl": "Does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
+  "pricing.freeCta": "Start free with the Quick Check",
+  "pricing.freeCtaContinue": "Continue your free progress",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "€9.99",
   "pricing.perMonth": "/month",
@@ -296,6 +298,11 @@ export const en = {
   "qc.backHome": "Back to homepage",
   "qc.signInNote": "Optional: create an account to keep your progress tied to your login on this device.",
   "qc.signIn": "Sign in or create account",
+  "qc.progressLabel": "Quick Check progress",
+  "qc.upgradeTitle": "Want the full picture?",
+  "qc.upgradeDesc":
+    "Navigator unlocks your complete Smart Integration Profile, a personalized pathway and the full 12-week roadmap with progress tracking — built from all 42 answers.",
+  "qc.upgradeCta": "Upgrade to Navigator",
 
   "pay.emailTitle": "Early access pricing",
   "pay.emailSub": "Early access pricing — available for a limited time.",
@@ -693,6 +700,8 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.freeDesc":
     "ثبت‌نام و شروع کار، بررسی سریع ۶ پرسشی، پروفایل اولیه و گام‌های پیشنهادی نخست — به‌علاوهٔ پرسشنامهٔ کامل ۴۲ پرسشی با نمای کلی پایه از آمادگی.",
   "pricing.freeExcl": "شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
+  "pricing.freeCta": "شروع رایگان با بررسی سریع",
+  "pricing.freeCtaContinue": "ادامهٔ پیشرفت رایگان شما",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "۹٫۹۹ یورو",
   "pricing.perMonth": "/ماه",
@@ -909,6 +918,11 @@ export const fa: Record<keyof typeof en, string> = {
   "qc.backHome": "بازگشت به صفحهٔ اصلی",
   "qc.signInNote": "اختیاری: برای پیوند پیشرفت خود به حساب کاربری در همین دستگاه، حساب بسازید.",
   "qc.signIn": "ورود یا ساخت حساب",
+  "qc.progressLabel": "پیشرفت بررسی سریع",
+  "qc.upgradeTitle": "تصویر کامل را می‌خواهید؟",
+  "qc.upgradeDesc":
+    "Navigator پروفایل هوشمند ادغام کامل، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای با پیگیری پیشرفت را بر اساس هر ۴۲ پاسخ باز می‌کند.",
+  "qc.upgradeCta": "ارتقا به Navigator",
 
   "pay.emailTitle": "قیمت دسترسی زودهنگام",
   "pay.emailSub": "قیمت دسترسی زودهنگام — برای مدت محدود در دسترس است.",
