@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, ClipboardCheck, ClipboardList, Landmark, Route as RouteIcon, UserRoundCheck, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, User, Users } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, ClipboardCheck, ClipboardList, Gift, Landmark, Route as RouteIcon, UserRoundCheck, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, User, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
@@ -516,8 +516,11 @@ function Landing() {
           <h2 className="text-2xl md:text-3xl">{t("pricing.title")}</h2>
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
             <article className="flex flex-col rounded-2xl border-2 border-[var(--navigator-gold)] bg-card p-7 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] focus-within:shadow-[var(--shadow-lift)]">
-              <h3 className="text-lg">{t("pricing.free")}</h3>
-              <p className="mt-3 text-3xl font-bold">{t("pricing.freePrice")}</p>
+              <h3 className="flex items-center gap-2 text-lg">
+                <Gift className="size-5 shrink-0 text-[var(--navigator-gold)]" aria-hidden />
+                {t("pricing.freePrice")}
+              </h3>
+              <hr className="mt-4 border-t border-border" />
               <ul className="mt-5 flex-1 space-y-4">
                 {([[ClipboardCheck, "pricing.freeF1", "pricing.freeF1Sub"], [Landmark, "pricing.freeF2", "pricing.freeF2Sub"]] as const).map(([Icon, k, sub]) => (
                   <li key={k} className="flex items-start gap-3">
@@ -541,7 +544,13 @@ function Landing() {
               <span className="absolute -top-3 start-7 rounded-full bg-[#C8A96A] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[var(--navigator-navy)]">
                 {t("pricing.recommended")}
               </span>
-              <h3 className="text-lg">{t("pricing.nav")}</h3>
+              <h3 className="flex items-center gap-2 text-lg">
+                <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: DISCOVER_ITEMS[2].fill }} aria-hidden>
+                  <Compass className="size-4" style={{ color: DISCOVER_ITEMS[2].icon }} />
+                </span>
+                {t("pricing.nav")}
+              </h3>
+              <hr className="mt-4 border-t border-border" />
               <p className="mt-3 text-3xl font-bold text-secondary">
                 {t("pricing.navPrice")}
                 <span className="text-sm font-medium text-muted-foreground">{t("pricing.perMonth")}</span>
@@ -555,7 +564,8 @@ function Landing() {
                 ))}
               </ul>
               <Link
-                to="/consent"
+                to={state.consent ? "/assessment" : "/consent"}
+                search={state.consent ? undefined : { next: "assessment" }}
                 className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary active:scale-[0.98]"
               >
                 {t("nav.cta")}
