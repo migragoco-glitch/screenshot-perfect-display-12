@@ -263,7 +263,20 @@ export const en = {
 
   "qc.title": "Quick check — 6 questions, about 2 minutes",
   "qc.sub":
-    "A short first look at your situation. Your answers here are saved and pre-fill the full assessment, so you never answer twice.",
+    "Answer 6 questions to get a first look at your situation. Your answers are saved, and if you continue to the full assessment the shared answers are already recorded — you never answer the same question twice.",
+  "qc.question": "Question",
+  "qc.answered": "answered",
+  "qc.remaining": "remaining",
+  "qc.assessedLabel": "Assessed in this quick check",
+  "qc.resourcesTitle": "Related official authorities and resources",
+  "qc.resourcesSub":
+    "Verified official sources where you can check the details that apply to your situation.",
+  "qc.resMigriDesc": "Residence-permit categories, requirements and applications.",
+  "qc.resStudyDesc": "The official guide to studying and applying in Finland.",
+  "qc.resInfoDesc": "Practical information about living, working and services in Finland.",
+  "qc.resEdufiDesc": "Recognition of foreign degrees and qualifications (EDUFI).",
+  "qc.storageNote":
+    "Your information is currently stored only in this browser and may not be available if browser data is cleared or you switch devices.",
   "qc.submit": "See my preliminary result",
   "qc.skipToFull": "Skip ahead to the full assessment",
   "qc.resultTitle": "Your preliminary profile",
@@ -883,7 +896,20 @@ export const fa: Record<keyof typeof en, string> = {
 
   "qc.title": "بررسی سریع — ۶ پرسش، حدود ۲ دقیقه",
   "qc.sub":
-    "نگاهی کوتاه و اولیه به وضعیت شما. پاسخ‌هایتان ذخیره می‌شود و پرسشنامهٔ کامل را پیش‌پر می‌کند، پس هیچ پرسشی را دوباره پاسخ نمی‌دهید.",
+    "با پاسخ به ۶ پرسش، یک نمای اولیه از وضعیت خود دریافت کنید. پاسخ‌های شما ذخیره می‌شوند و اگر ارزیابی کامل را ادامه دهید، پاسخ‌های مشترک از قبل ثبت شده‌اند؛ بنابراین لازم نیست دوباره به همان پرسش‌ها پاسخ دهید.",
+  "qc.question": "پرسش",
+  "qc.answered": "پاسخ‌داده‌شده",
+  "qc.remaining": "باقی‌مانده",
+  "qc.assessedLabel": "ارزیابی‌شده در این بررسی سریع",
+  "qc.resourcesTitle": "نهادها و منابع رسمی مرتبط",
+  "qc.resourcesSub":
+    "منابع رسمی تأییدشده‌ای که می‌توانید جزئیات مربوط به وضعیت خود را در آن‌ها بررسی کنید.",
+  "qc.resMigriDesc": "دسته‌های اجازهٔ اقامت، شرایط و ثبت درخواست.",
+  "qc.resStudyDesc": "راهنمای رسمی تحصیل و درخواست تحصیل در فنلاند.",
+  "qc.resInfoDesc": "اطلاعات کاربردی زندگی، کار و خدمات در فنلاند.",
+  "qc.resEdufiDesc": "تطبیق و ارزیابی مدارک تحصیلی خارجی (EDUFI).",
+  "qc.storageNote":
+    "اطلاعات شما فعلاً در همین مرورگر ذخیره می‌شود و ممکن است با پاک‌شدن داده‌های مرورگر یا تغییر دستگاه در دسترس نباشد.",
   "qc.submit": "مشاهدهٔ نتیجهٔ اولیهٔ من",
   "qc.skipToFull": "رفتن مستقیم به پرسشنامهٔ کامل",
   "qc.resultTitle": "پروفایل اولیهٔ شما",

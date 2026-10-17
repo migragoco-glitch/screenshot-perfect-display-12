@@ -284,6 +284,14 @@ export const INSTITUTION_PATHWAY: Record<Institution, Bilingual> = {
     en: "Municipal health & family services pathway",
     fa: "مسیر خدمات درمانی و خانوادگی شهرداری",
   },
+  "Study in Finland": {
+    en: "Study pathway information (Study in Finland)",
+    fa: "اطلاعات مسیر تحصیل (Study in Finland)",
+  },
+  InfoFinland: {
+    en: "Practical life information pathway (InfoFinland)",
+    fa: "مسیر اطلاعات کاربردی زندگی (InfoFinland)",
+  },
 };
 
 export type PathwayCard = {

@@ -6,6 +6,7 @@ import {
   ExternalLink,
   GraduationCap,
   House,
+  Info,
   ReceiptText,
   Rocket,
   ShieldPlus,
@@ -37,6 +38,8 @@ export const INSTITUTION_ICONS: Record<Institution, typeof Building2> = {
   "PRH / YTJ": Store,
   "Business Finland": Rocket,
   "Municipal health services": Stethoscope,
+  "Study in Finland": GraduationCap,
+  InfoFinland: Info,
 };
 
 export function InstitutionBadge({

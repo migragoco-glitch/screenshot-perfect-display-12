@@ -19,7 +19,9 @@ export type Institution =
   | "Local municipality services"
   | "PRH / YTJ"
   | "Business Finland"
-  | "Municipal health services";
+  | "Municipal health services"
+  | "Study in Finland"
+  | "InfoFinland";
 
 /** Full public-facing label for each institution. */
 export const INSTITUTION_LABEL: Record<Institution, string> = {
@@ -34,6 +36,8 @@ export const INSTITUTION_LABEL: Record<Institution, string> = {
   "PRH / YTJ": "PRH / YTJ",
   "Business Finland": "Business Finland",
   "Municipal health services": "Municipal health services",
+  "Study in Finland": "Study in Finland",
+  InfoFinland: "InfoFinland",
 };
 
 export type Phase = 1 | 2 | 3 | 4;
@@ -553,7 +557,7 @@ const KNOWLEDGE_TABLE_BASE: KnowledgeEntryBase[] = [
   },
 ];
 
-const OFFICIAL_SOURCE: Record<Institution, string> = {
+export const OFFICIAL_SOURCE: Record<Institution, string> = {
   Migri: "https://migri.fi/en/home",
   DVV: "https://dvv.fi/en/individuals",
   Vero: "https://www.vero.fi/en/individuals/",
@@ -565,6 +569,8 @@ const OFFICIAL_SOURCE: Record<Institution, string> = {
   "PRH / YTJ": "https://www.ytj.fi/en/",
   "Business Finland": "https://www.businessfinland.fi/en/do-business-with-finland/startup-in-finland/startup-permit/",
   "Municipal health services": "https://www.suomi.fi/citizen/health-and-medical-care",
+  "Study in Finland": "https://www.studyinfinland.fi/",
+  InfoFinland: "https://www.infofinland.fi/en",
 };
 
 const D = (en: string, fa: string): Bilingual => ({ en, fa });
