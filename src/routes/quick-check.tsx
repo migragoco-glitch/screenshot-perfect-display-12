@@ -262,18 +262,13 @@ function QuickCheck() {
         ) : (
           <>
             {/* Hero — Migration Compass */}
-            <section className="rounded-3xl border border-border bg-card p-6 md:p-8">
-              <div className="flex items-center gap-4">
-                <span className="flex size-[40px] shrink-0 items-center justify-center rounded-full bg-[var(--navigator-light-teal)]" aria-hidden>
-                  <img src={arrowMarkAsset.url} alt="" className="h-[25px] w-auto object-contain" />
-                </span>
-                <div>
-                  <h1 className="text-2xl md:text-3xl">{t("qc.resultTitle")}</h1>
-                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{t("qc.indicative")}</p>
-                </div>
+            <section className="qc-card rounded-3xl border border-border bg-card p-6 md:p-8">
+              <div>
+                <h1 className="text-2xl md:text-3xl">{t("qc.resultTitle")}</h1>
+                <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">{t("qc.indicative")}</p>
               </div>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border border-secondary/30 bg-secondary/5 p-4">
+                <div className="qc-card rounded-2xl border border-secondary/30 bg-secondary/5 p-4">
                   <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-secondary">
                     <Sparkles className="size-3.5" aria-hidden />
                     {t("qc.assessedLabel")}
