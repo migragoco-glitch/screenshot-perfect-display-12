@@ -111,8 +111,8 @@ function QuickCheckRing({ done, count, lang }: { done: boolean[]; count: number;
       {QUICK_CHECK_QUESTIONS.map((q, i) => {
         const StepIcon = QUESTION_ICONS[q.id] ?? Compass;
         const angle = ((-90 + (i + 0.5) * (360 / n)) * Math.PI) / 180;
-        const x = size / 2 + iconR * Math.cos(angle);
-        const y = size / 2 + iconR * Math.sin(angle);
+        const x = Math.round(size / 2 + iconR * Math.cos(angle));
+        const y = Math.round(size / 2 + iconR * Math.sin(angle));
         return (
           <span
             key={q.id}
