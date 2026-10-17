@@ -380,3 +380,7 @@
     transform: none;
   }
 }
+
+@keyframes qc-ring-spin { from { transform: rotate(-360deg); } to { transform: rotate(0deg); } }
+.qc-ring-spin { animation: qc-ring-spin 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1 both; }
+@media (prefers-reduced-motion: reduce) { .qc-ring-spin { animation: none; } }

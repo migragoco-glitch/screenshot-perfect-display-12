@@ -272,7 +272,7 @@ export const en = {
 
   "qc.title": "Quick Check — 6 Questions, Under 1 Minute",
   "qc.sub":
-    "Answer 6 short questions to get an initial overview of your situation. Your answers are saved, and if you continue to the full assessment, your shared answers will already be filled in, so you won’t need to answer the same questions again.",
+    "Get an initial overview of your situation in under a minute. Your answers are saved, and if you continue to the full assessment, your shared answers will already be filled in, so you won’t need to answer them again.",
   "qc.question": "Question",
   "qc.answered": "answered",
   "qc.remaining": "remaining",
@@ -914,7 +914,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "qc.title": "بررسی سریع — ۶ پرسش، کمتر از یک دقیقه",
   "qc.sub":
-    "با پاسخ به ۶ پرسش کوتاه، نمایی اولیه از وضعیت خود دریافت می‌کنید. پاسخ‌های شما ذخیره می‌شوند؛ اگر ارزیابی کامل را ادامه دهید، پاسخ‌های مشترک از قبل ثبت شده‌اند و نیازی نیست دوباره به آن‌ها پاسخ دهید.",
+    "در کمتر از یک دقیقه، نمایی اولیه از وضعیت خود دریافت کنید. پاسخ‌های شما ذخیره می‌شوند و در صورت ادامه ارزیابی کامل، پاسخ‌های مشترک از قبل ثبت خواهند بود؛ بنابراین نیازی به پاسخ‌گویی دوباره نیست.",
   "qc.question": "پرسش",
   "qc.answered": "پاسخ‌داده‌شده",
   "qc.remaining": "باقی‌مانده",
