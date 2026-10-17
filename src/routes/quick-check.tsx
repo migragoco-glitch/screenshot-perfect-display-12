@@ -195,12 +195,6 @@ function QuickCheck() {
                 {t("qc.submit")}
                 <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
               </button>
-              <Link
-                to="/assessment"
-                className="text-sm font-semibold text-muted-foreground underline underline-offset-4 hover:text-foreground"
-              >
-                {t("qc.skipToFull")}
-              </Link>
             </div>
           </>
         ) : (

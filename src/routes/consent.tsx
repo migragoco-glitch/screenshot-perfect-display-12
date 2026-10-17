@@ -6,8 +6,10 @@ import { useI18n } from "@/lib/i18n";
 import { trackEvent, useAppState } from "@/lib/store";
 
 export const Route = createFileRoute("/consent")({
-  validateSearch: (search: Record<string, unknown>): { upgrade?: boolean } =>
-    search['upgrade'] === true || search['upgrade'] === "true" ? { upgrade: true } : {},
+  validateSearch: (search: Record<string, unknown>): { upgrade?: boolean; next?: "assessment" } => ({
+    ...(search['upgrade'] === true || search['upgrade'] === "true" ? { upgrade: true } : {}),
+    ...(search['next'] === "assessment" ? { next: "assessment" as const } : {}),
+  }),
   head: () => ({
     meta: [
       { title: "Data & consent — MigraGo assessment" },
@@ -32,7 +34,7 @@ function ConsentScreen() {
   const { t } = useI18n();
   const { state, update } = useAppState();
   const navigate = useNavigate();
-  const { upgrade } = Route.useSearch();
+  const { upgrade, next } = Route.useSearch();
   const [checked, setChecked] = useState(false);
   const [showPrivacy, setShowPrivacy] = useState(false);
 
@@ -106,7 +108,7 @@ function ConsentScreen() {
                 }
                 update({ consent: true });
                 trackEvent({ type: "start" });
-                void navigate({ to: "/quick-check" });
+                void navigate({ to: next === "assessment" ? "/assessment" : "/quick-check" });
               }}
               className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors duration-200 ease-out hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
             >
