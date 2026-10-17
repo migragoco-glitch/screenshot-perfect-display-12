@@ -519,6 +519,13 @@ function Landing() {
               <p className="mt-3 text-3xl font-bold">{t("pricing.freePrice")}</p>
               <p className="mt-4 text-sm text-muted-foreground">{t("pricing.freeDesc")}</p>
               <p className="mt-3 text-xs font-semibold text-muted-foreground">{t("pricing.freeExcl")}</p>
+              <Link
+                to={state.consent ? "/quick-check" : "/consent"}
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full border border-secondary bg-transparent px-5 py-3 text-sm font-semibold text-secondary transition-colors duration-200 ease-out hover:bg-secondary hover:text-secondary-foreground"
+              >
+                {hasSavedProgress ? t("pricing.freeCtaContinue") : t("pricing.freeCta")}
+                <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+              </Link>
             </article>
 
             <article className="relative rounded-2xl border-2 border-secondary bg-card p-7 shadow-[var(--shadow-lift)]">
