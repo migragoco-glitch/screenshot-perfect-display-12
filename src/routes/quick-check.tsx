@@ -11,6 +11,7 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
+import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { InstitutionBadge } from "@/components/FeedbackWidgets";
 import { QuestionField } from "@/components/QuestionField";
@@ -75,10 +76,10 @@ const QUESTION_COLORS = [
 ];
 
 function QuickCheckRing({ done, count, lang }: { done: boolean[]; count: number; lang: string }) {
-  const size = 236;
-  const stroke = 16;
-  const r = 68;
-  const iconR = 100;
+  const size = 260;
+  const stroke = 46;
+  const r = 100;
+  const iconR = r;
   const c = 2 * Math.PI * r;
   const gap = 8;
   const n = done.length;
@@ -86,7 +87,8 @@ function QuickCheckRing({ done, count, lang }: { done: boolean[]; count: number;
   const fmt = (v: number) => (lang === "fa" ? v.toLocaleString("fa-IR") : String(v));
   return (
     <div className="relative" style={{ width: size, height: size }} aria-hidden>
-      <svg width={size} height={size}>
+      <div className="qc-ring-spin absolute inset-0">
+      <svg width={size} height={size} className="absolute inset-0">
         {done.map((d, i) => (
           <circle
             key={i}
@@ -104,9 +106,6 @@ function QuickCheckRing({ done, count, lang }: { done: boolean[]; count: number;
             style={{ transition: "stroke-opacity 300ms ease-out" }}
           />
         ))}
-        <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" className="fill-foreground text-2xl font-bold" direction="ltr">
-          {lang === "fa" ? `${fmt(count)}/${fmt(n)}` : `${count}/${n}`}
-        </text>
       </svg>
       {QUICK_CHECK_QUESTIONS.map((q, i) => {
         const StepIcon = QUESTION_ICONS[q.id] ?? Compass;
@@ -116,13 +115,17 @@ function QuickCheckRing({ done, count, lang }: { done: boolean[]; count: number;
         return (
           <span
             key={q.id}
-            className="absolute flex size-9 items-center justify-center rounded-full text-white shadow-sm transition-opacity duration-300"
-            style={{ left: x - 18, top: y - 18, backgroundColor: QUESTION_COLORS[i], opacity: done[i] ? 1 : 0.4 }}
+            className="absolute flex size-8 items-center justify-center rounded-full text-white ring-2 ring-card transition-opacity duration-300"
+            style={{ left: x - 16, top: y - 16, backgroundColor: QUESTION_COLORS[i], opacity: done[i] ? 1 : 0.45 }}
           >
             <StepIcon className="size-4" />
           </span>
         );
       })}
+      </div>
+      <span className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-foreground" dir="ltr">
+        {lang === "fa" ? `${fmt(count)}/${fmt(n)}` : `${count}/${n}`}
+      </span>
     </div>
   );
 }
@@ -207,6 +210,7 @@ function QuickCheck() {
                       index={i + 1}
                       answer={state.answers[q.id]}
                       levelColor={QUESTION_COLORS[i]!}
+                      fillSelected
                       onChange={(v) => {
                         setAnswer(q.id, v);
                         setShowRequired(false);
@@ -246,14 +250,8 @@ function QuickCheck() {
             {/* Hero — Migration Compass */}
             <section className="rounded-3xl border border-border bg-card p-6 md:p-8">
               <div className="flex items-center gap-4">
-                <span className="relative flex size-14 shrink-0 items-center justify-center rounded-full bg-secondary/10">
-                  <Compass className="size-7 text-secondary" aria-hidden />
-                  <span
-                    className="absolute -bottom-0.5 -end-0.5 flex size-5 items-center justify-center rounded-full bg-[var(--navigator-gold)] text-[10px] font-bold text-[var(--navigator-navy)]"
-                    aria-hidden
-                  >
-                    6
-                  </span>
+                <span className="flex size-[40px] shrink-0 items-center justify-center rounded-full bg-[var(--navigator-light-teal)]" aria-hidden>
+                  <img src={arrowMarkAsset.url} alt="" className="h-[25px] w-auto object-contain" />
                 </span>
                 <div>
                   <h1 className="text-2xl md:text-3xl">{t("qc.resultTitle")}</h1>

@@ -15,11 +15,16 @@ type Props = {
   answer: AnswerValue | undefined;
   onChange: (value: AnswerValue) => void;
   levelColor: string;
+  /** Fill the selected option with the level color (Quick Check only). */
+  fillSelected?: boolean;
 };
 
-export function QuestionField({ question: q, index, answer, onChange, levelColor }: Props) {
+export function QuestionField({ question: q, index, answer, onChange, levelColor, fillSelected = false }: Props) {
   const { lang, t } = useI18n();
   const selected = answer?.value;
+  const fillStyle = fillSelected
+    ? ({ backgroundColor: levelColor, borderColor: levelColor, color: "#fff" } as React.CSSProperties)
+    : undefined;
   const showDetail = q.detailOn !== undefined && selected === q.detailOn;
   const isBracket = q.id === 17 || q.id === 21;
   const subSelected = subAnswerIndex(q, answer);
@@ -95,6 +100,7 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
                 type="button"
                 aria-pressed={selected === i}
                 onClick={() => onChange({ value: i })}
+                style={selected === i ? fillStyle : undefined}
                 className={cn(
                   "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
                   selected === i
@@ -127,6 +133,7 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
                   type="button"
                   disabled={disabled}
                   aria-pressed={active}
+                  style={active ? fillStyle : undefined}
                   onClick={() => {
                     if (isNone) {
                       onChange({ value: active ? [] : [i] });
@@ -164,6 +171,7 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
                   type="button"
                   aria-pressed={selected === n}
                   onClick={() => onChange({ value: n })}
+                  style={selected === n ? fillStyle : undefined}
                   className={cn(
                     "flex-1 rounded-2xl border py-3 text-sm font-bold tabular-nums shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14)]",
                     selected === n
