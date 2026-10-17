@@ -54,6 +54,7 @@ function QuickCheck() {
   }, [hydrated, state.consent, navigate]);
 
   const allAnswered = QUICK_CHECK_QUESTIONS.every((q) => isAnswered(q, state.answers[q.id]));
+  const answeredCount = QUICK_CHECK_QUESTIONS.filter((q) => isAnswered(q, state.answers[q.id])).length;
   const result = computePreliminary(state.answers);
 
   const bands = [
@@ -73,6 +74,21 @@ function QuickCheck() {
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
               {t("qc.sub")}
             </p>
+
+            <div className="mt-6" role="progressbar" aria-valuenow={answeredCount} aria-valuemin={0} aria-valuemax={QUICK_CHECK_QUESTIONS.length} aria-label={t("qc.progressLabel")}>
+              <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
+                <span>{t("qc.progressLabel")}</span>
+                <span>
+                  {answeredCount} / {QUICK_CHECK_QUESTIONS.length}
+                </span>
+              </div>
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full bg-secondary transition-all duration-300 ease-out"
+                  style={{ width: `${(answeredCount / QUICK_CHECK_QUESTIONS.length) * 100}%` }}
+                />
+              </div>
+            </div>
 
             <div className="mt-8 space-y-4">
               {QUICK_CHECK_QUESTIONS.map((q, i) => (
@@ -192,6 +208,21 @@ function QuickCheck() {
                 {t("qc.backHome")}
               </Link>
             </div>
+
+            <section className="mt-6 rounded-3xl border-2 border-secondary/40 bg-card p-6">
+              <h2 className="text-lg">{t("qc.upgradeTitle")}</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t("qc.upgradeDesc")}</p>
+              <p className="mt-3 text-sm font-semibold text-foreground">
+                €9.99<span className="text-xs font-medium text-muted-foreground">{t("pricing.perMonth")}</span>
+              </p>
+              <Link
+                to="/checkout"
+                className="mt-4 inline-flex items-center gap-2 rounded-full bg-secondary px-5 py-2.5 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
+              >
+                {t("qc.upgradeCta")}
+                <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+              </Link>
+            </section>
 
             <p className="mt-6 text-xs text-muted-foreground">
               {t("qc.signInNote")}{" "}
