@@ -78,7 +78,7 @@ export const en = {
   "pricing.free": "\n",
   "pricing.freePrice": "Free",
   "pricing.freeDesc":
-    "The 42-question assessment, basic analysis and an initial integration-readiness insight.",
+    "Registration and onboarding, the 6-question Quick Check, a preliminary profile and initial action recommendations — plus the full 42-question assessment with a basic readiness overview.",
   "pricing.freeExcl": "Does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "€9.99",
@@ -182,7 +182,7 @@ export const en = {
 
   "pay.title": "Your profile is ready",
   "pay.sub":
-    "Your free analysis gives you the general direction. Unlock the full Smart Integration Profile and your 12-week roadmap with SettleSmart Navigator.",
+    "Free includes onboarding, the Quick Check and a basic readiness overview. Navigator adds the full Smart Integration Profile, your personalized 12-week roadmap, action and progress tracking, and curated official resources and links.",
   "pay.teaser": "Locked preview",
   "pay.unlock": "Unlock for €9.99/month",
   "pay.later": "Stay on the free overview",
@@ -393,7 +393,7 @@ export const en = {
     "No, the assessment and its overview are free to use without an account. Creating an account is being prepared for upcoming features; it does not currently sync your roadmap progress across devices — progress is saved only on the device and browser you use.",
   "faq.q2": "What is included in the free tier?",
   "faq.a2":
-    "The 42-question assessment, basic analysis and an initial integration-readiness insight. The free Essential tier does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
+    "Registration and onboarding, the 6-question Quick Check with a preliminary profile and initial action recommendations, plus the full 42-question assessment with a basic readiness overview. The free Essential tier does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
   "faq.q3": "What do I get with SettleSmart Navigator (€9.99/month)?",
   "faq.a3":
     "The Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights.",
@@ -455,7 +455,7 @@ export const en = {
 
   "metrics.emailVsPay":
     "Email captures are a lead-generation signal. Checkouts are the willingness-to-pay signal. They are counted separately.",
-  "metrics.checkoutSection": "€9.99 checkouts (Stripe test mode)",
+  "metrics.checkoutSection": "€9.99 checkouts (simulated test checkout — no real payment)",
 
   // ── Corrective build: final round ─────────────────────────
   "support.email": "Email",
@@ -691,7 +691,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.free": "\n",
   "pricing.freePrice": "رایگان",
   "pricing.freeDesc":
-    "ارزیابی ۴۲ پرسشی، تحلیل پایه و یک بینش اولیه از آمادگی ادغام.",
+    "ثبت‌نام و شروع کار، بررسی سریع ۶ پرسشی، پروفایل اولیه و گام‌های پیشنهادی نخست — به‌علاوهٔ پرسشنامهٔ کامل ۴۲ پرسشی با نمای کلی پایه از آمادگی.",
   "pricing.freeExcl": "شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "۹٫۹۹ یورو",
@@ -794,7 +794,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "pay.title": "پروفایل شما آماده است",
   "pay.sub":
-    "تحلیل رایگان، جهت کلی مسیر شما را نشان می‌دهد. برای دیدن پروفایل کامل هوشمند ادغام و نقشه‌راه ۱۲ هفته‌ای، اشتراک SettleSmart Navigator را فعال کنید.",
+    "نسخهٔ رایگان شامل شروع کار، بررسی سریع و نمای کلی پایه از آمادگی است. Navigator پروفایل کامل هوشمند ادغام، نقشه‌راه شخصی‌سازی‌شدهٔ ۱۲ هفته‌ای، پیگیری اقدام‌ها و پیشرفت، و منابع و پیوندهای رسمی منتخب را اضافه می‌کند.",
   "pay.teaser": "پیش‌نمایش قفل‌شده",
   "pay.unlock": "فعال‌سازی با ۹٫۹۹ یورو در ماه",
   "pay.later": "ادامه با نمای رایگان",
@@ -1006,7 +1006,7 @@ export const fa: Record<keyof typeof en, string> = {
     "خیر، ارزیابی و نمای کلی آن رایگان و بدون نیاز به حساب کاربری در دسترس است. ساخت حساب کاربری برای ویژگی‌های آینده آماده‌سازی می‌شود؛ در حال حاضر پیشرفت نقشه‌راه شما را بین دستگاه‌ها همگام نمی‌کند — پیشرفت فقط روی همان دستگاه و مرورگری که استفاده می‌کنید ذخیره می‌شود.",
   "faq.q2": "نسخهٔ رایگان شامل چه چیزهایی است؟",
   "faq.a2":
-    "ارزیابی ۴۲ پرسشی، تحلیل پایه و یک بینش اولیه از آمادگی ادغام. سطح رایگان Essential شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
+    "ثبت‌نام و شروع کار، بررسی سریع ۶ پرسشی با پروفایل اولیه و گام‌های پیشنهادی نخست، به‌علاوهٔ پرسشنامهٔ کامل ۴۲ پرسشی با نمای کلی پایه از آمادگی. سطح رایگان Essential شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
   "faq.q3": "اشتراک SettleSmart Navigator (ماهانه ۹٫۹۹ یورو) چه چیزی ارائه می‌دهد؟",
   "faq.a3":
     "پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر.",
@@ -1069,7 +1069,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "metrics.emailVsPay":
     "ثبت رایانامه سیگنال جذب سرنخ است و پرداخت‌ها سیگنال تمایل واقعی به پرداخت. این دو جداگانه شمارش می‌شوند.",
-  "metrics.checkoutSection": "پرداخت‌های ۹٫۹۹ یورویی (حالت آزمایشی Stripe)",
+  "metrics.checkoutSection": "پرداخت‌های ۹٫۹۹ یورویی (پرداخت آزمایشی شبیه‌سازی‌شده — پرداخت واقعی نیست)",
 
   // ── ویرایش اصلاحی: دور پایانی ─────────────────────────────
   "support.email": "رایانامه",
