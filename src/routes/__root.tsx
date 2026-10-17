@@ -41,6 +41,17 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
+    const msg = error instanceof Error ? error.message : String(error);
+    // A new version was deployed and old page files are gone: reload once to fetch the latest.
+    if (/Failed to fetch dynamically imported module|Importing a module script failed|error loading dynamically imported module/i.test(msg)) {
+      const key = "migrago.chunkReload";
+      const last = Number(sessionStorage.getItem(key) || 0);
+      if (Date.now() - last > 10000) {
+        sessionStorage.setItem(key, String(Date.now()));
+        window.location.reload();
+        return;
+      }
+    }
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
 
@@ -131,6 +142,20 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    const onPreloadError = (e: Event) => {
+      const key = "migrago.chunkReload";
+      const last = Number(sessionStorage.getItem(key) || 0);
+      if (Date.now() - last > 10000) {
+        e.preventDefault();
+        sessionStorage.setItem(key, String(Date.now()));
+        window.location.reload();
+      }
+    };
+    window.addEventListener("vite:preloadError", onPreloadError);
+    return () => window.removeEventListener("vite:preloadError", onPreloadError);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
