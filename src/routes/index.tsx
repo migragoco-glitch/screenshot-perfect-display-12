@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Building2, CalendarDays, ClipboardList, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, User, Users } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, ClipboardCheck, ClipboardList, Landmark, Route, UserRoundCheck, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, User, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
@@ -515,21 +515,29 @@ function Landing() {
         <section className="mx-auto max-w-7xl px-4 pb-20 md:px-8">
           <h2 className="text-2xl md:text-3xl">{t("pricing.title")}</h2>
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
-            <article className="rounded-2xl border-2 border-[var(--navigator-gold)] bg-card p-7">
+            <article className="flex flex-col gap-0 rounded-2xl border-2 border-[var(--navigator-gold)] bg-card p-7 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] focus-within:shadow-[var(--shadow-lift)] [&>a]:mt-6">
               <h3 className="text-lg">{t("pricing.free")}</h3>
               <p className="mt-3 text-3xl font-bold">{t("pricing.freePrice")}</p>
-              <p className="mt-4 text-sm text-muted-foreground">{t("pricing.freeDesc")}</p>
-              <p className="mt-3 text-xs font-semibold text-muted-foreground">{t("pricing.freeExcl")}</p>
+              <ul className="mt-5 space-y-4">
+                {([[ClipboardCheck, "pricing.freeF1", "pricing.freeF1Sub"], [Landmark, "pricing.freeF2", "pricing.freeF2Sub"]] as const).map(([Icon, k, sub]) => (
+                  <li key={k} className="flex items-start gap-3">
+                    <Icon className="mt-0.5 size-4 shrink-0 text-[var(--navigator-gold)]" aria-hidden />
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">{t(k)}</p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">{t(sub)}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
               <Link
                 to={state.consent ? "/quick-check" : "/consent"}
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full border border-secondary bg-transparent px-5 py-3 text-sm font-semibold text-secondary transition-colors duration-200 ease-out hover:bg-secondary hover:text-secondary-foreground"
+                className="mt-auto inline-flex w-full items-center justify-center rounded-full bg-[var(--navigator-gold)] px-5 py-3 text-sm font-semibold text-white transition-all duration-200 ease-out hover:brightness-95 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--navigator-gold)] active:scale-[0.98] active:brightness-90"
               >
-                {hasSavedProgress ? t("pricing.freeCtaContinue") : t("pricing.freeCta")}
-                <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+                {t("pricing.freeStart")}
               </Link>
             </article>
 
-            <article className="relative rounded-2xl border-2 border-secondary bg-card p-7 shadow-[var(--shadow-lift)]">
+            <article className="relative flex flex-col rounded-2xl border-2 border-secondary bg-card p-7 shadow-[var(--shadow-lift)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xl focus-within:shadow-xl">
               <span className="absolute -top-3 start-7 rounded-full bg-[#C8A96A] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[var(--navigator-navy)]">
                 {t("pricing.recommended")}
               </span>
@@ -538,10 +546,17 @@ function Landing() {
                 {t("pricing.navPrice")}
                 <span className="text-sm font-medium text-muted-foreground">{t("pricing.perMonth")}</span>
               </p>
-              <p className="mt-4 text-sm text-muted-foreground">{t("pricing.navDesc")}</p>
+              <ul className="mt-5 space-y-4">
+                {([[UserRoundCheck, "pricing.navF1"], [Route, "pricing.navF2"], [CalendarDays, "pricing.navF3"], [ChartLine, "pricing.navF4"]] as const).map(([Icon, k]) => (
+                  <li key={k} className="flex items-start gap-3">
+                    <Icon className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                    <p className="text-sm font-semibold text-foreground">{t(k)}</p>
+                  </li>
+                ))}
+              </ul>
               <Link
                 to="/consent"
-                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
+                className="mt-auto pt-0 inline-flex w-full items-center justify-center rounded-full bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary active:scale-[0.98] [margin-top:max(1.5rem,auto)]"
               >
                 {t("nav.cta")}
               </Link>

@@ -97,6 +97,15 @@ export const en = {
   "pricing.future": "Future / Locked — not available in the current MVP",
   "pricing.recommended": "Recommended",
   "pricing.upgrade": "Upgrade to Navigator",
+  "pricing.freeStart": "Start for Free",
+  "pricing.freeF1": "Initial Profile and Recommended First Steps",
+  "pricing.freeF1Sub": "Based on 6 short questions",
+  "pricing.freeF2": "Direct Access to Official Resources",
+  "pricing.freeF2Sub": "Official links relevant to your recommended next steps",
+  "pricing.navF1": "Smart Integration Profile",
+  "pricing.navF2": "Personalized Pathway",
+  "pricing.navF3": "12-Week Roadmap",
+  "pricing.navF4": "Progress Tracking and Actionable Recommendations",
 
   "consent.title": "Before you start: data & consent",
   "consent.p1":
@@ -717,7 +726,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.freeCtaContinue": "شروع مسیر رایگان",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "۹٫۹۹ یورو",
-  "pricing.perMonth": "/ماه",
+  "pricing.perMonth": " در ماه",
   "pricing.navDesc":
     "پروفایل هوشمند ادغام \n مسیر شخصی‌سازی‌ شدهٔ شما  \nنقشه‌ راه ۱۲ هفته‌ایی\n پیگیری پیشرفت و بینش‌های عملی گسترده‌تر",
   "pricing.stab": "طرح پیشرفتهٔ ادغام میگراگو",
@@ -730,6 +739,15 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.future": "آینده / قفل‌شده — در نسخهٔ کنونی (MVP) در دسترس نیست",
   "pricing.recommended": "پیشنهاد ما",
   "pricing.upgrade": "ارتقا به Navigator",
+  "pricing.freeStart": "شروع رایگان",
+  "pricing.freeF1": "پروفایل اولیه و گام‌های پیشنهادی",
+  "pricing.freeF1Sub": "بر اساس پاسخ به ۶ پرسش کوتاه",
+  "pricing.freeF2": "دسترسی مستقیم به منابع رسمی",
+  "pricing.freeF2Sub": "لینک نهادهای رسمی مرتبط با گام‌های پیشنهادی شما",
+  "pricing.navF1": "پروفایل هوشمند ادغام",
+  "pricing.navF2": "مسیر شخصی‌سازی‌شده",
+  "pricing.navF3": "نقشه راه ۱۲ هفته‌ای",
+  "pricing.navF4": "پیگیری پیشرفت و پیشنهادهای عملی",
 
   "consent.title": "پیش از شروع: داده‌ها و رضایت آگاهانه",
   "consent.p1":
