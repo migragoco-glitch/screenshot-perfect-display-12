@@ -270,9 +270,9 @@ export const en = {
   "csat.no": "Not really",
   "csat.thanks": "Thank you — your signal was recorded.",
 
-  "qc.title": "Quick check — 6 questions, about 2 minutes",
+  "qc.title": "Quick Check — 6 Questions, Under 1 Minute",
   "qc.sub":
-    "Answer 6 questions to get a first look at your situation. Your answers are saved, and if you continue to the full assessment the shared answers are already recorded — you never answer the same question twice.",
+    "Answer 6 short questions to get an initial overview of your situation. Your answers are saved, and if you continue to the full assessment, your shared answers will already be filled in, so you won’t need to answer the same questions again.",
   "qc.question": "Question",
   "qc.answered": "answered",
   "qc.remaining": "remaining",
@@ -912,9 +912,9 @@ export const fa: Record<keyof typeof en, string> = {
   "csat.no": "چندان نه",
   "csat.thanks": "سپاسگزاریم — پاسخ شما ثبت شد.",
 
-  "qc.title": "بررسی سریع — ۶ پرسش، حدود ۲ دقیقه",
+  "qc.title": "بررسی سریع — ۶ پرسش، کمتر از یک دقیقه",
   "qc.sub":
-    "با پاسخ به ۶ پرسش، یک نمای اولیه از وضعیت خود دریافت کنید. پاسخ‌های شما ذخیره می‌شوند و اگر ارزیابی کامل را ادامه دهید، پاسخ‌های مشترک از قبل ثبت شده‌اند؛ بنابراین لازم نیست دوباره به همان پرسش‌ها پاسخ دهید.",
+    "با پاسخ به ۶ پرسش کوتاه، نمایی اولیه از وضعیت خود دریافت می‌کنید. پاسخ‌های شما ذخیره می‌شوند؛ اگر ارزیابی کامل را ادامه دهید، پاسخ‌های مشترک از قبل ثبت شده‌اند و نیازی نیست دوباره به آن‌ها پاسخ دهید.",
   "qc.question": "پرسش",
   "qc.answered": "پاسخ‌داده‌شده",
   "qc.remaining": "باقی‌مانده",

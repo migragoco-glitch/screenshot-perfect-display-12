@@ -33,7 +33,7 @@ export const Route = createFileRoute("/quick-check")({
       { property: "og:title", content: "Quick check — MigraGo" },
       {
         property: "og:description",
-        content: "Six questions, two minutes: a preliminary profile and indicative first steps for your Finland integration pathway.",
+        content: "Six questions, under a minute: a preliminary profile and indicative first steps for your Finland integration pathway.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -63,6 +63,50 @@ const QUESTION_ICONS: Record<number, typeof Compass> = {
   15: Languages,
   22: Wallet,
 };
+
+/** Per-question brand colors (same palette as the landing product card and dashboard levels). */
+const QUESTION_COLORS = [
+  "var(--navigator-light-teal)",
+  "var(--navigator-teal)",
+  "var(--navigator-dark-teal)",
+  "var(--navigator-olive)",
+  "var(--navigator-olive-gold)",
+  "var(--navigator-gold)",
+];
+
+function QuickCheckRing({ done, count }: { done: boolean[]; count: number }) {
+  const size = 132;
+  const stroke = 12;
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const gap = 6;
+  const seg = (c - gap * done.length) / done.length;
+  return (
+    <svg width={size} height={size} aria-hidden>
+      {done.map((d, i) => (
+        <circle
+          key={i}
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          stroke={d ? QUESTION_COLORS[i] : "var(--muted)"}
+          strokeWidth={stroke}
+          strokeDasharray={`${seg} ${c - seg}`}
+          strokeDashoffset={-i * (seg + gap)}
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+          style={{ transition: "stroke 300ms ease-out" }}
+        />
+      ))}
+      <text x="50%" y="47%" dominantBaseline="middle" textAnchor="middle" className="fill-foreground text-2xl font-bold">
+        {count}
+      </text>
+      <text x="50%" y="64%" dominantBaseline="middle" textAnchor="middle" className="fill-muted-foreground text-[10px] font-semibold">
+        / {done.length}
+      </text>
+    </svg>
+  );
+}
 
 const RESOURCES: { institution: Institution; descKey: TKey }[] = [
   { institution: "Migri", descKey: "qc.resMigriDesc" },
@@ -121,32 +165,33 @@ function QuickCheck() {
                   {answeredCount} / {QUICK_CHECK_QUESTIONS.length}
                 </span>
               </div>
-              <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
-                <div
-                  className="h-full rounded-full bg-secondary transition-all duration-300 ease-out"
-                  style={{ width: `${(answeredCount / QUICK_CHECK_QUESTIONS.length) * 100}%` }}
+              <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-8">
+                <QuickCheckRing
+                  done={QUICK_CHECK_QUESTIONS.map((q) => isAnswered(q, state.answers[q.id]))}
+                  count={answeredCount}
                 />
+                <ol className="grid grid-cols-3 gap-3" aria-hidden>
+                  {QUICK_CHECK_QUESTIONS.map((q, i) => {
+                    const StepIcon = QUESTION_ICONS[q.id] ?? Compass;
+                    const done = isAnswered(q, state.answers[q.id]);
+                    const color = QUESTION_COLORS[i]!;
+                    return (
+                      <li
+                        key={q.id}
+                        className="flex size-10 items-center justify-center rounded-full border-2 transition-colors duration-300"
+                        style={{
+                          borderColor: color,
+                          backgroundColor: done ? color : "transparent",
+                          color: done ? "var(--journey-pill-foreground)" : color,
+                        }}
+                      >
+                        <StepIcon className="size-4" />
+                        <span className="sr-only">{i + 1}</span>
+                      </li>
+                    );
+                  })}
+                </ol>
               </div>
-              <ol className="mt-3 flex items-center justify-between" aria-hidden>
-                {QUICK_CHECK_QUESTIONS.map((q, i) => {
-                  const StepIcon = QUESTION_ICONS[q.id] ?? Compass;
-                  const done = isAnswered(q, state.answers[q.id]);
-                  return (
-                    <li
-                      key={q.id}
-                      className={cn(
-                        "flex size-8 items-center justify-center rounded-full border transition-colors duration-300",
-                        done
-                          ? "border-secondary bg-secondary text-secondary-foreground"
-                          : "border-border bg-card text-muted-foreground",
-                      )}
-                    >
-                      <StepIcon className="size-4" />
-                      <span className="sr-only">{i + 1}</span>
-                    </li>
-                  );
-                })}
-              </ol>
             </div>
 
             <div className="mt-8 space-y-4">
@@ -155,14 +200,14 @@ function QuickCheck() {
                 return (
                   <div key={q.id}>
                     <p className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-                      <StepIcon className="size-3.5 text-secondary" aria-hidden />
+                      <StepIcon className="size-3.5" style={{ color: QUESTION_COLORS[i] }} aria-hidden />
                       {t("qc.question")} {i + 1} / {QUICK_CHECK_QUESTIONS.length}
                     </p>
                     <QuestionField
                       question={q}
                       index={i + 1}
                       answer={state.answers[q.id]}
-                      levelColor="var(--navigator-teal)"
+                      levelColor={QUESTION_COLORS[i]!}
                       onChange={(v) => {
                         setAnswer(q.id, v);
                         setShowRequired(false);
