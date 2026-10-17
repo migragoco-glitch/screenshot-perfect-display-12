@@ -78,7 +78,7 @@ export const en = {
   "pricing.free": "\n",
   "pricing.freePrice": "Free",
   "pricing.freeDesc":
-    "The 42-question assessment, basic analysis and an initial integration-readiness insight.",
+    "Registration and onboarding, the 6-question Quick Check, a preliminary profile and initial action recommendations — plus the full 42-question assessment with a basic readiness overview.",
   "pricing.freeExcl": "Does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "€9.99",
@@ -182,7 +182,7 @@ export const en = {
 
   "pay.title": "Your profile is ready",
   "pay.sub":
-    "Your free analysis gives you the general direction. Unlock the full Smart Integration Profile and your 12-week roadmap with SettleSmart Navigator.",
+    "Free includes onboarding, the Quick Check and a basic readiness overview. Navigator adds the full Smart Integration Profile, your personalized 12-week roadmap, action and progress tracking, and curated official resources and links.",
   "pay.teaser": "Locked preview",
   "pay.unlock": "Unlock for €9.99/month",
   "pay.later": "Stay on the free overview",
@@ -258,6 +258,44 @@ export const en = {
   "csat.partly": "Partly",
   "csat.no": "Not really",
   "csat.thanks": "Thank you — your signal was recorded.",
+
+  "qc.title": "Quick check — 6 questions, about 2 minutes",
+  "qc.sub":
+    "A short first look at your situation. Your answers here are saved and pre-fill the full assessment, so you never answer twice.",
+  "qc.submit": "See my preliminary result",
+  "qc.skipToFull": "Skip ahead to the full assessment",
+  "qc.resultTitle": "Your preliminary profile",
+  "qc.indicative":
+    "Indicative only — based on the 6 questions you just answered, not the full 42-question assessment.",
+  "qc.prelimProfile": "Preliminary profile",
+  "qc.pathway": "Intended pathway",
+  "qc.dimDocuments": "Document readiness",
+  "qc.dimLanguage": "Language readiness",
+  "qc.dimFinances": "Financial runway",
+  "qc.band.ready": "Looks ready",
+  "qc.band.partial": "Needs attention",
+  "qc.band.unknown": "Not yet assessed",
+  "qc.actionsTitle": "Your first recommended steps",
+  "qc.actionPathway":
+    "Confirm which residence-permit category fits your situation on Migri's Enter Finland service.",
+  "qc.actionDocuments":
+    "Start official translation, notarization and apostille of your core identity and education documents.",
+  "qc.actionLanguage":
+    "Begin or continue Finnish or Swedish studies — even basic levels widen work and study options.",
+  "qc.actionFinances":
+    "Plan your financial runway against Migri's income requirement (about €1,200/month for an adult in Helsinki).",
+  "qc.actionChildren":
+    "Look into early childhood education or school registration for your children with your future municipality.",
+  "qc.unknownTitle": "Not yet assessed",
+  "qc.unknownLegal": "Your legal status and residence-permit history in detail",
+  "qc.unknownProfessional": "Your education, career and professional capacity",
+  "qc.unknownPsychological": "Your psychological and social readiness",
+  "qc.disclaimer":
+    "This preliminary result is indicative only. It is not a legal determination, not immigration advice, and not a guarantee of eligibility for any permit. The full assessment and official authorities (such as Migri) provide the complete picture.",
+  "qc.continueFull": "Continue to the full assessment",
+  "qc.backHome": "Back to homepage",
+  "qc.signInNote": "Optional: create an account to keep your progress tied to your login on this device.",
+  "qc.signIn": "Sign in or create account",
 
   "pay.emailTitle": "Early access pricing",
   "pay.emailSub": "Early access pricing — available for a limited time.",
@@ -355,7 +393,7 @@ export const en = {
     "No, the assessment and its overview are free to use without an account. Creating an account is being prepared for upcoming features; it does not currently sync your roadmap progress across devices — progress is saved only on the device and browser you use.",
   "faq.q2": "What is included in the free tier?",
   "faq.a2":
-    "The 42-question assessment, basic analysis and an initial integration-readiness insight. The free Essential tier does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
+    "Registration and onboarding, the 6-question Quick Check with a preliminary profile and initial action recommendations, plus the full 42-question assessment with a basic readiness overview. The free Essential tier does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
   "faq.q3": "What do I get with SettleSmart Navigator (€9.99/month)?",
   "faq.a3":
     "The Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights.",
@@ -417,7 +455,7 @@ export const en = {
 
   "metrics.emailVsPay":
     "Email captures are a lead-generation signal. Checkouts are the willingness-to-pay signal. They are counted separately.",
-  "metrics.checkoutSection": "€9.99 checkouts (Stripe test mode)",
+  "metrics.checkoutSection": "€9.99 checkouts (simulated test checkout — no real payment)",
 
   // ── Corrective build: final round ─────────────────────────
   "support.email": "Email",
@@ -653,7 +691,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.free": "\n",
   "pricing.freePrice": "رایگان",
   "pricing.freeDesc":
-    "ارزیابی ۴۲ پرسشی، تحلیل پایه و یک بینش اولیه از آمادگی ادغام.",
+    "ثبت‌نام و شروع کار، بررسی سریع ۶ پرسشی، پروفایل اولیه و گام‌های پیشنهادی نخست — به‌علاوهٔ پرسشنامهٔ کامل ۴۲ پرسشی با نمای کلی پایه از آمادگی.",
   "pricing.freeExcl": "شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
   "pricing.nav": "SettleSmart Navigator",
   "pricing.navPrice": "۹٫۹۹ یورو",
@@ -756,7 +794,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "pay.title": "پروفایل شما آماده است",
   "pay.sub":
-    "تحلیل رایگان، جهت کلی مسیر شما را نشان می‌دهد. برای دیدن پروفایل کامل هوشمند ادغام و نقشه‌راه ۱۲ هفته‌ای، اشتراک SettleSmart Navigator را فعال کنید.",
+    "نسخهٔ رایگان شامل شروع کار، بررسی سریع و نمای کلی پایه از آمادگی است. Navigator پروفایل کامل هوشمند ادغام، نقشه‌راه شخصی‌سازی‌شدهٔ ۱۲ هفته‌ای، پیگیری اقدام‌ها و پیشرفت، و منابع و پیوندهای رسمی منتخب را اضافه می‌کند.",
   "pay.teaser": "پیش‌نمایش قفل‌شده",
   "pay.unlock": "فعال‌سازی با ۹٫۹۹ یورو در ماه",
   "pay.later": "ادامه با نمای رایگان",
@@ -833,6 +871,44 @@ export const fa: Record<keyof typeof en, string> = {
   "csat.partly": "تا حدی",
   "csat.no": "چندان نه",
   "csat.thanks": "سپاسگزاریم — پاسخ شما ثبت شد.",
+
+  "qc.title": "بررسی سریع — ۶ پرسش، حدود ۲ دقیقه",
+  "qc.sub":
+    "نگاهی کوتاه و اولیه به وضعیت شما. پاسخ‌هایتان ذخیره می‌شود و پرسشنامهٔ کامل را پیش‌پر می‌کند، پس هیچ پرسشی را دوباره پاسخ نمی‌دهید.",
+  "qc.submit": "مشاهدهٔ نتیجهٔ اولیهٔ من",
+  "qc.skipToFull": "رفتن مستقیم به پرسشنامهٔ کامل",
+  "qc.resultTitle": "پروفایل اولیهٔ شما",
+  "qc.indicative":
+    "صرفاً راهنما — بر اساس همین ۶ پرسش، نه پرسشنامهٔ کامل ۴۲ پرسشی.",
+  "qc.prelimProfile": "پروفایل اولیه",
+  "qc.pathway": "مسیر موردنظر",
+  "qc.dimDocuments": "آمادگی مدارک",
+  "qc.dimLanguage": "آمادگی زبانی",
+  "qc.dimFinances": "پشتوانهٔ مالی",
+  "qc.band.ready": "آماده به نظر می‌رسد",
+  "qc.band.partial": "نیاز به توجه دارد",
+  "qc.band.unknown": "هنوز ارزیابی نشده",
+  "qc.actionsTitle": "نخستین گام‌های پیشنهادی شما",
+  "qc.actionPathway":
+    "در سامانهٔ Enter Finland ادارهٔ مهاجرت فنلاند (Migri) بررسی کنید کدام دستهٔ اجازهٔ اقامت با وضعیت شما مطابقت دارد.",
+  "qc.actionDocuments":
+    "ترجمهٔ رسمی، تأیید محضری و آپوستیل مدارک اصلی هویتی و تحصیلی خود را آغاز کنید.",
+  "qc.actionLanguage":
+    "یادگیری زبان فنلاندی یا سوئدی را آغاز یا ادامه دهید — حتی سطح پایه، گزینه‌های کار و تحصیل را گسترش می‌دهد.",
+  "qc.actionFinances":
+    "پشتوانهٔ مالی خود را با حداقل درآمد مورد نیاز Migri (حدود ۱,۲۰۰ یورو در ماه برای یک بزرگسال در هلسینکی) بسنجید.",
+  "qc.actionChildren":
+    "در مورد ثبت‌نام فرزندانتان در مهدکودک یا مدرسه از طریق شهرداری محل سکونت آینده اطلاعات کسب کنید.",
+  "qc.unknownTitle": "هنوز ارزیابی نشده",
+  "qc.unknownLegal": "جزئیات وضعیت حقوقی و سابقهٔ اجازهٔ اقامت شما",
+  "qc.unknownProfessional": "تحصیلات، سابقهٔ کار و توان حرفه‌ای شما",
+  "qc.unknownPsychological": "آمادگی روانی و اجتماعی شما",
+  "qc.disclaimer":
+    "این نتیجهٔ اولیه صرفاً راهنماست؛ تعیین وضعیت حقوقی، مشاورهٔ مهاجرتی یا تضمین واجدشرایط‌بودن برای هیچ نوع اجازهٔ اقامتی نیست. پرسشنامهٔ کامل و مراجع رسمی (مانند Migri) تصویر کامل را ارائه می‌دهند.",
+  "qc.continueFull": "ادامه به پرسشنامهٔ کامل",
+  "qc.backHome": "بازگشت به صفحهٔ اصلی",
+  "qc.signInNote": "اختیاری: برای پیوند پیشرفت خود به حساب کاربری در همین دستگاه، حساب بسازید.",
+  "qc.signIn": "ورود یا ساخت حساب",
 
   "pay.emailTitle": "قیمت دسترسی زودهنگام",
   "pay.emailSub": "قیمت دسترسی زودهنگام — برای مدت محدود در دسترس است.",
@@ -930,7 +1006,7 @@ export const fa: Record<keyof typeof en, string> = {
     "خیر، ارزیابی و نمای کلی آن رایگان و بدون نیاز به حساب کاربری در دسترس است. ساخت حساب کاربری برای ویژگی‌های آینده آماده‌سازی می‌شود؛ در حال حاضر پیشرفت نقشه‌راه شما را بین دستگاه‌ها همگام نمی‌کند — پیشرفت فقط روی همان دستگاه و مرورگری که استفاده می‌کنید ذخیره می‌شود.",
   "faq.q2": "نسخهٔ رایگان شامل چه چیزهایی است؟",
   "faq.a2":
-    "ارزیابی ۴۲ پرسشی، تحلیل پایه و یک بینش اولیه از آمادگی ادغام. سطح رایگان Essential شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
+    "ثبت‌نام و شروع کار، بررسی سریع ۶ پرسشی با پروفایل اولیه و گام‌های پیشنهادی نخست، به‌علاوهٔ پرسشنامهٔ کامل ۴۲ پرسشی با نمای کلی پایه از آمادگی. سطح رایگان Essential شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
   "faq.q3": "اشتراک SettleSmart Navigator (ماهانه ۹٫۹۹ یورو) چه چیزی ارائه می‌دهد؟",
   "faq.a3":
     "پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر.",
@@ -993,7 +1069,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "metrics.emailVsPay":
     "ثبت رایانامه سیگنال جذب سرنخ است و پرداخت‌ها سیگنال تمایل واقعی به پرداخت. این دو جداگانه شمارش می‌شوند.",
-  "metrics.checkoutSection": "پرداخت‌های ۹٫۹۹ یورویی (حالت آزمایشی Stripe)",
+  "metrics.checkoutSection": "پرداخت‌های ۹٫۹۹ یورویی (پرداخت آزمایشی شبیه‌سازی‌شده — پرداخت واقعی نیست)",
 
   // ── ویرایش اصلاحی: دور پایانی ─────────────────────────────
   "support.email": "رایانامه",
