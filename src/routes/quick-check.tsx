@@ -85,6 +85,9 @@ function QuickCheckRing({ done, count, lang }: { done: boolean[]; count: number;
   const n = done.length;
   const seg = (c - gap * n) / n;
   const fmt = (v: number) => (lang === "fa" ? v.toLocaleString("fa-IR") : String(v));
+  const nextIdx = done.findIndex((d) => !d);
+  const targetIdx = nextIdx === -1 ? n - 1 : nextIdx;
+  const needleAngle = (targetIdx + 0.5) * (360 / n);
   return (
     <div className="relative" style={{ width: size, height: size }} aria-hidden>
       <div className="qc-ring-spin absolute inset-0">
@@ -123,7 +126,18 @@ function QuickCheckRing({ done, count, lang }: { done: boolean[]; count: number;
         );
       })}
       </div>
-      <span className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-foreground" dir="ltr">
+      {/* Compass needle — visual cue only, points at the next unanswered question */}
+      <span
+        className="qc-needle absolute inset-0 flex items-center justify-center"
+        style={{ transform: `rotate(${needleAngle}deg)` }}
+      >
+        <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden>
+          <polygon points="32,6 37,32 27,32" fill="var(--gold)" />
+          <polygon points="32,58 37,32 27,32" fill="var(--muted-foreground)" fillOpacity="0.35" />
+          <circle cx="32" cy="32" r="4" fill="var(--gold)" stroke="var(--card)" strokeWidth="1.5" />
+        </svg>
+      </span>
+      <span className="absolute inset-x-0 flex items-center justify-center text-sm font-bold text-foreground" style={{ top: "62%" }} dir="ltr">
         {lang === "fa" ? `${fmt(count)}/${fmt(n)}` : `${count}/${n}`}
       </span>
     </div>
