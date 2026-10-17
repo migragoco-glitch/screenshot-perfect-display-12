@@ -515,10 +515,10 @@ function Landing() {
         <section className="mx-auto max-w-7xl px-4 pb-20 md:px-8">
           <h2 className="text-2xl md:text-3xl">{t("pricing.title")}</h2>
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
-            <article className="flex flex-col gap-0 rounded-2xl border-2 border-[var(--navigator-gold)] bg-card p-7 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] focus-within:shadow-[var(--shadow-lift)] [&>a]:mt-6">
+            <article className="flex flex-col rounded-2xl border-2 border-[var(--navigator-gold)] bg-card p-7 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] focus-within:shadow-[var(--shadow-lift)]">
               <h3 className="text-lg">{t("pricing.free")}</h3>
               <p className="mt-3 text-3xl font-bold">{t("pricing.freePrice")}</p>
-              <ul className="mt-5 space-y-4">
+              <ul className="mt-5 flex-1 space-y-4">
                 {([[ClipboardCheck, "pricing.freeF1", "pricing.freeF1Sub"], [Landmark, "pricing.freeF2", "pricing.freeF2Sub"]] as const).map(([Icon, k, sub]) => (
                   <li key={k} className="flex items-start gap-3">
                     <Icon className="mt-0.5 size-4 shrink-0 text-[var(--navigator-gold)]" aria-hidden />
@@ -531,7 +531,7 @@ function Landing() {
               </ul>
               <Link
                 to={state.consent ? "/quick-check" : "/consent"}
-                className="mt-auto inline-flex w-full items-center justify-center rounded-full bg-[var(--navigator-gold)] px-5 py-3 text-sm font-semibold text-white transition-all duration-200 ease-out hover:brightness-95 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--navigator-gold)] active:scale-[0.98] active:brightness-90"
+                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--navigator-gold)] px-5 py-3 text-sm font-semibold text-white transition-all duration-200 ease-out hover:brightness-95 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--navigator-gold)] active:scale-[0.98] active:brightness-90"
               >
                 {t("pricing.freeStart")}
               </Link>
@@ -546,7 +546,7 @@ function Landing() {
                 {t("pricing.navPrice")}
                 <span className="text-sm font-medium text-muted-foreground">{t("pricing.perMonth")}</span>
               </p>
-              <ul className="mt-5 space-y-4">
+              <ul className="mt-5 flex-1 space-y-4">
                 {([[UserRoundCheck, "pricing.navF1"], [Route, "pricing.navF2"], [CalendarDays, "pricing.navF3"], [ChartLine, "pricing.navF4"]] as const).map(([Icon, k]) => (
                   <li key={k} className="flex items-start gap-3">
                     <Icon className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
@@ -556,7 +556,7 @@ function Landing() {
               </ul>
               <Link
                 to="/consent"
-                className="mt-auto pt-0 inline-flex w-full items-center justify-center rounded-full bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary active:scale-[0.98] [margin-top:max(1.5rem,auto)]"
+                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary active:scale-[0.98]"
               >
                 {t("nav.cta")}
               </Link>
