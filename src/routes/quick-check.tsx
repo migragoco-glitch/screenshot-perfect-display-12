@@ -36,6 +36,12 @@ const BAND_STYLE: Record<PreliminaryBand, string> = {
   unknown: "border-border bg-muted text-muted-foreground",
 };
 
+const BAND_LABEL = {
+  ready: "qc.band.ready",
+  partial: "qc.band.partial",
+  unknown: "qc.band.unknown",
+} as const;
+
 function QuickCheck() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
@@ -50,11 +56,11 @@ function QuickCheck() {
   const allAnswered = QUICK_CHECK_QUESTIONS.every((q) => isAnswered(q, state.answers[q.id]));
   const result = computePreliminary(state.answers);
 
-  const bands: { labelKey: string; band: PreliminaryBand }[] = [
+  const bands = [
     { labelKey: "qc.dimDocuments", band: result.documents },
     { labelKey: "qc.dimLanguage", band: result.language },
     { labelKey: "qc.dimFinances", band: result.finances },
-  ];
+  ] as const;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -128,8 +134,8 @@ function QuickCheck() {
               <p className="mt-3 text-sm text-muted-foreground">
                 <span className="font-semibold text-foreground">{t("qc.pathway")}:</span>{" "}
                 {result.pathwayIndex === null
-                  ? t("qc.bandUnknown")
-                  : QUICK_CHECK_QUESTIONS[0].options?.[result.pathwayIndex]?.[lang]}
+                  ? t("qc.band.unknown")
+                  : (QUICK_CHECK_QUESTIONS[0].options?.[result.pathwayIndex]?.[lang] ?? "")}
               </p>
               <ul className="mt-4 space-y-2">
                 {bands.map(({ labelKey, band }) => (
@@ -141,7 +147,7 @@ function QuickCheck() {
                     )}
                   >
                     <span>{t(labelKey)}</span>
-                    <span>{t(`qc.band.${band}`)}</span>
+                    <span>{t(BAND_LABEL[band])}</span>
                   </li>
                 ))}
               </ul>
