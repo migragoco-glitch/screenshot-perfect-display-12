@@ -105,7 +105,7 @@ function QuickCheckRing({ done, count, lang }: { done: boolean[]; count: number;
           />
         ))}
         <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" className="fill-foreground text-2xl font-bold" direction="ltr">
-          {lang === "fa" ? `${fmt(n)}/${fmt(count)}` : `${count}/${n}`}
+          {lang === "fa" ? `${fmt(count)}/${fmt(n)}` : `${count}/${n}`}
         </text>
       </svg>
       {QUICK_CHECK_QUESTIONS.map((q, i) => {
