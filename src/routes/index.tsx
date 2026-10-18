@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, ClipboardCheck, ClipboardList, Gift, Landmark, Route as RouteIcon, UserRoundCheck, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, User, Users } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, ClipboardCheck, ClipboardList, Gift, Landmark, ListCheck, Route as RouteIcon, UserRoundCheck, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
@@ -276,9 +276,9 @@ function RoadmapPreview() {
 }
 
 const DISCOVER_ITEMS = [
-  { key: "hero.discover1", fill: "#3AC8C3", icon: "#021C3B", Icon: User },
-  { key: "hero.discover2", fill: "#02808A", icon: "#FFFFFF", Icon: ClipboardList },
-  { key: "hero.discover3", fill: "#6B8E3A", icon: "#021C3B", Icon: Compass },
+  { key: "hero.discover1", fill: "#3AC8C3", icon: "#021C3B", Icon: UserRoundCheck },
+  { key: "hero.discover2", fill: "#02808A", icon: "#FFFFFF", Icon: RouteIcon },
+  { key: "hero.discover3", fill: "#6B8E3A", icon: "#021C3B", Icon: ListCheck },
 ] as const;
 
 function DiscoverPreviewCard() {
