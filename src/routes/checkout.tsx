@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { CreditCard, Lock, ShieldCheck } from "lucide-react";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { localizeNumber, useI18n } from "@/lib/i18n";
-import { trackEvent, useAppState } from "@/lib/store";
+import { navigatorCheckoutDestination, trackEvent, useAppState } from "@/lib/store";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -32,7 +32,7 @@ const DISCOUNT = 0.5;
 function CheckoutPage() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const { update } = useAppState();
+  const { state: appState, hydrated, update } = useAppState();
   const [code, setCode] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [state, setState] = useState<"idle" | "busy" | "done">("idle");
@@ -42,20 +42,27 @@ function CheckoutPage() {
     setEmail(window.localStorage.getItem("migrago.earlyAccessEmail"));
   }, []);
 
+  useEffect(() => {
+    if (hydrated && !appState.consent) void navigate({ to: "/consent", search: { upgrade: true } });
+  }, [hydrated, appState.consent, navigate]);
+
   const total = code ? BASE_PRICE * (1 - DISCOUNT) : BASE_PRICE;
   const price = (v: number) => `€${localizeNumber(Number(v.toFixed(2)), lang)}`;
 
   const pay = () => {
+    if (!hydrated || !appState.consent || state !== "idle") return;
     setState("busy");
     trackEvent({ type: "checkout_started" });
     window.setTimeout(() => {
       trackEvent({ type: "checkout_completed" });
       update({ tier: "navigator" });
-      window.localStorage.setItem("migrago.justUpgraded", "1");
+      if (appState.completed) window.localStorage.setItem("migrago.justUpgraded", "1");
       setState("done");
-      window.setTimeout(() => void navigate({ to: "/dashboard" }), 700);
+      window.setTimeout(() => void navigate({ to: navigatorCheckoutDestination(appState.completed) }), 700);
     }, 1200);
   };
+
+  if (!hydrated || !appState.consent) return null;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -110,7 +117,7 @@ function CheckoutPage() {
 
           <button
             type="button"
-            onClick={() => void navigate({ to: "/dashboard" })}
+            onClick={() => void navigate({ to: appState.completed ? "/dashboard" : "/quick-check" })}
             className="mt-3 w-full text-xs font-semibold text-muted-foreground underline underline-offset-4"
           >
             {t("checkout.cancel")}
