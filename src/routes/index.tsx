@@ -329,7 +329,7 @@ function Landing() {
 
   return (
     <div className="min-h-screen">
-      <AppHeader registered={Object.keys(state.answers).length > 0} />
+      <AppHeader registered={Object.keys(state.answers).length > 0} quickCheckCta />
 
       <main>
         {/* Hero */}
@@ -364,11 +364,18 @@ function Landing() {
 
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Link
-                  to="/consent"
+                  to="/quick-check"
                   className="group inline-flex items-center gap-2 rounded-full bg-[var(--navigator-teal)] px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-card)] transition-colors duration-200 ease-out hover:bg-[var(--navigator-teal)]/90"
                 >
-                  {t("nav.cta")}
+                  {t("hero.quickCheckCta")}
                   <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" aria-hidden />
+                </Link>
+                <Link
+                  to="/"
+                  hash="how-it-works"
+                  className="text-sm font-semibold text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                >
+                  {t("hero.howCta")}
                 </Link>
                 <span className="text-xs text-muted-foreground">{t("hero.time")}</span>
               </div>
@@ -456,7 +463,7 @@ function Landing() {
         </section>
 
         {/* How it works */}
-        <section className="border-y border-border/70 bg-muted/40">
+        <section id="how-it-works" className="scroll-mt-40 border-y border-border/70 bg-muted/40">
           <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
             <h2 className="text-2xl md:text-3xl">{t("how.title")}</h2>
             <ol className="mt-8 grid gap-5 md:grid-cols-3">
