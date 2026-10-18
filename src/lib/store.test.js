@@ -15,7 +15,7 @@ describe("Navigator assessment access", () => {
     expect(navigatorCheckoutDestination(true)).toBe("/dashboard");
   });
   test("all six shared Quick Check answers carry over unchanged", () => {
-    const answers = { 36: { value: 1 }, 8: { value: [0] }, 7: { value: 0 }, 34: { value: 0 }, 15: { value: 1, detail: "0" }, 22: { value: 1 } };
+    const answers = { 36: { value: 1 }, 8: { value: [0] }, 7: { value: 0 }, 34: { value: 3 }, 15: { value: 1, detail: "0" }, 22: { value: 1 } };
     expect(sanitizeAnswers(answers)).toEqual(answers);
   });
 });
