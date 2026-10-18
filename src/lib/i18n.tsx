@@ -452,7 +452,7 @@ export const en = {
     "Use the Contact page: email us at migrago.co@gmail.com or start a WhatsApp chat with the team. Both channels are staffed during this MVP stage; an in-app assistant is a planned future capability, not a live feature.",
   "faq.q11": "What does the €249 MigraGo Advanced Integration Plan include?",
   "faq.a11":
-    "A future advanced experience designed to provide deeper integration analysis and a more comprehensive personalized roadmap. Conceptually it would offer a more detailed identification of strengths, gaps and priorities, more comprehensive personalization, a more detailed staged roadmap, relevant institutions and resources presented for information, and a comprehensive downloadable report. It is future / locked — not available in the current MVP — and there is no purchase flow for it. The current core offering is the free Essential tier and SettleSmart Navigator at €9.99/month.",
+    "A future advanced experience designed to provide deeper integration analysis and a more comprehensive personalized roadmap. Conceptually it would offer a more detailed identification of strengths, gaps and priorities, more comprehensive personalization, a more detailed staged roadmap, relevant institutions and resources presented for information, and a comprehensive downloadable report. It is future / locked — not available in the current MVP — and there is no purchase flow for it. The current core offering is the free Quick Check tier and SettleSmart Navigator at €9.99/month.",
 
   "contact.title": "Contact us",
   "contact.sub": "Email and WhatsApp are our support channels during this MVP stage. We reply within a few working days.",
@@ -1097,7 +1097,7 @@ export const fa: Record<keyof typeof en, string> = {
     "از صفحهٔ تماس با ما استفاده کنید: رایانامه به نشانی migrago.co@gmail.com یا گفت‌وگوی مستقیم در واتس‌اپ. هر دو کانال در این مرحلهٔ MVP فعال‌اند؛ دستیار درون‌برنامه‌ای یک قابلیت آینده است و اکنون فعال نیست.",
   "faq.q11": "طرح پیشرفتهٔ ادغام میگراگو (۲۴۹ یورو) شامل چه چیزهایی است؟",
   "faq.a11":
-    "یک تجربهٔ پیشرفتهٔ آینده که برای ارائهٔ تحلیل عمیق‌تر ادغام و نقشهٔ راه شخصی‌سازی‌شدهٔ جامع‌تر طراحی شده است. از نظر مفهومی می‌تواند شناسایی دقیق‌تر نقاط قوت، شکاف‌ها و اولویت‌ها، شخصی‌سازی جامع‌تر، نقشهٔ راه مرحله‌ای و دقیق‌تر، نهادها و منابع مرتبط را به‌صورت اطلاع‌رسانی، و یک گزارش جامع قابل دانلود ارائه دهد. این محصول آینده / قفل‌شده است — در نسخهٔ کنونی (MVP) در دسترس نیست و هیچ فرایند خریدی برای آن وجود ندارد. عرضهٔ اصلی کنونی، سطح رایگان Essential و SettleSmart Navigator با ۹٫۹۹ یورو در ماه است.",
+    "یک تجربهٔ پیشرفتهٔ آینده که برای ارائهٔ تحلیل عمیق‌تر ادغام و نقشهٔ راه شخصی‌سازی‌شدهٔ جامع‌تر طراحی شده است. از نظر مفهومی می‌تواند شناسایی دقیق‌تر نقاط قوت، شکاف‌ها و اولویت‌ها، شخصی‌سازی جامع‌تر، نقشهٔ راه مرحله‌ای و دقیق‌تر، نهادها و منابع مرتبط را به‌صورت اطلاع‌رسانی، و یک گزارش جامع قابل دانلود ارائه دهد. این محصول آینده / قفل‌شده است — در نسخهٔ کنونی (MVP) در دسترس نیست و هیچ فرایند خریدی برای آن وجود ندارد. عرضهٔ اصلی کنونی، سطح رایگان بررسی سریع و SettleSmart Navigator با ۹٫۹۹ یورو در ماه است.",
 
 
   "contact.title": "تماس با ما",
