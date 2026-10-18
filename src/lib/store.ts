@@ -5,6 +5,14 @@ import { QUESTIONS, isQuestionApplicable, subAnswerIndex, subAnswerIndexes } fro
 const KEY = "migrago.state.v1";
 const METRICS_KEY = "migrago.metrics.v1";
 
+export function hasNavigatorAccess(tier: AppState["tier"]): boolean {
+  return tier === "navigator";
+}
+
+export function navigatorCheckoutDestination(completed: boolean): "/dashboard" | "/assessment" {
+  return completed ? "/dashboard" : "/assessment";
+}
+
 export type ScoreSnapshot = {
   at: string;
   overall: number;

@@ -88,7 +88,7 @@ export const en = {
   "pricing.navPrice": "€9.99",
   "pricing.perMonth": "/month",
   "pricing.navDesc":
-    "Smart Integration Profile\n Your personalized pathway\n Your 12-week roadmap\nProgress tracking and expanded actionable insights",
+    "Full 42-question assessment\nSmart Integration Profile\n Your personalized pathway\n Your 12-week roadmap\nProgress tracking and expanded actionable insights",
   "pricing.stab": "MigraGo Advanced Integration Plan",
   "pricing.stabPrice": "€249",
   "pricing.stabDesc":
@@ -105,6 +105,7 @@ export const en = {
   "pricing.freeF2": "Direct Access to Official Resources",
   "pricing.freeF2Sub": "Links to official organizations relevant to your recommended steps",
   "pricing.navF1": "Smart Integration Profile",
+  "pricing.navF0": "Full 42-question assessment",
   "pricing.navF2": "Personalized Pathway",
   "pricing.navF3": "12-Week Roadmap",
   "pricing.navF4": "Progress Tracking and Actionable Recommendations",
@@ -195,7 +196,7 @@ export const en = {
 
   "pay.title": "Your profile is ready",
   "pay.sub":
-    "Free includes onboarding, the Quick Check and a basic readiness overview. Navigator adds the full Smart Integration Profile, your personalized 12-week roadmap, action and progress tracking, and curated official resources and links.",
+    "Free includes the 6-question Quick Check in under one minute, a preliminary profile and recommended first steps. SettleSmart Navigator (€9.99/month) includes the full 42-question assessment, Smart Integration Profile, personalized pathway, 12-week roadmap, action and progress tracking, and curated official resources and links. Your Quick Check answers carry over to the full assessment.",
   "pay.teaser": "Locked preview",
   "pay.unlock": "Unlock for €9.99/month",
   "pay.later": "Stay on the free overview",
@@ -325,7 +326,7 @@ export const en = {
   "qc.progressLabel": "Quick Check progress",
   "qc.upgradeTitle": "Want the full picture?",
   "qc.upgradeDesc":
-    "Navigator unlocks your complete Smart Integration Profile, a personalized pathway and the full 12-week roadmap with progress tracking — built from all 42 answers.",
+    "Navigator includes the full 42-question assessment, your complete Smart Integration Profile, a personalized pathway and the full 12-week roadmap with progress tracking. Your Quick Check answers carry over.",
   "qc.upgradeCta": "Upgrade to Navigator",
 
   "pay.emailTitle": "Early access pricing",
@@ -421,13 +422,13 @@ export const en = {
   "faq.sub": "The short answers to what newcomers ask us most.",
   "faq.q1": "Do I need an account to use MigraGo?",
   "faq.a1":
-    "No, the assessment and its overview are free to use without an account. Creating an account is being prepared for upcoming features; it does not currently sync your roadmap progress across devices — progress is saved only on the device and browser you use.",
+    "No account is required for the free 6-question Quick Check, your preliminary profile and recommended first steps. The full 42-question assessment and its results require SettleSmart Navigator (€9.99/month).",
   "faq.q2": "What is included in the free tier?",
   "faq.a2":
-    "Registration and onboarding, the 6-question Quick Check with a preliminary profile and initial action recommendations, plus the full 42-question assessment with a basic readiness overview. The free Essential tier does not include the Smart Integration Profile, the personalized pathway or the 12-week roadmap.",
+    "Registration and onboarding, the free 6-question Quick Check in under one minute, a preliminary profile and recommended first steps. The full 42-question assessment, Smart Integration Profile, personalized pathway and 12-week roadmap belong to SettleSmart Navigator (€9.99/month), not the free tier.",
   "faq.q3": "What do I get with SettleSmart Navigator (€9.99/month)?",
   "faq.a3":
-    "The Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights.",
+    "The full 42-question assessment, Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights. Your Quick Check answers carry over to the full assessment.",
   "faq.q4": "How is my roadmap generated?",
   "faq.a4":
     "Your assessment responses evaluate your current status across three core dimensions and identify existing gaps. The system then maps these gaps against the official regulations and procedures of the destination country, structuring the required actions into a 12-week plan across four operational phases..",
@@ -464,21 +465,21 @@ export const en = {
     "An in-app AI support assistant is on the roadmap as a future capability. It is not available in this version.",
 
   "checkout.title": "Secure checkout",
-  "checkout.sub": "SettleSmart Navigator — full Smart Integration Profile and 12-week roadmap.",
+  "checkout.sub": "SettleSmart Navigator — full 42-question assessment, Smart Integration Profile and 12-week roadmap.",
   "checkout.confirmation": "By continuing, you confirm you'd like to proceed with payment.",
   "checkout.plan": "SettleSmart Navigator (monthly)",
   "checkout.discountLabel": "Early-access discount",
   "checkout.total": "Total due today",
-  "checkout.pay": "Pay and unlock my roadmap",
-  "checkout.cancel": "Back to my profile",
+  "checkout.pay": "Pay and unlock Navigator",
+  "checkout.cancel": "Back",
   "checkout.testMode":
     "Test mode — this prototype runs a simulated payment step. No card is charged.",
   "checkout.processing": "Processing payment…",
-  "checkout.done": "Payment confirmed. Unlocking your roadmap…",
+  "checkout.done": "Payment confirmed. Unlocking Navigator…",
   "checkout.codeApplied": "Early-access code applied",
 
   "pay.emailNote":
-    "This step reserves your discount only. The roadmap unlocks after checkout.",
+    "This step reserves your discount only. Navigator unlocks after checkout.",
   "pay.standard": "Standard pricing",
 
   "road.completion": "tasks completed",
@@ -732,7 +733,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.navPrice": "۹٫۹۹ یورو",
   "pricing.perMonth": " در ماه",
   "pricing.navDesc":
-    "پروفایل هوشمند ادغام \n مسیر شخصی‌سازی‌ شدهٔ شما  \nنقشه‌ راه ۱۲ هفته‌ایی\n پیگیری پیشرفت و بینش‌های عملی گسترده‌تر",
+    "ارزیابی کامل ۴۲ پرسشی\nپروفایل هوشمند ادغام \n مسیر شخصی‌سازی‌ شدهٔ شما  \nنقشه‌ راه ۱۲ هفته‌ایی\n پیگیری پیشرفت و بینش‌های عملی گسترده‌تر",
   "pricing.stab": "طرح پیشرفتهٔ ادغام میگراگو",
   "pricing.stabPrice": "۲۴۹ یورو",
   "pricing.stabDesc":
@@ -749,6 +750,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.freeF2": "دسترسی مستقیم به منابع رسمی",
   "pricing.freeF2Sub": "لینک نهادهای رسمی مرتبط با گام‌های پیشنهادی شما",
   "pricing.navF1": "پروفایل هوشمند ادغام",
+  "pricing.navF0": "ارزیابی کامل ۴۲ پرسشی",
   "pricing.navF2": "مسیر شخصی‌سازی‌شده",
   "pricing.navF3": "نقشه راه ۱۲ هفته‌ای",
   "pricing.navF4": "پیگیری پیشرفت و پیشنهادهای عملی",
@@ -838,7 +840,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "pay.title": "پروفایل شما آماده است",
   "pay.sub":
-    "نسخهٔ رایگان شامل شروع کار، بررسی سریع و نمای کلی پایه از آمادگی است. Navigator پروفایل کامل هوشمند ادغام، نقشه‌راه شخصی‌سازی‌شدهٔ ۱۲ هفته‌ای، پیگیری اقدام‌ها و پیشرفت، و منابع و پیوندهای رسمی منتخب را اضافه می‌کند.",
+    "نسخهٔ رایگان شامل بررسی سریع ۶ پرسشی در کمتر از یک دقیقه، پروفایل اولیه و گام‌های پیشنهادی نخست است. SettleSmart Navigator (ماهانه ۹٫۹۹ یورو) شامل ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده، نقشه‌راه ۱۲ هفته‌ای، پیگیری اقدام‌ها و پیشرفت و منابع و پیوندهای رسمی منتخب است. پاسخ‌های بررسی سریع شما به ارزیابی کامل منتقل می‌شوند.",
   "pay.teaser": "پیش‌نمایش قفل‌شده",
   "pay.unlock": "فعال‌سازی با ۹٫۹۹ یورو در ماه",
   "pay.later": "ادامه با نمای رایگان",
@@ -969,7 +971,7 @@ export const fa: Record<keyof typeof en, string> = {
   "qc.progressLabel": "پیشرفت بررسی سریع",
   "qc.upgradeTitle": "تصویر کامل را می‌خواهید؟",
   "qc.upgradeDesc":
-    "Navigator پروفایل هوشمند ادغام کامل، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای با پیگیری پیشرفت را بر اساس هر ۴۲ پاسخ باز می‌کند.",
+    "Navigator شامل ارزیابی کامل ۴۲ پرسشی، پروفایل کامل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای با پیگیری پیشرفت است. پاسخ‌های بررسی سریع شما منتقل می‌شوند.",
   "qc.upgradeCta": "ارتقا به Navigator",
 
   "pay.emailTitle": "قیمت دسترسی زودهنگام",
@@ -1065,13 +1067,13 @@ export const fa: Record<keyof typeof en, string> = {
   "faq.sub": "پاسخ کوتاه به پرسش‌هایی که تازه‌واردان بیش از همه می‌پرسند.",
   "faq.q1": "برای استفاده از میگراگو باید حساب کاربری بسازم؟",
   "faq.a1":
-    "خیر، ارزیابی و نمای کلی آن رایگان و بدون نیاز به حساب کاربری در دسترس است. ساخت حساب کاربری برای ویژگی‌های آینده آماده‌سازی می‌شود؛ در حال حاضر پیشرفت نقشه‌راه شما را بین دستگاه‌ها همگام نمی‌کند — پیشرفت فقط روی همان دستگاه و مرورگری که استفاده می‌کنید ذخیره می‌شود.",
+    "برای بررسی سریع رایگان ۶ پرسشی، پروفایل اولیه و گام‌های پیشنهادی نخست نیازی به حساب کاربری نیست. ارزیابی کامل ۴۲ پرسشی و نتایج آن به SettleSmart Navigator (ماهانه ۹٫۹۹ یورو) نیاز دارند.",
   "faq.q2": "نسخهٔ رایگان شامل چه چیزهایی است؟",
   "faq.a2":
-    "ثبت‌نام و شروع کار، بررسی سریع ۶ پرسشی با پروفایل اولیه و گام‌های پیشنهادی نخست، به‌علاوهٔ پرسشنامهٔ کامل ۴۲ پرسشی با نمای کلی پایه از آمادگی. سطح رایگان Essential شامل پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده یا نقشه‌راه ۱۲ هفته‌ای نمی‌شود.",
+    "ثبت‌نام و شروع کار، بررسی سریع رایگان ۶ پرسشی در کمتر از یک دقیقه، پروفایل اولیه و گام‌های پیشنهادی نخست. ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای به SettleSmart Navigator (ماهانه ۹٫۹۹ یورو) تعلق دارند، نه نسخهٔ رایگان.",
   "faq.q3": "اشتراک SettleSmart Navigator (ماهانه ۹٫۹۹ یورو) چه چیزی ارائه می‌دهد؟",
   "faq.a3":
-    "پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر.",
+    "ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر. پاسخ‌های بررسی سریع شما به ارزیابی کامل منتقل می‌شوند.",
   "faq.q4": "نقشهٔ راه چگونه ساخته می‌شود؟",
   "faq.a4":
     "پاسخ‌های ارزیابی شما، وضعیت کنونی‌تان را در ابعاد سه‌گانه سنجیده و شکاف‌های موجود را شناسایی می‌کند. سامانه سپس این شکاف‌ها را با ضوابط و رویه‌های رسمی کشور مقصد تطبیق داده و اقدامات لازم را در قالب یک برنامه ۱۲ هفته‌ای (در چهار فاز عملیاتی) مرتب می‌سازد.",
@@ -1109,21 +1111,21 @@ export const fa: Record<keyof typeof en, string> = {
     "دستیار پشتیبانی هوش مصنوعی درون‌برنامه‌ای در نقشهٔ راه محصول قرار دارد و در این نسخه در دسترس نیست.",
 
   "checkout.title": "پرداخت امن",
-  "checkout.sub": "SettleSmart Navigator — پروفایل کامل هوشمند ادغام و نقشه‌راه ۱۲ هفته‌ای.",
+  "checkout.sub": "SettleSmart Navigator — ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام و نقشه‌راه ۱۲ هفته‌ای.",
   "checkout.confirmation": "با ادامه، تأیید می‌کنید که مایل به ادامهٔ پرداخت هستید.",
   "checkout.plan": "SettleSmart Navigator (ماهانه)",
   "checkout.discountLabel": "تخفیف دسترسی زودهنگام",
   "checkout.total": "مبلغ قابل پرداخت",
-  "checkout.pay": "پرداخت و باز کردن نقشهٔ راه",
-  "checkout.cancel": "بازگشت به پروفایل",
+  "checkout.pay": "پرداخت و فعال‌سازی Navigator",
+  "checkout.cancel": "بازگشت",
   "checkout.testMode":
     "حالت آزمایشی — این نمونهٔ اولیه یک مرحلهٔ پرداخت شبیه‌سازی‌شده اجرا می‌کند و هیچ مبلغی از کارت برداشت نمی‌شود.",
   "checkout.processing": "در حال پردازش پرداخت…",
-  "checkout.done": "پرداخت تأیید شد. در حال باز کردن نقشهٔ راه…",
+  "checkout.done": "پرداخت تأیید شد. در حال فعال‌سازی Navigator…",
   "checkout.codeApplied": "کد دسترسی زودهنگام اعمال شد",
 
   "pay.emailNote":
-    "این مرحله فقط تخفیف شما را رزرو می‌کند. نقشهٔ راه پس از پرداخت باز می‌شود.",
+    "این مرحله فقط تخفیف شما را رزرو می‌کند. Navigator پس از پرداخت فعال می‌شود.",
   "pay.standard": "قیمت استاندارد",
 
   "road.completion": "گام انجام‌شده",

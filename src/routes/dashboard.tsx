@@ -64,7 +64,7 @@ import { buildGapAnalysis, buildPathways, whyRecommended } from "@/lib/pathways"
 import { FOUNDER_TRACK_IDS, QUESTIONS, isAnswered } from "@/lib/questions";
 import { fetchRoadmapProgress, setRoadmapTask } from "@/lib/feedback";
 import { useSession } from "@/lib/session";
-import { trackEvent, useAppState } from "@/lib/store";
+import { hasNavigatorAccess, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 
@@ -245,25 +245,25 @@ function Dashboard() {
   const locked = state.tier !== "navigator";
 
   useEffect(() => {
-    if (hydrated && !state.completed && !deleted) void navigate({ to: "/assessment" });
-  }, [hydrated, state.completed, deleted, navigate]);
+    if (hydrated && (!state.completed || !hasNavigatorAccess(state.tier)) && !deleted) void navigate({ to: "/assessment" });
+  }, [hydrated, state.completed, state.tier, deleted, navigate]);
 
   // Live recalculation: every answer edit produces a new snapshot.
   useEffect(() => {
-    if (!hydrated || !state.completed) return;
+    if (!hydrated || !state.completed || !hasNavigatorAccess(state.tier)) return;
     pushSnapshot({
       overall: profile.overall,
       legal: profile.legal,
       professional: profile.professional,
       psychological: profile.psychological,
     });
-  }, [hydrated, state.completed, profile, pushSnapshot]);
+  }, [hydrated, state.completed, state.tier, profile, pushSnapshot]);
 
   useEffect(() => {
     if (hydrated && locked && state.completed) trackEvent({ type: "paywall_view" });
   }, [hydrated, locked, state.completed]);
 
-  if (!hydrated) return null;
+  if (!hydrated || ((!state.completed || !hasNavigatorAccess(state.tier)) && !deleted)) return null;
 
   if (buildingRoadmap) {
     return (

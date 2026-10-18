@@ -563,7 +563,7 @@ function Landing() {
                 <span className="text-sm font-medium text-muted-foreground">{t("pricing.perMonth")}</span>
               </p>
               <ul className="mt-5 flex-1 space-y-4">
-                {([[UserRoundCheck, "pricing.navF1"], [RouteIcon, "pricing.navF2"], [CalendarDays, "pricing.navF3"], [ChartLine, "pricing.navF4"]] as const).map(([Icon, k]) => (
+                {([[ClipboardCheck, "pricing.navF0"], [UserRoundCheck, "pricing.navF1"], [RouteIcon, "pricing.navF2"], [CalendarDays, "pricing.navF3"], [ChartLine, "pricing.navF4"]] as const).map(([Icon, k]) => (
                   <li key={k} className="flex items-start gap-3">
                     <Icon className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
                     <p className="text-sm font-semibold text-foreground">{t(k)}</p>

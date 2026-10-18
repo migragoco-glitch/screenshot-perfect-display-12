@@ -20,6 +20,8 @@ import { QuestionField } from "@/components/QuestionField";
 import { LiveProgressPanel } from "@/components/LiveProgressPanel";
 import { AssessmentGuideMoment } from "@/components/AssessmentGuideMoment";
 import { PenguinLoader } from "@/components/PenguinLoader";
+import { FoundersCircleModal } from "@/components/FeedbackWidgets";
+import { Button } from "@/components/ui/button";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import {
   COUNTRIES,
@@ -31,7 +33,7 @@ import {
   type Answers,
 } from "@/lib/questions";
 import { BUCKETS, computeProfile } from "@/lib/scoring";
-import { storedAnswersAreConsistent, trackEvent, useAppState } from "@/lib/store";
+import { hasNavigatorAccess, storedAnswersAreConsistent, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/assessment")({
@@ -146,6 +148,7 @@ function Assessment() {
   const { state, hydrated, setAnswer, update, pushSnapshot, resetAnswers } = useAppState();
   const [section, setSection] = useState(1);
   const [analyzing, setAnalyzing] = useState(false);
+  const [payModal, setPayModal] = useState(false);
   const [showRequired, setShowRequired] = useState(false);
   const [corrupted, setCorrupted] = useState(false);
   const [inconsistencyDismissed, setInconsistencyDismissed] = useState(false);
@@ -157,18 +160,18 @@ function Assessment() {
   const founderTrack = state.founderTrack ?? null;
 
   useEffect(() => {
-    if (hydrated && !state.consent) void navigate({ to: "/consent" });
+    if (hydrated && !state.consent) void navigate({ to: "/consent", search: { next: "assessment" } });
   }, [hydrated, state.consent, navigate]);
 
   // Validate stored answers whenever Step 7 loads; safely reset instead of crashing.
   useEffect(() => {
-    if (!hydrated || section !== 7) return;
+    if (!hydrated || !hasNavigatorAccess(state.tier) || section !== 7) return;
     if (storedAnswersAreConsistent()) return;
     resetAnswers();
     setCorrupted(true);
     setSection(1);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [hydrated, section, resetAnswers]);
+  }, [hydrated, state.tier, section, resetAnswers]);
 
   const visible = useMemo(
     () => questionsForSection(section, state.answers, { founderTrack }),
@@ -229,6 +232,29 @@ function Assessment() {
     }, 1400);
     return () => window.clearTimeout(id);
   }, [guidedView, section]);
+
+  if (!hydrated || !state.consent) return null;
+
+  if (!hasNavigatorAccess(state.tier)) {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <AppHeader />
+        <main className="mx-auto w-full max-w-lg flex-1 px-4 py-14 md:px-8">
+          <section className="glass-card rounded-3xl p-7 md:p-9">
+            <h1 className="text-2xl">{t("pricing.nav")}</h1>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t("pay.sub")}</p>
+            <p className="mt-4 text-3xl font-bold text-secondary">{t("pricing.navPrice")}<span className="text-sm font-medium text-muted-foreground">{t("pricing.perMonth")}</span></p>
+            <Button variant="secondary" className="mt-6 h-auto w-full whitespace-normal rounded-full px-5 py-3 text-sm font-bold" onClick={() => { trackEvent({ type: "upgrade_click" }); setPayModal(true); }}>
+              {t("pricing.upgrade")}<ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+            </Button>
+            <Button variant="link" className="mt-3 h-auto w-full whitespace-normal text-xs" onClick={() => void navigate({ to: "/quick-check" })}>{t("pricing.freeCta")}</Button>
+            <p className="mt-4 text-xs text-muted-foreground">{t("pay.demoNote")}</p>
+          </section>
+        </main>
+        <FoundersCircleModal open={payModal} onClose={() => setPayModal(false)} onJoined={() => { setPayModal(false); void navigate({ to: "/checkout" }); }} />
+      </div>
+    );
+  }
 
   if (analyzing) {
     return (

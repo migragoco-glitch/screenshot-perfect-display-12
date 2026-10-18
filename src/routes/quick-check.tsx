@@ -358,7 +358,7 @@ function QuickCheck() {
                 to="/assessment"
                 className="inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors duration-200 ease-out hover:bg-primary/90"
               >
-                {t("qc.continueFull")}
+                {state.tier === "navigator" ? t("qc.continueFull") : t("qc.upgradeCta")}
                 <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
               </Link>
               <Link
@@ -376,10 +376,10 @@ function QuickCheck() {
                 €9.99<span className="text-xs font-medium text-muted-foreground">{t("pricing.perMonth")}</span>
               </p>
               <Link
-                to="/checkout"
+                to="/assessment"
                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-secondary px-5 py-2.5 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
               >
-                {t("qc.upgradeCta")}
+                {state.tier === "navigator" ? t("qc.continueFull") : t("qc.upgradeCta")}
                 <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
               </Link>
             </section>
