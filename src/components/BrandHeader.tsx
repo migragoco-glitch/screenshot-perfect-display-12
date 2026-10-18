@@ -103,7 +103,7 @@ export function CountrySelector() {
   );
 }
 
-export function AppHeader({ registered }: { registered?: boolean }) {
+export function AppHeader({ registered, quickCheckCta = false }: { registered?: boolean; quickCheckCta?: boolean }) {
   const { t } = useI18n();
   const navigate = useNavigate();
   const { session } = useSession();
@@ -123,6 +123,14 @@ export function AppHeader({ registered }: { registered?: boolean }) {
         <div className="ms-auto flex flex-wrap items-center gap-2">
           <CountrySelector />
           <LanguageSwitch />
+          {quickCheckCta ? (
+            <Link
+              to="/quick-check"
+              className="rounded-full bg-secondary px-4 py-2 text-xs font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
+            >
+              {t("hero.quickCheckCta")}
+            </Link>
+          ) : null}
           {registered ? (
             <Link
               to="/dashboard"
