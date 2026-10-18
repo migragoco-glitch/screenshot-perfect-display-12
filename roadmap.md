@@ -1,8 +1,9 @@
 # Current roadmap
 
-- [ ] Compare app and website EN/FA tier claims and correct actual app inconsistencies.
-- [ ] Gate the full assessment before answering through existing Navigator upgrade flow; preserve shared answers.
-- [ ] Verify relevant app flows and website where accessible; report cross-project limitations.
+- [x] Compare app and website EN/FA tier claims and correct actual app inconsistencies.
+- [x] Gate the full assessment before answering through existing Navigator upgrade flow; preserve shared answers.
+- [x] Verify relevant app flows and live website EN/FA pricing; report cross-project limitations.
+- [ ] Correct stale website search metadata describing the free plan as Essential with AI analysis — blocked: the website snapshot is read-only; requires its own project chat.
 
 - [x] Align homepage hero copy and Quick Check CTAs; verify EN/FA links and same-page section scrolling.
 
