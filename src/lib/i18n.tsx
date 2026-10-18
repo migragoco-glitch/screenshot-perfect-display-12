@@ -23,7 +23,7 @@ export const en = {
 
   "hero.title": "Know where you stand in your migration journey. Know what comes next.",
   "hero.sub":
-    "MigraGo is a migration assessment and settlement-planning platform. Start with the free Quick Check — 6 questions, less than one minute — for a preliminary profile and recommended first steps. The full assessment with Navigator provides your personalized pathway and 12-week roadmap, informed by relevant laws, services, and support resources.",
+    "MigraGo is a platform for migration assessment and settlement and integration planning in your destination country. Start with the free 6-question Quick Check in under one minute to receive a preliminary profile and recommended first steps. With SettleSmart Navigator, complete the full assessment and receive your Smart Integration Profile, personalized pathway, and 12-week roadmap based on your answers, with steps linked to relevant laws, procedures, services, and support resources in your destination country.",
   "hero.badge": "Evidence-based integration pathway",
   "hero.badgeLine1": "Evidence-based integration pathway",
   "hero.badgeLine2": "Informed by Finland's knowledge and social-integration ecosystem",
@@ -667,9 +667,9 @@ export const fa: Record<keyof typeof en, string> = {
   "nav.comingSoon": "به‌زودی",
   "nav.comingSoonTip": "در این نسخه فعال نیست — به‌زودی.",
 
-  "hero.title": "بدانید در مسیر مهاجرت کجا ایستاده‌اید. بدانید قدم بعدی چیست.",
+  "hero.title": "بدانید در مسیر مهاجرت کجا ایستاده‌اید و قدم بعدی چیست.",
   "hero.sub":
-    "میگراگو پلتفرمی برای ارزیابی مهاجرت و برنامه‌ریزی استقرار است. با بررسی سریع رایگان — ۶ پرسش، کمتر از یک دقیقه — شروع کنید و پروفایل اولیه و گام‌های پیشنهادی نخست را دریافت کنید. ارزیابی کامل با Navigator، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای شما را با تکیه بر قوانین، خدمات و منابع حمایتی مرتبط ارائه می‌کند.",
+    "میگراگو پلتفرمی برای ارزیابی وضعیت مهاجرت و برنامه‌ریزی استقرار و ادغام در کشور مقصد است. با بررسی سریع رایگانِ ۶ پرسشی، در کمتر از یک دقیقه شروع کنید و پروفایل اولیه و گام‌های پیشنهادی نخست را دریافت کنید. با SettleSmart Navigator، ارزیابی کامل را انجام دهید و بر اساس پاسخ‌هایتان، پروفایل یکپارچه‌سازی، مسیر شخصی‌سازی‌شده و نقشهٔ راه ۱۲ هفته‌ای دریافت کنید؛ همراه با گام‌های مرتبط با قوانین، رویه‌ها، خدمات و منابع حمایتی کشور مقصد.",
   "hero.badge": "مسیر ادغام مبتنی بر شواهد",
   "hero.badgeLine1": "مسیر ادغام مبتنی بر شواهد",
   "hero.badgeLine2": "با تکیه بر دانش و زیست بوم ادغام اجتماعی فنلاند ",
