@@ -674,7 +674,7 @@ export const fa: Record<keyof typeof en, string> = {
   "hero.badgeLine1": "مسیر ادغام مبتنی بر شواهد",
   "hero.badgeLine2": "با تکیه بر دانش و زیست بوم ادغام اجتماعی فنلاند ",
   "hero.time": "\n",
-  "hero.discoverTitle": "با تکمیل ارزیابی MigraGo:",
+  "hero.discoverTitle": "با تکمیل ارزیابی میگراگو:",
   "hero.discoverSub": "این موارد را کشف می‌کنید",
   "hero.discover1": "وضعیت و آمادگی شما",
   "hero.discover2": "اولویت‌های شما",
