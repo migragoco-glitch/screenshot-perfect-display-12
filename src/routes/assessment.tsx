@@ -160,7 +160,7 @@ function Assessment() {
   const founderTrack = state.founderTrack ?? null;
 
   useEffect(() => {
-    if (hydrated && !state.consent) void navigate({ to: "/consent" });
+    if (hydrated && !state.consent) void navigate({ to: "/consent", search: { next: "assessment" } });
   }, [hydrated, state.consent, navigate]);
 
   // Validate stored answers whenever Step 7 loads; safely reset instead of crashing.
