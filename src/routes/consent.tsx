@@ -6,9 +6,10 @@ import { useI18n } from "@/lib/i18n";
 import { trackEvent, useAppState } from "@/lib/store";
 
 export const Route = createFileRoute("/consent")({
-  validateSearch: (search: Record<string, unknown>): { upgrade?: boolean; next?: "assessment" } => ({
+  validateSearch: (search: Record<string, unknown>): { upgrade?: boolean; next?: "assessment" | "start" } => ({
     ...(search['upgrade'] === true || search['upgrade'] === "true" ? { upgrade: true } : {}),
     ...(search['next'] === "assessment" ? { next: "assessment" as const } : {}),
+    ...(search['next'] === "start" ? { next: "start" as const } : {}),
   }),
   head: () => ({
     meta: [
@@ -108,7 +109,7 @@ function ConsentScreen() {
                 }
                 update({ consent: true });
                 trackEvent({ type: "start" });
-                void navigate({ to: next === "assessment" ? "/assessment" : "/quick-check" });
+                void navigate({ to: next === "start" ? "/start" : next === "assessment" ? "/assessment" : "/quick-check" });
               }}
               className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors duration-200 ease-out hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
             >

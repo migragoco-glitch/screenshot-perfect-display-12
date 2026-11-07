@@ -11,3 +11,4 @@
 
 - Keep full-assessment access gated by the existing stored Navigator tier before rendering questions or results; reuse the existing early-access modal and simulated checkout so shared answers and storage remain intact.
 - Route simulated-checkout completion to the full assessment when incomplete, and to existing results when complete; never generate results from partial Quick Check answers.
+- Keep the needs-first /start flow URL-only and derive its steps in area-flow from shared answers and existing roadmap knowledge; its checkout return target preserves the separate flow without changing assessment scoring.

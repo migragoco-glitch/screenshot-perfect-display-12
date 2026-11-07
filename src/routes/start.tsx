@@ -1,0 +1,321 @@
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { ArrowLeft, ArrowRight, Check, ExternalLink, Globe, HeartPulse, House, IdCard, Landmark, Lock, Users } from "lucide-react";
+import { AppHeader, SiteFooter } from "@/components/BrandHeader";
+import { FoundersCircleModal } from "@/components/FeedbackWidgets";
+import { QuestionField } from "@/components/QuestionField";
+import { Button } from "@/components/ui/button";
+import { AREAS, MUNICIPALITIES, STEP_AREA, documentsForSteps, planWeeks, weeksRange, buildAreaSteps, suggestRoute, formatCheckedDate, earlyChildhoodLocalUrl, type AreaId, type AreaStep } from "@/lib/area-flow";
+import { localizeNumber, useI18n } from "@/lib/i18n";
+import { QUESTIONS, isQuestionApplicable } from "@/lib/questions";
+import { hasNavigatorAccess, trackEvent, useAppState } from "@/lib/store";
+
+export const Route = createFileRoute("/start")({
+  head: () => ({ meta: [
+    { title: "First steps in Finland — MigraGo" },
+    { name: "description", content: "Find your first steps for identity registration, family services, Kela and healthcare in Finland." },
+    { property: "og:title", content: "First steps in Finland — MigraGo" },
+    { property: "og:description", content: "Choose your municipality and priorities for practical first steps linked to official Finnish sources." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary_large_image" },
+  ] }),
+  component: StartScreen,
+});
+
+type Stage = "city" | "areas" | "questions" | "choose" | "info" | "road";
+const SESSION_KEY = "migrago.start.v1";
+function saveSession(areas: AreaId[], stage: Stage) {
+  try { window.sessionStorage.setItem(SESSION_KEY, JSON.stringify({ areas, stage })); } catch { /* Storage may be unavailable. */ }
+}
+function readIds(key: string): string[] {
+  try {
+    const value: unknown = JSON.parse(window.localStorage.getItem(key) ?? "[]");
+    return Array.isArray(value) ? value.filter((id): id is string => typeof id === "string") : [];
+  } catch { return []; }
+}
+function saveIds(key: string, ids: string[]) {
+  try { window.localStorage.setItem(key, JSON.stringify(ids)); } catch { /* Storage may be unavailable. */ }
+}
+const ICONS = { status: Globe, id: IdCard, bank: Landmark, kela: HeartPulse, housing: House, family: Users };
+
+function StartScreen() {
+  const { lang, dir, t } = useI18n();
+  const { state, hydrated, update, setAnswer } = useAppState();
+  const navigate = useNavigate();
+  const [stage, setStage] = useState<Stage>("city");
+  const [areas, setAreas] = useState<AreaId[]>([]);
+  const [areaError, setAreaError] = useState(false);
+  const [restored, setRestored] = useState(false);
+  const [doneIds, setDoneIds] = useState<string[]>([]);
+  const [docIds, setDocIds] = useState<string[]>([]);
+  const [expandedIds, setExpandedIds] = useState<string[]>([]);
+  const [paywallOpen, setPaywallOpen] = useState(false);
+  useEffect(() => {
+    if (!hydrated || !state.consent || restored) return;
+    try {
+      const saved: unknown = JSON.parse(window.sessionStorage.getItem(SESSION_KEY) ?? "null");
+      if (state.municipality && saved && typeof saved === "object" && "stage" in saved && "areas" in saved &&
+          typeof saved.stage === "string" && ["areas", "questions", "choose", "info", "road"].includes(saved.stage) && Array.isArray(saved.areas)) {
+        setStage(saved.stage as Stage);
+        setAreas(saved.areas.filter((id): id is AreaId => AREAS.some((area) => area.id === id)));
+      } else setStage("city");
+    } catch { setStage("city"); }
+    setDoneIds(readIds("migrago.start.done"));
+    setDocIds(readIds("migrago.start.docs"));
+    setRestored(true);
+  }, [hydrated, state.consent, state.municipality, restored]);
+  useEffect(() => {
+    if (restored && hydrated && state.consent) saveSession(areas, stage);
+  }, [areas, stage, restored, hydrated, state.consent]);
+  useEffect(() => {
+    if (hydrated && !state.consent) void navigate({ to: "/consent", search: { next: "start" } });
+  }, [hydrated, state.consent, navigate]);
+
+  if (!hydrated || !state.consent || !restored) return null;
+  const selectedAreas = AREAS.filter((area) => areas.includes(area.id));
+  const asked = new Set(selectedAreas.flatMap((area) => area.questions));
+  const effectiveRoute = state.route ?? suggestRoute(state.answers[2]?.value);
+  const steps = buildAreaSteps(areas, state.answers, effectiveRoute);
+  const hasNavigator = hasNavigatorAccess(state.tier);
+  const filteredSteps = steps.filter((step) => areas.includes(STEP_AREA[step.id] as AreaId));
+  const checklist = documentsForSteps(filteredSteps);
+  const toggleDone = (id: string) => {
+    const next = doneIds.includes(id) ? doneIds.filter((value) => value !== id) : [...doneIds, id];
+    setDoneIds(next); saveIds("migrago.start.done", next);
+  };
+  const toggleDoc = (id: string) => {
+    const next = docIds.includes(id) ? docIds.filter((value) => value !== id) : [...docIds, id];
+    setDocIds(next); saveIds("migrago.start.docs", next);
+  };
+  const openUpgrade = () => {
+    trackEvent({ type: "upgrade_click" }); saveSession(areas, stage); setPaywallOpen(true);
+  };
+  const localUrl = earlyChildhoodLocalUrl(state.municipality);
+  const questionOwners = new Set<number>();
+
+  return (
+    <div dir={dir} className="flex min-h-screen flex-col">
+      <AppHeader />
+      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 md:px-8 md:py-14">
+        <h1 className="text-2xl md:text-3xl">{t("start.title")}</h1>
+        {stage === "city" ? (
+          <section className="mt-8">
+            <label htmlFor="start-municipality" className="text-lg font-semibold">{t("start.city")}</label>
+            <select id="start-municipality" value={state.municipality ?? ""} onChange={(event) => {
+              const municipality = event.target.value;
+              if (municipality) update({ municipality, region: ["Helsinki", "Espoo", "Vantaa"].includes(municipality) ? "helsinki" : "elsewhere" });
+            }} className="mt-4 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm">
+              <option value="" disabled>{t("start.chooseCity")}</option>
+              {MUNICIPALITIES.map((city) => <option key={city} value={city}>{t(`start.city.${city}`)}</option>)}
+            </select>
+            <Button variant="secondary" className="mt-6" disabled={!state.municipality} onClick={() => setStage("areas")}>
+              {t("common.continue")}<ArrowRight className="rtl:rotate-180" />
+            </Button>
+          </section>
+        ) : null}
+        {stage === "areas" ? (
+          <section className="mt-8">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-xl">{t("start.areas")}</h2>
+              <Button variant="outline" onClick={() => { setAreas(AREAS.map((area) => area.id)); setAreaError(false); }}><Check />{t("start.selectAll")}</Button>
+            </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-3">
+              {AREAS.map((area) => {
+                const Icon = ICONS[area.id];
+                const active = areas.includes(area.id);
+                return <Button key={area.id} variant="outline" aria-pressed={active} onClick={() => {
+                  setAreas((current) => active ? current.filter((id) => id !== area.id) : [...current, area.id]);
+                  setAreaError(false);
+                }} className={`h-auto min-h-36 flex-col items-start justify-start whitespace-normal rounded-lg p-4 text-start ${active ? "border-secondary bg-secondary/10 ring-1 ring-secondary" : ""}`}>
+                  <Icon className="text-secondary" />
+                  <span className="font-semibold">{t(area.title)}</span>
+                  <span className="text-xs font-normal leading-relaxed text-muted-foreground">{t(area.description)}</span>
+                </Button>;
+              })}
+            </div>
+            {areaError ? <p role="alert" className="mt-3 text-sm text-destructive">{t("start.noAreas")}</p> : null}
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button variant="outline" onClick={() => setStage("city")}><ArrowLeft className="rtl:rotate-180" />{t("common.back")}</Button>
+              <Button variant="secondary" className="h-auto min-h-9 whitespace-normal" onClick={() => {
+                if (!areas.length) { setAreaError(true); return; }
+                setStage("questions");
+              }}>{t("start.continueAreas").replace("{n}", localizeNumber(areas.length, lang))}<ArrowRight className="rtl:rotate-180" /></Button>
+            </div>
+          </section>
+        ) : null}
+        {stage === "questions" ? (
+          <>
+            {selectedAreas.map((area) => (
+              <section key={area.id} className="mt-8 border-t border-border pt-6">
+                <h2 className="text-xl">{t(area.title)}</h2>
+                <p className="mt-2 text-sm text-muted-foreground">{t(area.description)}</p>
+                <a href={area.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-secondary">{t("road.officialSource")}<ExternalLink className="size-4" /></a>
+                <div className="mt-5 space-y-4">
+                  {area.questions.map((id) => {
+                    if (questionOwners.has(id)) return null;
+                    questionOwners.add(id);
+                    const question = QUESTIONS.find((item) => item.id === id);
+                    if (!question || !isQuestionApplicable(question, state.answers, { founderTrack: state.founderTrack ?? null })) return null;
+                    return <QuestionField key={id} question={question} index={id} hideNumber={true} answer={state.answers[id]} onChange={(value) => setAnswer(id, value)} levelColor="var(--teal)" />;
+                  })}
+                </div>
+                {area.id === "status" ? <>
+                  <div role="group" aria-label={t("start.route.label")} className="mt-5">
+                    <p className="text-sm font-semibold">{t("start.route.label")}</p>
+                    <div className="mt-3 flex flex-wrap gap-3">
+                      {(["eu", "nordic", "noneu"] as const).map((route) => <Button key={route} variant="outline" aria-pressed={effectiveRoute === route} onClick={() => update({ route })} className={`h-auto min-h-9 whitespace-normal text-start ${effectiveRoute === route ? "border-secondary bg-secondary/10 ring-1 ring-secondary" : ""}`}>{t(`start.route.${route}`)}</Button>)}
+                    </div>
+                    {state.route === undefined && effectiveRoute ? <p className="mt-3 text-sm text-muted-foreground">{t("start.route.suggested")}</p> : null}
+                    {effectiveRoute === undefined ? <p className="mt-3 text-sm text-muted-foreground">{t("start.route.choose")}</p> : null}
+                  </div>
+                  <p className="mt-3 text-sm text-muted-foreground">{t("start.status.scope")} <a href="https://migri.fi/en/home" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold text-secondary">{t("road.officialSource")}<ExternalLink className="size-4" /></a></p>
+                </> : null}
+              </section>
+            ))}
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Button variant="outline" onClick={() => setStage("areas")}><ArrowLeft className="rtl:rotate-180" />{t("common.back")}</Button>
+              <Button variant="secondary" onClick={() => setStage("choose")}>{t("start.showSteps")}<ArrowRight className="rtl:rotate-180" /></Button>
+            </div>
+          </>
+        ) : null}
+        {stage === "choose" ? (
+          <section className="mt-8">
+            <h2 className="text-xl">{t("start.choose.title")}</h2>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              {(["info", "road"] as const).map((view) => (
+                <Button key={view} variant="outline" onClick={() => setStage(view)} className="h-auto min-h-28 flex-col items-start justify-start whitespace-normal rounded-lg p-4 text-start">
+                  <span className="font-semibold">{t(`start.choose.${view}.title`)}</span>
+                  <span className="text-xs font-normal leading-relaxed text-muted-foreground">{t(`start.choose.${view}.desc`)}</span>
+                </Button>
+              ))}
+            </div>
+            <Button variant="outline" className="mt-6" onClick={() => setStage("questions")}><ArrowLeft className="rtl:rotate-180" />{t("common.back")}</Button>
+          </section>
+        ) : null}
+        {stage === "info" ? (
+          <section className="mt-8">
+            <h2 className="text-xl">{t("start.info.title")}</h2>
+            {selectedAreas.map((area) => {
+              const areaSteps = steps.filter((step) => STEP_AREA[step.id] === area.id);
+              return (
+                <section key={area.id} className="mt-8 border-t border-border pt-6">
+                  <h3 className="text-lg font-semibold">{t(area.title)}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{t(area.description)}</p>
+                  <a href={area.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-secondary">{t("road.officialSource")}<ExternalLink className="size-4" /></a>
+                  {areaSteps.length ? (
+                    <ul className="mt-5 space-y-4">
+                      {areaSteps.map((step) => <li key={step.id} data-step-id={step.id} className="rounded-lg border border-border bg-card p-5"><StepBody step={step} localUrl={localUrl} /></li>)}
+                    </ul>
+                  ) : <p className="mt-4 text-sm text-muted-foreground">{t(area.id === "status" ? effectiveRoute === "nordic" ? "start.route.nordicNote" : effectiveRoute === undefined ? "start.route.choose" : "start.noSteps" : "start.noSteps")}</p>}
+                  {area.id === "status" ? <p className="mt-3 text-sm text-muted-foreground">{t("start.status.scope")}</p> : null}
+                </section>
+              );
+            })}
+            {hasNavigator ? <>
+              <section className="mt-8 border-t border-border pt-6">
+                <h3 className="text-lg font-semibold">{t("start.checklist.title")}</h3>
+                {checklist.length ? checklist.map((item) => <div key={item.id} className="mt-5">
+                  <h4 className="text-sm font-semibold">{typeof item.title === "string" ? t(item.title) : item.title[lang]}</h4>
+                  {item.documents.map((key, index) => <label key={`${item.id}:${index}`} className="mt-3 flex items-start gap-3 text-sm">
+                    <input type="checkbox" className="mt-1 size-4 accent-secondary" checked={docIds.includes(`${item.id}:${index}`)} onChange={() => toggleDoc(`${item.id}:${index}`)} />
+                    <span>{t(key)}</span>
+                  </label>)}
+                </div>) : <p className="mt-3 text-sm text-muted-foreground">{t("start.checklist.empty")}</p>}
+              </section>
+              <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p>
+            </> : <UpgradeCard view="info" onUpgrade={openUpgrade} />}
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button variant="outline" onClick={() => setStage("choose")}><ArrowLeft className="rtl:rotate-180" />{t("common.back")}</Button>
+              <Button variant="secondary" onClick={() => setStage("road")}>{t("start.switchToRoad")}<ArrowRight className="rtl:rotate-180" /></Button>
+            </div>
+          </section>
+        ) : null}
+        {stage === "road" ? (
+          <section className="mt-8">
+            <h2 className="text-xl">{t("start.results")}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">{t("start.results.sub")}</p>
+            {hasNavigator ? <p className="mt-3 text-sm text-muted-foreground">
+              {t("start.plan.length").replace("{n}", localizeNumber(planWeeks(steps), lang))} · {t("start.progress").replace("{done}", localizeNumber(steps.filter((step) => doneIds.includes(step.id)).length, lang)).replace("{total}", localizeNumber(steps.length, lang))}
+            </p> : null}
+            {steps.length ? (
+              <ol className="mt-5 space-y-4">
+                {steps.map((step, index) => (
+                  <li key={step.id} data-step-id={step.id} className="rounded-lg border border-border bg-card p-5">
+                    {hasNavigator ? <span className="mb-3 inline-block rounded-md bg-secondary/10 px-2 py-1 text-xs font-semibold text-secondary">{t("start.plan.weeks").replace("{from}", localizeNumber(weeksRange(step.phase)[0], lang)).replace("{to}", localizeNumber(weeksRange(step.phase)[1], lang))}</span> : null}
+                    <StepBody step={step} localUrl={localUrl} number={index + 1} showDetails={false} />
+                    {hasNavigator ? <>
+                      <div className="mt-4 flex flex-wrap gap-3">
+                        <Button variant="outline" size="sm" aria-expanded={expandedIds.includes(step.id)} aria-controls={`details-${step.id}`} onClick={() => setExpandedIds((current) => current.includes(step.id) ? current.filter((id) => id !== step.id) : [...current, step.id])}>{t(expandedIds.includes(step.id) ? "start.details.close" : "start.details.open")}</Button>
+                        <Button variant={doneIds.includes(step.id) ? "secondary" : "outline"} size="sm" aria-pressed={doneIds.includes(step.id)} onClick={() => toggleDone(step.id)}><Check />{t(doneIds.includes(step.id) ? "start.done" : "start.markDone")}</Button>
+                      </div>
+                      {expandedIds.includes(step.id) ? <div id={`details-${step.id}`} className="mt-4 border-t border-border pt-1">
+                        <StepDetails step={step} />
+                        {step.dependency?.[lang] ? <p className="mt-3 text-sm leading-relaxed"><strong>{t("start.details.dependency")}: </strong>{step.dependency[lang]}</p> : null}
+                        {step.completion?.[lang] ? <p className="mt-3 text-sm leading-relaxed"><strong>{t("start.details.completion")}: </strong>{step.completion[lang]}</p> : null}
+                      </div> : null}
+                    </> : null}
+                    <div className="mt-3 flex flex-wrap gap-2 text-xs">
+                      {step.basedOnAnswers ? <span className="rounded-md bg-secondary/10 px-2 py-1 text-secondary">{t("start.based")}</span> : null}
+                      {step.addedFirst ? <span className="rounded-md bg-accent/20 px-2 py-1 text-foreground">{t("start.prerequisite")}</span> : null}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            ) : <p className="mt-5 text-sm text-muted-foreground">{t("start.noSteps")}</p>}
+            {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : <UpgradeCard view="road" onUpgrade={openUpgrade} />}
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button variant="outline" onClick={() => setStage("choose")}><ArrowLeft className="rtl:rotate-180" />{t("common.back")}</Button>
+              <Button variant="secondary" onClick={() => setStage("info")}>{t("start.switchToInfo")}<ArrowRight className="rtl:rotate-180" /></Button>
+            </div>
+          </section>
+        ) : null}
+      </main>
+      <SiteFooter />
+      <FoundersCircleModal open={paywallOpen} onClose={() => setPaywallOpen(false)} onJoined={() => {
+        setPaywallOpen(false); void navigate({ to: "/checkout", search: { next: "start" } });
+      }} />
+    </div>
+  );
+}
+function StepBody({ step, localUrl, number, showDetails = true }: { step: AreaStep; localUrl: string | undefined; number?: number; showDetails?: boolean }) {
+  const { lang, t } = useI18n();
+  return (
+    <>
+      <div className="flex items-start gap-3">
+        {number ? <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-secondary/10 text-sm font-semibold text-secondary">{localizeNumber(number, lang)}</span> : null}
+        <h3 className="text-base font-semibold leading-relaxed">{typeof step.title === "string" ? t(step.title) : step.title[lang]}</h3>
+      </div>
+      <p className="mt-3 text-xs font-semibold text-muted-foreground">{t("road.relevantAuthority")}: {t(`start.authority.${step.authority}`)}</p>
+      {showDetails && step.detail ? <p className="mt-3 text-sm leading-relaxed">{step.detail[lang]}</p> : null}
+      {step.overlay.deadline ? <p className="mt-3 text-sm leading-relaxed"><strong>{t("start.deadline")}: </strong>{t(step.overlay.deadline)}</p> : null}
+      {showDetails && step.overlay.documents ? <div className="mt-3 text-sm"><strong>{t("start.documents")}</strong><ul className="mt-1 list-disc space-y-1 ps-5">{step.overlay.documents.map((key) => <li key={key}>{t(key)}</li>)}</ul></div> : null}
+      {showDetails && step.overlay.note ? <p className="mt-3 text-sm leading-relaxed"><strong>{t("start.note")}: </strong>{t(step.overlay.note)}</p> : null}
+      <a href={step.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-secondary">{t("road.officialSource")}<ExternalLink className="size-4" /></a>
+      {step.id === "early-childhood-education" ? <div className="mt-3 text-sm">{localUrl ? <a href={localUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold text-secondary">{t("start.local")}<ExternalLink className="size-4" /></a> : <><p className="text-muted-foreground">{t("start.localMissing")}</p><a href={step.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-secondary underline">{t("road.officialSource")}</a></>}</div> : null}
+      <p className="mt-3 text-xs text-muted-foreground">{t("start.lastChecked")}: <time dateTime={step.overlay.lastChecked}><bdi>{formatCheckedDate(step.overlay.lastChecked, lang)}</bdi></time></p>
+    </>
+  );
+}
+
+function StepDetails({ step }: { step: AreaStep }) {
+  const { lang, t } = useI18n();
+  return <>
+    {step.detail?.[lang] ? <p className="mt-3 text-sm leading-relaxed">{step.detail[lang]}</p> : null}
+    {step.overlay.documents?.length ? <div className="mt-3 text-sm"><strong>{t("start.documents")}</strong><ul className="mt-1 list-disc space-y-1 ps-5">{step.overlay.documents.map((key) => <li key={key}>{t(key)}</li>)}</ul></div> : null}
+    {step.overlay.note ? <p className="mt-3 text-sm leading-relaxed"><strong>{t("start.note")}: </strong>{t(step.overlay.note)}</p> : null}
+  </>;
+}
+function UpgradeCard({ view, onUpgrade }: { view: "info" | "road"; onUpgrade: () => void }) {
+  const { t } = useI18n();
+  const inclusions = view === "road" ? ["start.lock.road.weeks", "start.lock.road.details", "start.lock.road.track"] as const : ["start.lock.info.checklist"] as const;
+  return <div className="mt-8 rounded-3xl border border-dashed border-border bg-muted/50 p-6">
+    <Lock className="size-6 text-secondary" aria-hidden />
+    <h3 className="mt-3 text-lg font-semibold">{t("start.lock.title")}</h3>
+    <ul className="mt-4 space-y-3 text-sm">
+      {inclusions.map((key) => <li key={key} className="flex items-start gap-2"><Check className="size-4 shrink-0 text-secondary" aria-hidden /><span>{t(key)}</span></li>)}
+      {(["start.lock.soon.sync", "start.lock.soon.pdf", "start.lock.soon.alerts"] as const).map((key) => <li key={key} className="flex flex-wrap items-center gap-2 text-muted-foreground"><span>{t(key)}</span><span className="rounded-md bg-muted px-2 py-1 text-xs">{t("start.soon")}</span></li>)}
+    </ul>
+    <Button variant="secondary" className="mt-5 h-auto whitespace-normal" onClick={onUpgrade}><Lock />{t("start.upgrade")}</Button>
+    <p className="mt-3 text-xs text-muted-foreground">{t("pay.demoNote")}</p>
+  </div>;
+}

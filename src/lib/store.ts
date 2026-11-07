@@ -30,6 +30,8 @@ export type AppState = {
   founderTrack?: boolean;
   /** Optional, non-scored: intended settlement region in Finland. */
   region?: "helsinki" | "elsewhere" | "undecided";
+  municipality?: string;
+  route?: "eu" | "nordic" | "noneu";
   registeredAt?: string;
 };
 
