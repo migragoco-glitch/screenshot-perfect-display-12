@@ -2,7 +2,7 @@ import type { Answers, Bilingual } from "./questions";
 import { en, fa, type Lang, type TKey } from "./i18n";
 import { KNOWLEDGE_TABLE } from "./roadmap";
 
-export type AreaId = "status" | "id" | "bank" | "kela" | "housing" | "family";
+export type AreaId = "status" | "id" | "bank" | "housing" | "kela" | "family" | "work" | "language" | "comm";
 export type Route = "eu" | "nordic" | "noneu";
 export function suggestRoute(country: unknown): Route | undefined {
   if (typeof country !== "string" || !country.trim()) return undefined;
@@ -16,9 +16,12 @@ export const AREAS: { id: AreaId; title: TKey; description: TKey; sourceUrl: str
   { id: "status", title: "start.area.status.title", description: "start.area.status.description", sourceUrl: "https://migri.fi/en/registration-of-right-of-residence", questions: [2] },
   { id: "id", title: "start.area.id.title", description: "start.area.id.description", sourceUrl: "https://dvv.fi/en/foreigner-registration", questions: [37] },
   { id: "bank", title: "start.area.bank.title", description: "start.area.bank.description", sourceUrl: "https://infofinland.fi/en/settling-in-finland/everyday-life-in-finland", questions: [] },
-  { id: "kela", title: "start.area.kela.title", description: "start.area.kela.description", sourceUrl: "https://www.kela.fi/moving-to-finland", questions: [7, 37] },
   { id: "housing", title: "start.area.housing.title", description: "start.area.housing.description", sourceUrl: "https://infofinland.fi/en/housing/rental-home/tenancy-agreement", questions: [] },
+  { id: "kela", title: "start.area.kela.title", description: "start.area.kela.description", sourceUrl: "https://www.kela.fi/moving-to-finland", questions: [7, 37] },
   { id: "family", title: "start.area.family.title", description: "start.area.family.description", sourceUrl: "https://dvv.fi/en/family-relationships-and-marital-status", questions: [7, 8] },
+  { id: "work", title: "start.area.work.title", description: "start.area.work.description", sourceUrl: "https://www.vero.fi/en/individuals/tax-cards-and-tax-returns/arriving_in_finland/work_in_finland/", questions: [13, 36] },
+  { id: "language", title: "start.area.language.title", description: "start.area.language.description", sourceUrl: "https://www.suomi.fi/citizen/moving-and-traveling/migration/guide/as-an-immigrant-in-finland/integration-services-help-the-immigrant", questions: [] },
+  { id: "comm", title: "start.area.comm.title", description: "start.area.comm.description", sourceUrl: "https://infofinland.fi/en", questions: [] },
 ];
 
 /** Derive only the explicitly supplied answers, without scored-profile defaults. */
@@ -45,10 +48,25 @@ export type AreaOverlay = {
   documents?: TKey[];
   note?: TKey;
   sourceUrl?: string;
-  lastChecked: "2026-11-06";
+  lastChecked: string;
 };
 const checked = "2026-11-06";
+const checkedToday = "2026-11-07";
 export const AREA_OVERLAYS: Record<string, AreaOverlay> = {
+  "vero-tax": { lastChecked: checkedToday, note: "start.step.vero-tax.note", sourceUrl: "https://www.vero.fi/en/individuals/tax-cards-and-tax-returns/arriving_in_finland/work_in_finland/" },
+  "finnish-course": { lastChecked: checkedToday, deadline: "start.step.finnish-course.deadline", note: "start.step.finnish-course.note", sourceUrl: "https://www.suomi.fi/citizen/moving-and-traveling/migration/guide/as-an-immigrant-in-finland/integration-services-help-the-immigrant" },
+  "driving-licence": { phase: 4, completion: "start.step.driving-licence.completion", lastChecked: checkedToday, deadline: "start.step.driving-licence.deadline", note: "start.step.driving-licence.note", sourceUrl: "https://traficom.fi/en/drivers-and-vehicles/driving-licenses/exchanging-foreign-driving-licence-finnish-driving-licence" },
+  "te-jobseeker": { lastChecked: checked },
+  "cv-finnish-format": { lastChecked: checked },
+  "employment-bridge": { lastChecked: checked },
+  "startup-permit": { lastChecked: checked },
+  "business-registration": { lastChecked: checked },
+  "study-path": { lastChecked: checked },
+  "ihh-onboarding": { lastChecked: checked },
+  "municipal-onboarding": { lastChecked: checked },
+  "language-practice": { lastChecked: checked },
+  "community-network": { lastChecked: checked },
+  "long-term-status": { lastChecked: checked },
   "eu-registration": { phase: 1, lastChecked: checked, deadline: "start.step.eu-registration.deadline", documents: ["start.step.eu-registration.doc1", "start.step.eu-registration.doc2"], note: "start.step.eu-registration.note", completion: "start.step.eu-registration.completion", sourceUrl: "https://migri.fi/en/registration-of-right-of-residence" },
   "migri-permit": { lastChecked: checked, note: "start.step.migri-permit.note", sourceUrl: "https://migri.fi/en/processing-fees-and-payment-methods" },
   "strong-id": { phase: 2, lastChecked: checked, documents: ["start.step.strong-id.doc1", "start.step.strong-id.doc2"], note: "start.step.strong-id.note", completion: "start.step.strong-id.completion", sourceUrl: "https://infofinland.fi/en/settling-in-finland/everyday-life-in-finland" },
@@ -68,7 +86,7 @@ export const AREA_OVERLAYS: Record<string, AreaOverlay> = {
   "bank-account": { phase: 1, completion: "start.step.bank-account.completion", lastChecked: checked, documents: ["start.step.bank-account.documents"], note: "start.step.bank-account.note", sourceUrl: "https://infofinland.fi/en/settling-in-finland/everyday-life-in-finland" },
 };
 
-type Authority = "DVV" | "Kela" | "Bank" | "Local municipality services" | "Municipal health services" | "Migri" | "Landlord or housing provider";
+type Authority = "DVV" | "Kela" | "Bank" | "Local municipality services" | "Municipal health services" | "Migri" | "Landlord or housing provider" | "Vero" | "Local Employment Services" | "Valvira / OPH" | "Business Finland" | "PRH / YTJ" | "International House Helsinki" | "Traficom";
 const AUTHORITY_OVERRIDES: Record<string, Authority> = {
   "early-childhood-education": "Local municipality services",
   "pre-primary-education": "Local municipality services",
@@ -90,6 +108,7 @@ export type AreaStep = {
   addedFirst: boolean;
 };
 const NEW_STEPS: Record<string, { title: TKey; authority: Authority }> = {
+  "driving-licence": { title: "start.step.driving-licence.title", authority: "Traficom" },
   "eu-registration": { title: "start.step.eu-registration.title", authority: "Migri" },
   "strong-id": { title: "start.step.strong-id.title", authority: "Bank" },
   "find-home": { title: "start.step.find-home.title", authority: "Landlord or housing provider" },
@@ -99,7 +118,7 @@ const NEW_STEPS: Record<string, { title: TKey; authority: Authority }> = {
   "bank-account": { title: "start.step.bank-account.title", authority: "Bank" },
 };
 const FAMILY_IDS = ["dvv-family", "early-childhood-education", "pre-primary-education", "compulsory-school", "upper-secondary-education", "school-daycare"];
-const ORDER = ["eu-registration", "migri-permit", "dvv-id-code", "municipality-of-residence", "temporary-address", "move-notification", "find-home", "bank-account", "strong-id", "kela-social", "health-registration", ...FAMILY_IDS];
+const ORDER = ["eu-registration", "migri-permit", "dvv-id-code", "municipality-of-residence", "temporary-address", "move-notification", "find-home", "vero-tax", "bank-account", "strong-id", "kela-social", "health-registration", ...FAMILY_IDS, "finnish-course", "ihh-onboarding", "municipal-onboarding", "te-jobseeker", "cv-finnish-format", "employment-bridge", "startup-permit", "business-registration", "study-path", "community-network", "driving-licence", "language-practice", "long-term-status"];
 
 export function formatCheckedDate(iso: string, lang: Lang): string {
   const date = new Date(`${iso}T00:00:00Z`);
@@ -113,6 +132,10 @@ export const TITLE_OVERRIDES: Record<string, Bilingual> = {
 };
 
 export const STEP_AREA: Record<string, AreaId> = {
+  "vero-tax": "work", "te-jobseeker": "work", "cv-finnish-format": "work", "employment-bridge": "work",
+  "startup-permit": "work", "business-registration": "work", "study-path": "work",
+  "finnish-course": "language", "ihh-onboarding": "language", "municipal-onboarding": "language", "language-practice": "language",
+  "community-network": "comm", "driving-licence": "comm", "long-term-status": "status",
   "eu-registration": "status", "migri-permit": "status", "strong-id": "bank", "find-home": "housing",
   "dvv-id-code": "id", "municipality-of-residence": "id", "temporary-address": "id", "move-notification": "id",
   "bank-account": "bank", "kela-social": "kela", "health-registration": "kela",
@@ -120,7 +143,7 @@ export const STEP_AREA: Record<string, AreaId> = {
   "compulsory-school": "family", "upper-secondary-education": "family", "school-daycare": "family",
 };
 
-export function buildAreaSteps(areas: readonly AreaId[], answers: Answers, route?: Route): AreaStep[] {
+export function buildAreaSteps(areas: readonly AreaId[], answers: Answers, route?: Route, region?: string): AreaStep[] {
   const flags = computeAreaFlags(answers);
   const selected = new Map<string, { basedOnAnswers: boolean; addedFirst: boolean }>();
   const add = (id: string, basedOnAnswers = false, addedFirst = false) => {
@@ -130,7 +153,7 @@ export function buildAreaSteps(areas: readonly AreaId[], answers: Answers, route
   const shortStay = answers[37]?.value === 0;
   if (areas.includes("status")) {
     if (route === "eu") add("eu-registration", true);
-    if (route === "noneu") add("migri-permit", true);
+    if (route === "noneu") { add("migri-permit", true); add("long-term-status"); }
     if (route === "nordic") add("dvv-id-code", true);
   }
   if (areas.includes("id")) {
@@ -154,7 +177,24 @@ export function buildAreaSteps(areas: readonly AreaId[], answers: Answers, route
       if (matches || (id === "dvv-family" && flags.children)) add(id, true);
     }
   }
+  if (areas.includes("work")) {
+    add("vero-tax");
+    const basis = answers[36]?.value;
+    const employment = answers[13]?.value;
+    if (basis === 0 || basis === 5) { add("te-jobseeker", true); add("cv-finnish-format", true); }
+    if (basis === 1) add("study-path", true);
+    if (basis === 2) { add("startup-permit", true); add("business-registration", true); }
+    if (basis === 3) add("business-registration", true);
+    if (employment === 4) { add("te-jobseeker", true); add("cv-finnish-format", true); add("employment-bridge", true); }
+  }
+  if (areas.includes("language")) {
+    add("finnish-course");
+    add(region === "helsinki" ? "ihh-onboarding" : "municipal-onboarding");
+    add("language-practice");
+  }
+  if (areas.includes("comm")) { add("community-network"); add("driving-licence"); }
   for (const id of [...selected.keys()]) {
+    if (id === "vero-tax") add("dvv-id-code", false, true);
     if (id === "strong-id") { add("bank-account", false, true); add("dvv-id-code", false, true); }
     if (id === "kela-social") { add("dvv-id-code", false, true); add("bank-account", false, true); }
     if (id === "health-registration" && !shortStay) add("municipality-of-residence", false, true);
