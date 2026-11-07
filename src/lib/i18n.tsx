@@ -12,7 +12,7 @@ export type Lang = "en" | "fa";
 
 export const en = {
   "start.area.status.title": "Residence and route",
-  "start.area.status.description": "Your citizenship group decides whether you register or apply for a permit.",
+  "start.area.status.description": "Depending on your citizenship, you register your right of residence or apply for a residence permit.",
   "start.area.bank.title": "Bank and digital ID",
   "start.area.bank.description": "A bank account and online banking codes for Finnish services.",
   "start.area.housing.title": "Housing",
@@ -96,6 +96,8 @@ export const en = {
   "start.documents": "Documents",
   "start.note": "Note",
   "start.lastChecked": "Last checked",
+  "start.disclaimer": "This information is a general guide, not legal advice. Always confirm with the official source.",
+  "start.deviceNote": "Your answers and ticks stay on this device only.",
   "start.local": "Local official page",
   "start.localMissing": "Local page not added yet",
   "start.authority.DVV": "DVV",
@@ -460,7 +462,7 @@ export const en = {
   "qc.upgradeCta": "Upgrade to Navigator",
 
   "pay.emailTitle": "Early access pricing",
-  "pay.emailSub": "Early access pricing — available for a limited time.",
+  "pay.emailSub": "Early-access price for trial users.",
   "pay.emailLabel": "Your email",
   "pay.emailCta": "Get my code and continue",
   "pay.emailInvalid": "Please enter a valid email address.",
@@ -594,8 +596,9 @@ export const en = {
   "contact.futureBody":
     "An in-app AI support assistant is on the roadmap as a future capability. It is not available in this version.",
 
-  "checkout.title": "Secure checkout",
+  "checkout.title": "Activate the trial version",
   "checkout.sub": "SettleSmart Navigator — full 42-question assessment, Smart Integration Profile and 12-week roadmap.",
+  "checkout.start.sub": "SettleSmart Navigator: a week-by-week plan, step details, progress tracking and one document checklist for the areas you chose.",
   "checkout.confirmation": "By continuing, you confirm you'd like to proceed with payment.",
   "checkout.plan": "SettleSmart Navigator (monthly)",
   "checkout.discountLabel": "Early-access discount",
@@ -789,7 +792,7 @@ export const en = {
 
 export const fa: Record<keyof typeof en, string> = {
   "start.area.status.title": "اقامت و مسیر",
-  "start.area.status.description": "گروه شهروندی شما تعیین می‌کند که ثبت می‌کنید یا اجازهٔ اقامت می‌گیرید.",
+  "start.area.status.description": "بسته به شهروندی‌تان، حق اقامت را ثبت می‌کنید یا اجازهٔ اقامت می‌گیرید.",
   "start.area.bank.title": "بانک و هویت دیجیتال",
   "start.area.bank.description": "حساب بانکی و کد بانکداری آنلاین برای سرویس‌های فنلاند.",
   "start.area.housing.title": "مسکن",
@@ -873,6 +876,8 @@ export const fa: Record<keyof typeof en, string> = {
   "start.documents": "مدارک",
   "start.note": "نکته",
   "start.lastChecked": "آخرین بررسی",
+  "start.disclaimer": "این اطلاعات راهنمای عمومی است و مشاورهٔ حقوقی نیست. همیشه با منبع رسمی تأیید کنید.",
+  "start.deviceNote": "پاسخ‌ها و علامت‌های شما فقط روی همین دستگاه می‌ماند.",
   "start.local": "صفحهٔ رسمی محلی",
   "start.localMissing": "صفحهٔ محلی هنوز اضافه نشده است",
   "start.authority.DVV": "DVV",
@@ -1235,7 +1240,7 @@ export const fa: Record<keyof typeof en, string> = {
   "qc.upgradeCta": "ارتقا به Navigator",
 
   "pay.emailTitle": "قیمت دسترسی زودهنگام",
-  "pay.emailSub": "قیمت دسترسی زودهنگام — برای مدت محدود در دسترس است.",
+  "pay.emailSub": "قیمت دسترسی زودهنگام برای کاربران نسخهٔ آزمایشی.",
   "pay.emailLabel": "رایانامهٔ شما",
   "pay.emailCta": "دریافت کد و ادامه",
   "pay.emailInvalid": "لطفاً یک نشانی رایانامهٔ معتبر وارد کنید.",
@@ -1370,8 +1375,9 @@ export const fa: Record<keyof typeof en, string> = {
   "contact.futureBody":
     "دستیار پشتیبانی هوش مصنوعی درون‌برنامه‌ای در نقشهٔ راه محصول قرار دارد و در این نسخه در دسترس نیست.",
 
-  "checkout.title": "پرداخت امن",
+  "checkout.title": "فعال‌سازی نسخهٔ آزمایشی",
   "checkout.sub": "SettleSmart Navigator — ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام و نقشه‌راه ۱۲ هفته‌ای.",
+  "checkout.start.sub": "SettleSmart Navigator: برنامهٔ هفته‌به‌هفته، جزئیات هر گام، پیگیری پیشرفت و یک فهرست مدارک برای حوزه‌هایی که انتخاب کرده‌اید.",
   "checkout.confirmation": "با ادامه، تأیید می‌کنید که مایل به ادامهٔ پرداخت هستید.",
   "checkout.plan": "SettleSmart Navigator (ماهانه)",
   "checkout.discountLabel": "تخفیف دسترسی زودهنگام",

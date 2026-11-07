@@ -247,8 +247,13 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
             </label>
             <input
               type={q.detailType === "number" ? "number" : "text"}
+              min={q.id === 7 ? 1 : undefined}
               value={answer?.detail ?? ""}
-              onChange={(e) => onChange({ value: selected, detail: e.target.value })}
+              onChange={(e) => {
+                const detail = e.target.value;
+                if (q.id === 7 && detail !== "" && Number(detail) < 1) return;
+                onChange({ value: selected, detail });
+              }}
               className="mt-1.5 w-full max-w-sm rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
