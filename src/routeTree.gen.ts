@@ -20,6 +20,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FounderMetricsRouteImport } from './routes/founder-metrics'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QuickCheckRouteImport } from './routes/quick-check'
+import { Route as StartRouteImport } from './routes/start'
 import { Route as TermsRouteImport } from './routes/terms'
 
 const IndexRoute = IndexRouteImport.update({
@@ -77,6 +78,11 @@ const QuickCheckRoute = QuickCheckRouteImport.update({
   path: '/quick-check',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StartRoute = StartRouteImport.update({
+  id: '/start',
+  path: '/start',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/founder-metrics': typeof FounderMetricsRoute
   '/privacy': typeof PrivacyRoute
   '/quick-check': typeof QuickCheckRoute
+  '/start': typeof StartRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesByTo {
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/founder-metrics': typeof FounderMetricsRoute
   '/privacy': typeof PrivacyRoute
   '/quick-check': typeof QuickCheckRoute
+  '/start': typeof StartRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRoutesById {
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/founder-metrics': typeof FounderMetricsRoute
   '/privacy': typeof PrivacyRoute
   '/quick-check': typeof QuickCheckRoute
+  '/start': typeof StartRoute
   '/terms': typeof TermsRoute
 }
 export interface FileRouteTypes {
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/founder-metrics'
     | '/privacy'
     | '/quick-check'
+    | '/start'
     | '/terms'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/founder-metrics'
     | '/privacy'
     | '/quick-check'
+    | '/start'
     | '/terms'
   id:
     | '__root__'
@@ -168,6 +179,7 @@ export interface FileRouteTypes {
     | '/founder-metrics'
     | '/privacy'
     | '/quick-check'
+    | '/start'
     | '/terms'
   fileRoutesById: FileRoutesById
 }
@@ -183,6 +195,7 @@ export interface RootRouteChildren {
   FounderMetricsRoute: typeof FounderMetricsRoute
   PrivacyRoute: typeof PrivacyRoute
   QuickCheckRoute: typeof QuickCheckRoute
+  StartRoute: typeof StartRoute
   TermsRoute: typeof TermsRoute
 }
 
@@ -265,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuickCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/start': {
+      id: '/start'
+      path: '/start'
+      fullPath: '/start'
+      preLoaderRoute: typeof StartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -287,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   FounderMetricsRoute: FounderMetricsRoute,
   PrivacyRoute: PrivacyRoute,
   QuickCheckRoute: QuickCheckRoute,
+  StartRoute: StartRoute,
   TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
