@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, ExternalLink, Globe, HeartPulse, House, IdCard, Landmark, Lock, Users } from "lucide-react";
+import { ArrowLeft, ArrowRight, Briefcase, Building2, Check, ExternalLink, Globe, HeartPulse, House, IdCard, Landmark, Languages, Lock, Users } from "lucide-react";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { FoundersCircleModal } from "@/components/FeedbackWidgets";
 import { QuestionField } from "@/components/QuestionField";
@@ -36,7 +36,7 @@ function readIds(key: string): string[] {
 function saveIds(key: string, ids: string[]) {
   try { window.localStorage.setItem(key, JSON.stringify(ids)); } catch { /* Storage may be unavailable. */ }
 }
-const ICONS = { status: Globe, id: IdCard, bank: Landmark, kela: HeartPulse, housing: House, family: Users };
+const ICONS = { status: Globe, id: IdCard, bank: Landmark, kela: HeartPulse, housing: House, family: Users, work: Briefcase, language: Languages, comm: Building2 };
 
 function StartScreen() {
   const { lang, dir, t } = useI18n();
@@ -75,7 +75,7 @@ function StartScreen() {
   const selectedAreas = AREAS.filter((area) => areas.includes(area.id));
   const asked = new Set(selectedAreas.flatMap((area) => area.questions));
   const effectiveRoute = state.route ?? suggestRoute(state.answers[2]?.value);
-  const steps = buildAreaSteps(areas, state.answers, effectiveRoute);
+  const steps = buildAreaSteps(areas, state.answers, effectiveRoute, state.region);
   const hasNavigator = hasNavigatorAccess(state.tier);
   const filteredSteps = steps.filter((step) => areas.includes(STEP_AREA[step.id] as AreaId));
   const checklist = documentsForSteps(filteredSteps);
