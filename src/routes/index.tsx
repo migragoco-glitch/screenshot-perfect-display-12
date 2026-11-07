@@ -364,10 +364,10 @@ function Landing() {
 
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Link
-                  to="/quick-check"
+                  to="/start"
                   className="group inline-flex items-center gap-2 rounded-full bg-[var(--navigator-teal)] px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-card)] transition-colors duration-200 ease-out hover:bg-[var(--navigator-teal)]/90"
                 >
-                  {t("hero.quickCheckCta")}
+                  {t("hero.startCta")}
                   <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" aria-hidden />
                 </Link>
                 <Link
