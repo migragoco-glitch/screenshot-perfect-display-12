@@ -540,7 +540,8 @@ function Landing() {
                 ))}
               </ul>
               <Link
-                to={state.consent ? "/quick-check" : "/consent"}
+                to={state.consent ? "/start" : "/consent"}
+                search={state.consent ? {} : { next: "start" }}
                 className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--navigator-gold)] px-5 py-3 text-sm font-semibold text-white transition-all duration-200 ease-out hover:brightness-95 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--navigator-gold)] active:scale-[0.98] active:brightness-90"
               >
                 {t("pricing.freeStart")}
@@ -571,11 +572,11 @@ function Landing() {
                 ))}
               </ul>
               <Link
-                to={state.consent ? "/assessment" : "/consent"}
-                search={state.consent ? {} : { next: "assessment" }}
+                to={state.consent ? "/start" : "/consent"}
+                search={state.consent ? {} : { next: "start" }}
                 className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary active:scale-[0.98]"
               >
-                {t("nav.cta")}
+                {t("pricing.navStart")}
               </Link>
             </article>
 

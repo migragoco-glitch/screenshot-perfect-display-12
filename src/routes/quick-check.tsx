@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
@@ -22,6 +22,9 @@ import { useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/quick-check")({
+  beforeLoad: () => {
+    throw redirect({ to: "/start" });
+  },
   head: () => ({
     meta: [
       { title: "Quick check — MigraGo" },
