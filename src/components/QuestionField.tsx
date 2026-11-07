@@ -17,9 +17,10 @@ type Props = {
   levelColor: string;
   /** Fill the selected option with the level color (Quick Check only). */
   fillSelected?: boolean;
+  hideNumber?: boolean;
 };
 
-export function QuestionField({ question: q, index, answer, onChange, levelColor, fillSelected = false }: Props) {
+export function QuestionField({ question: q, index, answer, onChange, levelColor, fillSelected = false, hideNumber = false }: Props) {
   const { lang, t } = useI18n();
   const selected = answer?.value;
   const fillStyle = fillSelected
@@ -41,9 +42,9 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
     >
       <legend className="sr-only">{q.label[lang]}</legend>
       <div className="flex items-start gap-3">
-        <span className="assessment-question-number mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold">
+        {!hideNumber ? <span className="assessment-question-number mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold">
           {localizeNumber(index, lang)}
-        </span>
+        </span> : null}
         <p className="text-[15px] font-semibold leading-relaxed">{q.label[lang]}</p>
       </div>
 

@@ -6,6 +6,9 @@ import { localizeNumber, useI18n } from "@/lib/i18n";
 import { navigatorCheckoutDestination, trackEvent, useAppState } from "@/lib/store";
 
 export const Route = createFileRoute("/checkout")({
+  validateSearch: (search: Record<string, unknown>): { next?: "start" } => ({
+    ...(search["next"] === "start" ? { next: "start" as const } : {}),
+  }),
   head: () => ({
     meta: [
       { title: "Checkout — MigraGo SettleSmart Navigator" },
@@ -32,6 +35,7 @@ const DISCOUNT = 0.5;
 function CheckoutPage() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
   const { state: appState, hydrated, update } = useAppState();
   const [code, setCode] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
@@ -58,7 +62,7 @@ function CheckoutPage() {
       update({ tier: "navigator" });
       if (appState.completed) window.localStorage.setItem("migrago.justUpgraded", "1");
       setState("done");
-      window.setTimeout(() => void navigate({ to: navigatorCheckoutDestination(appState.completed) }), 700);
+      window.setTimeout(() => void navigate({ to: next === "start" ? "/start" : navigatorCheckoutDestination(appState.completed) }), 700);
     }, 1200);
   };
 
@@ -117,7 +121,7 @@ function CheckoutPage() {
 
           <button
             type="button"
-            onClick={() => void navigate({ to: appState.completed ? "/dashboard" : "/quick-check" })}
+            onClick={() => void navigate({ to: next === "start" ? "/start" : appState.completed ? "/dashboard" : "/quick-check" })}
             className="mt-3 w-full text-xs font-semibold text-muted-foreground underline underline-offset-4"
           >
             {t("checkout.cancel")}
