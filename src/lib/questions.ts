@@ -805,7 +805,7 @@ export const COUNTRIES: Bilingual[] = [
   o("Nigeria", "نیجریه"),
   o("Pakistan", "پاکستان"),
   o("Philippines", "فیلیپین"),
-  o("Poland", "پلند"),
+  o("Poland", "لهستان"),
   o("Russia", "روسیه"),
   o("Saudi Arabia", "عربستان سعودی"),
   o("Spain", "اسپانیا"),

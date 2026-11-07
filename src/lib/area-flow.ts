@@ -69,6 +69,13 @@ export const AREA_OVERLAYS: Record<string, AreaOverlay> = {
 };
 
 type Authority = "DVV" | "Kela" | "Bank" | "Local municipality services" | "Municipal health services" | "Migri" | "Landlord or housing provider";
+const AUTHORITY_OVERRIDES: Record<string, Authority> = {
+  "early-childhood-education": "Local municipality services",
+  "pre-primary-education": "Local municipality services",
+  "compulsory-school": "Local municipality services",
+  "upper-secondary-education": "Local municipality services",
+  "school-daycare": "Local municipality services",
+};
 export type AreaStep = {
   phase: number;
   dependency?: Bilingual;
@@ -162,7 +169,7 @@ export function buildAreaSteps(areas: readonly AreaId[], answers: Answers, route
     if (!overlay) return [];
     const entry = KNOWLEDGE_TABLE.find((item) => item.id === id);
     const fresh = NEW_STEPS[id];
-    if (entry) return [{ id, title: TITLE_OVERRIDES[id] ?? entry.title, detail: entry.detail, phase: entry.phase, dependency: entry.dependency, completion: entry.completionCondition, authority: entry.institution as Authority, sourceUrl: overlay.sourceUrl ?? entry.officialSource, overlay, ...tags }];
+    if (entry) return [{ id, title: TITLE_OVERRIDES[id] ?? entry.title, detail: entry.detail, phase: entry.phase, dependency: entry.dependency, completion: entry.completionCondition, authority: AUTHORITY_OVERRIDES[id] ?? entry.institution as Authority, sourceUrl: overlay.sourceUrl ?? entry.officialSource, overlay, ...tags }];
     if (fresh && overlay.sourceUrl) return [{ id, ...fresh, phase: overlay.phase ?? 1, ...(overlay.completion ? { completion: { en: en[overlay.completion], fa: fa[overlay.completion] } } : {}), sourceUrl: overlay.sourceUrl, overlay, ...tags }];
     return [];
   }).sort((a, b) => a.phase - b.phase || ORDER.indexOf(a.id) - ORDER.indexOf(b.id));

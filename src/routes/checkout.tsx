@@ -75,8 +75,11 @@ function CheckoutPage() {
         <div className="glass-card rise-in rounded-3xl p-7 md:p-9">
           <Lock className="size-7 text-secondary" aria-hidden />
           <h1 className="mt-5 text-2xl">{t("checkout.title")}</h1>
-          <p className="mt-2 text-sm text-muted-foreground">{t("checkout.sub")}</p>
+          <p className="mt-2 text-sm text-muted-foreground">{t(next === "start" ? "checkout.start.sub" : "checkout.sub")}</p>
           <p className="mt-3 text-sm text-muted-foreground">{t("checkout.confirmation")}</p>
+          <p className="mt-5 rounded-2xl bg-muted p-4 text-xs leading-relaxed text-muted-foreground">
+            {t("checkout.testMode")}
+          </p>
 
           <dl className="mt-7 space-y-3 border-y border-border py-5 text-sm">
             <div className="flex items-center justify-between gap-4">
@@ -127,9 +130,6 @@ function CheckoutPage() {
             {t("checkout.cancel")}
           </button>
 
-          <p className="mt-5 rounded-2xl bg-muted p-4 text-xs leading-relaxed text-muted-foreground">
-            {t("checkout.testMode")}
-          </p>
         </div>
       </main>
       <SiteFooter />

@@ -224,6 +224,8 @@ function StartScreen() {
               </section>
               <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p>
             </> : <UpgradeCard view="info" onUpgrade={openUpgrade} />}
+            <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
+            <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button variant="outline" onClick={() => setStage("choose")}><ArrowLeft className="rtl:rotate-180" />{t("common.back")}</Button>
               <Button variant="secondary" onClick={() => setStage("road")}>{t("start.switchToRoad")}<ArrowRight className="rtl:rotate-180" /></Button>
@@ -263,6 +265,8 @@ function StartScreen() {
               </ol>
             ) : <p className="mt-5 text-sm text-muted-foreground">{t("start.noSteps")}</p>}
             {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : <UpgradeCard view="road" onUpgrade={openUpgrade} />}
+            <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
+            <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button variant="outline" onClick={() => setStage("choose")}><ArrowLeft className="rtl:rotate-180" />{t("common.back")}</Button>
               <Button variant="secondary" onClick={() => setStage("info")}>{t("start.switchToInfo")}<ArrowRight className="rtl:rotate-180" /></Button>
@@ -292,7 +296,7 @@ function StepBody({ step, localUrl, number, showDetails = true }: { step: AreaSt
       {showDetails && step.overlay.note ? <p className="mt-3 text-sm leading-relaxed"><strong>{t("start.note")}: </strong>{t(step.overlay.note)}</p> : null}
       <a href={step.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-secondary">{t("road.officialSource")}<ExternalLink className="size-4" /></a>
       {step.id === "early-childhood-education" ? <div className="mt-3 text-sm">{localUrl ? <a href={localUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold text-secondary">{t("start.local")}<ExternalLink className="size-4" /></a> : <><p className="text-muted-foreground">{t("start.localMissing")}</p><a href={step.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-secondary underline">{t("road.officialSource")}</a></>}</div> : null}
-      <p className="mt-3 text-xs text-muted-foreground">{t("start.lastChecked")}: <time dateTime={step.overlay.lastChecked}><bdi>{formatCheckedDate(step.overlay.lastChecked, lang)}</bdi></time></p>
+      {step.overlay.deadline || step.overlay.documents?.length || step.overlay.note ? <p className="mt-3 text-xs text-muted-foreground">{t("start.lastChecked")}: <time dateTime={step.overlay.lastChecked}><bdi>{formatCheckedDate(step.overlay.lastChecked, lang)}</bdi></time></p> : null}
     </>
   );
 }
