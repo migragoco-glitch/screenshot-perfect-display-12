@@ -125,10 +125,10 @@ export function AppHeader({ registered, quickCheckCta = false }: { registered?: 
           <LanguageSwitch />
           {quickCheckCta ? (
             <Link
-              to="/quick-check"
+              to="/start"
               className="rounded-full bg-secondary px-4 py-2 text-xs font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
             >
-              {t("hero.quickCheckCta")}
+              {t("hero.startCta")}
             </Link>
           ) : null}
           {registered ? (
