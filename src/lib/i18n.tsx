@@ -11,6 +11,13 @@ import {
 export type Lang = "en" | "fa";
 
 export const en = {
+  "start.profile.title": "Go deeper: your full readiness profile",
+  "start.profile.desc": "The full assessment builds your Smart Integration Profile, charts and a 12-week roadmap. Your answers so far are kept, so you only answer what is missing.",
+  "start.profile.cta.assessment": "Complete my full profile",
+  "start.profile.cta.dashboard": "Open my profile",
+  "start.lock.profile": "Your full readiness profile with charts, built from the answers you already gave",
+  "start.deleteData": "Delete my data on this device",
+  "start.deleteConfirm": "This removes your answers and ticks from this device.",
   "start.area.work.title": "Tax and work",
   "start.area.work.description": "Tax card, job search, starting a business or planning studies.",
   "start.area.language.title": "Language and integration",
@@ -864,6 +871,13 @@ export const fa: Record<keyof typeof en, string> = {
   "start.step.find-home.note": "قرارداد اجاره را همیشه کتبی ببندید. تقریباً همهٔ قراردادها ودیعهٔ اجاره می‌خواهند؛ معمولاً دو ماه اجاره و حداکثر سه ماه. ودیعه را نمی‌توان به‌جای اجارهٔ ماه‌های آخر حساب کرد.",
   "start.step.find-home.completion": "قرارداد اجارهٔ کتبی امضاشده دارید.",
 
+  "start.profile.title": "عمیق‌تر شوید: پروفایل کامل آمادگی شما",
+  "start.profile.desc": "ارزیابی کامل، پروفایل هوشمند ادغام، نمودارها و نقشهٔ راه ۱۲هفته‌ای شما را می‌سازد. پاسخ‌های قبلی شما حفظ می‌شود و فقط به پرسش‌های باقی‌مانده پاسخ می‌دهید.",
+  "start.profile.cta.assessment": "تکمیل پروفایل کامل من",
+  "start.profile.cta.dashboard": "باز کردن پروفایل من",
+  "start.lock.profile": "پروفایل کامل آمادگی با نمودارها، ساخته‌شده از پاسخ‌هایی که قبلاً داده‌اید",
+  "start.deleteData": "حذف داده‌های من از این دستگاه",
+  "start.deleteConfirm": "پاسخ‌ها و علامت‌های شما از این دستگاه پاک می‌شود.",
   "start.lock.title": "با SettleSmart Navigator امکانات بیشتری باز کنید",
   "start.lock.road.weeks": "برنامهٔ هفته‌به‌هفته",
   "start.lock.road.details": "جزئیات اقدامات و شرایط تکمیل",
