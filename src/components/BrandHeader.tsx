@@ -5,7 +5,7 @@ import qrCodeAsset from "@/assets/qr-code-migrago.jpeg.asset.json";
 import { CONTACT_EMAIL, MAILTO_URL, WHATSAPP_URL } from "@/components/SupportChannels";
 import { useI18n } from "@/lib/i18n";
 import { useSession, signOutEverywhere } from "@/lib/session";
-import { trackEvent } from "@/lib/store";
+import { hasNavigatorAccess, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 
@@ -107,6 +107,8 @@ export function AppHeader({ registered, quickCheckCta = false }: { registered?: 
   const { t } = useI18n();
   const navigate = useNavigate();
   const { session } = useSession();
+  const { state } = useAppState();
+  const legacyProfile = state.completed && hasNavigatorAccess(state.tier);
 
   const handleLogout = async () => {
     await signOutEverywhere();
@@ -133,10 +135,10 @@ export function AppHeader({ registered, quickCheckCta = false }: { registered?: 
           ) : null}
           {registered ? (
             <Link
-              to="/dashboard"
+              to={legacyProfile ? "/dashboard" : "/start"}
               className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-colors duration-200 ease-out hover:bg-primary/90"
             >
-              {t("nav.profile")}
+              {t(legacyProfile ? "nav.profile" : "nav.continue")}
             </Link>
           ) : null}
           {session ? (
