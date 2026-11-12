@@ -144,7 +144,12 @@ function StartScreen() {
                 return <Button type="button" key={area.id} variant="outline" aria-pressed={active} onClick={() => {
                   setAreas((current) => active ? current.filter((id) => id !== area.id) : [...current, area.id]);
                   setAreaError(false);
-                }} className={cn("h-auto flex flex-col items-start justify-start gap-3 whitespace-normal rounded-2xl border bg-card p-5 text-start transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary", active ? "border-2 border-secondary bg-secondary/8 shadow-[var(--shadow-lift)]" : "border-border")}>
+                }} className={cn("relative h-auto flex flex-col items-start justify-start gap-3 whitespace-normal rounded-2xl border bg-card p-5 text-start transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary", active ? "border-2 border-secondary bg-secondary/15 shadow-[var(--shadow-lift)] hover:bg-secondary/20" : "border-border hover:bg-accent/40")}>
+                  {active ? (
+                    <span aria-hidden="true" className="absolute top-3.5 end-3.5 flex size-6 items-center justify-center rounded-full bg-secondary text-secondary-foreground shadow-sm">
+                      <Check className="size-3.5 stroke-[3]" />
+                    </span>
+                  ) : null}
                   <span className="flex size-12 items-center justify-center rounded-full" style={{ background: chipColor, boxShadow: `0 0 0 5px color-mix(in srgb, ${chipColor} 20%, transparent)` }}><Icon className="size-6" style={{ color: tealGroup ? "var(--secondary-foreground)" : "var(--navigator-navy)" }} /></span>
                   <span className="text-sm font-bold">{t(area.title)}</span>
                   <span className="text-xs font-normal leading-relaxed text-muted-foreground">{t(area.description)}</span>
