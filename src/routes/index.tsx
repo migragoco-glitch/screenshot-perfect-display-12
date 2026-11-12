@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, ClipboardCheck, ClipboardList, Gift, Landmark, ListCheck, Route as RouteIcon, UserRoundCheck, Compass, Contact, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Target, Users } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Gift, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
@@ -275,53 +275,6 @@ function RoadmapPreview() {
   );
 }
 
-const DISCOVER_ITEMS = [
-  { key: "hero.discover1", fill: "#3AC8C3", icon: "#021C3B", Icon: UserRoundCheck },
-  { key: "hero.discover2", fill: "#02808A", icon: "#FFFFFF", Icon: RouteIcon },
-  { key: "hero.discover3", fill: "#6B8E3A", icon: "#021C3B", Icon: ListCheck },
-] as const;
-
-function DiscoverPreviewCard() {
-  const { t, lang } = useI18n();
-  const { ref, entered } = useInViewOnce<HTMLDivElement>();
-
-  return (
-    <div
-      ref={ref}
-      className={`mt-8 rounded-[14px] border p-5 shadow-[0_10px_30px_-12px_rgba(2,28,59,0.45)]${entered ? " navigator-entered" : ""}`}
-      style={{ background: "#021C3B", borderColor: "#1B3A5C" }}
-    >
-      <p className="text-[12px] font-bold text-white">{t("hero.discoverTitle")}</p>
-      <p className="mt-1 text-[9.5px]" style={{ color: "#8FA3B8" }}>
-        {t("hero.discoverSub")}
-      </p>
-      <div className="mt-5 grid grid-cols-3 gap-3">
-        {DISCOVER_ITEMS.map((item, index) => (
-          <div key={item.key} className="flex flex-col items-center gap-2">
-            <span
-              className="discover-badge flex size-[52px] items-center justify-center rounded-full"
-              style={{
-                background: item.fill,
-                boxShadow: `0 0 0 5px ${item.fill}33`,
-                animationDelay: `${(lang === "fa" ? DISCOVER_ITEMS.length - 1 - index : index) * 100}ms`,
-              }}
-              aria-hidden
-            >
-              <item.Icon className="size-6" style={{ color: item.icon }} />
-            </span>
-            <span
-              className="whitespace-nowrap text-center text-[10px] font-medium"
-              style={{ color: "#E5E9EE" }}
-            >
-              {t(item.key)}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function Landing() {
   const { t, lang } = useI18n();
   const { state } = useAppState();
@@ -364,7 +317,6 @@ function Landing() {
               <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
                 {t("hero.sub")}
               </p>
-              <DiscoverPreviewCard />
 
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Link
@@ -432,29 +384,6 @@ function Landing() {
           </div>
         </section>
 
-        {/* About */}
-        <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
-          <h2 className="text-2xl md:text-3xl">{t("about.title")}</h2>
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
-              {[
-                { t: t("about.definitionTitle"), d: t("about.definition"), icon: Compass },
-                { t: t("about.missionTitle"), d: t("about.mission"), icon: Target },
-                { t: t("about.boundariesTitle"), d: t("about.boundaries"), icon: Scale },
-              ].map((b, index) => (
-                <InformationalCard
-                  key={b.t}
-                  as="article"
-                  delay={index * 90}
-                  className="rounded-2xl border border-border bg-card p-6"
-                >
-                  <b.icon className="size-5 text-secondary" strokeWidth={1.75} aria-hidden />
-                <h3 className="mt-4 text-lg">{b.t}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{b.d}</p>
-                </InformationalCard>
-            ))}
-          </div>
-        </section>
-
         {/* Integration is a process */}
         <section className="mx-auto max-w-7xl px-4 pb-4 md:px-8">
           <InformationalCard as="article" className="rounded-3xl border border-secondary/25 bg-secondary/8 p-8 md:p-10">
@@ -470,25 +399,70 @@ function Landing() {
         <section id="how-it-works" className="scroll-mt-40 border-y border-border/70 bg-muted/40">
           <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
             <h2 className="text-2xl md:text-3xl">{t("how.title")}</h2>
-            <ol className="mt-8 grid gap-5 md:grid-cols-3">
-              {[
-                { n: 1, t: t("how.s1.t"), d: t("how.s1.d"), icon: ClipboardList },
-                { n: 2, t: t("how.s2.t"), d: t("how.s2.d"), icon: Contact },
-                { n: 3, t: t("how.s3.t"), d: t("how.s3.d"), icon: CalendarDays },
-              ].map((s, index) => (
-                <InformationalCard
-                  key={s.n}
-                  as="li"
-                  delay={index * 90}
-                  className="rounded-2xl border border-border bg-card p-6"
-                >
-                  <span className="inline-flex size-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
-                    {s.n}
+            <ol className="mt-8 grid gap-6 md:grid-cols-3 md:gap-8">
+              {([
+                { n: 1, title: "how.s1.t", description: "how.s1.d" },
+                { n: 2, title: "how.s2.t", description: "how.s2.d" },
+                { n: 3, title: "how.s3.t", description: "how.s3.d" },
+              ] as const).map((step) => (
+                <li key={step.n} className="relative flex min-w-0 flex-col rounded-3xl border border-secondary/20 bg-linear-to-b from-[var(--readiness-highlight)] to-secondary/8 px-5 pt-7 text-center shadow-[var(--shadow-card)] md:px-6">
+                  {step.n < 3 ? (
+                    <span aria-hidden="true" className="absolute -end-6 top-1/2 z-10 hidden size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-[var(--readiness-highlight)] text-secondary shadow-[var(--shadow-card)] md:flex">
+                      <ArrowRight className="size-4 rtl:rotate-180" />
+                    </span>
+                  ) : null}
+                  <span className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-secondary text-lg font-bold text-secondary-foreground">
+                    {step.n}
                   </span>
-                  <s.icon className="mt-4 size-5 text-secondary" strokeWidth={1.75} aria-hidden />
-                  <h3 className="mt-4 text-lg">{s.t}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>
-                </InformationalCard>
+                  <h3 className="mt-5 text-lg leading-snug">{t(step.title)}</h3>
+                  <div className="mb-7 mt-3 space-y-3 text-sm leading-relaxed text-muted-foreground">
+                    {t(step.description).split("\n").map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  </div>
+                  <div aria-hidden="true" className="mt-auto rounded-t-2xl border border-b-0 border-border bg-[var(--readiness-highlight)] p-4 text-start text-xs shadow-[var(--shadow-card)]">
+                    {step.n === 1 ? (
+                      <>
+                        <p className="font-semibold">{t("how.mock.city")}</p>
+                        <div className="mt-2 flex min-w-0 items-center justify-between gap-2 rounded-lg border border-border px-3 py-2.5 text-muted-foreground">
+                          <span className="min-w-0">{t("start.chooseCity")}</span><ChevronDown className="size-3.5 shrink-0" />
+                        </div>
+                        <div className="mt-3 space-y-3">
+                          {(["start.city.Helsinki", "start.city.Espoo", "start.city.Vantaa", "start.city.Tampere"] as const).map((key) => (
+                            <div key={key} className="flex items-center gap-2"><span className="size-1.5 rounded-full bg-secondary" />{t(key)}</div>
+                          ))}
+                        </div>
+                      </>
+                    ) : step.n === 2 ? (
+                      <>
+                        <p className="font-semibold">{t("how.mock.matters")}</p>
+                        <div className="mt-3 space-y-3">
+                          {(["start.area.status.title", "start.area.id.title", "start.area.bank.title", "start.area.housing.title"] as const).map((key, index) => (
+                            <div key={key} className="flex items-center gap-2">
+                              <span className={`flex size-4 shrink-0 items-center justify-center rounded-sm border ${index < 2 ? "border-secondary bg-secondary text-secondary-foreground" : "border-border"}`}>
+                                {index < 2 ? <Check className="size-3" /> : null}
+                              </span>
+                              {t(key)}
+                            </div>
+                          ))}
+                        </div>
+                        <p className="mt-3 text-muted-foreground">{t("how.mock.more")}</p>
+                      </>
+                    ) : (
+                      <div className="space-y-3">
+                        <div className="rounded-lg border border-border px-3 py-4 font-semibold">{t("start.choose.info.title")}</div>
+                        <div className="rounded-lg border border-secondary/30 bg-secondary/5 px-3 py-4">
+                          <p className="font-semibold">{t("start.choose.road.title")}</p>
+                          <div className="mt-4 flex items-center justify-center">
+                            <span className="flex size-6 items-center justify-center rounded-full bg-secondary font-bold text-secondary-foreground">1</span>
+                            <span className="h-px w-6 bg-border" />
+                            <span className="flex size-6 items-center justify-center rounded-full bg-[var(--navigator-olive)] font-bold text-secondary-foreground">2</span>
+                            <span className="h-px w-6 bg-border" />
+                            <span className="flex size-6 items-center justify-center rounded-full bg-[var(--navigator-gold)] font-bold text-secondary-foreground">3</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </li>
               ))}
             </ol>
           </div>
