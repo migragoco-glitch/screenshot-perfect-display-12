@@ -425,6 +425,8 @@ export const en = {
   "auth.toggleToSignUp": "No account yet? Create one",
   "auth.toggleToSignIn": "Already have an account? Sign in",
   "auth.checkEmail": "Check your inbox to confirm your email address.",
+  "auth.showPassword": "Show password",
+  "auth.hidePassword": "Hide password",
 
   "csat.q": "Does this analysis match your real situation?",
   "csat.sub": "One tap. It helps us validate the model — no personal data is stored.",
@@ -1231,6 +1233,8 @@ export const fa: Record<keyof typeof en, string> = {
   "auth.toggleToSignUp": "هنوز حساب ندارید؟ یک حساب بسازید",
   "auth.toggleToSignIn": "حساب دارید؟ وارد شوید",
   "auth.checkEmail": "برای تأیید نشانی رایانامه، صندوق ورودی خود را بررسی کنید.",
+  "auth.showPassword": "نمایش گذرواژه",
+  "auth.hidePassword": "پنهان کردن گذرواژه",
 
   "csat.q": "آیا این تحلیل با وضعیت واقعی شما همخوانی دارد؟",
   "csat.sub": "فقط یک کلیک. این پاسخ به اعتبارسنجی مدل کمک می‌کند و هیچ داده‌ای شخصی ذخیره نمی‌شود.",
