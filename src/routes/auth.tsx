@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LogIn } from "lucide-react";
+import { Eye, EyeOff, LogIn } from "lucide-react";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
@@ -35,6 +35,7 @@ function AuthPage() {
   const [mode, setMode] = useState<"in" | "up">("in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
@@ -105,14 +106,29 @@ function AuthPage() {
           <label className="mt-4 block text-xs font-semibold text-muted-foreground">
             {t("auth.password")}
           </label>
-          <input
-            type="password"
-            autoComplete={mode === "in" ? "current-password" : "new-password"}
-            maxLength={72}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
-          />
+          <div className="relative mt-1.5">
+            <input
+              type={showPassword ? "text" : "password"}
+              autoComplete={mode === "in" ? "current-password" : "new-password"}
+              maxLength={72}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-xl border border-input bg-background px-4 py-2.5 pe-11 text-sm outline-none focus:ring-2 focus:ring-ring"
+            />
+            <button
+              type="button"
+              aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
+              aria-pressed={showPassword}
+              onClick={() => setShowPassword((v) => !v)}
+              className="absolute inset-y-0 end-1 my-auto flex size-10 items-center justify-center text-primary transition-colors duration-200 ease-out hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              {showPassword ? (
+                <EyeOff className="size-4" aria-hidden="true" />
+              ) : (
+                <Eye className="size-4" aria-hidden="true" />
+              )}
+            </button>
+          </div>
 
           {error ? <p className="mt-3 text-xs font-semibold text-destructive">{error}</p> : null}
           {notice ? <p className="mt-3 text-xs font-semibold text-secondary">{notice}</p> : null}
@@ -138,6 +154,7 @@ function AuthPage() {
             type="button"
             onClick={() => {
               setMode((m) => (m === "in" ? "up" : "in"));
+              setShowPassword(false);
               setError(null);
               setNotice(null);
             }}
