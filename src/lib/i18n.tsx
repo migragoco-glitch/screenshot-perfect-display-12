@@ -184,17 +184,18 @@ export const en = {
   "nav.comingSoon": "Coming Soon",
   "nav.comingSoonTip": "Not available in this version — coming soon.",
 
-  "hero.title": "Know where you stand in your migration journey. Know what comes next.",
+  "hero.title": "Settle in, step by step.",
   "hero.sub":
-    "MigraGo helps you plan your first steps in Finland. Choose your city and the matters you need help with, answer only the questions that matter for them, and get official sources, key deadlines and your steps in the right order. SettleSmart Navigator adds a week-by-week plan, step details and progress tracking.",
+    "Already in Finland or just arrived? Choose the matters you need guidance on and get official sources, key deadlines and your steps in the right order. SettleSmart Navigator adds a week-by-week plan, step details and progress tracking.",
+  "hero.eyebrow": "A practical guide to settling in after arrival",
   "hero.badge": "Evidence-based integration pathway",
   "hero.badgeLine1": "Evidence-based integration pathway",
   "hero.badgeLine2": "Informed by Finland's knowledge and social-integration ecosystem",
   "hero.time": "\n",
   "hero.discoverTitle": "With MigraGo you can:",
-  "hero.discoverSub": "Start with what you need now",
-  "hero.discover1": "Only what applies to you",
-  "hero.discover2": "Official sources and deadlines",
+  "hero.discoverSub": "Know what to do next",
+  "hero.discover1": "Only the matters that apply to you",
+  "hero.discover2": "Official source and deadline for each matter",
   "hero.discover3": "Steps in the right order",
   "hero.navigatorTitle": "SettleSmart Navigator",
   "hero.navigatorNotice": "MigraGo is not a visa application or immigration consultation service.",
@@ -208,10 +209,10 @@ export const en = {
   "about.title": "What MigraGo is",
   "about.definitionTitle": "Definition",
   "about.definition":
-    "A personalized digital navigator that helps you understand your situation, identify your priorities, and know what to do next for settling and integrating in your destination country.",
+    "A personalized digital guide for settling in: choose your city and the matters you need, and see what to do, where the official source is, the deadline for each task, and your next step in your destination country.",
   "about.missionTitle": "Mission",
   "about.mission":
-    "Turning scattered information into a clear, actionable path toward integration.",
+    "Turning scattered administrative information into a clear, actionable path, from settling in to social integration.",
   "about.boundariesTitle": "Boundaries",
   "about.boundaries":
     "MigraGo provides a personalized roadmap based on your information and relevant country-specific regulations and procedures. It does not replace legal advice or official authorities, and it does not guarantee residence, integration, or other outcomes.",
@@ -997,17 +998,18 @@ export const fa: Record<keyof typeof en, string> = {
   "nav.comingSoon": "به‌زودی",
   "nav.comingSoonTip": "در این نسخه فعال نیست — به‌زودی.",
 
-  "hero.title": "بدانید در مسیر مهاجرت کجا ایستاده‌اید و قدم بعدی چیست.",
+  "hero.title": "قدم‌به‌قدم، برای استقرار در کشور جدید.",
   "hero.sub":
-    "میگراگو به شما کمک می‌کند نخستین گام‌های خود را در فنلاند برنامه‌ریزی کنید. شهر و اموری را که به کمک نیاز دارید انتخاب کنید، فقط به پرسش‌های مرتبط با همان امور پاسخ دهید و منبع رسمی، مهلت‌های مهم و گام‌هایتان را به ترتیب درست دریافت کنید. SettleSmart Navigator برنامهٔ هفته‌به‌هفته، جزئیات هر گام و پیگیری پیشرفت را اضافه می‌کند.",
+    "اگر در فنلاند زندگی می‌کنید یا تازه رسیده‌اید، اموری را که به راهنمایی نیاز دارید انتخاب کنید و منبع رسمی، مهلت‌های مهم و گام‌هایتان را به ترتیب درست دریافت کنید. SettleSmart Navigator برنامهٔ هفته‌به‌هفته، جزئیات هر گام و پیگیری پیشرفت را اضافه می‌کند.",
+  "hero.eyebrow": "راهنمای عملی استقرار پس از ورود",
   "hero.badge": "مسیر ادغام مبتنی بر شواهد",
   "hero.badgeLine1": "مسیر ادغام مبتنی بر شواهد",
   "hero.badgeLine2": "با تکیه بر دانش و زیست بوم ادغام اجتماعی فنلاند ",
   "hero.time": "\n",
   "hero.discoverTitle": "با میگراگو می‌توانید:",
-  "hero.discoverSub": "از آنچه همین حالا لازم دارید شروع کنید",
-  "hero.discover1": "فقط آنچه به شما مربوط است",
-  "hero.discover2": "منبع رسمی و مهلت‌ها",
+  "hero.discoverSub": "بدانید قدم بعدی چیست",
+  "hero.discover1": "فقط امور مربوط به شما",
+  "hero.discover2": "منبع رسمی و مهلت هر امر",
   "hero.discover3": "گام‌ها به ترتیب درست",
   "hero.navigatorTitle": "SettleSmart Navigator",
   "hero.navigatorNotice": "MigraGo یک فرم درخواست ویزا یا مشاورهٔ مهاجرتی نیست.",
@@ -1021,10 +1023,10 @@ export const fa: Record<keyof typeof en, string> = {
   "about.title": "میگراگو چیست",
   "about.definitionTitle": "تعریف",
   "about.definition":
-    "یک راهنمای دیجیتال شخصی‌سازی‌شده که به شما کمک می‌کند وضعیت خود را درک کنید، اولویت‌هایتان را شناسایی کنید و بدانید برای استقرار و ادغام در کشور مقصد، قدم بعدی چیست.",
+    "یک راهنمای دیجیتال شخصی‌سازی‌شده برای استقرار: با انتخاب شهر و امور مورد نیازتان می‌فهمید چه کارهایی دارید، منبع رسمی و مهلت هر کار کجاست و قدم بعدی شما در کشور مقصد چیست.",
   "about.missionTitle": "مأموریت",
   "about.mission":
-    "تبدیل اطلاعات پراکنده به یک مسیر روشن و قابل اجرا به سوی ادغام.",
+    "تبدیل اطلاعات پراکندهٔ اداری به یک مسیر روشن و قابل اجرا، از استقرار تا ادغام اجتماعی.",
   "about.boundariesTitle": "محدودهٔ مسئولیت",
   "about.boundaries": "میگراگو بر اساس اطلاعات شما و ضوابط و رویه‌های مرتبط با کشور مقصد، مسیری شخصی‌سازی‌شده ارائه می‌دهد. این محصول جایگزین مشاوره حقوقی یا مراجع رسمی نیست و اقامت، ادغام یا هیچ نتیجه دیگری را تضمین نمی‌کند.",
 
