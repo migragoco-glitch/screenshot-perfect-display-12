@@ -113,7 +113,7 @@ function StartScreen() {
     <div dir={dir} className="flex min-h-screen flex-col">
       <AppHeader />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 md:px-8 md:py-14">
-        <h1 className="text-2xl md:text-3xl">{t("start.title")}</h1>
+        <h1 className="text-2xl md:text-3xl">{t(stage === "info" ? "start.title.info" : stage === "road" ? "start.title.road" : "start.title")}</h1>
         {stage === "city" ? (
           <section className="mt-8"><div className="glass-card rise-in rounded-3xl p-6 md:p-8">
             <label htmlFor="start-municipality" className="text-lg font-semibold">{t("start.city")}</label>
