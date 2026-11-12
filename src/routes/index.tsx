@@ -354,7 +354,11 @@ function Landing() {
               </div>
             </div>
 
-            <h1 className="mt-6 text-4xl leading-[1.08] md:text-6xl">
+            <p className="mt-4 text-xs font-semibold text-secondary">
+              {t("hero.eyebrow")}
+            </p>
+
+            <h1 className="mt-2 text-4xl leading-[1.08] md:text-6xl">
                 <span className="text-gradient-brand">{t("hero.title")}</span>
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
