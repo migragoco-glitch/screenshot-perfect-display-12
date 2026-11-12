@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
@@ -373,6 +373,13 @@ function Assessment() {
 
       <div className="mx-auto flex max-w-4xl flex-col gap-6 px-4 py-10 md:px-8 lg:grid lg:max-w-6xl lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
         <main className="min-w-0">
+        <Link
+          to="/start"
+          className="mb-4 inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted"
+        >
+          <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
+          {t("q.backToStart")}
+        </Link>
         {guidedView === "companion" ? (
           <AssessmentGuideMoment message={t(`q.companion.${companionMoment}`)} />
         ) : guidedView === "complete" ? (
