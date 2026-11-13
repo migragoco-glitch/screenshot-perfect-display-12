@@ -454,59 +454,58 @@ function Landing() {
             <article className="flex flex-col rounded-2xl border-2 border-[var(--navigator-gold)] bg-card p-7 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] focus-within:shadow-[var(--shadow-lift)]">
               <h3 className="flex items-center gap-2 text-lg">
                 <Gift className="size-5 shrink-0 text-[var(--navigator-gold)]" aria-hidden />
-                {t("pricing.freePrice")}
+                {t("pricing.freeName")}
               </h3>
-              <hr className="mt-4 border-t border-border" />
-              <ul className="mt-5 flex-1 space-y-4">
-                {([[ClipboardCheck, "pricing.freeF1", "pricing.freeF1Sub"], [Landmark, "pricing.freeF2", "pricing.freeF2Sub"]] as const).map(([Icon, k, sub]) => (
-                  <li key={k} className="flex items-start gap-3">
-                    <Icon className="mt-0.5 size-4 shrink-0 text-[var(--navigator-gold)]" aria-hidden />
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">{t(k)}</p>
-                      <p className="mt-0.5 text-xs text-muted-foreground">{t(sub)}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <p className="mt-2 min-h-8 text-xs text-muted-foreground">{t("pricing.freeTagline")}</p>
+              <div className="mt-3">
+                <p className="text-3xl font-bold text-[var(--navigator-gold)]">{t("pricing.freePriceAmount")}</p>
+                <div className="min-h-5" aria-hidden />
+                <div className="mt-1 min-h-5" aria-hidden />
+              </div>
               <Link
                 to={state.consent ? "/start" : "/consent"}
                 search={state.consent ? {} : { next: "start" }}
-                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--navigator-gold)] px-5 py-3 text-sm font-semibold text-white transition-all duration-200 ease-out hover:brightness-95 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--navigator-gold)] active:scale-[0.98] active:brightness-90"
+                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--navigator-gold)] px-5 py-3 text-sm font-semibold text-primary-foreground transition-all duration-200 ease-out hover:brightness-95 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--navigator-gold)] active:scale-[0.98] active:brightness-90"
               >
                 {t("pricing.freeStart")}
               </Link>
-            </article>
-
-            <article className="relative flex flex-col rounded-2xl border-2 border-secondary bg-card p-7 shadow-[var(--shadow-lift)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xl focus-within:shadow-xl">
-              <span className="absolute -top-3 start-7 rounded-full bg-[#C8A96A] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[var(--navigator-navy)]">
-                {t("pricing.recommended")}
-              </span>
-              <h3 className="flex items-center gap-2 text-lg">
-                <span className="flex size-[26px] shrink-0 items-center justify-center rounded-full bg-[var(--navigator-light-teal)]" aria-hidden>
-                  <img src={arrowMarkAsset.url} alt="" className="h-4 w-auto object-contain" />
-                </span>
-                {t("pricing.nav")}
-              </h3>
-              <hr className="mt-4 border-t border-border" />
-              <p className="mt-3 text-3xl font-bold text-secondary">
-                {t("pricing.navPrice")}
-                <span className="text-sm font-medium text-muted-foreground">{t("pricing.perMonth")}</span>
-              </p>
+              <hr className="my-5 border-t border-border" />
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t("pricing.freeLead")}</p>
               <ul className="mt-5 flex-1 space-y-4">
-                {([[ClipboardCheck, "pricing.navF0"], [UserRoundCheck, "pricing.navF1"], [RouteIcon, "pricing.navF2"], [CalendarDays, "pricing.navF3"], [ChartLine, "pricing.navF4"]] as const).map(([Icon, k]) => (
+                {(["pricing.freeItem1", "pricing.freeItem2", "pricing.freeItem3", "pricing.freeItem4", "pricing.freeItem5", "pricing.freeItem6"] as const).map((k) => (
                   <li key={k} className="flex items-start gap-3">
-                    <Icon className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden />
+                    <Check className="mt-0.5 size-4 shrink-0 text-[var(--navigator-gold)]" aria-hidden />
                     <p className="text-sm font-semibold text-foreground">{t(k)}</p>
                   </li>
                 ))}
               </ul>
+            </article>
+
+            <article className="relative flex flex-col rounded-2xl border-2 border-navy bg-card p-7 shadow-[var(--shadow-lift)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xl focus-within:shadow-xl">
+              <h3 className="text-lg">{t("pricing.nav")}</h3>
+              <p className="mt-2 min-h-8 text-xs text-muted-foreground">{t("pricing.navTagline")}</p>
+              <div className="mt-3">
+                <p className="min-h-9 text-2xl font-bold text-navy">{t("pricing.navPrice30")}</p>
+                <p className="min-h-5 text-sm font-medium text-muted-foreground">{t("pricing.navPrice90")}</p>
+                <p className="mt-1 min-h-5 text-xs text-muted-foreground">{t("pricing.navPriceNote")}</p>
+              </div>
               <Link
                 to={state.consent ? "/start" : "/consent"}
                 search={state.consent ? {} : { next: "start" }}
-                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-secondary px-5 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary active:scale-[0.98]"
+                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-navy px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors duration-200 ease-out hover:bg-navy/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy active:scale-[0.98]"
               >
                 {t("pricing.navStart")}
               </Link>
+              <hr className="my-5 border-t border-border" />
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t("pricing.navLead")}</p>
+              <ul className="mt-5 flex-1 space-y-4">
+                {(["pricing.navItem1", "pricing.navItem2", "pricing.navItem3", "pricing.navItem4", "pricing.navItem5", "pricing.navItem6", "pricing.navItem7"] as const).map((k) => (
+                  <li key={k} className="flex items-start gap-3">
+                    <Check className={`mt-0.5 size-4 shrink-0 ${k === "pricing.navItem7" ? "text-muted-foreground" : "text-navy"}`} aria-hidden />
+                    <p className={`text-sm font-semibold ${k === "pricing.navItem7" ? "text-muted-foreground" : "text-foreground"}`}>{t(k)}</p>
+                  </li>
+                ))}
+              </ul>
             </article>
 
             <article className="relative overflow-hidden rounded-2xl border border-dashed border-[color:var(--plum)]/30 bg-muted/50 p-7">
