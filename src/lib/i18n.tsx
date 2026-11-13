@@ -190,7 +190,7 @@ export const en = {
 
   "hero.title": "What path lies ahead of you as you start life in a new country?",
   "hero.sub":
-    "Arriving in a new country, especially when you are not familiar with its language, laws, institutions and services, can bring confusion and difficult decisions. Relying on incomplete or incorrect information can lead to wrong choices, wasted time and money, and emotional strain for you and your family.",
+    "Arriving in a new country, especially when you are not familiar with its language, laws, institutions and administrative procedures, can bring confusion and difficult decisions. Relying on incomplete or incorrect information can lead to wrong choices, wasted time and money, and emotional strain for you and your family.",
   "hero.eyebrow": "A step-by-step guide to settlement and social integration",
   "hero.sub2": "MigraGo helps you, without needing to communicate in the destination country's language and from anywhere, in a short time and with a free option, reach official information that fits your situation, identify the relevant actions and begin your settlement and social integration with a personal roadmap.",
   "hero.tagline": "From official information to practical actions, with a roadmap that fits your situation.",
@@ -1013,7 +1013,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "hero.title": "برای شروع زندگی در کشور جدید، چه مسیری پیش روی شماست؟",
   "hero.sub":
-    "ورود به کشوری جدید، به‌ویژه زمانی که با زبان، قوانین، نهادها و خدمات آن آشنا نیستید، می‌تواند با سردرگمی و دشواری در تصمیم‌گیری همراه باشد. اتکا به اطلاعات ناقص یا نادرست ممکن است به انتخاب مسیرهای اشتباه، اتلاف وقت و هزینه و فشار روانی برای شما و خانواده‌تان منجر شود.",
+    "ورود به کشوری جدید، به‌ویژه زمانی که با زبان، قوانین، نهادها و رویه‌های اداری آن آشنا نیستید، می‌تواند با سردرگمی و دشواری در تصمیم‌گیری همراه باشد. اتکا به اطلاعات ناقص یا نادرست ممکن است به انتخاب مسیرهای اشتباه، اتلاف وقت و هزینه و فشار روانی برای شما و خانواده‌تان منجر شود.",
   "hero.eyebrow": "راهنمای قدم‌به‌قدم استقرار و ادغام اجتماعی",
   "hero.sub2": "میگراگو به شما کمک می‌کند بدون نیاز به مکالمه به زبان کشور مقصد و از هر کجا، در زمانی کوتاه و با امکان استفاده رایگان، به اطلاعات رسمی و متناسب با شرایط خود دسترسی پیدا کنید، اقدامات مرتبط را بشناسید و با یک نقشهٔ راه شخصی، مسیر استقرار و ادغام اجتماعی خود را آغاز کنید.",
   "hero.tagline": "از اطلاعات رسمی تا اقدامات عملی؛ با نقشهٔ راهی متناسب با شرایط شما.",
