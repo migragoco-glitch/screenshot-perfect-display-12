@@ -173,6 +173,10 @@ export const en = {
   "start.city.Other municipality": "Other municipality",
 
   "nav.country": "Country",
+  "country.soonHeading": "Coming soon",
+  "nav.how": "How it works",
+  "nav.pricing": "Pricing",
+  "nav.menu": "Menu",
   "nav.language": "Language",
   "nav.cta": "Build My Personal Pathway",
   "hero.quickCheckCta": "Start Free Quick Check",
@@ -241,7 +245,7 @@ export const en = {
   "inst.a.bf": "Visit Business Finland official website (opens in a new tab)",
   "inst.a.ihh": "Visit International House Helsinki official website (opens in a new tab)",
 
-  "pricing.title": "Access tiers",
+  "pricing.title": "Pricing",
   "pricing.free": "\n",
   "pricing.freePrice": "Free",
   "pricing.freeDesc":
@@ -990,6 +994,10 @@ export const fa: Record<keyof typeof en, string> = {
   "start.city.Other municipality": "شهرداری دیگر",
 
   "nav.country": "کشور",
+  "country.soonHeading": "به‌زودی",
+  "nav.how": "چگونه کار می‌کند",
+  "nav.pricing": "قیمت‌ها",
+  "nav.menu": "منو",
   "nav.language": "زبان",
   "nav.cta": "مسیر شخصی من را بساز",
   "hero.quickCheckCta": "شروع بررسی رایگان",
@@ -1056,7 +1064,7 @@ export const fa: Record<keyof typeof en, string> = {
   "inst.a.bf": "مشاهده وب‌سایت رسمی Business Finland — در تب جدید باز می‌شود",
   "inst.a.ihh": "مشاهده وب‌سایت رسمی International House Helsinki — در تب جدید باز می‌شود",
 
-  "pricing.title": "سطوح دسترسی",
+  "pricing.title": "قیمت‌ها",
   "pricing.free": "\n",
   "pricing.freePrice": "رایگان",
   "pricing.freeDesc":

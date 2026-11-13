@@ -1,5 +1,8 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Globe, Lock, LogOut } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown, Globe, Lock, LogOut, Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import logoAsset from "@/assets/logo.png.asset.json";
 import qrCodeAsset from "@/assets/qr-code-migrago.jpeg.asset.json";
 import { CONTACT_EMAIL, MAILTO_URL, WHATSAPP_URL } from "@/components/SupportChannels";
@@ -10,11 +13,15 @@ import { cn } from "@/lib/utils";
 
 
 export const COUNTRY_OPTIONS = [
-  { code: "FI", flag: "🇫🇮", name: { en: "Finland", fa: "فنلاند" }, active: true, group: "eu" },
-  { code: "DE", flag: "🇩🇪", name: { en: "Germany", fa: "آلمان" }, active: false, group: "eu" },
-  { code: "SE", flag: "🇸🇪", name: { en: "Sweden", fa: "سوئد" }, active: false, group: "eu" },
-  { code: "NL", flag: "🇳🇱", name: { en: "Netherlands", fa: "هلند" }, active: false, group: "eu" },
-  { code: "CA", flag: "🇨🇦", name: { en: "Canada", fa: "کانادا" }, active: false, group: "global" },
+  { code: "FI", flag: "🇫🇮", name: { en: "Finland", fa: "فنلاند" }, active: true },
+  { code: "DE", flag: "🇩🇪", name: { en: "Germany", fa: "آلمان" }, active: false },
+  { code: "CA", flag: "🇨🇦", name: { en: "Canada", fa: "کانادا" }, active: false },
+  { code: "GB", flag: "🇬🇧", name: { en: "United Kingdom", fa: "بریتانیا" }, active: false },
+  { code: "TR", flag: "🇹🇷", name: { en: "Türkiye", fa: "ترکیه" }, active: false },
+  { code: "US", flag: "🇺🇸", name: { en: "United States", fa: "ایالات متحده" }, active: false },
+  { code: "AU", flag: "🇦🇺", name: { en: "Australia", fa: "استرالیا" }, active: false },
+  { code: "NL", flag: "🇳🇱", name: { en: "Netherlands", fa: "هلند" }, active: false },
+  { code: "SE", flag: "🇸🇪", name: { en: "Sweden", fa: "سوئد" }, active: false },
 ] as const;
 
 export function BrandLogo({ className }: { className?: string }) {
@@ -60,51 +67,44 @@ export function LanguageSwitch() {
 
 export function CountrySelector() {
   const { lang, t } = useI18n();
-
-  const renderCountry = (c: (typeof COUNTRY_OPTIONS)[number]) =>
-    c.active ? (
-      <span
-        key={c.code}
-        className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-secondary-foreground"
-      >
-        <span aria-hidden>{c.flag}</span>
-        {c.name[lang]}
-      </span>
-    ) : (
-      <button
-        key={c.code}
-        type="button"
-        title={t("nav.comingSoonTip")}
-        aria-disabled="true"
-        onClick={() => trackEvent({ type: "country_click", country: c.name.en })}
-        className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-[color:var(--plum)]/30 px-2.5 py-1 text-xs text-muted-foreground/80 transition-colors duration-200 ease-out hover:bg-muted"
-      >
-        <span aria-hidden className="grayscale">
-          {c.flag}
-        </span>
-        {c.name[lang]}
-        <Lock className="size-3" style={{ color: "var(--plum)" }} aria-hidden />
-      </button>
-
-    );
+  const [open, setOpen] = useState(false);
+  const finland = COUNTRY_OPTIONS[0];
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5 rounded-2xl border border-border bg-card px-3 py-2 md:rounded-full md:px-2 md:py-1">
-      <span className="px-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-        {t("country.eu")}
-      </span>
-      {COUNTRY_OPTIONS.filter((c) => c.group === "eu").map(renderCountry)}
-      <span className="mx-1 h-4 w-px bg-border" aria-hidden />
-      <span className="px-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-        {t("country.global")}
-      </span>
-      {COUNTRY_OPTIONS.filter((c) => c.group === "global").map(renderCountry)}
-    </div>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button variant="outline" size="sm" aria-expanded={open} className="gap-1.5 rounded-full bg-card">
+          <span aria-hidden>{finland.flag}</span>
+          {finland.name[lang]}
+          <ChevronDown className="size-3" aria-hidden />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="end" dir={lang === "fa" ? "rtl" : "ltr"} aria-label={t("nav.country")} className="max-h-[var(--radix-popover-content-available-height)] w-60 max-w-[calc(100vw-2rem)] overflow-y-auto p-2">
+        <ul>
+          <li className="flex items-center gap-2 rounded-md bg-secondary px-3 py-2 text-xs font-semibold text-secondary-foreground" aria-current="true">
+            <span aria-hidden>{finland.flag}</span>{finland.name[lang]}
+          </li>
+        </ul>
+        <p className="px-3 pb-1 pt-3 text-xs font-semibold text-muted-foreground">{t("country.soonHeading")}</p>
+        <ul>
+          {COUNTRY_OPTIONS.filter((c) => !c.active).map((c) => (
+            <li key={c.code}>
+              <Button type="button" variant="ghost" size="sm" title={t("nav.comingSoonTip")} aria-disabled="true" onClick={() => trackEvent({ type: "country_click", country: c.name.en })} className="h-auto min-h-8 w-full justify-start gap-2 whitespace-normal text-start text-xs text-muted-foreground">
+                <span aria-hidden>{c.flag}</span>
+                <span className="min-w-0 flex-1">{c.name[lang]}</span>
+                <Lock className="size-3 text-[var(--plum)]" aria-hidden />
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </PopoverContent>
+    </Popover>
   );
 }
 
 export function AppHeader({ registered, quickCheckCta = false }: { registered?: boolean; quickCheckCta?: boolean }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { session } = useSession();
   const { state } = useAppState();
@@ -118,46 +118,70 @@ export function AppHeader({ registered, quickCheckCta = false }: { registered?: 
     void navigate({ to: "/" });
   };
 
-  return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-4 py-3 md:px-8">
-        <BrandLogo />
-        <div className="ms-auto flex flex-wrap items-center gap-2">
+  const renderMenuItems = (mobile = false) => (
+    <>
+          <nav aria-label={t("nav.menu")} className={cn("flex gap-4 text-xs font-semibold text-muted-foreground", mobile ? "w-full flex-col border-b border-border pb-3" : "items-center")}>
+            <Link to="/" hash="how-it-works" onClick={() => setMobileMenuOpen(false)} className="hover:text-foreground">{t("nav.how")}</Link>
+            <Link to="/" hash="pricing" onClick={() => setMobileMenuOpen(false)} className="hover:text-foreground">{t("nav.pricing")}</Link>
+            <Link to="/faq" onClick={() => setMobileMenuOpen(false)} className="hover:text-foreground">{t("nav.faq")}</Link>
+          </nav>
           <CountrySelector />
           <LanguageSwitch />
-          {quickCheckCta ? (
-            <Link
-              to="/start"
-              className="rounded-full bg-secondary px-4 py-2 text-xs font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
-            >
-              {t("hero.startCta")}
-            </Link>
-          ) : null}
           {registered ? (
             <Link
               to={legacyProfile ? "/dashboard" : "/start"}
+              onClick={() => setMobileMenuOpen(false)}
               className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-colors duration-200 ease-out hover:bg-primary/90"
             >
               {t(legacyProfile ? "nav.profile" : "nav.continue")}
             </Link>
           ) : null}
           {session ? (
-            <button
+            <Button
               type="button"
-              onClick={() => void handleLogout()}
+              variant="outline"
+              size="sm"
+              onClick={() => { setMobileMenuOpen(false); void handleLogout(); }}
               className="inline-flex items-center gap-1.5 rounded-full border border-border bg-transparent px-4 py-2 text-xs font-semibold text-muted-foreground transition-colors duration-200 ease-out hover:bg-muted hover:text-foreground"
             >
               <LogOut className="size-3.5 rtl:rotate-180" aria-hidden />
               {t("nav.logout")}
-            </button>
+            </Button>
           ) : (
             <Link
               to="/auth"
+              onClick={() => setMobileMenuOpen(false)}
               className="rounded-full bg-secondary px-4 py-2 text-xs font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
             >
               {t("nav.signIn")}
             </Link>
           )}
+    </>
+  );
+
+  return (
+    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-4 py-3 md:gap-3 md:px-8">
+        <BrandLogo />
+        <div className="ms-auto flex flex-wrap items-center gap-2">
+          {quickCheckCta ? (
+            <Button asChild variant="secondary" size="sm" className="h-auto max-w-36 whitespace-normal rounded-full px-3 py-2 text-center text-xs md:max-w-none md:px-4">
+              <Link to="/start">{t("hero.startCta")}</Link>
+            </Button>
+          ) : null}
+          <div className="hidden flex-wrap items-center gap-2 md:flex">{renderMenuItems()}</div>
+          <div className="md:hidden">
+            <Popover open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <PopoverTrigger asChild>
+                <Button variant="outline" size="sm" aria-expanded={mobileMenuOpen} className="rounded-full">
+                  <Menu className="size-4" aria-hidden />{t("nav.menu")}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="end" dir={lang === "fa" ? "rtl" : "ltr"} aria-label={t("nav.menu")} className="flex max-h-[var(--radix-popover-content-available-height)] max-w-[calc(100vw-2rem)] flex-wrap items-center gap-3 overflow-y-auto md:hidden">
+                {renderMenuItems(true)}
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
       </div>
     </header>
