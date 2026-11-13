@@ -422,6 +422,7 @@ function Landing() {
                 </li>
               ))}
             </ul>
+            <p className="mt-6 max-w-2xl text-xs leading-relaxed opacity-75">{t("inst.note")}</p>
           </div>
         </section>
 
