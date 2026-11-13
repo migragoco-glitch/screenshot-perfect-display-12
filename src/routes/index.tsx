@@ -1,11 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Gift, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, Scale, Sparkles, Users } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Gift, Globe, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, Scale, Sparkles, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { useI18n, type TKey } from "@/lib/i18n";
 import { useAppState } from "@/lib/store";
+import { TITLE_OVERRIDES } from "@/lib/area-flow";
+import { KNOWLEDGE_TABLE } from "@/lib/roadmap";
+
+function mockStepTitle(id: string, lang: "en" | "fa", t: (key: TKey) => string) {
+  const bilingual = TITLE_OVERRIDES[id] ?? KNOWLEDGE_TABLE.find((entry) => entry.id === id)?.title;
+  return bilingual ? bilingual[lang] : t(`start.step.${id}.title` as TKey);
+}
 
 // Trigger rebuild after prior changes
 export const Route = createFileRoute("/")({
@@ -351,41 +358,55 @@ function Landing() {
                     {step.n === 1 ? (
                       <>
                         <p className="font-semibold">{t("how.mock.city")}</p>
-                        <div className="mt-2 flex min-w-0 items-center justify-between gap-2 rounded-lg border border-border px-3 py-2.5 text-muted-foreground">
+                        <div className="mt-2 flex min-w-0 items-center justify-between gap-2 rounded-lg border-2 px-3 py-2.5 text-muted-foreground" style={{ borderColor: "var(--navigator-light-teal)" }}>
                           <span className="min-w-0">{t("start.chooseCity")}</span><ChevronDown className="size-3.5 shrink-0" />
                         </div>
-                        <div className="mt-3 space-y-3">
-                          {(["start.city.Helsinki", "start.city.Espoo", "start.city.Vantaa", "start.city.Tampere"] as const).map((key) => (
-                            <div key={key} className="flex items-center gap-2"><span className="size-1.5 rounded-full bg-secondary" />{t(key)}</div>
+                        <div className="mt-3 flex flex-wrap gap-1.5">
+                          {([["start.city.Helsinki", "var(--navigator-light-teal)"], ["start.city.Espoo", "var(--navigator-teal)"], ["start.city.Vantaa", "var(--navigator-olive)"], ["start.city.Tampere", "var(--navigator-gold)"]] as const).map(([key, color]) => (
+                            <span key={key} className="rounded-full border px-2.5 py-1 font-semibold" style={{ borderColor: `color-mix(in srgb, ${color} 40%, transparent)`, background: `color-mix(in srgb, ${color} 12%, var(--card))` }}>{t(key)}</span>
                           ))}
                         </div>
                       </>
                     ) : step.n === 2 ? (
-                      <>
-                        <p className="font-semibold">{t("how.mock.matters")}</p>
-                        <div className="mt-3 space-y-3">
-                          {(["start.area.status.title", "start.area.id.title", "start.area.bank.title", "start.area.housing.title"] as const).map((key, index) => (
-                            <div key={key} className="flex items-center gap-2">
-                              <span className={`flex size-4 shrink-0 items-center justify-center rounded-sm border ${index < 2 ? "border-secondary bg-secondary text-secondary-foreground" : "border-border"}`}>
-                                {index < 2 ? <Check className="size-3" /> : null}
-                              </span>
-                              {t(key)}
-                            </div>
-                          ))}
-                        </div>
-                        <p className="mt-3 text-muted-foreground">{t("how.mock.more")}</p>
-                      </>
+                      <div className="grid grid-cols-2 gap-2">
+                        {([
+                          { key: "start.area.status.title", Icon: Globe, color: "var(--navigator-light-teal)", on: true },
+                          { key: "start.area.housing.title", Icon: House, color: "var(--navigator-teal)", on: true },
+                          { key: "start.area.comm.title", Icon: Building2, color: "var(--navigator-gold)", on: true },
+                          { key: "start.area.family.title", Icon: Users, color: "var(--navigator-olive)", on: false },
+                        ] as const).map(({ key, Icon, color, on }) => (
+                          <div key={key} className={`relative rounded-xl p-2.5 ${on ? "border-2" : "border border-border bg-card"}`} style={on ? { borderColor: color, background: `color-mix(in srgb, ${color} 12%, var(--card))` } : undefined}>
+                            {on ? <span className="absolute end-1.5 top-1.5 flex size-4 items-center justify-center rounded-full text-white" style={{ background: color }}><Check className="size-2.5" strokeWidth={3} /></span> : <span className="absolute end-1.5 top-1.5 size-4 rounded-full border-2 border-muted-foreground/30" />}
+                            <span className={`flex size-7 items-center justify-center rounded-full ${on ? "text-white" : "bg-muted/70 text-muted-foreground"}`} style={on ? { background: color } : undefined}><Icon className="size-3.5" /></span>
+                            <p className="mt-2 text-[11px] font-semibold leading-tight">{t(key)}</p>
+                          </div>
+                        ))}
+                      </div>
                     ) : (
                       <div className="space-y-3">
-                        <div className="rounded-lg border border-border px-3 py-4 font-semibold">{t("start.choose.info.title")}</div>
-                        <div className="rounded-lg border border-secondary/30 bg-secondary/5 px-3 py-4">
+                        <div className="rounded-lg border border-border bg-card px-3 py-3">
                           <p className="font-semibold">{t("start.choose.road.title")}</p>
-                          <div className="mt-4 flex items-center justify-center">
-                            <span className="flex size-6 items-center justify-center rounded-full bg-secondary font-bold text-secondary-foreground">1</span>
-                            <span className="h-px w-6 bg-border" />
-                            <span className="flex size-6 items-center justify-center rounded-full bg-[var(--navigator-olive)] font-bold text-secondary-foreground">2</span>
-                            <span className="h-px w-6 bg-border" />
-                            <span className="flex size-6 items-center justify-center rounded-full bg-[var(--navigator-gold)] font-bold text-secondary-foreground">3</span>
+                          {([1, 2, 3, 4] as const).map((phase) => {
+                            const color = ["var(--navigator-light-teal)", "var(--navigator-teal)", "var(--navigator-olive)", "var(--navigator-gold)"][phase - 1]!;
+                            const items = phase === 1 ? [["dvv-id-code", "DVV"], ["municipality-of-residence", "DVV"], ["move-notification", "DVV"]] as const : phase === 2 ? [["strong-id", "Bank"], ["kela-social", "Kela"]] as const : [] as const;
+                            return <div key={phase} className="mt-2">
+                              <p className="border-s-[3px] ps-2 text-[10px] font-bold" style={{ borderColor: color }}>{t(`road.phase${phase}` as TKey)}</p>
+                              {items.map(([id, authority], index) => (
+                                <div key={id} className="mt-1.5 flex items-center gap-1.5 text-[10px]">
+                                  <span className="flex size-4 shrink-0 items-center justify-center rounded-full font-bold" style={{ background: color, color: phase === 2 ? "#fff" : "var(--navigator-navy)" }}>{phase === 1 ? index + 1 : index + 4}</span>
+                                  <span className="min-w-0 flex-1 truncate">{mockStepTitle(id, lang, t)}</span>
+                                  <span className="shrink-0 rounded bg-[var(--institution-tint)] px-1 font-semibold text-[var(--institution-purple)]">{authority}</span>
+                                </div>
+                              ))}
+                            </div>;
+                          })}
+                        </div>
+                        <div className="rounded-lg border border-border bg-card px-3 py-3">
+                          <p className="font-semibold">{t("start.choose.info.title")}</p>
+                          <p className="mt-2 text-[11px] font-semibold">{t("start.step.move-notification.title")}</p>
+                          <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[10px]">
+                            <span className="rounded bg-[var(--institution-tint)] px-1 font-semibold text-[var(--institution-purple)]">DVV</span>
+                            <span className="rounded-full px-2 py-0.5" style={{ background: "color-mix(in srgb, var(--navigator-gold) 15%, var(--card))" }}>{t("start.step.move-notification.deadline")}</span>
                           </div>
                         </div>
                       </div>

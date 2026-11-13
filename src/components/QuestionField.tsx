@@ -18,14 +18,18 @@ type Props = {
   /** Fill the selected option with the level color (Quick Check only). */
   fillSelected?: boolean;
   hideNumber?: boolean;
+  /** Tint the selected option with the level color (/start only). */
+  accentSelected?: boolean;
 };
 
-export function QuestionField({ question: q, index, answer, onChange, levelColor, fillSelected = false, hideNumber = false }: Props) {
+export function QuestionField({ question: q, index, answer, onChange, levelColor, fillSelected = false, hideNumber = false, accentSelected = false }: Props) {
   const { lang, t } = useI18n();
   const selected = answer?.value;
   const fillStyle = fillSelected
     ? ({ backgroundColor: levelColor, borderColor: levelColor, color: "#fff" } as React.CSSProperties)
-    : undefined;
+    : accentSelected
+      ? ({ borderColor: levelColor, background: `color-mix(in srgb, ${levelColor} 14%, var(--card))`, boxShadow: `0 0 0 3px color-mix(in srgb, ${levelColor} 20%, transparent)`, color: "var(--foreground)" } as React.CSSProperties)
+      : undefined;
   const showDetail = q.detailOn !== undefined && selected === q.detailOn;
   const isBracket = q.id === 17 || q.id === 21;
   const subSelected = subAnswerIndex(q, answer);
@@ -209,6 +213,7 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
                     key={opt.en}
                     type="button"
                     aria-pressed={active}
+                    style={active && accentSelected ? fillStyle : undefined}
                     onClick={() => {
                       if (q.sub?.multi) {
                         const next = active
