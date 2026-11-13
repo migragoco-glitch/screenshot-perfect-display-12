@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Gift, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, Info, RefreshCw, Scale, Sparkles, Users } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Gift, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, RefreshCw, Scale, Sparkles, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
@@ -248,9 +248,6 @@ function RoadmapPreview() {
 
   return (
     <div ref={ref} className={`mt-6 rounded-2xl bg-[var(--navigator-navy)] px-4 pb-5 pt-4${entered ? " navigator-entered" : ""}`}>
-      <p className="text-center text-xs font-semibold text-[var(--navigator-cream)]">
-        {t("hero.roadmapStage")}
-      </p>
       <div className="mt-5 grid h-44 grid-cols-4 gap-2 sm:gap-3">
         {ROADMAP_PHASES.map((phase, index) => {
           const PhaseIcon = phase.icon;
@@ -290,28 +287,11 @@ function Landing() {
           <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 md:grid-cols-[1.15fr_0.85fr] md:items-center md:px-8 md:py-24">
             <div className="rise-in">
 
-            <div className="mt-4 inline-flex flex-col gap-1 rounded-2xl border border-secondary/30 bg-card px-4 py-3 shadow-[var(--shadow-card)]">
-              <span className="text-xs font-semibold text-secondary">{t("hero.badgeLine1")}</span>
-              <div className="flex items-center gap-2">
-                <span
-                  className="flex size-5 items-center justify-center overflow-hidden rounded-sm border border-border bg-white"
-                  aria-hidden
-                >
-                  <svg viewBox="0 0 18 11" className="size-full" role="presentation">
-                    <rect width="18" height="11" fill="#fff" />
-                    <rect x="5" width="3" height="11" fill="#003580" />
-                    <rect y="4" width="18" height="3" fill="#003580" />
-                  </svg>
-                </span>
-                <span className="text-xs font-medium text-muted-foreground">{t("hero.badgeLine2")}</span>
-              </div>
-            </div>
-
             <p className="mt-4 text-xs font-semibold text-secondary">
               {t("hero.eyebrow")}
             </p>
 
-            <h1 className="mt-2 text-4xl leading-[1.08] md:text-6xl">
+            <h1 className="mt-2 text-3xl leading-[1.08] md:text-5xl">
                 <span className="text-gradient-brand">{t("hero.title")}</span>
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
@@ -354,17 +334,7 @@ function Landing() {
               <span className="absolute -top-3 start-3 flex size-[26px] items-center justify-center rounded-full bg-[var(--navigator-light-teal)]" aria-hidden>
                 <img src={arrowMarkAsset.url} alt="" className="h-4 w-auto object-contain" />
               </span>
-              <h2 className="text-center text-[18px] font-semibold text-[var(--navigator-teal)]">
-                {t("hero.navigatorTitle")}
-              </h2>
-              <div className="mt-5 flex items-center gap-2 rounded-xl bg-[var(--navigator-notice)] px-3 py-2.5 text-xs leading-relaxed text-[var(--navigator-notice-text)]">
-                <Info className="size-4 shrink-0 text-[var(--navigator-notice-icon)]" aria-hidden />
-                <span>{t("hero.navigatorNotice")}</span>
-              </div>
               <div className="mt-5 rounded-[10px] border border-border bg-[#F7F4EE] p-4">
-                <p className="text-center text-sm font-semibold text-[var(--navigator-navy)]">
-                  {t("hero.previewTitle")}
-                </p>
                 <SampleDonut />
                 <div className="mt-5 grid grid-cols-3 gap-3">
                   {SAMPLE.map((d) => (
@@ -381,9 +351,6 @@ function Landing() {
                 </p>
               </div>
               <RoadmapPreview />
-              <p className="mt-4 text-center text-xs text-[var(--navigator-navy)] opacity-70">
-                {t("hero.navigatorClosing")}
-              </p>
               </div>
               </div>
             </div>
@@ -394,7 +361,6 @@ function Landing() {
         <section className="mx-auto max-w-7xl px-4 pb-4 md:px-8">
           <InformationalCard as="article" className="rounded-3xl border border-secondary/25 bg-secondary/8 p-8 md:p-10">
             <RefreshCw className="size-6 text-secondary" strokeWidth={1.75} aria-hidden />
-            <h2 className="mt-4 text-2xl md:text-3xl">{t("about.processTitle")}</h2>
             <p className="mt-4 max-w-4xl text-sm leading-relaxed text-muted-foreground md:text-base">
               {t("about.processBody")}
             </p>
