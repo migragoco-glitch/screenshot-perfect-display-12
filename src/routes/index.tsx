@@ -317,6 +317,12 @@ function Landing() {
               <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
                 {t("hero.sub")}
               </p>
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                {t("hero.sub2")}
+              </p>
+              <p className="mt-4 max-w-2xl text-base font-semibold text-foreground md:text-lg">
+                {t("hero.tagline")}
+              </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Link
