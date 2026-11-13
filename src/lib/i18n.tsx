@@ -235,8 +235,9 @@ export const en = {
   "how.mock.more": "… and more",
 
   "inst.title": "Direct access to official sources",
-  "inst.sub":
-    "Each link opens that institution's own official website. MigraGo is not affiliated with these institutions.",
+  "inst.sub": "Each link opens that institution's own official website.",
+  "inst.note":
+    "MigraGo is an independent service with no affiliation or official partnership with these institutions. Their names are shown only to point to the official source.",
   "inst.a.migri": "Visit Migri official website (opens in a new tab)",
   "inst.a.dvv": "Visit DVV — Digital and Population Information Agency — official website (opens in a new tab)",
   "inst.a.vero": "Visit Vero — Finnish Tax Administration — official website (opens in a new tab)",
@@ -1057,7 +1058,8 @@ export const fa: Record<keyof typeof en, string> = {
   "how.mock.more": "… و موارد دیگر",
 
   "inst.title": "دسترسی مستقیم به منابع رسمی",
-  "inst.sub": "پیوند هر نهاد به وب‌سایت رسمی خودش باز می‌شود. میگراگو وابسته به این نهادها نیست.",
+  "inst.sub": "پیوند هر نهاد به وب‌سایت رسمی خودش باز می‌شود.",
+  "inst.note": "میگراگو یک سرویس مستقل است و با این نهادها وابستگی یا همکاری رسمی ندارد. نام این نهادها فقط برای ارجاع به منبع رسمی آمده است.",
   "inst.a.migri": "مشاهده وب‌سایت رسمی Migri (اداره مهاجرت فنلاند) — در تب جدید باز می‌شود",
   "inst.a.dvv": "مشاهده وب‌سایت رسمی DVV (آژانس اطلاعات جمعیت و دیجیتال) — در تب جدید باز می‌شود",
   "inst.a.vero": "مشاهده وب‌سایت رسمی Vero (اداره مالیات فنلاند) — در تب جدید باز می‌شود",
