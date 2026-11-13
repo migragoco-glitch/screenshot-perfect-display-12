@@ -390,12 +390,12 @@ function Landing() {
                             const color = ["var(--navigator-light-teal)", "var(--navigator-teal)", "var(--navigator-olive)", "var(--navigator-gold)"][phase - 1]!;
                             const items = phase === 1 ? [["dvv-id-code", "DVV"], ["municipality-of-residence", "DVV"], ["move-notification", "DVV"]] : phase === 2 ? [["strong-id", "Bank"], ["kela-social", "Kela"]] : [];
                             return <div key={phase} className="mt-2">
-                              <p className="border-s-[3px] ps-2 text-[10px] font-bold" style={{ borderColor: color }}>{t(`road.phase${phase}`)}</p>
+                              <p className="border-s-[3px] ps-2 text-[10px] font-bold" style={{ borderColor: color }}>{t(`road.phase${phase}` as TKey)}</p>
                               {items.map(([id, authority], index) => (
                                 <div key={id} className="mt-1.5 flex items-center gap-1.5 text-[10px]">
                                   <span className="flex size-4 shrink-0 items-center justify-center rounded-full font-bold" style={{ background: color, color: phase === 2 ? "#fff" : "var(--navigator-navy)" }}>{phase === 1 ? index + 1 : index + 4}</span>
                                   <span className="min-w-0 flex-1 truncate">{mockStepTitle(id, lang, t)}</span>
-                                  <span className="shrink-0 rounded px-1 font-semibold text-[color:var(--institution-purple,var(--navigator-plum,currentColor))]">{authority}</span>
+                                  <span className="shrink-0 rounded bg-[var(--institution-tint)] px-1 font-semibold text-[var(--institution-purple)]">{authority}</span>
                                 </div>
                               ))}
                             </div>;
@@ -405,7 +405,7 @@ function Landing() {
                           <p className="font-semibold">{t("start.choose.info.title")}</p>
                           <p className="mt-2 text-[11px] font-semibold">{t("start.step.move-notification.title")}</p>
                           <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[10px]">
-                            <span className="rounded px-1 font-semibold">DVV</span>
+                            <span className="rounded bg-[var(--institution-tint)] px-1 font-semibold text-[var(--institution-purple)]">DVV</span>
                             <span className="rounded-full px-2 py-0.5" style={{ background: "color-mix(in srgb, var(--navigator-gold) 15%, var(--card))" }}>{t("start.step.move-notification.deadline")}</span>
                           </div>
                         </div>
