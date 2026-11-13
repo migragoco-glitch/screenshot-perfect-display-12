@@ -12,16 +12,26 @@ import { hasNavigatorAccess, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 
+const flagImage = (width: number, height: number, shapes: string) =>
+  `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">${shapes}</svg>`)}`;
+
+const unionJack = '<path fill="#012169" d="M0 0h60v30H0z"/><path stroke="#fff" stroke-width="6" d="m0 0 60 30m0-30L0 30"/><path stroke="#c8102e" stroke-width="2" d="m0 0 60 30m0-30L0 30"/><path stroke="#fff" stroke-width="10" d="M30 0v30M0 15h60"/><path stroke="#c8102e" stroke-width="6" d="M30 0v30M0 15h60"/>';
+const usStars = Array.from({ length: 9 }, (_, row) =>
+  Array.from({ length: row % 2 === 0 ? 6 : 5 }, (_, col) =>
+    `<use href="#star" transform="translate(${3 + col * 6 + (row % 2) * 3} ${3 + row * 3})"/>`,
+  ).join(""),
+).join("");
+
 export const COUNTRY_OPTIONS = [
-  { code: "FI", flag: "🇫🇮", name: { en: "Finland", fa: "فنلاند" }, active: true },
-  { code: "DE", flag: "🇩🇪", name: { en: "Germany", fa: "آلمان" }, active: false },
-  { code: "CA", flag: "🇨🇦", name: { en: "Canada", fa: "کانادا" }, active: false },
-  { code: "GB", flag: "🇬🇧", name: { en: "United Kingdom", fa: "بریتانیا" }, active: false },
-  { code: "TR", flag: "🇹🇷", name: { en: "Türkiye", fa: "ترکیه" }, active: false },
-  { code: "US", flag: "🇺🇸", name: { en: "United States", fa: "ایالات متحده" }, active: false },
-  { code: "AU", flag: "🇦🇺", name: { en: "Australia", fa: "استرالیا" }, active: false },
-  { code: "NL", flag: "🇳🇱", name: { en: "Netherlands", fa: "هلند" }, active: false },
-  { code: "SE", flag: "🇸🇪", name: { en: "Sweden", fa: "سوئد" }, active: false },
+  { code: "FI", flag: flagImage(18, 11, '<path fill="#fff" d="M0 0h18v11H0z"/><path fill="#003580" d="M5 0h3v11H5zM0 4h18v3H0z"/>'), name: { en: "Finland", fa: "فنلاند" }, active: true },
+  { code: "DE", flag: flagImage(5, 3, '<path fill="#000" d="M0 0h5v1H0z"/><path fill="#d00" d="M0 1h5v1H0z"/><path fill="#ffce00" d="M0 2h5v1H0z"/>'), name: { en: "Germany", fa: "آلمان" }, active: false },
+  { code: "CA", flag: flagImage(64, 32, '<path fill="#fff" d="M0 0h64v32H0z"/><path fill="#d80621" d="M0 0h16v32H0zM48 0h16v32H48zM32 4l-3 6-3-2 1 8-5-4-1 3-4-1 2 5-2 1 10 6-1 3 5-1v3h2v-3l5 1-1-3 10-6-2-1 2-5-4 1-1-3-5 4 1-8-3 2z"/>'), name: { en: "Canada", fa: "کانادا" }, active: false },
+  { code: "GB", flag: flagImage(60, 30, unionJack), name: { en: "United Kingdom", fa: "بریتانیا" }, active: false },
+  { code: "TR", flag: flagImage(60, 40, '<path fill="#e30a17" d="M0 0h60v40H0z"/><circle cx="22" cy="20" r="10" fill="#fff"/><circle cx="25" cy="20" r="8" fill="#e30a17"/><path fill="#fff" d="m35 14 1.4 4.3H41l-3.7 2.7 1.4 4.3-3.7-2.7-3.7 2.7 1.4-4.3-3.7-2.7h4.6z"/>'), name: { en: "Türkiye", fa: "ترکیه" }, active: false },
+  { code: "US", flag: flagImage(123.5, 65, `<path fill="#fff" d="M0 0h123.5v65H0z"/>${Array.from({ length: 7 }, (_, i) => `<path fill="#b22234" d="M0 ${i * 10}h123.5v5H0z"/>`).join("")}<path fill="#3c3b6e" d="M0 0h49.4v35H0z"/><defs><path id="star" fill="#fff" d="m0-1.5.35 1.04H1.5l-.93.67.35 1.04L0 .61l-.92.64.35-1.04- .93-.67h1.15z"/></defs><g transform="scale(1.2 1)">${usStars}</g>`), name: { en: "United States", fa: "ایالات متحده" }, active: false },
+  { code: "AU", flag: flagImage(60, 30, `<path fill="#012169" d="M0 0h60v30H0z"/><svg width="30" height="15" viewBox="0 0 60 30">${unionJack}</svg><defs><path id="seven" fill="#fff" d="m0-3.5.65 2.15 2.09-.83-1.28 1.85 1.95 1.14-2.25.14.3 2.23L0 1.56-1.76 3.18l.3-2.23-2.25-.14 1.95-1.14-1.28-1.85 2.09.83z"/><path id="five" fill="#fff" d="m0-1.7.4 1.2h1.25L.65.24l.39 1.2L0 .7l-1.04.74.39-1.2-1-.74H-.4z"/></defs><use href="#seven" transform="translate(15 23) scale(1.3)"/><use href="#seven" transform="translate(45 5) scale(.65)"/><use href="#seven" transform="translate(37 14) scale(.65)"/><use href="#seven" transform="translate(52 12) scale(.65)"/><use href="#seven" transform="translate(45 25) scale(.65)"/><use href="#five" transform="translate(49 18)"/>`), name: { en: "Australia", fa: "استرالیا" }, active: false },
+  { code: "NL", flag: flagImage(3, 2, '<path fill="#ae1c28" d="M0 0h3v2H0z"/><path fill="#fff" d="M0 .6667h3v.6666H0z"/><path fill="#21468b" d="M0 1.3333h3V2H0z"/>'), name: { en: "Netherlands", fa: "هلند" }, active: false },
+  { code: "SE", flag: flagImage(16, 10, '<path fill="#006aa7" d="M0 0h16v10H0z"/><path fill="#fecc00" d="M5 0h2v10H5zM0 4h16v2H0z"/>'), name: { en: "Sweden", fa: "سوئد" }, active: false },
 ] as const;
 
 export function BrandLogo({ className }: { className?: string }) {
@@ -74,7 +84,7 @@ export function CountrySelector() {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" aria-expanded={open} className="gap-1.5 rounded-full bg-card">
-          <span aria-hidden>{finland.flag}</span>
+          <img src={finland.flag} alt="" aria-hidden="true" className="h-4 w-5 shrink-0 object-contain" />
           {finland.name[lang]}
           <ChevronDown className="size-3" aria-hidden />
         </Button>
@@ -82,7 +92,7 @@ export function CountrySelector() {
       <PopoverContent align="end" dir={lang === "fa" ? "rtl" : "ltr"} aria-label={t("nav.country")} className="max-h-[var(--radix-popover-content-available-height)] w-60 max-w-[calc(100vw-2rem)] overflow-y-auto p-2">
         <ul>
           <li className="flex items-center gap-2 rounded-md bg-secondary px-3 py-2 text-xs font-semibold text-secondary-foreground" aria-current="true">
-            <span aria-hidden>{finland.flag}</span>{finland.name[lang]}
+            <img src={finland.flag} alt="" aria-hidden="true" className="h-4 w-5 shrink-0 object-contain" />{finland.name[lang]}
           </li>
         </ul>
         <p className="px-3 pb-1 pt-3 text-xs font-semibold text-muted-foreground">{t("country.soonHeading")}</p>
@@ -90,7 +100,7 @@ export function CountrySelector() {
           {COUNTRY_OPTIONS.filter((c) => !c.active).map((c) => (
             <li key={c.code}>
               <Button type="button" variant="ghost" size="sm" title={t("nav.comingSoonTip")} aria-disabled="true" onClick={() => trackEvent({ type: "country_click", country: c.name.en })} className="h-auto min-h-8 w-full justify-start gap-2 whitespace-normal text-start text-xs text-muted-foreground">
-                <span aria-hidden>{c.flag}</span>
+                <img src={c.flag} alt="" aria-hidden="true" className="h-4 w-5 shrink-0 object-contain" />
                 <span className="min-w-0 flex-1">{c.name[lang]}</span>
                 <Lock className="size-3 text-[var(--plum)]" aria-hidden />
               </Button>
@@ -169,15 +179,15 @@ export function AppHeader({ registered, quickCheckCta = false }: { registered?: 
               <Link to="/start">{t("hero.startCta")}</Link>
             </Button>
           ) : null}
-          <div className="hidden flex-wrap items-center gap-2 md:flex">{renderMenuItems()}</div>
-          <div className="md:hidden">
+          <div className="hidden flex-wrap items-center gap-2 lg:flex">{renderMenuItems()}</div>
+          <div className="lg:hidden">
             <Popover open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <PopoverTrigger asChild>
                 <Button variant="outline" size="sm" aria-expanded={mobileMenuOpen} className="rounded-full">
                   <Menu className="size-4" aria-hidden />{t("nav.menu")}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent align="end" dir={lang === "fa" ? "rtl" : "ltr"} aria-label={t("nav.menu")} className="flex max-h-[var(--radix-popover-content-available-height)] max-w-[calc(100vw-2rem)] flex-wrap items-center gap-3 overflow-y-auto md:hidden">
+              <PopoverContent align="end" dir={lang === "fa" ? "rtl" : "ltr"} aria-label={t("nav.menu")} className="flex max-h-[var(--radix-popover-content-available-height)] max-w-[calc(100vw-2rem)] flex-wrap items-center gap-3 overflow-y-auto lg:hidden">
                 {renderMenuItems(true)}
               </PopoverContent>
             </Popover>
