@@ -83,7 +83,7 @@ export function CountrySelector() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" aria-expanded={open} className="gap-1.5 rounded-full bg-card">
+        <Button variant="outline" size="sm" aria-expanded={open} className={cn("gap-1.5 rounded-full border border-input bg-card transition-colors duration-200 hover:border-[var(--navigator-gold)] hover:bg-[var(--navigator-gold)]/15 hover:text-foreground focus-visible:ring-1 focus-visible:ring-[var(--navigator-gold)]", open && "border-[var(--navigator-gold)] bg-[var(--navigator-gold)]/15")}>
           <img src={finland.flag} alt="" aria-hidden="true" className="h-4 w-5 shrink-0 object-contain" />
           {finland.name[lang]}
           <ChevronDown className="size-3" aria-hidden />
