@@ -1,5 +1,7 @@
 # Current roadmap
 
+- [x] Apply approved compact country control, header links, mobile menu, and bilingual Pricing heading.
+
 - [x] Compare app and website EN/FA tier claims and correct actual app inconsistencies.
 - [x] Gate the full assessment before answering through existing Navigator upgrade flow; preserve shared answers.
 - [x] Verify relevant app flows and live website EN/FA pricing; report cross-project limitations.

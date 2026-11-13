@@ -497,7 +497,7 @@ function Landing() {
         </section>
 
         {/* Tiers */}
-        <section className="mx-auto max-w-7xl px-4 pb-20 md:px-8">
+        <section id="pricing" className="mx-auto max-w-7xl px-4 pb-20 md:px-8">
           <h2 className="text-2xl md:text-3xl">{t("pricing.title")}</h2>
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
             <article className="flex flex-col rounded-2xl border-2 border-[var(--navigator-gold)] bg-card p-7 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] focus-within:shadow-[var(--shadow-lift)]">
