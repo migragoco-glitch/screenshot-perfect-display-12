@@ -43,12 +43,14 @@ function ConsentScreen() {
     <div className="flex min-h-screen flex-col">
       <AppHeader />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12 md:px-8 md:py-16">
-        <div className="glass-card rise-in rounded-3xl p-7 md:p-10">
-          <ShieldCheck className="size-7 text-secondary" aria-hidden />
+        <div className="glass-card rise-in rounded-3xl border-t-[5px] border-t-[var(--plum)] p-7 md:p-10">
+          <div className="flex size-12 items-center justify-center rounded-full bg-[var(--plum)] text-white shadow-sm" aria-hidden>
+            <ShieldCheck className="size-6 text-white" />
+          </div>
           <h1 className="mt-5 text-2xl md:text-3xl">{t("consent.title")}</h1>
           <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted-foreground">
             <p>{t("consent.p1")}</p>
-            <p className="rounded-2xl border border-accent/40 bg-accent/10 p-4 text-foreground">
+            <p className="rounded-2xl border border-[var(--plum)]/40 bg-[var(--plum)]/10 p-4 text-foreground">
               {t("consent.p2")}
             </p>
             <p>{t("consent.p3")}</p>
@@ -58,7 +60,7 @@ function ConsentScreen() {
           <button
             type="button"
             onClick={() => setShowPrivacy((v) => !v)}
-            className="mt-5 text-sm font-semibold text-secondary underline underline-offset-4"
+            className="mt-5 text-sm font-semibold text-[var(--plum)] underline decoration-[var(--plum)] underline-offset-4 hover:opacity-85 dark:text-foreground"
           >
             {t("consent.privacy")}
           </button>

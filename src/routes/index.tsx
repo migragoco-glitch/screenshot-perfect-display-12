@@ -456,10 +456,10 @@ function Landing() {
                 <Gift className="size-5 shrink-0 text-[var(--navigator-gold)]" aria-hidden />
                 {t("pricing.freeName")}
               </h3>
-              <p className="mt-2 min-h-8 text-xs text-muted-foreground">{t("pricing.freeTagline")}</p>
+              <p className="mt-2 min-h-8 text-xs text-foreground/80">{t("pricing.freeTagline")}</p>
               <div className="mt-3">
                 <p className="text-3xl font-bold text-[var(--navigator-gold)]">{t("pricing.freePriceAmount")}</p>
-                <div className="min-h-5" aria-hidden />
+                <div className="min-h-6" aria-hidden />
                 <div className="mt-1 min-h-5" aria-hidden />
               </div>
               <Link
@@ -483,11 +483,11 @@ function Landing() {
 
             <article className="relative flex flex-col rounded-2xl border-2 border-navy bg-card p-7 shadow-[var(--shadow-lift)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xl focus-within:shadow-xl">
               <h3 className="text-lg">{t("pricing.nav")}</h3>
-              <p className="mt-2 min-h-8 text-xs text-muted-foreground">{t("pricing.navTagline")}</p>
+              <p className="mt-2 min-h-8 text-xs text-foreground/80">{t("pricing.navTagline")}</p>
               <div className="mt-3">
                 <p className="min-h-9 text-2xl font-bold text-navy">{t("pricing.navPrice30")}</p>
-                <p className="min-h-5 text-sm font-medium text-muted-foreground">{t("pricing.navPrice90")}</p>
-                <p className="mt-1 min-h-5 text-xs text-muted-foreground">{t("pricing.navPriceNote")}</p>
+                <p className="min-h-6 text-xl font-semibold text-navy">{t("pricing.navPrice90")}</p>
+                <p className="mt-1 min-h-5 text-xs text-foreground">{t("pricing.navPriceNote")}</p>
               </div>
               <Link
                 to={state.consent ? "/start" : "/consent"}
