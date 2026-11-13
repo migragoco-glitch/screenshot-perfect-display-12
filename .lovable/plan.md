@@ -1,34 +1,59 @@
-# Homepage removals and illustrated How it works
+# Compact header navigation and pricing heading
 
-## Files and exact scope
-Only two application files will change after APPROVED, with translations edited first. No implementation changes now.
+## Scope and files
+After APPROVED, change only:
+1. `src/components/BrandHeader.tsx` — compact country control, three navigation links, and mobile menu within the existing header.
+2. `src/lib/i18n.tsx` — the four new keys and one changed heading key listed below, in EN and FA.
+3. `src/routes/index.tsx` — add `id="pricing"` to the existing pricing section, which currently has no ID. Its heading already uses `pricing.title`; no other homepage markup changes.
 
-### 1. `src/lib/i18n.tsx`
-- Only English and Persian exist; there are no other languages to change.
-- Replace `how.s1.t`, `how.s1.d`, `how.s2.t`, `how.s2.d`, `how.s3.t`, and `how.s3.d` in English first, then Persian, with the exact supplied text.
-- Store the two Step 3 paragraphs in `how.s3.d` separated by a line break; render them as two paragraphs.
-- Keep EN `how.title` as “How it works”; use the requested FA «چگونه کار می‌کند؟» (the current value lacks the question mark).
-- Add only these mock-panel labels, in both dictionaries:
-  - `how.mock.city`: EN “City”; FA «شهر».
-  - `how.mock.matters`: EN “Your matters”; FA «امور شما».
-  - `how.mock.more`: EN “… and more”; FA «… و موارد دیگر».
-- Preserve every `hero.discover*` and `about.*` key, including those no longer rendered.
+## Exact translation keys
+| Key | Action | EN | FA |
+| --- | --- | --- | --- |
+| `country.soonHeading` | New | Coming soon | به‌زودی |
+| `nav.how` | New | How it works | چگونه کار می‌کند |
+| `nav.pricing` | New | Pricing | قیمت‌ها |
+| `nav.menu` | New | Menu | منو |
+| `pricing.title` | Change from “Access tiers” / «سطوح دسترسی» | Pricing | قیمت‌ها |
 
-### 2. `src/routes/index.tsx`
-- In `Landing`, remove the `<DiscoverPreviewCard />` rendering at current line 367 (the dark navy discover-items box). Remove its now-unused local component and `DISCOVER_ITEMS` constant, and only imports made unused by these removals.
-- Remove the entire About section at current lines 435–456: `about.title` and the Definition, Mission, and Boundaries cards. Keep the separate “Integration is a process” section unchanged.
-- Replace only the existing How it works `<ol>` and its three animated `InformationalCard` items at current lines 473–493 with three static illustrated cards. Preserve the section, its `id="how-it-works"`, and its heading.
-- Desktop: three equal-width, equal-height cards in one row; small circular white arrow chips between them, reversed in RTL. Mobile: stacked cards without chips.
-- Cards: large rounded corners, a soft white-to-light-teal vertical gradient, thin border, soft existing shadow, centered number badge/title/text, and a white mock panel with rounded top corners anchored to each card’s bottom. Use existing white surface, teal, border, text, and shadow tokens; add no colours or global styles. No animation or interactive controls.
-- Use ordinary static markup and existing Lucide icons for mock select caret, checkboxes, and arrows. Mark each mock panel and decorative chips `aria-hidden="true"`.
+Reuse `nav.faq` unchanged: EN “FAQ”, FA «پرسش‌های پرتکرار».
+Reuse `nav.comingSoonTip` unchanged: EN “Not available in this version — coming soon.”, FA «در این نسخه فعال نیست — به‌زودی.».
+Keep `country.eu` and `country.global` in the dictionaries, but remove their rendering from the header.
 
-## Existing keys reused by the mock panels
-- Mock 1 placeholder: `start.chooseCity`.
-- Mock 1 city rows: `start.city.Helsinki`, `start.city.Espoo`, `start.city.Vantaa`, `start.city.Tampere`.
-- Mock 2 first four matters, verified from `AREAS` order: `start.area.status.title`, `start.area.id.title`, `start.area.bank.title`, `start.area.housing.title`. First two checked; last two unchecked; then `how.mock.more`.
-- Mock 3 options: `start.choose.info.title` and `start.choose.road.title`. The roadmap tile adds only linked numbered circles “1 2 3” in existing teal, olive, and gold tokens.
+## Country control
+- Replace the badge row with one compact trigger showing 🇫🇮 Finland in EN or 🇫🇮 فنلاند in FA, followed by a caret.
+- Open a small list with Finland as the active, non-clickable item, followed by the translated “Coming soon” heading and these locked items in this exact order:
 
-## Boundaries and completion
-Nothing else changes: no `/start` edits, other routes, navigation, assessment/scoring, selection logic, saved answers, storage keys, checkout, pricing, header/footer, remaining homepage sections, packages, images, libraries, animation, or refactor.
+| Flag | EN | FA |
+| --- | --- | --- |
+| 🇩🇪 | Germany | آلمان |
+| 🇨🇦 | Canada | کانادا |
+| 🇬🇧 | United Kingdom | بریتانیا |
+| 🇹🇷 | Türkiye | ترکیه |
+| 🇺🇸 | United States | ایالات متحده |
+| 🇦🇺 | Australia | استرالیا |
+| 🇳🇱 | Netherlands | هلند |
+| 🇸🇪 | Sweden | سوئد |
 
-After APPROVED: one focused implementation pass and one automatic build only; no manual build, browser/preview checks, publishing, or retries. Stop and report the first error or missing required element; ask before any broader change.
+- Keep bilingual names in the existing `COUNTRY_OPTIONS` structure. Do not add France.
+- Each locked item keeps its emoji, existing Lock icon, `aria-disabled="true"`, `title={t("nav.comingSoonTip")}`, and `trackEvent({ type: "country_click", country: c.name.en })` on click. No navigation or country change; do not use native `disabled`, which would prevent the requested analytics click.
+
+## Navigation and mobile behavior
+- Add inline desktop links: `nav.how` → `/#how-it-works`, `nav.pricing` → `/#pricing`, and `nav.faq` → `/faq`.
+- Use `Link to="/" hash="how-it-works"` and `Link to="/" hash="pricing"` so the same links work both on the homepage and other routes.
+- At `md` and above, show the links, country control, language switch, and existing account controls inline.
+- Below `md`, show the unchanged logo, the existing primary CTA when `quickCheckCta` is enabled, and one Menu button. Move the three links, country control, unchanged language switch, Continue/Profile control when applicable, and Sign in/Log out control into its panel.
+- Keep the primary CTA outside the mobile panel, using `hero.startCta` → `/start`. Preserve the existing `quickCheckCta` condition on other routes; do not add CTAs where none currently exist.
+- The mobile panel closes when a navigation link is chosen, on outside click, or on Escape. Language switching remains usable within the panel. Persian layout follows the existing RTL setting.
+
+## Technical details: state and markup
+- Reuse the existing `Button` and `Popover` components; no package or shared-component changes.
+- Use controlled `mobileMenuOpen` state in `AppHeader` and country-list open state in `CountrySelector`, wired through Popover `open` / `onOpenChange`.
+- Each Popover trigger uses `Button` through `PopoverTrigger asChild`, with `aria-expanded` and an associated panel. Existing Popover behavior supplies outside-click dismissal, Escape handling, keyboard focus management, and focus return to the trigger.
+- Mobile panel markup contains a labelled navigation block and the existing controls. Country content uses a semantic list with a static active Finland row and focusable locked item controls, allowing Tab and Enter/Space interaction without navigation.
+- Constrain panels to the available viewport and allow scrolling for the country list. Use only existing surface, border, text, accent, and shadow styles.
+
+## Explicitly unchanged
+Logo image, size, alt text, and absence of text below it; sticky header behavior; `LanguageSwitch` implementation; CTA text and destination; Continue/Profile conditions and destinations; Sign in/Log out conditions and handlers; footer; pricing cards, prices, descriptions, and every other pricing key; all other sections, routes, assessment logic, storage, checkout, backend, packages, and global styles. No refactor or unrelated edits.
+
+## Execution limits
+No app edits before APPROVED. After approval, one focused implementation pass and one automatic build only; no manual build, browser or preview checks, publishing, or repeated test runs. Report any error immediately and stop rather than retrying. If a required element is missing or broader changes are needed, stop and ask first.
