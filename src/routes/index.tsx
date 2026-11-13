@@ -388,7 +388,7 @@ function Landing() {
                           <p className="font-semibold">{t("start.choose.road.title")}</p>
                           {([1, 2, 3, 4] as const).map((phase) => {
                             const color = ["var(--navigator-light-teal)", "var(--navigator-teal)", "var(--navigator-olive)", "var(--navigator-gold)"][phase - 1]!;
-                            const items = phase === 1 ? [["dvv-id-code", "DVV"], ["municipality-of-residence", "DVV"], ["move-notification", "DVV"]] : phase === 2 ? [["strong-id", "Bank"], ["kela-social", "Kela"]] : [];
+                            const items = phase === 1 ? [["dvv-id-code", "DVV"], ["municipality-of-residence", "DVV"], ["move-notification", "DVV"]] as const : phase === 2 ? [["strong-id", "Bank"], ["kela-social", "Kela"]] as const : [] as const;
                             return <div key={phase} className="mt-2">
                               <p className="border-s-[3px] ps-2 text-[10px] font-bold" style={{ borderColor: color }}>{t(`road.phase${phase}` as TKey)}</p>
                               {items.map(([id, authority], index) => (
