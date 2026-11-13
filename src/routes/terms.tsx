@@ -6,7 +6,7 @@ import { useI18n } from "@/lib/i18n";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms of Service — MigraGo SettleSmart Navigator" },
+      { title: "Terms of Service — MigraGo" },
       {
         name: "description",
         content:

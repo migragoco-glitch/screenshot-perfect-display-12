@@ -12,7 +12,7 @@ export type Lang = "en" | "fa";
 
 export const en = {
   "start.profile.title": "Go deeper: your full readiness profile",
-  "start.profile.desc": "The full assessment builds your Smart Integration Profile, charts and a 12-week roadmap. Your answers so far are kept, so you only answer what is missing.",
+  "start.profile.desc": "The full assessment builds your Integration Profile, charts and a 12-week roadmap. Your answers so far are kept, so you only answer what is missing.",
   "start.profile.cta.assessment": "Complete my full profile",
   "start.profile.cta.dashboard": "Open my profile",
   "start.lock.profile": "Your full readiness profile with charts, built from the answers you already gave",
@@ -70,7 +70,7 @@ export const en = {
   "start.step.find-home.note": "Always make the tenancy agreement in writing. Almost all agreements require a rent security deposit, usually two months' rent and at most three months. The deposit cannot be used for your last months' rent.",
   "start.step.find-home.completion": "You have a signed written tenancy agreement.",
 
-  "start.lock.title": "Unlock more with SettleSmart Navigator",
+  "start.lock.title": "Unlock more with Premium",
   "start.lock.road.weeks": "A week-by-week plan",
   "start.lock.road.details": "Detailed actions and completion conditions",
   "start.lock.road.track": "Track completed steps",
@@ -80,7 +80,7 @@ export const en = {
   "start.lock.soon.sync": "Cross-device sync",
   "start.lock.soon.pdf": "PDF export",
   "start.lock.soon.alerts": "Alerts",
-  "start.upgrade": "Upgrade to Navigator",
+  "start.upgrade": "Upgrade to Premium",
   "start.plan.length": "Plan length: {n} weeks",
   "start.plan.weeks": "Weeks {from}–{to}",
   "start.progress": "{done} of {total} steps completed",
@@ -100,8 +100,8 @@ export const en = {
   "start.title": "Your first steps in Finland",
   "start.title.info": "What you need to know, from starting your life in Finland to social integration",
   "start.title.road": "Your roadmap in Finland",
-  "start.city": "Your city or municipality",
-  "start.chooseCity": "Select a municipality",
+  "start.city": "Your city",
+  "start.chooseCity": "Select a city",
   "start.areas": "Which matters do you need guidance on?",
   "start.selectAll": "Select all",
   "start.continueAreas": "Continue with {n} items",
@@ -192,8 +192,8 @@ export const en = {
   "hero.sub":
     "Arriving in a new country, especially when you are not familiar with its language, laws, institutions and administrative procedures, can bring confusion and difficult decisions. Relying on incomplete or incorrect information can lead to wrong choices, wasted time and money, and emotional strain for you and your family.",
   "hero.eyebrow": "A step-by-step guide to settlement and social integration",
-  "hero.sub2": "MigraGo helps you, without needing prior familiarity with the destination country's language and from anywhere, in a short time and with a free option, reach official information that fits your situation, identify the relevant actions and begin your settlement and social integration with a personal roadmap.",
-  "hero.tagline": "From official information to practical actions, with a roadmap that fits your situation.",
+  "hero.sub2": "MigraGo helps you, without needing prior familiarity with the destination country's language and from anywhere, in a short time and with a free option, reach reliable information that fits your situation, identify the relevant actions and begin your settlement and social integration with a personal roadmap.",
+  "hero.tagline": "From reliable information to practical actions, with a roadmap that fits your situation.",
   "hero.badge": "Evidence-based integration pathway",
   "hero.badgeLine1": "Evidence-based integration pathway",
   "hero.badgeLine2": "Informed by Finland's knowledge and social-integration ecosystem",
@@ -226,10 +226,10 @@ export const en = {
   "how.title": "How it works",
   "how.s1.t": "Choose your city",
   "how.s1.d": "Select the city where you live or plan to live from the list.",
-  "how.s2.t": "Tick the matters you need guidance on",
-  "how.s2.d": "Select one or more cards, or all of them. You answer a few short questions only about those matters, so that your next steps fit your situation.",
-  "how.s3.t": "Choose one of the two options",
-  "how.s3.d": "“Information for my choices”: for each item, the description, relevant authority, official source, deadline and documents needed, where they apply. The Premium plan adds an interactive documents checklist.\n“My roadmap”: your actions are prioritized in a logical order, with what must come first at the start. The Premium plan adds the week range of each step, step ticking and step details.",
+  "how.s2.t": "Choose the cards that match your needs",
+  "how.s2.d": "Each card is one part of the settlement path. Select one or more cards, or all of them. You answer a few short questions only about the cards you selected, so your steps fit your situation.",
+  "how.s3.t": "See the result in one of two ways",
+  "how.s3.d": "“Information for my choices”: For each of your choices: the responsible authority, the link to its official website, the deadline, required documents and notes (where they apply). Premium adds an interactive document checklist.\n“My roadmap”: Your actions are listed in order, in timed phases of 3 to 12 weeks. Premium adds each step's week range, step check-offs and step details.",
   "how.mock.city": "City",
   "how.mock.matters": "Your matters",
   "how.mock.more": "… and more",
@@ -256,11 +256,11 @@ export const en = {
   "pricing.freeExcl": "\n",
   "pricing.freeCta": "Back to my first steps (free)",
   "pricing.freeCtaContinue": "Start your free journey",
-  "pricing.nav": "SettleSmart Navigator",
+  "pricing.nav": "Premium",
   "pricing.navPrice": "€9.99",
   "pricing.perMonth": "/month",
   "pricing.navDesc":
-    "Full 42-question assessment\nSmart Integration Profile\n Your personalized pathway\n Your 12-week roadmap\nProgress tracking and expanded actionable insights",
+    "Full 42-question assessment\nIntegration Profile\n Your personalized pathway\n Your 12-week roadmap\nProgress tracking and expanded actionable insights",
   "pricing.stab": "MigraGo Advanced Integration Plan",
   "pricing.stabPrice": "€249",
   "pricing.stabDesc":
@@ -270,7 +270,7 @@ export const en = {
     "Conceptually it would offer deeper integration analysis, a more detailed identification of strengths, gaps and priorities, more comprehensive personalization, a more detailed staged roadmap, relevant institutions and resources presented for information, and a comprehensive downloadable report. It is locked today and there is no purchase flow for it.",
   "pricing.future": "Future / Locked — not available in the current MVP",
   "pricing.recommended": "Recommended",
-  "pricing.upgrade": "Upgrade to Navigator",
+  "pricing.upgrade": "Upgrade to Premium",
   "pricing.freeStart": "Where do I start?",
   "pricing.freeF1": "Choose your city and the matters you need",
   "pricing.freeF1Sub": "Answer only the questions that matter for your choices",
@@ -342,7 +342,7 @@ export const en = {
   "loading.roadmap": "Building your 12-week roadmap...",
   "loading.roadmapSub": "Sequencing your priorities...",
 
-  "dash.title": "Your Smart Integration Profile",
+  "dash.title": "Your Integration Profile",
   "dash.overall": "Baseline readiness score",
   "dash.dim1": "Legal / Status Readiness",
   "dash.dim2": "Economic & Professional Capacity",
@@ -370,7 +370,7 @@ export const en = {
 
   "pay.title": "Your profile is ready",
   "pay.sub":
-    "Free includes the 6-question Quick Check in under one minute, a preliminary profile and recommended first steps. SettleSmart Navigator (€9.99/month) includes the full 42-question assessment, Smart Integration Profile, personalized pathway, 12-week roadmap, action and progress tracking, and curated official resources and links. Your Quick Check answers carry over to the full assessment.",
+    "Free includes the 6-question Quick Check in under one minute, a preliminary profile and recommended first steps. Premium (€9.99/month) includes the full 42-question assessment, Smart Integration Profile, personalized pathway, 12-week roadmap, action and progress tracking, and curated official resources and links. Your Quick Check answers carry over to the full assessment.",
   "pay.teaser": "Locked preview",
   "pay.unlock": "Unlock for €9.99/month",
   "pay.later": "Stay on the free overview",
@@ -391,7 +391,7 @@ export const en = {
   "road.week": "Week",
   "road.composition": "Phase composition",
   "road.steps": "steps",
-  "road.locked": "Unlock your roadmap with SettleSmart Navigator.",
+  "road.locked": "Unlock your roadmap with Premium.",
 
   "metrics.title": "Founder Validation Dashboard",
   "metrics.banner": "Internal validation metrics — for evaluator demonstration purposes.",
@@ -405,7 +405,7 @@ export const en = {
   "metrics.finished": "Finished",
   "metrics.funnel": "Free → paywall conversion funnel",
   "metrics.wtp": "Willingness-to-pay signal",
-  "metrics.upgradeClicks": "\"Upgrade to Navigator\" clicks",
+  "metrics.upgradeClicks": "\"Upgrade to Premium\" clicks",
   "metrics.checkoutStarted": "€9.99 checkouts initiated",
   "metrics.checkoutDone": "€9.99 checkouts completed",
   "metrics.nationalities": "Top nationalities (aggregate)",
@@ -416,11 +416,11 @@ export const en = {
 
   "footer.legal":
     "MigraGo does not replace legal advice or official authorities, and does not guarantee residence or integration outcomes.",
-  "footer.rights": "MIGRAGO — SETTLESMART NAVIGATOR",
-  "footer.tagline": "MigraGo — Smart Guidance — From Pre-Arrival to Sustainable Integration",
+  "footer.rights": "© MigraGo",
+  "footer.tagline": "MigraGo – from before arrival to lasting integration",
   "footer.description":
-    "SettleSmart Navigator — Simplifying migration complexity into an actionable, step-by-step roadmap.",
-  "footer.qrCaption": "Get the App",
+    "A step-by-step guide to settlement and social integration for starting life in a new country. From reliable information to practical actions, with a roadmap that fits your situation.",
+  "footer.qrCaption": "Our website",
   "common.back": "Back",
   "common.continue": "Continue",
   "common.close": "Close",
@@ -502,8 +502,8 @@ export const en = {
   "qc.progressLabel": "Quick Check progress",
   "qc.upgradeTitle": "Want the full picture?",
   "qc.upgradeDesc":
-    "Navigator includes the full 42-question assessment, your complete Smart Integration Profile, a personalized pathway and the full 12-week roadmap with progress tracking. Your Quick Check answers carry over.",
-  "qc.upgradeCta": "Upgrade to Navigator",
+    "Premium includes the full 42-question assessment, your complete Smart Integration Profile, a personalized pathway and the full 12-week roadmap with progress tracking. Your Quick Check answers carry over.",
+  "qc.upgradeCta": "Upgrade to Premium",
 
   "pay.emailTitle": "Early access pricing",
   "pay.emailSub": "Early-access price for trial users.",
@@ -598,13 +598,13 @@ export const en = {
   "faq.sub": "The short answers to what newcomers ask us most.",
   "faq.q1": "Do I need an account to use MigraGo?",
   "faq.a1":
-    "No account is required for the free 6-question Quick Check, your preliminary profile and recommended first steps. The full 42-question assessment and its results require SettleSmart Navigator (€9.99/month).",
+    "No account is required for the free 6-question Quick Check, your preliminary profile and recommended first steps. The full 42-question assessment and its results require Premium (€9.99/month).",
   "faq.q2": "What is included in the free tier?",
   "faq.a2":
-    "Registration and onboarding, the free 6-question Quick Check in under one minute, a preliminary profile and recommended first steps. The full 42-question assessment, Smart Integration Profile, personalized pathway and 12-week roadmap belong to SettleSmart Navigator (€9.99/month), not the free tier.",
-  "faq.q3": "What do I get with SettleSmart Navigator (€9.99/month)?",
+    "Registration and onboarding, the free 6-question Quick Check in under one minute, a preliminary profile and recommended first steps. The full 42-question assessment, Smart Integration Profile, personalized pathway and 12-week roadmap belong to Premium (€9.99/month), not the free tier.",
+  "faq.q3": "What do I get with Premium (€9.99/month)?",
   "faq.a3":
-    "The full 42-question assessment, Smart Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights. Your Quick Check answers carry over to the full assessment.",
+    "The full 42-question assessment, Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights. Your Quick Check answers carry over to the full assessment.",
   "faq.q4": "How is my roadmap generated?",
   "faq.a4":
     "Your assessment responses evaluate your current status across three core dimensions and identify existing gaps. The system then maps these gaps against the official regulations and procedures of the destination country, structuring the required actions into a 12-week plan across four operational phases..",
@@ -628,7 +628,7 @@ export const en = {
     "Use the Contact page: email us at migrago.co@gmail.com or start a WhatsApp chat with the team. Both channels are staffed during this MVP stage; an in-app assistant is a planned future capability, not a live feature.",
   "faq.q11": "What does the €249 MigraGo Advanced Integration Plan include?",
   "faq.a11":
-    "A future advanced experience designed to provide deeper integration analysis and a more comprehensive personalized roadmap. Conceptually it would offer a more detailed identification of strengths, gaps and priorities, more comprehensive personalization, a more detailed staged roadmap, relevant institutions and resources presented for information, and a comprehensive downloadable report. It is future / locked — not available in the current MVP — and there is no purchase flow for it. The current core offering is the free Quick Check tier and SettleSmart Navigator at €9.99/month.",
+    "A future advanced experience designed to provide deeper integration analysis and a more comprehensive personalized roadmap. Conceptually it would offer a more detailed identification of strengths, gaps and priorities, more comprehensive personalization, a more detailed staged roadmap, relevant institutions and resources presented for information, and a comprehensive downloadable report. It is future / locked — not available in the current MVP — and there is no purchase flow for it. The current core offering is the free Quick Check tier and Premium at €9.99/month.",
 
   "contact.title": "Contact us",
   "contact.sub": "Email and WhatsApp are our support channels during this MVP stage. We reply within a few working days.",
@@ -641,22 +641,22 @@ export const en = {
     "An in-app AI support assistant is on the roadmap as a future capability. It is not available in this version.",
 
   "checkout.title": "Activate the trial version",
-  "checkout.sub": "SettleSmart Navigator — full 42-question assessment, Smart Integration Profile and 12-week roadmap.",
-  "checkout.start.sub": "SettleSmart Navigator: a week-by-week plan, step details, progress tracking, one document checklist, and your full readiness profile built from your answers.",
+  "checkout.sub": "Full 42-question assessment, Integration Profile and 12-week roadmap.",
+  "checkout.start.sub": "a week-by-week plan, step details, progress tracking, one document checklist, and your full readiness profile built from your answers.",
   "checkout.confirmation": "By continuing, you confirm you'd like to proceed with payment.",
-  "checkout.plan": "SettleSmart Navigator (monthly)",
+  "checkout.plan": "Premium (monthly)",
   "checkout.discountLabel": "Early-access discount",
   "checkout.total": "Total due today",
-  "checkout.pay": "Pay and unlock Navigator",
+  "checkout.pay": "Pay and unlock Premium",
   "checkout.cancel": "Back",
   "checkout.testMode":
     "Test mode — this prototype runs a simulated payment step. No card is charged.",
   "checkout.processing": "Processing payment…",
-  "checkout.done": "Payment confirmed. Unlocking Navigator…",
+  "checkout.done": "Payment confirmed. Unlocking Premium…",
   "checkout.codeApplied": "Early-access code applied",
 
   "pay.emailNote":
-    "This step reserves your discount only. Navigator unlocks after checkout.",
+    "This step reserves your discount only. Premium unlocks after checkout.",
   "pay.standard": "Standard pricing",
 
   "road.completion": "tasks completed",
@@ -888,13 +888,13 @@ export const fa: Record<keyof typeof en, string> = {
   "start.step.find-home.completion": "قرارداد اجارهٔ کتبی امضاشده دارید.",
 
   "start.profile.title": "عمیق‌تر شوید: پروفایل کامل آمادگی شما",
-  "start.profile.desc": "ارزیابی کامل، پروفایل هوشمند ادغام، نمودارها و نقشهٔ راه ۱۲هفته‌ای شما را می‌سازد. پاسخ‌های قبلی شما حفظ می‌شود و فقط به پرسش‌های باقی‌مانده پاسخ می‌دهید.",
+  "start.profile.desc": "ارزیابی کامل، پروفایل ادغام، نمودارها و نقشهٔ راه ۱۲هفته‌ای شما را می‌سازد. پاسخ‌های قبلی شما حفظ می‌شود و فقط به پرسش‌های باقی‌مانده پاسخ می‌دهید.",
   "start.profile.cta.assessment": "تکمیل پروفایل کامل من",
   "start.profile.cta.dashboard": "باز کردن پروفایل من",
   "start.lock.profile": "پروفایل کامل آمادگی با نمودارها، ساخته‌شده از پاسخ‌هایی که قبلاً داده‌اید",
   "start.deleteData": "حذف داده‌های من از این دستگاه",
   "start.deleteConfirm": "پاسخ‌ها و علامت‌های شما از این دستگاه پاک می‌شود.",
-  "start.lock.title": "با SettleSmart Navigator امکانات بیشتری باز کنید",
+  "start.lock.title": "با Premium امکانات بیشتری باز کنید",
   "start.lock.road.weeks": "برنامهٔ هفته‌به‌هفته",
   "start.lock.road.details": "جزئیات اقدامات و شرایط تکمیل",
   "start.lock.road.track": "پیگیری گام‌های تکمیل‌شده",
@@ -904,7 +904,7 @@ export const fa: Record<keyof typeof en, string> = {
   "start.lock.soon.sync": "همگام‌سازی بین دستگاه‌ها",
   "start.lock.soon.pdf": "خروجی PDF",
   "start.lock.soon.alerts": "اعلان‌ها",
-  "start.upgrade": "ارتقا به Navigator",
+  "start.upgrade": "ارتقا به Premium",
   "start.plan.length": "طول برنامه: {n} هفته",
   "start.plan.weeks": "هفته‌های {from} تا {to}",
   "start.progress": "{done} گام از {total} گام تکمیل شده",
@@ -924,8 +924,8 @@ export const fa: Record<keyof typeof en, string> = {
   "start.title": "گام‌های نخست شما در فنلاند",
   "start.title.info": "آنچه از شروع زندگی در فنلاند تا ادغام اجتماعی باید بدانید",
   "start.title.road": "نقشه‌ی راه شما در فنلاند",
-  "start.city": "شهر یا شهرداری شما",
-  "start.chooseCity": "یک شهرداری انتخاب کنید",
+  "start.city": "شهر شما",
+  "start.chooseCity": "یک شهر انتخاب کنید",
   "start.areas": "به راهنمایی در کدام امور نیاز دارید؟",
   "start.selectAll": "انتخاب همه",
   "start.continueAreas": "ادامه با {n} مورد",
@@ -1016,8 +1016,8 @@ export const fa: Record<keyof typeof en, string> = {
   "hero.sub":
     "ورود به کشوری جدید، به‌ویژه زمانی که با زبان، قوانین، نهادها و رویه‌های اداری آن آشنا نیستید، می‌تواند با سردرگمی و دشواری در تصمیم‌گیری همراه باشد. اتکا به اطلاعات ناقص یا نادرست ممکن است به انتخاب مسیرهای اشتباه، اتلاف وقت و هزینه و فشار روانی برای شما و خانواده‌تان منجر شود.",
   "hero.eyebrow": "راهنمای قدم‌به‌قدم استقرار و ادغام اجتماعی",
-  "hero.sub2": "میگراگو به شما کمک می‌کند بدون نیاز به آشنایی قبلی با زبان کشور مقصد و از هر کجا، در زمانی کوتاه و با امکان استفاده رایگان، به اطلاعات رسمی و متناسب با شرایط خود دسترسی پیدا کنید، اقدامات مرتبط را بشناسید و با یک نقشهٔ راه شخصی، مسیر استقرار و ادغام اجتماعی خود را آغاز کنید.",
-  "hero.tagline": "از اطلاعات رسمی تا اقدامات عملی؛ با نقشهٔ راهی متناسب با شرایط شما.",
+  "hero.sub2": "میگراگو به شما کمک می‌کند بدون نیاز به آشنایی قبلی با زبان کشور مقصد و از هر کجا، در زمانی کوتاه و با امکان استفاده رایگان، به اطلاعات معتبر و متناسب با شرایط خود دسترسی پیدا کنید، اقدامات مرتبط را بشناسید و با یک نقشهٔ راه شخصی، مسیر استقرار و ادغام اجتماعی خود را آغاز کنید.",
+  "hero.tagline": "از اطلاعات معتبر تا اقدامات عملی؛ با نقشهٔ راهی متناسب با شرایط شما.",
   "hero.badge": "مسیر ادغام مبتنی بر شواهد",
   "hero.badgeLine1": "مسیر ادغام مبتنی بر شواهد",
   "hero.badgeLine2": "با تکیه بر دانش و زیست بوم ادغام اجتماعی فنلاند ",
@@ -1049,10 +1049,10 @@ export const fa: Record<keyof typeof en, string> = {
   "how.title": "چگونه کار می‌کند؟",
   "how.s1.t": "شهر خود را انتخاب کنید",
   "how.s1.d": "شهری را که در آن ساکن هستید یا قصد سکونت دارید از فهرست انتخاب کنید.",
-  "how.s2.t": "اموری را که به راهنمایی نیاز دارید علامت بزنید",
-  "how.s2.d": "یک یا چند کارت، یا همهٔ آن‌ها را انتخاب کنید. فقط دربارهٔ همان امور چند پرسش کوتاه پاسخ می‌دهید تا گام‌های بعدی متناسب با شرایط شما تعیین شود.",
-  "how.s3.t": "یکی از دو گزینه را انتخاب کنید",
-  "how.s3.d": "«اطلاعات مرتبط با انتخاب‌های من»: برای هر مورد، توضیح، مرجع مرتبط، منبع رسمی، مهلت و مدارک مورد نیاز (در صورت وجود). نسخهٔ Premium چک‌لیست تعاملی مدارک را اضافه می‌کند.\n«نقشهٔ راه من»: اقدامات شما به ترتیب منطقی اولویت‌بندی می‌شود و آنچه باید اول انجام شود در ابتدا می‌آید. نسخهٔ Premium بازهٔ هفتهٔ هر گام، علامت‌زدن گام‌ها و جزئیات هر گام را اضافه می‌کند.",
+  "how.s2.t": "کارت‌های مرتبط با نیازهای خود را انتخاب کنید",
+  "how.s2.d": "هر کارت یک بخش از مسیر استقرار را نشان می‌دهد. یک یا چند کارت، یا همهٔ آن‌ها را انتخاب کنید. فقط دربارهٔ کارت‌های انتخاب‌شده چند پرسش کوتاه پاسخ می‌دهید تا گام‌های شما متناسب با شرایطتان تعیین شود.",
+  "how.s3.t": "نتیجه را به یکی از دو شکل ببینید",
+  "how.s3.d": "«اطلاعات مرتبط با انتخاب‌های من»: برای هر انتخاب شما: نهاد مسئول، لینک وب‌سایت رسمی، مهلت، مدارک لازم و یادداشت (در صورت وجود). نسخهٔ Premium چک‌لیست تعاملی مدارک را اضافه می‌کند.\n«نقشهٔ راه من»: اقدام‌ها به ترتیب انجام، در مرحله‌های زمان‌بندی‌شدهٔ ۳ تا ۱۲ هفته‌ای می‌آید. نسخهٔ Premium بازهٔ هفتهٔ هر گام، علامت‌زدن گام‌ها و جزئیات هر گام را اضافه می‌کند.",
   "how.mock.city": "شهر",
   "how.mock.matters": "امور شما",
   "how.mock.more": "… و موارد دیگر",
@@ -1078,11 +1078,11 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.freeExcl": "\n",
   "pricing.freeCta": "بازگشت به گام‌های نخست من (رایگان)",
   "pricing.freeCtaContinue": "شروع مسیر رایگان",
-  "pricing.nav": "SettleSmart Navigator",
+  "pricing.nav": "Premium",
   "pricing.navPrice": "۹٫۹۹ یورو",
   "pricing.perMonth": " در ماه",
   "pricing.navDesc":
-    "ارزیابی کامل ۴۲ پرسشی\nپروفایل هوشمند ادغام \n مسیر شخصی‌سازی‌ شدهٔ شما  \nنقشه‌ راه ۱۲ هفته‌ایی\n پیگیری پیشرفت و بینش‌های عملی گسترده‌تر",
+    "ارزیابی کامل ۴۲ پرسشی\nپروفایل ادغام \n مسیر شخصی‌سازی‌ شدهٔ شما  \nنقشه‌ راه ۱۲ هفته‌ایی\n پیگیری پیشرفت و بینش‌های عملی گسترده‌تر",
   "pricing.stab": "طرح پیشرفتهٔ ادغام میگراگو",
   "pricing.stabPrice": "۲۴۹ یورو",
   "pricing.stabDesc":
@@ -1092,7 +1092,7 @@ export const fa: Record<keyof typeof en, string> = {
     "از نظر مفهومی می‌تواند تحلیل عمیق‌تر ادغام، شناسایی دقیق‌تر نقاط قوت، شکاف‌ها و اولویت‌ها، شخصی‌سازی جامع‌تر، نقشهٔ راه مرحله‌ای و دقیق‌تر، نهادها و منابع مرتبط را به‌صورت اطلاع‌رسانی، و یک گزارش جامع قابل دانلود ارائه دهد. این طرح اکنون قفل است و هیچ فرایند خریدی برای آن وجود ندارد.",
   "pricing.future": "آینده / قفل‌شده — در نسخهٔ کنونی (MVP) در دسترس نیست",
   "pricing.recommended": "پیشنهاد ما",
-  "pricing.upgrade": "ارتقا به Navigator",
+  "pricing.upgrade": "ارتقا به Premium",
   "pricing.freeStart": "از کجا شروع کنم؟",
   "pricing.freeF1": "شهر و امور مورد نیاز را انتخاب کنید",
   "pricing.freeF1Sub": "فقط به پرسش‌های مرتبط با انتخاب‌های خود پاسخ دهید",
@@ -1163,7 +1163,7 @@ export const fa: Record<keyof typeof en, string> = {
   "loading.roadmap": "در حال ساخت نقشه‌راه ۱۲ هفته‌ای شما…",
   "loading.roadmapSub": "در حال اولویت‌بندی و ترتیب‌گذاری…",
 
-  "dash.title": "پروفایل هوشمند ادغام شما",
+  "dash.title": "پروفایل ادغام شما",
   "dash.overall": "نمرهٔ پایهٔ آمادگی",
   "dash.dim1": "آمادگی حقوقی / وضعیت اقامت",
   "dash.dim2": "ظرفیت اقتصادی و حرفه‌ای",
@@ -1191,7 +1191,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "pay.title": "پروفایل شما آماده است",
   "pay.sub":
-    "نسخهٔ رایگان شامل بررسی سریع ۶ پرسشی در کمتر از یک دقیقه، پروفایل اولیه و گام‌های پیشنهادی نخست است. SettleSmart Navigator (ماهانه ۹٫۹۹ یورو) شامل ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده، نقشه‌راه ۱۲ هفته‌ای، پیگیری اقدام‌ها و پیشرفت و منابع و پیوندهای رسمی منتخب است. پاسخ‌های بررسی سریع شما به ارزیابی کامل منتقل می‌شوند.",
+    "نسخهٔ رایگان شامل بررسی سریع ۶ پرسشی در کمتر از یک دقیقه، پروفایل اولیه و گام‌های پیشنهادی نخست است. Premium (ماهانه ۹٫۹۹ یورو) شامل ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده، نقشه‌راه ۱۲ هفته‌ای، پیگیری اقدام‌ها و پیشرفت و منابع و پیوندهای رسمی منتخب است. پاسخ‌های بررسی سریع شما به ارزیابی کامل منتقل می‌شوند.",
   "pay.teaser": "پیش‌نمایش قفل‌شده",
   "pay.unlock": "فعال‌سازی با ۹٫۹۹ یورو در ماه",
   "pay.later": "ادامه با نمای رایگان",
@@ -1212,7 +1212,7 @@ export const fa: Record<keyof typeof en, string> = {
   "road.week": "هفته",
   "road.composition": "ترکیب فازها",
   "road.steps": "گام",
-  "road.locked": "نقشه‌راه خود را با اشتراک SettleSmart Navigator باز کنید.",
+  "road.locked": "نقشه‌راه خود را با اشتراک Premium باز کنید.",
 
   "metrics.title": "داشبورد اعتبارسنجی بنیان‌گذار",
   "metrics.banner": "شاخص‌های اعتبارسنجی داخلی — برای ارائه به ارزیاب.",
@@ -1226,7 +1226,7 @@ export const fa: Record<keyof typeof en, string> = {
   "metrics.finished": "تکمیل‌شده",
   "metrics.funnel": "قیف تبدیل رایگان به صفحهٔ پرداخت",
   "metrics.wtp": "سیگنال تمایل به پرداخت",
-  "metrics.upgradeClicks": "کلیک روی «ارتقا به Navigator»",
+  "metrics.upgradeClicks": "کلیک روی «ارتقا به Premium»",
   "metrics.checkoutStarted": "پرداخت‌های ۹٫۹۹ یورویی آغازشده",
   "metrics.checkoutDone": "پرداخت‌های ۹٫۹۹ یورویی تکمیل‌شده",
   "metrics.nationalities": "بیشترین ملیت‌ها (تجمیعی)",
@@ -1237,10 +1237,10 @@ export const fa: Record<keyof typeof en, string> = {
 
   "footer.legal":
     "میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام ارائه نمی‌دهد.",
-  "footer.rights": "میگراگو — SettleSmart Navigator",
-  "footer.tagline": "میگراگو – مسیر هوشمند – پیش از ورود تا ادغام پایدار",
+  "footer.rights": "© میگراگو",
+  "footer.tagline": "میگراگو – پیش از ورود تا ادغام پایدار",
   "footer.description":
-    "SettleSmart Navigator — رهیاب هوشمند استقرار – ساده‌سازی پیچیدگی‌های مسیر مهاجرت با نقشه‌راهی عملیاتی و گام‌به‌گام.",
+    "راهنمای قدم‌به‌قدم استقرار و ادغام اجتماعی برای شروع زندگی در کشور جدید. از اطلاعات معتبر تا اقدامات عملی، با نقشه‌راهی متناسب با شرایط شما.",
   "footer.qrCaption": "وب‌سایت ما",
   "common.back": "بازگشت",
   "common.continue": "ادامه",
@@ -1324,8 +1324,8 @@ export const fa: Record<keyof typeof en, string> = {
   "qc.progressLabel": "پیشرفت بررسی سریع",
   "qc.upgradeTitle": "تصویر کامل را می‌خواهید؟",
   "qc.upgradeDesc":
-    "Navigator شامل ارزیابی کامل ۴۲ پرسشی، پروفایل کامل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای با پیگیری پیشرفت است. پاسخ‌های بررسی سریع شما منتقل می‌شوند.",
-  "qc.upgradeCta": "ارتقا به Navigator",
+    "Premium شامل ارزیابی کامل ۴۲ پرسشی، پروفایل کامل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای با پیگیری پیشرفت است. پاسخ‌های بررسی سریع شما منتقل می‌شوند.",
+  "qc.upgradeCta": "ارتقا به Premium",
 
   "pay.emailTitle": "قیمت دسترسی زودهنگام",
   "pay.emailSub": "قیمت دسترسی زودهنگام برای کاربران نسخهٔ آزمایشی.",
@@ -1420,13 +1420,13 @@ export const fa: Record<keyof typeof en, string> = {
   "faq.sub": "پاسخ کوتاه به پرسش‌هایی که تازه‌واردان بیش از همه می‌پرسند.",
   "faq.q1": "برای استفاده از میگراگو باید حساب کاربری بسازم؟",
   "faq.a1":
-    "برای بررسی سریع رایگان ۶ پرسشی، پروفایل اولیه و گام‌های پیشنهادی نخست نیازی به حساب کاربری نیست. ارزیابی کامل ۴۲ پرسشی و نتایج آن به SettleSmart Navigator (ماهانه ۹٫۹۹ یورو) نیاز دارند.",
+    "برای بررسی سریع رایگان ۶ پرسشی، پروفایل اولیه و گام‌های پیشنهادی نخست نیازی به حساب کاربری نیست. ارزیابی کامل ۴۲ پرسشی و نتایج آن به Premium (ماهانه ۹٫۹۹ یورو) نیاز دارند.",
   "faq.q2": "نسخهٔ رایگان شامل چه چیزهایی است؟",
   "faq.a2":
-    "ثبت‌نام و شروع کار، بررسی سریع رایگان ۶ پرسشی در کمتر از یک دقیقه، پروفایل اولیه و گام‌های پیشنهادی نخست. ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای به SettleSmart Navigator (ماهانه ۹٫۹۹ یورو) تعلق دارند، نه نسخهٔ رایگان.",
-  "faq.q3": "اشتراک SettleSmart Navigator (ماهانه ۹٫۹۹ یورو) چه چیزی ارائه می‌دهد؟",
+    "ثبت‌نام و شروع کار، بررسی سریع رایگان ۶ پرسشی در کمتر از یک دقیقه، پروفایل اولیه و گام‌های پیشنهادی نخست. ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای به Premium (ماهانه ۹٫۹۹ یورو) تعلق دارند، نه نسخهٔ رایگان.",
+  "faq.q3": "اشتراک Premium (ماهانه ۹٫۹۹ یورو) چه چیزی ارائه می‌دهد؟",
   "faq.a3":
-    "ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر. پاسخ‌های بررسی سریع شما به ارزیابی کامل منتقل می‌شوند.",
+    "ارزیابی کامل ۴۲ پرسشی، پروفایل ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر. پاسخ‌های بررسی سریع شما به ارزیابی کامل منتقل می‌شوند.",
   "faq.q4": "نقشهٔ راه چگونه ساخته می‌شود؟",
   "faq.a4":
     "پاسخ‌های ارزیابی شما، وضعیت کنونی‌تان را در ابعاد سه‌گانه سنجیده و شکاف‌های موجود را شناسایی می‌کند. سامانه سپس این شکاف‌ها را با ضوابط و رویه‌های رسمی کشور مقصد تطبیق داده و اقدامات لازم را در قالب یک برنامه ۱۲ هفته‌ای (در چهار فاز عملیاتی) مرتب می‌سازد.",
@@ -1450,7 +1450,7 @@ export const fa: Record<keyof typeof en, string> = {
     "از صفحهٔ تماس با ما استفاده کنید: رایانامه به نشانی migrago.co@gmail.com یا گفت‌وگوی مستقیم در واتس‌اپ. هر دو کانال در این مرحلهٔ MVP فعال‌اند؛ دستیار درون‌برنامه‌ای یک قابلیت آینده است و اکنون فعال نیست.",
   "faq.q11": "طرح پیشرفتهٔ ادغام میگراگو (۲۴۹ یورو) شامل چه چیزهایی است؟",
   "faq.a11":
-    "یک تجربهٔ پیشرفتهٔ آینده که برای ارائهٔ تحلیل عمیق‌تر ادغام و نقشهٔ راه شخصی‌سازی‌شدهٔ جامع‌تر طراحی شده است. از نظر مفهومی می‌تواند شناسایی دقیق‌تر نقاط قوت، شکاف‌ها و اولویت‌ها، شخصی‌سازی جامع‌تر، نقشهٔ راه مرحله‌ای و دقیق‌تر، نهادها و منابع مرتبط را به‌صورت اطلاع‌رسانی، و یک گزارش جامع قابل دانلود ارائه دهد. این محصول آینده / قفل‌شده است — در نسخهٔ کنونی (MVP) در دسترس نیست و هیچ فرایند خریدی برای آن وجود ندارد. عرضهٔ اصلی کنونی، سطح رایگان بررسی سریع و SettleSmart Navigator با ۹٫۹۹ یورو در ماه است.",
+    "یک تجربهٔ پیشرفتهٔ آینده که برای ارائهٔ تحلیل عمیق‌تر ادغام و نقشهٔ راه شخصی‌سازی‌شدهٔ جامع‌تر طراحی شده است. از نظر مفهومی می‌تواند شناسایی دقیق‌تر نقاط قوت، شکاف‌ها و اولویت‌ها، شخصی‌سازی جامع‌تر، نقشهٔ راه مرحله‌ای و دقیق‌تر، نهادها و منابع مرتبط را به‌صورت اطلاع‌رسانی، و یک گزارش جامع قابل دانلود ارائه دهد. این محصول آینده / قفل‌شده است — در نسخهٔ کنونی (MVP) در دسترس نیست و هیچ فرایند خریدی برای آن وجود ندارد. عرضهٔ اصلی کنونی، سطح رایگان بررسی سریع و Premium با ۹٫۹۹ یورو در ماه است.",
 
 
   "contact.title": "تماس با ما",
@@ -1464,22 +1464,22 @@ export const fa: Record<keyof typeof en, string> = {
     "دستیار پشتیبانی هوش مصنوعی درون‌برنامه‌ای در نقشهٔ راه محصول قرار دارد و در این نسخه در دسترس نیست.",
 
   "checkout.title": "فعال‌سازی نسخهٔ آزمایشی",
-  "checkout.sub": "SettleSmart Navigator — ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام و نقشه‌راه ۱۲ هفته‌ای.",
-  "checkout.start.sub": "SettleSmart Navigator: برنامهٔ هفته‌به‌هفته، جزئیات هر گام، پیگیری پیشرفت، یک فهرست مدارک و پروفایل کامل آمادگی ساخته‌شده از پاسخ‌های شما.",
+  "checkout.sub": "ارزیابی کامل ۴۲ پرسشی، پروفایل ادغام و نقشه‌راه ۱۲ هفته‌ای.",
+  "checkout.start.sub": "برنامهٔ هفته‌به‌هفته، جزئیات هر گام، پیگیری پیشرفت، یک فهرست مدارک و پروفایل کامل آمادگی ساخته‌شده از پاسخ‌های شما.",
   "checkout.confirmation": "با ادامه، تأیید می‌کنید که مایل به ادامهٔ پرداخت هستید.",
-  "checkout.plan": "SettleSmart Navigator (ماهانه)",
+  "checkout.plan": "Premium (ماهانه)",
   "checkout.discountLabel": "تخفیف دسترسی زودهنگام",
   "checkout.total": "مبلغ قابل پرداخت",
-  "checkout.pay": "پرداخت و فعال‌سازی Navigator",
+  "checkout.pay": "پرداخت و فعال‌سازی Premium",
   "checkout.cancel": "بازگشت",
   "checkout.testMode":
     "حالت آزمایشی — این نمونهٔ اولیه یک مرحلهٔ پرداخت شبیه‌سازی‌شده اجرا می‌کند و هیچ مبلغی از کارت برداشت نمی‌شود.",
   "checkout.processing": "در حال پردازش پرداخت…",
-  "checkout.done": "پرداخت تأیید شد. در حال فعال‌سازی Navigator…",
+  "checkout.done": "پرداخت تأیید شد. در حال فعال‌سازی Premium…",
   "checkout.codeApplied": "کد دسترسی زودهنگام اعمال شد",
 
   "pay.emailNote":
-    "این مرحله فقط تخفیف شما را رزرو می‌کند. Navigator پس از پرداخت فعال می‌شود.",
+    "این مرحله فقط تخفیف شما را رزرو می‌کند. Premium پس از پرداخت فعال می‌شود.",
   "pay.standard": "قیمت استاندارد",
 
   "road.completion": "گام انجام‌شده",

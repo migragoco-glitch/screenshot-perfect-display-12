@@ -8,13 +8,13 @@ import { useI18n } from "@/lib/i18n";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact us — MigraGo SettleSmart Navigator" },
+      { title: "Contact us — MigraGo" },
       {
         name: "description",
         content:
           "Reach the MigraGo team by email or WhatsApp for support with your Finland integration assessment or roadmap.",
       },
-      { property: "og:title", content: "Contact us — MigraGo SettleSmart Navigator" },
+      { property: "og:title", content: "Contact us — MigraGo" },
       {
         property: "og:description",
         content: "Email and WhatsApp support for the MigraGo Finland integration prototype.",

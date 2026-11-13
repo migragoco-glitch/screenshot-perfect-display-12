@@ -7,13 +7,13 @@ import { useI18n } from "@/lib/i18n";
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "FAQ — MigraGo SettleSmart Navigator" },
+      { title: "FAQ — MigraGo" },
       {
         name: "description",
         content:
           "Answers about MigraGo's Finland integration assessment, scoring, pricing, data handling and the 12-week roadmap.",
       },
-      { property: "og:title", content: "FAQ — MigraGo SettleSmart Navigator" },
+      { property: "og:title", content: "FAQ — MigraGo" },
       {
         property: "og:description",
         content: "Common questions about the assessment, scoring model, pricing and your data.",

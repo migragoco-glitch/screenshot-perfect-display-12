@@ -12,13 +12,13 @@ export const Route = createFileRoute("/")({
 
   head: () => ({
     meta: [
-      { title: "MigraGo — SettleSmart Navigator for Finland" },
+      { title: "MigraGo" },
       {
         name: "description",
         content:
           "Assess your integration readiness for Finland and get a personalized 12-week roadmap mapped to Migri, DVV, Kela, Vero and Local Employment Services.",
       },
-      { property: "og:title", content: "MigraGo — SettleSmart Navigator for Finland" },
+      { property: "og:title", content: "MigraGo" },
       {
         property: "og:description",
         content:

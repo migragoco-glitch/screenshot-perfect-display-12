@@ -11,16 +11,16 @@ export const Route = createFileRoute("/checkout")({
   }),
   head: () => ({
     meta: [
-      { title: "Checkout — MigraGo SettleSmart Navigator" },
+      { title: "Checkout — MigraGo" },
       {
         name: "description",
         content:
-          "Complete your SettleSmart Navigator subscription to unlock the full integration profile and 12-week roadmap.",
+          "Complete your Premium subscription to unlock the full integration profile and 12-week roadmap.",
       },
-      { property: "og:title", content: "Checkout — MigraGo SettleSmart Navigator" },
+      { property: "og:title", content: "Checkout — MigraGo" },
       {
         property: "og:description",
-        content: "Unlock the full Smart Integration Profile and your 12-week Finland roadmap.",
+        content: "Unlock the full Integration Profile and your 12-week Finland roadmap.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

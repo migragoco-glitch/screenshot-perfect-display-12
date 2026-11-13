@@ -91,14 +91,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "MigraGo — SettleSmart Navigator for Finland" },
+      { title: "MigraGo" },
       {
         name: "description",
         content:
-          "Build your Smart Integration Profile and a 12-week Finland settlement roadmap sourced from Migri, DVV, Kela, Vero and Local Employment Services.",
+          "Build your Integration Profile and a 12-week Finland settlement roadmap sourced from Migri, DVV, Kela, Vero and Local Employment Services.",
       },
       { name: "author", content: "MigraGo" },
-      { property: "og:title", content: "MigraGo — SettleSmart Navigator for Finland" },
+      { property: "og:title", content: "MigraGo" },
       {
         property: "og:description",
         content: "Assess your readiness and get an institution-sourced 12-week roadmap for Finland.",

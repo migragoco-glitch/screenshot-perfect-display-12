@@ -10,13 +10,13 @@ import { useSession } from "@/lib/session";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — MigraGo SettleSmart Navigator" },
+      { title: "Sign in — MigraGo" },
       {
         name: "description",
         content:
           "Sign in to MigraGo. Your assessment answers and roadmap progress are saved only on this device/browser.",
       },
-      { property: "og:title", content: "Sign in — MigraGo SettleSmart Navigator" },
+      { property: "og:title", content: "Sign in — MigraGo" },
       {
         property: "og:description",
         content: "Your assessment answers and roadmap progress are saved only on this device/browser.",
