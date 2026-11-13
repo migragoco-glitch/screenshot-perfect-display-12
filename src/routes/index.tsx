@@ -37,7 +37,7 @@ const INSTITUTIONS: { name: string; url: string; aria: TKey }[] = [
   { name: "Vero", url: "https://www.vero.fi", aria: "inst.a.vero" },
   { name: "Kela", url: "https://www.kela.fi", aria: "inst.a.kela" },
   {
-    name: "Local Employment Services (via Job Market Finland — tyomarkkinatori.fi)",
+    name: "Job Market Finland",
     url: "https://www.tyomarkkinatori.fi",
     aria: "inst.a.employment",
   },
