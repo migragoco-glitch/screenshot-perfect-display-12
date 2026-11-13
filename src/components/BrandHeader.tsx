@@ -39,7 +39,7 @@ export function BrandLogo({ className }: { className?: string }) {
     <Link to="/" className={cn("inline-flex shrink-0 items-center", className)}>
       <img
         src={logoAsset.url}
-        alt="MigraGo — SettleSmart Navigator"
+        alt="MigraGo"
         className="h-16 w-auto md:h-20"
       />
     </Link>
@@ -208,7 +208,7 @@ export function SiteFooter() {
           <div className="inline-flex w-fit items-center gap-3.5 rounded-xl bg-white p-3 shadow-[var(--shadow-card)]">
             <img
               src={logoAsset.url}
-              alt="MigraGo — SettleSmart Navigator"
+              alt="MigraGo"
               className="h-12 w-auto md:h-14"
             />
             <a

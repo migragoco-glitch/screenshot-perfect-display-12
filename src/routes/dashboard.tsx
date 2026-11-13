@@ -71,13 +71,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "Smart Integration Profile — MigraGo dashboard" },
+      { title: "Integration Profile — MigraGo dashboard" },
       {
         name: "description",
         content:
           "Your Legal / Status Readiness, Economic & Professional Capacity and Soft Skills & Psychological Readiness scores plus your evidence-based 12-week Finland roadmap.",
       },
-      { property: "og:title", content: "Smart Integration Profile — MigraGo dashboard" },
+      { property: "og:title", content: "Integration Profile — MigraGo dashboard" },
       {
         property: "og:description",
         content:
