@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Gift, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, RefreshCw, Scale, Sparkles, Users } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Gift, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, Scale, Sparkles, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
@@ -114,39 +114,6 @@ function useCountUp(target: number, active: boolean, duration: number) {
   }, [active, duration, reducedMotion, target]);
 
   return value;
-}
-
-function InformationalCard({
-  as: Component,
-  children,
-  className,
-  delay = 0,
-}: {
-  as: "article" | "li";
-  children: React.ReactNode;
-  className: string;
-  delay?: number;
-}) {
-  const { ref, entered } = useInViewOnce<HTMLElement>();
-  const reducedMotion = useReducedMotion();
-  const motionClassName = `${className} transition-[opacity,transform] duration-500 ease-out motion-reduce:transition-none ${
-    entered || reducedMotion ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
-  }`;
-  const motionStyle = { transitionDelay: reducedMotion ? "0ms" : `${delay}ms` };
-
-  if (Component === "li") {
-    return (
-      <li ref={ref as React.Ref<HTMLLIElement>} className={motionClassName} style={motionStyle}>
-        {children}
-      </li>
-    );
-  }
-
-  return (
-    <article ref={ref as React.Ref<HTMLElement>} className={motionClassName} style={motionStyle}>
-      {children}
-    </article>
-  );
 }
 
 function SampleDonut() {
@@ -355,16 +322,6 @@ function Landing() {
               </div>
             </div>
           </div>
-        </section>
-
-        {/* Integration is a process */}
-        <section className="mx-auto max-w-7xl px-4 pb-4 md:px-8">
-          <InformationalCard as="article" className="rounded-3xl border border-secondary/25 bg-secondary/8 p-8 md:p-10">
-            <RefreshCw className="size-6 text-secondary" strokeWidth={1.75} aria-hidden />
-            <p className="mt-4 max-w-4xl text-sm leading-relaxed text-muted-foreground md:text-base">
-              {t("about.processBody")}
-            </p>
-          </InformationalCard>
         </section>
 
         {/* How it works */}
