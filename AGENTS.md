@@ -18,3 +18,4 @@
 - Keep completed-Premium profile links in the pure profile-link helper, reusing knowledge entries and /start completion IDs without changing either roadmap generator; omit check dates without a matching overlay source.
 - Premium dashboard progress derives from the same area steps, profile additions and stored completion IDs as /start; resolve knowledge weeks in the profile-link helper and use the existing phase start for overlay-only steps, so no second roadmap is generated.
 - Share roadmap summary and profile preview presentation between /start and dashboard; keep persisted step/document IDs unchanged so both views reflect the same progress.
+- Snapshot submitted answers with their skip flag and scoring context; recorded-answer links use an explicit read-only view so viewing preserves drafts, while confirmed re-assessment alone reopens them.
