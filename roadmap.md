@@ -1,6 +1,8 @@
 # Current roadmap
 
-- [ ] Apply approved completed-Premium profile priorities, additional steps, gap links and score-history changes with the three corrections.
+- [ ] Consolidate Premium dashboard around /start progress, compact Profile and Account, preserving Free /start and consent.
+
+- [x] Apply approved completed-Premium profile priorities, additional steps, gap links and score-history changes with the three corrections.
 
 - [x] Require Q7 child count with stored-type tolerance and unify both /start Premium feature lists using the approved bilingual keys.
 
