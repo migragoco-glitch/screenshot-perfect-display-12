@@ -14,7 +14,7 @@ type Props = {
   question: Question;
   index: number;
   answer: AnswerValue | undefined;
-  onChange: (value: AnswerValue) => void;
+  onChange?: (value: AnswerValue) => void;
   levelColor: string;
   /** Fill the selected option with the level color (Quick Check only). */
   fillSelected?: boolean;
@@ -46,7 +46,7 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
       className={cn(
         "assessment-question-card rounded-2xl border p-5 shadow-[var(--shadow-card)] backdrop-blur-sm md:p-6",
         q.showIf && "conditional-reveal",
-        readOnly && "opacity-90",
+        readOnly && "[&_button]:opacity-100 [&_input]:text-foreground [&_textarea]:text-foreground [&_select]:text-foreground [&_input]:[-webkit-text-fill-color:var(--foreground)]",
       )}
       style={{ "--assessment-level-color": levelColor } as React.CSSProperties}
     >
@@ -78,7 +78,7 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
             max={99}
             inputMode="numeric"
             value={typeof selected === "number" || typeof selected === "string" ? String(selected) : ""}
-            onChange={(e) => onChange({ value: e.target.value === "" ? undefined : Number(e.target.value) })}
+            onChange={readOnly ? undefined : (e) => onChange?.({ value: e.target.value === "" ? undefined : Number(e.target.value) })}
             className="w-32 rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
           />
         ) : null}
@@ -87,7 +87,7 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
           <textarea
             rows={3}
             value={typeof selected === "string" ? selected : ""}
-            onChange={(e) => onChange({ value: e.target.value })}
+            onChange={readOnly ? undefined : (e) => onChange?.({ value: e.target.value })}
             className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-ring"
           />
         ) : null}
@@ -95,7 +95,7 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
         {q.type === "country" ? (
           <select
             value={typeof selected === "string" ? selected : ""}
-            onChange={(e) => onChange({ value: e.target.value })}
+            onChange={readOnly ? undefined : (e) => onChange?.({ value: e.target.value })}
             className="w-full max-w-sm rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="">{t("q.selectCountry")}</option>
@@ -114,13 +114,13 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
                 key={opt.en}
                 type="button"
                 aria-pressed={selected === i}
-                onClick={() => onChange({ value: i })}
+                onClick={readOnly ? undefined : () => onChange?.({ value: i })}
                 style={selected === i ? fillStyle : undefined}
                 className={cn(
-                  "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
+                  "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out enabled:hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
                   selected === i
                     ? "border-secondary bg-secondary/12 text-foreground ring-1 ring-secondary/40"
-                    : "border-border bg-background hover:border-secondary/40",
+                    : "border-border bg-background enabled:hover:border-secondary/40",
                 )}
               >
                 <span className="flex items-center gap-2.5">
@@ -152,26 +152,26 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
                   disabled={disabled}
                   aria-pressed={active}
                   style={active ? fillStyle : undefined}
-                  onClick={() => {
+                  onClick={readOnly ? undefined : () => {
                     if (isNone) {
-                      onChange({ value: active ? [] : [i] });
+                      onChange?.({ value: active ? [] : [i] });
                       return;
                     }
                     if (exclusive.includes(i)) {
-                      onChange({ value: active ? [] : [i] });
+                      onChange?.({ value: active ? [] : [i] });
                       return;
                     }
                     const next = active
                       ? arr.filter((x) => x !== i)
                       : [...arr.filter((x) => !exclusive.includes(x)), i];
-                    onChange({ value: next });
+                    onChange?.({ value: next });
                   }}
                   className={cn(
-                    "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
+                    "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out enabled:hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
                     active
                       ? "border-secondary bg-secondary/12 ring-1 ring-secondary/40"
-                      : "border-border bg-background hover:border-secondary/40",
-                    disabled && "cursor-not-allowed opacity-40",
+                      : "border-border bg-background enabled:hover:border-secondary/40",
+                    disabled && !readOnly && "cursor-not-allowed opacity-40",
                   )}
                 >
                   <span className="flex items-center gap-2.5">
@@ -194,13 +194,13 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
                   key={n}
                   type="button"
                   aria-pressed={selected === n}
-                  onClick={() => onChange({ value: n })}
+                  onClick={readOnly ? undefined : () => onChange?.({ value: n })}
                   style={selected === n ? fillStyle : undefined}
                   className={cn(
-                    "flex-1 rounded-2xl border py-3 text-sm font-bold tabular-nums shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14)]",
+                    "flex-1 rounded-2xl border py-3 text-sm font-bold tabular-nums shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out enabled:hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14)]",
                     selected === n
                       ? "border-secondary bg-secondary text-secondary-foreground"
-                      : "border-border bg-background hover:border-secondary/40",
+                      : "border-border bg-background enabled:hover:border-secondary/40",
                   )}
                 >
                   <span className="flex items-center justify-center gap-1.5">
@@ -233,21 +233,21 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
                     type="button"
                     aria-pressed={active}
                     style={active && accentSelected ? fillStyle : undefined}
-                    onClick={() => {
+                    onClick={readOnly ? undefined : () => {
                       if (q.sub?.multi) {
                         const next = active
                           ? subSelections.filter((value) => value !== i)
                           : [...subSelections, i].sort((a, b) => a - b);
-                        onChange({ value: selected, subValue: next });
+                        onChange?.({ value: selected, subValue: next });
                         return;
                       }
-                      onChange({ value: selected, detail: String(i) });
+                      onChange?.({ value: selected, detail: String(i) });
                     }}
                     className={cn(
-                      "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
+                      "rounded-2xl border px-4 py-3 text-start text-sm font-medium shadow-[inset_0_1px_2px_rgba(11,37,69,0.05)] transition-all duration-200 ease-out enabled:hover:shadow-[0_0_0_3px_rgba(42,144,143,0.14),inset_0_1px_2px_rgba(11,37,69,0.05)]",
                       active
                         ? "border-secondary bg-secondary/12 text-foreground ring-1 ring-secondary/40"
-                        : "border-border bg-background hover:border-secondary/40",
+                        : "border-border bg-background enabled:hover:border-secondary/40",
                     )}
                   >
                     <span className="flex items-center gap-2.5">
@@ -273,10 +273,10 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
               type={q.detailType === "number" ? "number" : "text"}
               min={q.detailType === "number" ? 1 : undefined}
               value={answer?.detail ?? ""}
-              onChange={(e) => {
+              onChange={readOnly ? undefined : (e) => {
                 const detail = e.target.value;
                 if (q.detailType === "number" && detail !== "" && Number(detail) < 1) return;
-                onChange({ value: selected, detail });
+                onChange?.({ value: selected, detail });
               }}
               className="mt-1.5 w-full max-w-sm rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
             />

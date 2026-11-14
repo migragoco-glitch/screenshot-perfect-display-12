@@ -1,5 +1,7 @@
 # Current roadmap
 
+- [x] Apply TASK 1 assessment locking, recorded-answer viewing and draft cancellation only; verify once, without browser checks or publishing.
+
 - [ ] Apply approved roadmap/info/dashboard presentation changes and four corrections; preserve document storage and knowledge-version copy.
 
 - [ ] Consolidate Premium dashboard around /start progress, compact Profile and Account, preserving Free /start and consent.

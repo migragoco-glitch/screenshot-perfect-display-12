@@ -27,7 +27,6 @@ import {
   Mail,
   Map as MapIcon,
   MapPin,
-  Pencil,
   Puzzle,
   Route as RouteIcon,
   Scale,
@@ -128,7 +127,7 @@ type Tab = "dashboard" | "assessment" | "profile" | "progress" | "account";
 function Dashboard() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const { state, hydrated, update, ensureBaselineSnapshot, reset } = useAppState();
+  const { state, hydrated, startReassessment, ensureBaselineSnapshot, reset } = useAppState();
   const search = Route.useSearch();
   const [tab, setTab] = useState<Tab>(search.tab === "profile" ? "profile" : "dashboard");
   const [buildingRoadmap, setBuildingRoadmap] = useState(false);
@@ -171,8 +170,8 @@ function Dashboard() {
   // never changes the displayed profile.
   const displayAnswers = state.assessmentStatus === "editing" ? (state.submittedAnswers ?? {}) : (state.submittedAnswers ?? state.answers);
   const profile = useMemo(
-    () => computeProfile(displayAnswers, state.founderTrack === true, state.region ?? "undecided"),
-    [displayAnswers, state.founderTrack, state.region],
+    () => computeProfile(displayAnswers, (state.completed ? state.submittedFounderTrack : state.founderTrack) === true, (state.completed ? state.submittedRegion : state.region) ?? "undecided"),
+    [displayAnswers, state.completed, state.submittedFounderTrack, state.founderTrack, state.submittedRegion, state.region],
   );
   const gapList = useMemo(() => buildGapAnalysis(profile), [profile]);
   const locked = state.tier !== "navigator";
@@ -255,10 +254,10 @@ function Dashboard() {
     psychological: h.psychological,
   }));
   const bonusAnswered =
-    state.founderTrack === true &&
+    state.submittedFounderTrack === true &&
     FOUNDER_TRACK_IDS.every((id) => {
       const question = QUESTIONS.find((candidate) => candidate.id === id);
-      return question ? isAnswered(question, state.answers[id]) : false;
+      return question ? isAnswered(question, displayAnswers[id]) : false;
     });
 
   const openPaywall = () => {
@@ -276,7 +275,7 @@ function Dashboard() {
   const docsDone = docKeys.filter((id) => startDocIds.includes(id)).length;
   const totalTasks = allItems.length;
   const doneCount = allItems.filter((i) => done.has(i.id)).length;
-  const assessmentCounts = assessmentProgress(displayAnswers, { founderTrack: state.founderTrack ?? null }, state.section7Skipped === true);
+  const assessmentCounts = assessmentProgress(displayAnswers, { founderTrack: state.submittedFounderTrack ?? null }, state.submittedSection7Skipped === true);
   const latestSnapshot = state.history[state.history.length - 1];
   const snapshotDate = latestSnapshot
     ? new Date(latestSnapshot.at).toLocaleDateString(lang === "fa" ? "fa-IR" : "en-GB", { day: "numeric", month: "short", year: "numeric" })
@@ -323,13 +322,15 @@ function Dashboard() {
             <h1 className="text-2xl md:text-3xl">{t("journey.title")}</h1>
             <p className="mt-2 text-xs text-muted-foreground">{t("dash.recalc").replace("{date}", snapshotDate)}</p>
           </div>
-          <Link
-            to="/assessment"
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => void navigate({ to: "/assessment", search: state.completed ? { view: "recorded" } : {} })}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted"
           >
-            <Pencil className="size-4" aria-hidden />
-            {t("dash.editAnswers")}
-          </Link>
+            <ClipboardList className="size-4" aria-hidden />
+            {t(state.completed ? "assess.viewRecorded" : "assess.open")}
+          </Button>
         </div>
 
         <nav className="mt-7 flex flex-wrap gap-2" role="tablist">
@@ -405,17 +406,18 @@ function Dashboard() {
                 </p>
               ) : null}
               <div className="mt-5 flex flex-wrap items-center gap-3">
-                <Link
-                  to="/assessment"
+                <Button
+                  type="button"
+                  onClick={() => void navigate({ to: "/assessment", search: state.completed ? { view: "recorded" } : {} })}
                   className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground"
                 >
-                  {state.completed ? t("dash.editAnswers") : t("assess.open")}
-                </Link>
+                  {state.completed ? t("assess.viewRecorded") : t("assess.open")}
+                </Button>
                 {state.completed && !locked ? (
                   reassessConfirm ? (
                     <span className="flex flex-wrap items-center gap-2">
                       <span className="text-xs font-semibold">{t("assess.reassessConfirm")}</span>
-                      <Button type="button" variant="secondary" className="rounded-full" onClick={() => { update({ assessmentStatus: "editing" }); setReassessConfirm(false); void navigate({ to: "/assessment" }); }}>{t("assess.reassess")}</Button>
+                      <Button type="button" variant="secondary" className="rounded-full" onClick={() => { startReassessment(); setReassessConfirm(false); void navigate({ to: "/assessment", search: {} }); }}>{t("assess.reassess")}</Button>
                       <Button type="button" variant="outline" className="rounded-full" onClick={() => setReassessConfirm(false)}>{t("common.back")}</Button>
                     </span>
                   ) : (

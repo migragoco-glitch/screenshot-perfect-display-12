@@ -30,6 +30,9 @@ export type AppState = {
   founderTrack?: boolean;
   /** Locked copy of the last submitted round; locked views read only this. */
   submittedAnswers?: Answers;
+  submittedSection7Skipped?: boolean;
+  submittedFounderTrack?: boolean;
+  submittedRegion?: AppState["region"];
   /** submitted = answers read-only; editing = a re-assessment round is in progress. */
   assessmentStatus?: "submitted" | "editing";
   /** Section 7 skip flag; part of the locked/submitted state. */
@@ -62,6 +65,16 @@ const emptyState: AppState = {
   tier: "free",
   history: [],
 };
+
+/** Restores the last submitted round without changing its dated history. */
+export function restoredSubmittedRound(state: AppState): Partial<AppState> {
+  return {
+    answers: state.submittedAnswers ?? state.answers,
+    section7Skipped: state.submittedSection7Skipped ?? false,
+    founderTrack: state.submittedFounderTrack ?? false,
+    assessmentStatus: "submitted",
+  };
+}
 
 const QUESTION_BY_ID = new Map(QUESTIONS.map((q) => [q.id, q]));
 
@@ -207,7 +220,8 @@ function read(): AppState {
     const history = Array.isArray(parsed?.history) ? parsed.history : [];
     const ctx: AnswerContext = { founderTrack: parsed?.founderTrack ?? null };
     const answers = sanitizeAnswers(parsed?.answers, true, ctx);
-    const submittedAnswers = sanitizeAnswers(parsed?.submittedAnswers, true, ctx);
+    const submittedFounderTrack = parsed.submittedFounderTrack ?? parsed.founderTrack ?? false;
+    const submittedAnswers = sanitizeAnswers(parsed?.submittedAnswers, true, { founderTrack: submittedFounderTrack });
     // Existing users with completed answers are treated as a submitted round.
     const legacySubmitted = parsed?.completed && Object.keys(submittedAnswers).length === 0 && Object.keys(answers).length > 0;
     const assessmentStatus = parsed?.assessmentStatus ?? (parsed?.completed ? "submitted" : undefined);
@@ -217,6 +231,11 @@ function read(): AppState {
       history,
       answers,
       submittedAnswers: legacySubmitted ? answers : submittedAnswers,
+      ...(parsed.completed ? {
+        submittedSection7Skipped: parsed.submittedSection7Skipped ?? parsed.section7Skipped ?? false,
+        submittedFounderTrack,
+        submittedRegion: parsed.submittedRegion ?? parsed.region ?? "undecided",
+      } : {}),
       ...(assessmentStatus !== undefined ? { assessmentStatus } : {}),
     };
   } catch {
@@ -338,6 +357,22 @@ export function useAppState() {
     setState(next);
   }, []);
 
+  const startReassessment = useCallback(() => {
+    const current = read();
+    if (!hasNavigatorAccess(current.tier) || !current.completed) return;
+    const next: AppState = { ...current, ...restoredSubmittedRound(current), assessmentStatus: "editing" };
+    write(next);
+    setState(next);
+  }, []);
+
+  const cancelReassessment = useCallback(() => {
+    const current = read();
+    if (current.assessmentStatus !== "editing" || !current.completed) return;
+    const next: AppState = { ...current, ...restoredSubmittedRound(current) };
+    write(next);
+    setState(next);
+  }, []);
+
   /** Removes answers that have become Not Applicable without touching other progress. */
   const clearAnswers = useCallback((ids: readonly number[]) => {
     const current = read();
@@ -383,6 +418,9 @@ export function useAppState() {
       ...current,
       history,
       submittedAnswers: current.answers,
+      submittedSection7Skipped: current.section7Skipped === true,
+      submittedFounderTrack: current.founderTrack === true,
+      submittedRegion: current.region ?? "undecided",
       assessmentStatus: "submitted",
       completed: true,
     };
@@ -405,7 +443,7 @@ export function useAppState() {
     setState(emptyState);
   }, []);
 
-  return { state, hydrated, update, setAnswer, clearAnswers, pushSnapshot, submitAssessment, ensureBaselineSnapshot, reset, resetAnswers };
+  return { state, hydrated, update, setAnswer, clearAnswers, pushSnapshot, submitAssessment, ensureBaselineSnapshot, reset, resetAnswers, startReassessment, cancelReassessment };
 }
 
 // --- Real vs simulated data separation (founder dashboard) ---
