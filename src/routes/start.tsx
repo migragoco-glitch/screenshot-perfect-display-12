@@ -113,10 +113,11 @@ function StartScreen() {
   const [firstExpanded, setFirstExpanded] = useState(false);
   const [profileWhyIds, setProfileWhyIds] = useState<string[]>([]);
   const [paywallOpen, setPaywallOpen] = useState(false);
-  const [activated, setActivated] = useState(false);
-  useEffect(() => {
-    try { if (window.sessionStorage.getItem("migrago.start.activated") === "1") { window.sessionStorage.removeItem("migrago.start.activated"); setActivated(true); } } catch { /* Storage may be unavailable. */ }
-  }, []);
+  // Read the activation flag once into the state initializer; the key is
+  // removed only when the banner is dismissed.
+  const [activated, setActivated] = useState(() => {
+    try { return window.sessionStorage.getItem("migrago.start.activated") === "1"; } catch { return false; }
+  });
   useEffect(() => {
     if (!hydrated || !state.consent || restored) return;
     try {
@@ -211,7 +212,7 @@ function StartScreen() {
     <div dir={dir} className="flex min-h-screen flex-col">
       <AppHeader />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 md:px-8 md:py-14">
-        {activated ? <div role="status" className="mb-6 flex items-start justify-between gap-3 rounded-2xl bg-secondary/12 px-4 py-3 text-sm font-semibold text-foreground"><span>{t("start.activatedBanner")}</span><button type="button" aria-label={t("common.close")} onClick={() => setActivated(false)} className="text-muted-foreground">×</button></div> : null}
+        {activated && hasNavigator ? <div role="status" className="mb-6 flex items-start justify-between gap-3 rounded-2xl bg-secondary/12 px-4 py-3 text-sm font-semibold text-foreground"><span>{t("start.activatedBanner")}</span><button type="button" aria-label={t("common.close")} onClick={() => { setActivated(false); try { window.sessionStorage.removeItem("migrago.start.activated"); } catch { /* Storage may be unavailable. */ } }} className="text-muted-foreground">×</button></div> : null}
         <StepTracker stage={stage} questionFill={questionFill} />
         <h1 className="text-2xl md:text-3xl">{t(stage === "info" ? "start.title.info" : stage === "road" ? "start.title.road" : "start.title")}</h1>
         {stage === "city" ? (
@@ -403,7 +404,7 @@ function StartScreen() {
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div><h2 className="text-xl md:text-2xl">{t("start.results")}</h2><p className="mt-1 text-sm text-muted-foreground">{t("start.results.sub")}</p></div>
             </div>
-            <RoadmapSummary done={planDone} total={allPlanSteps.length} showLength free={!hasNavigator} />
+            <RoadmapSummary done={planDone} total={allPlanSteps.length} showLength free={!hasNavigator} phases={[1, 2, 3, 4].map((phase) => ({ color: PHASE_COLORS[phase - 1]!, total: allPlanSteps.filter((step) => step.phase === phase).length, done: allPlanSteps.filter((step) => step.phase === phase && doneIds.includes(step.id)).length }))} />
             {steps.length ? [...new Set(steps.map((step) => step.phase))].map((phase) => {
               const phaseSteps = steps.filter((step) => step.phase === phase);
               return <Fragment key={phase}>
