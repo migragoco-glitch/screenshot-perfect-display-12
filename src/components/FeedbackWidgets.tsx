@@ -158,16 +158,16 @@ export function FoundersCircleModal({
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [done, setDone] = useState(false);
 
   if (!open) return null;
 
   const submit = async () => {
+    if (busy) return;
     setBusy(true);
     setError(null);
     const res = await joinFoundersCircle(email);
-    setBusy(false);
     if (!res.ok) {
+      setBusy(false);
       setError(t("pay.emailInvalid"));
       return;
     }
@@ -175,8 +175,8 @@ export function FoundersCircleModal({
     window.localStorage.setItem("migrago.earlyAccessEmail", email.trim().toLowerCase());
     window.localStorage.setItem("migrago.discountCode", "EARLY100");
     trackEvent({ type: "email_captured" });
-    setDone(true);
-    window.setTimeout(onJoined, 800);
+    setBusy(false);
+    onJoined();
   };
 
   return (
@@ -200,10 +200,6 @@ export function FoundersCircleModal({
 
         <p className="mt-3 text-sm text-muted-foreground">{t("pay.emailSub")}</p>
 
-        {done ? (
-          <p className="mt-5 text-sm font-semibold text-secondary">{t("pay.emailThanks")}</p>
-        ) : (
-          <>
             <label className="mt-5 block text-xs font-semibold text-muted-foreground">
               {t("pay.emailLabel")}
             </label>
@@ -235,8 +231,6 @@ export function FoundersCircleModal({
             >
               {t("pay.emailSkip")}
             </button>
-          </>
-        )}
       </div>
     </div>
   );
