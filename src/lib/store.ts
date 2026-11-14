@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { AnswerContext, AnswerValue, Answers } from "./questions";
-import { QUESTIONS, isQuestionApplicable, subAnswerIndex, subAnswerIndexes } from "./questions";
+import { QUESTIONS, applicableQuestions, isQuestionApplicable, subAnswerIndex, subAnswerIndexes } from "./questions";
 
 const KEY = "migrago.state.v1";
 const METRICS_KEY = "migrago.metrics.v1";
@@ -11,6 +11,23 @@ export function hasNavigatorAccess(tier: AppState["tier"]): boolean {
 
 export function navigatorCheckoutDestination(completed: boolean): "/dashboard" | "/assessment" {
   return completed ? "/dashboard" : "/assessment";
+}
+
+export function assessmentView(state: Pick<AppState, "completed" | "assessmentStatus">, _view?: "recorded") {
+  const mode = state.assessmentStatus === "editing" ? "editing" : state.completed ? "submitted" : "initial";
+  return { mode, readOnly: mode === "submitted", topBar: mode === "initial" ? null : mode } as const;
+}
+
+export function assessmentQuestionNumbers(answers: Answers, ctx?: AnswerContext, section7Skipped = false) {
+  return new Map(applicableQuestions(answers, ctx, section7Skipped).map((q, index) => [q.id, index + 1]));
+}
+
+export function startAnswerIds(ids?: readonly number[]): number[] {
+  return [...new Set((ids ?? []).filter((id) => [2, 7, 8, 13, 36, 37].includes(id)))];
+}
+
+export function recordStartAnswer(ids: readonly number[] | undefined, id: number): number[] {
+  return startAnswerIds([...(ids ?? []), id]);
 }
 
 export type ScoreSnapshot = {
@@ -24,6 +41,7 @@ export type ScoreSnapshot = {
 export type AppState = {
   consent: boolean;
   answers: Answers;
+  startAnsweredIds?: number[];
   completed: boolean;
   tier: "free" | "navigator";
   history: ScoreSnapshot[];
@@ -230,6 +248,7 @@ function read(): AppState {
       ...parsed,
       history,
       answers,
+      startAnsweredIds: startAnswerIds(Array.isArray(parsed.startAnsweredIds) ? parsed.startAnsweredIds : undefined),
       submittedAnswers: legacySubmitted ? answers : submittedAnswers,
       ...(parsed.completed ? {
         submittedSection7Skipped: parsed.submittedSection7Skipped ?? parsed.section7Skipped ?? false,
@@ -345,11 +364,12 @@ export function useAppState() {
     setState(next);
   }, []);
 
-  const setAnswer = useCallback((id: number, value: AnswerValue) => {
+  const setAnswer = useCallback((id: number, value: AnswerValue, fromStart = false) => {
     const current = read();
     const merged = { ...current.answers, [id]: { ...current.answers[id], ...value } };
     const next: AppState = {
       ...current,
+      ...(fromStart ? { startAnsweredIds: recordStartAnswer(current.startAnsweredIds, id) } : {}),
       answers: sanitizeAnswers(merged, true, { founderTrack: current.founderTrack ?? null }),
       registeredAt: current.registeredAt ?? new Date().toISOString(),
     };
