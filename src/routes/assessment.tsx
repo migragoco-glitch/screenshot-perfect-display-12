@@ -564,6 +564,7 @@ function Assessment() {
               key={q.id}
               question={q}
               index={questionNumbers.get(q.id) ?? 1}
+              hideNumber={q.section === 7}
               answer={displayAnswers[q.id]}
               levelColor={LEVEL_COLORS[section - 1] ?? "var(--navigator-teal)"}
               readOnly={readOnly}
