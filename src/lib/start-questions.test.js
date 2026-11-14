@@ -14,6 +14,22 @@ const incomplete = new Function("questionsDone", "questionsTotal", `return ${con
 const guardStage = new Function("restored", "stage", "hasUnansweredQuestions", "setStage", `if (!restored) return; ${guard[1]}`);
 
 describe("Approved start question rules", () => {
+  test("Q7 Yes requires a non-empty whole child count of at least 1 and age ranges", () => {
+    const q = QUESTIONS.find((item) => item.id === 7);
+    if (!q) throw new Error("Q7 missing");
+    for (const detail of [undefined, "", "  ", "0", "1.5", "abc", "-1"]) {
+      expect(isAnswered(q, { value: 1, detail, subValue: [0] })).toBe(false);
+    }
+    expect(isAnswered(q, { value: 1, detail: "2", subValue: [0] })).toBe(true);
+    expect(isAnswered(q, { value: 1, detail: " 1 ", subValue: [0] })).toBe(true);
+    expect(isAnswered(q, { value: 1, detail: "2", subValue: [] })).toBe(false);
+    expect(isAnswered(q, { value: 0 })).toBe(true);
+  });
+  test("Q7 accepts a saved number-typed child count", () => {
+    const q = QUESTIONS.find((item) => item.id === 7);
+    if (!q) throw new Error("Q7 missing");
+    expect(isAnswered(q, { value: 1, detail: 2, subValue: [0] })).toBe(true);
+  });
   test("Q13 option 5 contributes the neutral 0.5 score and counts as answered", () => {
     const q = QUESTIONS.find((item) => item.id === 13);
     if (!q) throw new Error("Q13 missing");

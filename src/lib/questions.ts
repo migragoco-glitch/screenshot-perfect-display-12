@@ -748,6 +748,10 @@ export function isAnswered(q: Question, a: AnswerValue | undefined) {
   if (!a) return false;
   if (q.type === "multi") return Array.isArray(a.value) && a.value.length > 0;
   if (q.type === "text") return typeof a.value === "string" && a.value.trim().length > 1;
+  if (q.id === 7 && a.value === 1) {
+    const detail = String(a.detail ?? "").trim();
+    if (detail === "" || !Number.isInteger(Number(detail)) || Number(detail) < 1) return false;
+  }
   const subApplies = q.sub && (q.sub.showOn === undefined || a.value === q.sub.showOn);
   if (subApplies && q.sub?.multi && subAnswerIndexes(q, a).length === 0) return false;
   if (subApplies && !q.sub?.multi && subAnswerIndex(q, a) === undefined) return false;
