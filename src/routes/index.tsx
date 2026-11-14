@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Gift, Globe, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, Scale, Sparkles, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
+import { FoundersCircleModal } from "@/components/FeedbackWidgets";
 import { useI18n, type TKey } from "@/lib/i18n";
 import { useAppState } from "@/lib/store";
 import { TITLE_OVERRIDES } from "@/lib/area-flow";
@@ -249,6 +250,8 @@ function RoadmapPreview() {
 function Landing() {
   const { t, lang } = useI18n();
   const { state } = useAppState();
+  const navigate = useNavigate();
+  const [paywallOpen, setPaywallOpen] = useState(false);
   const hasSavedProgress = Object.keys(state.answers).length > 0;
 
   return (
@@ -489,13 +492,19 @@ function Landing() {
                 <p className="min-h-6 text-xl font-semibold text-navy">{t("pricing.navPrice90")}</p>
                 <p className="mt-1 min-h-5 text-xs text-foreground">{t("pricing.navPriceNote")}</p>
               </div>
-              <Link
-                to={state.consent ? "/start" : "/consent"}
-                search={state.consent ? {} : { next: "start" }}
+              <button
+                type="button"
+                onClick={() => {
+                  if (state.tier === "navigator") {
+                    void navigate({ to: "/start" });
+                    return;
+                  }
+                  setPaywallOpen(true);
+                }}
                 className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-navy px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors duration-200 ease-out hover:bg-navy/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy active:scale-[0.98]"
               >
                 {t("pricing.navStart")}
-              </Link>
+              </button>
               <hr className="my-5 border-t border-border" />
               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t("pricing.navLead")}</p>
               <ul className="mt-5 flex-1 space-y-4">
@@ -548,6 +557,9 @@ function Landing() {
       </main>
 
       <SiteFooter />
+      <FoundersCircleModal open={paywallOpen} onClose={() => setPaywallOpen(false)} onJoined={() => {
+        setPaywallOpen(false); void navigate({ to: "/checkout", search: { next: "start" } });
+      }} />
     </div>
   );
 }

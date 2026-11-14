@@ -89,7 +89,7 @@ function ConsentScreen() {
                   // Consent step of the upgrade flow → continue to checkout.
                   // The roadmap only unlocks after a completed checkout.
                   update({ consent: true });
-                  void navigate({ to: "/checkout" });
+                  void navigate({ to: "/checkout", search: next === "start" ? { next } : {} });
                   return;
                 }
                 update({ consent: true });
