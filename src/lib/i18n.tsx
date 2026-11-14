@@ -536,10 +536,10 @@ export const en = {
     "Premium includes the full 42-question assessment, your complete Smart Integration Profile, a personalized pathway and the full 12-week roadmap with progress tracking. Your Quick Check answers carry over.",
   "qc.upgradeCta": "Upgrade to Premium",
 
-  "pay.emailTitle": "Early access pricing",
-  "pay.emailSub": "Early-access price for trial users.",
+  "pay.emailTitle": "Early-access price",
+  "pay.emailSub": "Leave your email to get Premium at 70% off: €3.00 for 30 days or €7.50 for 90 days (instead of €9.99 and €24.99).",
   "pay.emailLabel": "Your email",
-  "pay.emailCta": "Get my code and continue",
+  "pay.emailCta": "Save email and continue",
   "pay.emailInvalid": "Please enter a valid email address.",
   "pay.emailThanks": "Your early-access code is reserved. Continuing to checkout…",
   "pay.emailSkip": "Continue at standard pricing",
@@ -686,7 +686,7 @@ export const en = {
   "checkout.oneTime": "One-time payment, no automatic renewal",
   "checkout.confirmation": "By continuing, you confirm you'd like to proceed with payment.",
   "checkout.plan": "Premium (monthly)",
-  "checkout.discountLabel": "Early-access discount",
+  "checkout.discountLabel": "Early-access discount (70%)",
   "checkout.total": "Total due today",
   "checkout.pay": "Pay and unlock Premium",
   "checkout.cancel": "Back",
@@ -697,7 +697,7 @@ export const en = {
   "checkout.codeApplied": "Early-access code applied",
 
   "pay.emailNote":
-    "This step reserves your discount only. Premium unlocks after checkout.",
+    "Your email is stored to reserve this price. Premium unlocks after payment.",
   "pay.standard": "Standard pricing",
 
   "road.completion": "tasks completed",
@@ -1399,11 +1399,11 @@ export const fa: Record<keyof typeof en, string> = {
     "Premium شامل ارزیابی کامل ۴۲ پرسشی، پروفایل کامل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای با پیگیری پیشرفت است. پاسخ‌های بررسی سریع شما منتقل می‌شوند.",
   "qc.upgradeCta": "ارتقا به Premium",
 
-  "pay.emailTitle": "قیمت دسترسی زودهنگام",
-  "pay.emailSub": "قیمت دسترسی زودهنگام برای کاربران نسخهٔ آزمایشی.",
-  "pay.emailLabel": "رایانامهٔ شما",
-  "pay.emailCta": "دریافت کد و ادامه",
-  "pay.emailInvalid": "لطفاً یک نشانی رایانامهٔ معتبر وارد کنید.",
+  "pay.emailTitle": "قیمت ویژهٔ دسترسی زودهنگام",
+  "pay.emailSub": "با ثبت ایمیل، Premium را با ۷۰٪ تخفیف بگیرید: ۳٫۰۰ یورو برای ۳۰ روز یا ۷٫۵۰ یورو برای ۹۰ روز (به‌جای ۹٫۹۹ و ۲۴٫۹۹ یورو).",
+  "pay.emailLabel": "ایمیل شما",
+  "pay.emailCta": "ثبت ایمیل و ادامه",
+  "pay.emailInvalid": "لطفاً یک ایمیل معتبر وارد کنید.",
   "pay.emailThanks": "کد دسترسی زودهنگام شما رزرو شد. در حال رفتن به مرحلهٔ پرداخت…",
   "pay.emailSkip": "ادامه با قیمت استاندارد",
 
@@ -1550,7 +1550,7 @@ export const fa: Record<keyof typeof en, string> = {
   "checkout.oneTime": "پرداخت یک‌باره، بدون تمدید خودکار",
   "checkout.confirmation": "با ادامه، تأیید می‌کنید که مایل به ادامهٔ پرداخت هستید.",
   "checkout.plan": "Premium (ماهانه)",
-  "checkout.discountLabel": "تخفیف دسترسی زودهنگام",
+  "checkout.discountLabel": "تخفیف دسترسی زودهنگام (۷۰٪)",
   "checkout.total": "مبلغ قابل پرداخت",
   "checkout.pay": "پرداخت و فعال‌سازی Premium",
   "checkout.cancel": "بازگشت",
@@ -1561,7 +1561,7 @@ export const fa: Record<keyof typeof en, string> = {
   "checkout.codeApplied": "کد دسترسی زودهنگام اعمال شد",
 
   "pay.emailNote":
-    "این مرحله فقط تخفیف شما را رزرو می‌کند. Premium پس از پرداخت فعال می‌شود.",
+    "ایمیل شما برای رزرو این قیمت ذخیره می‌شود. Premium پس از پرداخت فعال می‌شود.",
   "pay.standard": "قیمت استاندارد",
 
   "road.completion": "گام انجام‌شده",

@@ -50,12 +50,15 @@ function CheckoutPage() {
   }, []);
 
   useEffect(() => {
-    if (hydrated && !appState.consent) void navigate({ to: "/consent", search: { upgrade: true } });
-  }, [hydrated, appState.consent, navigate]);
+    if (hydrated && !appState.consent) void navigate({ to: "/consent", search: { upgrade: true, ...(next ? { next } : {}) } });
+  }, [hydrated, appState.consent, navigate, next]);
 
   const basePrice = PLAN_PRICES[plan];
   const total = code ? basePrice * (1 - DISCOUNT) : basePrice;
-  const price = (v: number) => `€${localizeNumber(v.toFixed(2), lang)}`;
+  const price = (v: number) =>
+    lang === "fa"
+      ? `${localizeNumber(v.toFixed(2), lang).replace(".", "٫")} یورو`
+      : `€${localizeNumber(v.toFixed(2), lang)}`;
 
   const pay = () => {
     if (!hydrated || !appState.consent || state !== "idle") return;
@@ -80,7 +83,6 @@ function CheckoutPage() {
           <Lock className="size-7 text-secondary" aria-hidden />
           <h1 className="mt-5 text-2xl">{t("checkout.title")}</h1>
           <p className="mt-2 text-sm text-muted-foreground">{t(next === "start" ? "checkout.start.sub" : "checkout.sub")}</p>
-          <p className="mt-3 text-sm text-muted-foreground">{t("checkout.confirmation")}</p>
           <p className="mt-5 rounded-2xl bg-muted p-4 text-xs leading-relaxed text-muted-foreground">
             {t("checkout.testMode")}
           </p>
@@ -128,7 +130,13 @@ function CheckoutPage() {
                 <dt className="font-semibold">
                   {t("checkout.discountLabel")} · {code}
                 </dt>
-                <dd className="tabular-nums font-semibold">−{price(basePrice - total)}</dd>
+                <dd className="tabular-nums font-semibold">
+                  {lang === "fa" ? (
+                    <><bdi dir="ltr">−{localizeNumber((basePrice - total).toFixed(2), lang).replace(".", "٫")}</bdi>{" یورو"}</>
+                  ) : (
+                    <bdi dir="ltr">−€{localizeNumber((basePrice - total).toFixed(2), lang)}</bdi>
+                  )}
+                </dd>
               </div>
             ) : null}
             <div className="flex items-center justify-between gap-4 pt-1 text-base font-bold">

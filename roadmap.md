@@ -1,5 +1,7 @@
 # Current roadmap
 
+- [x] Apply approved ITEM 1 email-modal copy, checkout currency display, landing Premium button behavior, and consent return target; leave ITEM 2 untouched.
+
 - [x] Apply approved checkout pass selector, early-access discount, and scoped bilingual price wording; preserve simulated completion and untouched pages.
 
 - [x] Apply approved compact country control, header links, mobile menu, and bilingual Pricing heading.
