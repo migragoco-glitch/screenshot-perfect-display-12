@@ -176,13 +176,25 @@ function Dashboard() {
   const gapList = useMemo(() => buildGapAnalysis(profile), [profile]);
   const locked = state.tier !== "navigator";
   const hasStartPlan = hasNavigatorAccess(state.tier) && Boolean(state.municipality) && startAreas.length > 0;
+  // The home card and the /start roadmap share this exact step set: the
+  // area-flow steps only. The 7 profile steps stay in the /start profile
+  // section and the progress tab, counted separately.
+  const roadmapSteps = hasStartPlan
+    ? buildAreaSteps(startAreas, state.answers, state.route ?? suggestRoute(state.answers[2]?.value), state.region)
+    : [];
   const allItems = hasStartPlan ? [
-    ...buildAreaSteps(startAreas, state.answers, state.route ?? suggestRoute(state.answers[2]?.value), state.region),
+    ...roadmapSteps,
     ...(state.completed ? getProfileSteps(profile.gaps) : []),
   ] : [];
   const startPlanStepIds = allItems.map((step) => step.id);
   const done = new Set(startDoneIds);
   const roadmap = [1, 2, 3, 4].map((phase) => ({ phase, items: allItems.filter((step) => step.phase === phase) }));
+  const roadmapDoneCount = roadmapSteps.filter((step) => done.has(step.id)).length;
+  const roadmapPhases = [1, 2, 3, 4].map((phase) => ({
+    color: ROADMAP_PHASES[phase - 1]?.value ?? "var(--navigator-teal)",
+    total: roadmapSteps.filter((step) => step.phase === phase).length,
+    done: roadmapSteps.filter((step) => step.phase === phase && done.has(step.id)).length,
+  }));
   const openStartRoadmap = () => {
     if (hasStartPlan) {
       try {
@@ -344,7 +356,7 @@ function Dashboard() {
           <div className="rise-in mt-7 space-y-5">
             <section className="border-b border-border py-6">
               <h2 className="text-lg">{t("dash.homeRoadmapTitle")}</h2>
-              <RoadmapSummary done={doneCount} total={totalTasks} />
+              <RoadmapSummary done={roadmapDoneCount} total={roadmapSteps.length} phases={roadmapPhases} />
               {state.completed ? <p className="text-sm font-semibold">{t("dash.readinessScore").replace("{overall}", localizeNumber(profile.overall, lang))}</p> : null}
               <Button type="button" variant="secondary" className="mt-4 rounded-full" onClick={openStartRoadmap}>{t("dash.homeRoadmapCta")}<ArrowRight className="size-4 rtl:rotate-180" /></Button>
             </section>
@@ -367,13 +379,13 @@ function Dashboard() {
               <h2 className="text-lg">{t("assess.title")}</h2>
               <p className="mt-2 text-sm font-semibold">{t("assess.structure")}</p>
               <p className="mt-3 text-sm text-muted-foreground">
-                {localizeNumber(answeredCount, lang)} {t("assess.answeredOf")}{" "}
-                {localizeNumber(QUESTIONS.length, lang)}
+                {localizeNumber(assessmentCounts.answered, lang)} {t("assess.answeredOf")}{" "}
+                {localizeNumber(assessmentCounts.total, lang)}
               </p>
               <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-muted">
                 <div
                   className="h-full rounded-full bg-secondary transition-all duration-500 ease-out"
-                  style={{ width: `${Math.round((answeredCount / QUESTIONS.length) * 100)}%` }}
+                  style={{ width: `${assessmentCounts.total ? Math.round((assessmentCounts.answered / assessmentCounts.total) * 100) : 0}%` }}
                 />
               </div>
               <p
@@ -384,13 +396,31 @@ function Dashboard() {
               >
                 {state.completed ? t("assess.completed") : t("assess.notCompleted")}
               </p>
-              <div className="mt-5">
+              {state.completed ? (
+                <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-[11px] font-semibold text-muted-foreground">
+                  <Lock className="size-3" aria-hidden />
+                  {t("assess.locked")}
+                  {snapshotDate ? ` — ${snapshotDate}` : ""}
+                </p>
+              ) : null}
+              <div className="mt-5 flex flex-wrap items-center gap-3">
                 <Link
                   to="/assessment"
                   className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground"
                 >
                   {state.completed ? t("dash.editAnswers") : t("assess.open")}
                 </Link>
+                {state.completed && !locked ? (
+                  reassessConfirm ? (
+                    <span className="flex flex-wrap items-center gap-2">
+                      <span className="text-xs font-semibold">{t("assess.reassessConfirm")}</span>
+                      <Button type="button" variant="secondary" className="rounded-full" onClick={() => { update({ assessmentStatus: "editing" }); setReassessConfirm(false); void navigate({ to: "/assessment" }); }}>{t("assess.reassess")}</Button>
+                      <Button type="button" variant="outline" className="rounded-full" onClick={() => setReassessConfirm(false)}>{t("common.back")}</Button>
+                    </span>
+                  ) : (
+                    <Button type="button" variant="outline" className="rounded-full" onClick={() => setReassessConfirm(true)}>{t("assess.reassess")}</Button>
+                  )
+                ) : null}
               </div>
             </section>
           </div>
@@ -438,6 +468,18 @@ function Dashboard() {
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {analysisSummary(profile)[lang]}
                 </p>
+                {(() => {
+                  const weakest = weakestDimension(profile);
+                  const weakestValue = profile[weakest];
+                  if (weakestValue >= TOP_BAND_THRESHOLD) return null;
+                  const dimensionLabel = t(weakest === "legal" ? "dash.dim1" : weakest === "professional" ? "dash.dim2" : "dash.dim3");
+                  return (
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {t("dash.analysis.weakest").replace("{dimension}", dimensionLabel)}{" "}
+                      {t(`dash.analysis.weakest.${weakest}` as "dash.analysis.weakest.legal")}
+                    </p>
+                  );
+                })()}
                 {profile.strengths.length ? (
                   <>
                     <h3 className="mt-5 text-xs font-bold uppercase tracking-wider text-secondary">
