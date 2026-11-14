@@ -183,6 +183,8 @@ export const QUESTIONS: Question[] = [
     type: "multi",
     unscored: true,
     label: o("Who will be relocating to Finland with you?", "چه کسانی همراه شما به فنلاند مهاجرت می‌کنند؟"),
+    // "Alone" (0) and "Not yet decided" (4) are exclusive with every other option.
+    exclusiveIndexes: [0, 4],
     options: [
       o("Alone", "تنها"),
       o("Spouse/partner", "همسر / شریک زندگی"),
