@@ -48,6 +48,7 @@ import {
   InstitutionBadge,
   NpsSurvey,
 } from "@/components/FeedbackWidgets";
+import { ProfilePreview, RoadmapSummary } from "@/components/RoadmapSummary";
 import { SupportChannels } from "@/components/SupportChannels";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import { analysisSummary, computeProfile, type GapFlag } from "@/lib/scoring";
@@ -58,11 +59,12 @@ import { useSession } from "@/lib/session";
 import { hasNavigatorAccess, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { AREAS, buildAreaSteps, suggestRoute, type AreaId } from "@/lib/area-flow";
+import { AREAS, buildAreaSteps, documentsForSteps, suggestRoute, type AreaId } from "@/lib/area-flow";
 import { formatScoreDelta, getProfileSteps, getRelatedStepsForGap, getStepWeek } from "@/lib/profile-link";
 
 
 export const Route = createFileRoute("/dashboard")({
+  validateSearch: (search: Record<string, unknown>): { tab?: "profile" } => ({ tab: search.tab === "profile" ? "profile" : undefined }),
   head: () => ({
     meta: [
       { title: "Integration Profile — MigraGo dashboard" },
@@ -127,7 +129,8 @@ function Dashboard() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
   const { state, hydrated, pushSnapshot, reset } = useAppState();
-  const [tab, setTab] = useState<Tab>("dashboard");
+  const search = Route.useSearch();
+  const [tab, setTab] = useState<Tab>(search.tab === "profile" ? "profile" : "dashboard");
   const [buildingRoadmap, setBuildingRoadmap] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [payModal, setPayModal] = useState(false);
@@ -137,6 +140,7 @@ function Dashboard() {
   const [showAllCompleted, setShowAllCompleted] = useState(false);
   const [startAreas, setStartAreas] = useState<AreaId[]>([]);
   const [startDoneIds, setStartDoneIds] = useState<string[]>([]);
+  const [startDocIds, setStartDocIds] = useState<string[]>([]);
   const { user } = useSession();
 
   useEffect(() => {
@@ -145,6 +149,8 @@ function Dashboard() {
       if (Array.isArray(saved?.areas)) setStartAreas(saved.areas.filter((id: unknown): id is AreaId => AREAS.some((area) => area.id === id)));
       const ids: unknown = JSON.parse(window.localStorage.getItem("migrago.start.done") ?? window.sessionStorage.getItem("migrago.start.done") ?? "[]");
       if (Array.isArray(ids)) setStartDoneIds(ids.filter((id): id is string => typeof id === "string"));
+      const docs: unknown = JSON.parse(window.localStorage.getItem("migrago.start.docs") ?? "[]");
+      if (Array.isArray(docs)) setStartDocIds(docs.filter((id): id is string => typeof id === "string"));
     } catch { /* Storage may be unavailable or invalid. */ }
   }, []);
 
@@ -166,10 +172,10 @@ function Dashboard() {
   );
   const gapList = useMemo(() => buildGapAnalysis(profile), [profile]);
   const locked = state.tier !== "navigator";
-  const hasStartPlan = hasNavigatorAccess(state.tier) && state.completed && Boolean(state.municipality) && startAreas.length > 0;
+  const hasStartPlan = hasNavigatorAccess(state.tier) && Boolean(state.municipality) && startAreas.length > 0;
   const allItems = hasStartPlan ? [
     ...buildAreaSteps(startAreas, state.answers, state.route ?? suggestRoute(state.answers[2]?.value), state.region),
-    ...getProfileSteps(profile.gaps),
+    ...(state.completed ? getProfileSteps(profile.gaps) : []),
   ] : [];
   const startPlanStepIds = allItems.map((step) => step.id);
   const done = new Set(startDoneIds);
@@ -185,7 +191,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    if (hydrated && (!state.completed || !hasNavigatorAccess(state.tier)) && !deleted) void navigate({ to: "/assessment" });
+    if (hydrated && !hasNavigatorAccess(state.tier) && !deleted) void navigate({ to: "/assessment" });
   }, [hydrated, state.completed, state.tier, deleted, navigate]);
 
   // Live recalculation: every answer edit produces a new snapshot.
@@ -203,7 +209,7 @@ function Dashboard() {
     if (hydrated && locked && state.completed) trackEvent({ type: "paywall_view" });
   }, [hydrated, locked, state.completed]);
 
-  if (!hydrated || ((!state.completed || !hasNavigatorAccess(state.tier)) && !deleted)) return null;
+  if (!hydrated || (!hasNavigatorAccess(state.tier) && !deleted)) return null;
 
   if (buildingRoadmap) {
     return (
@@ -248,6 +254,8 @@ function Dashboard() {
     void navigate({ to: "/checkout" });
   };
 
+  const docKeys = documentsForSteps(allItems).flatMap((item) => item.documents.map((_, index) => `${item.id}:${index}`));
+  const docsDone = docKeys.filter((id) => startDocIds.includes(id)).length;
   const totalTasks = allItems.length;
   const doneCount = allItems.filter((i) => done.has(i.id)).length;
   const answeredCount = QUESTIONS.filter((q) => state.answers[q.id] !== undefined).length;
@@ -281,14 +289,6 @@ function Dashboard() {
     ["account", t("tab.account")],
   ];
 
-  const roadmapBuildSteps = [
-    { key: "engine.s1", icon: Puzzle, color: "var(--navigator-teal)" },
-    { key: "engine.s2", icon: MapPin, color: "var(--navigator-light-teal)" },
-    { key: "engine.s3", icon: ListChecks, color: "var(--navigator-olive-gold)" },
-    { key: "engine.s4", icon: UserCircle, color: "var(--navigator-teal)" },
-    { key: "engine.s5", icon: ArrowRightLeft, color: "var(--navigator-teal)" },
-    { key: "engine.s6", icon: Flag, color: "var(--navigator-light-teal)" },
-  ] as const;
 
 
   return (
@@ -335,37 +335,17 @@ function Dashboard() {
           <div className="rise-in mt-7 space-y-5">
             <section className="border-b border-border py-6">
               <h2 className="text-lg">{t("dash.homeRoadmapTitle")}</h2>
+              <RoadmapSummary done={doneCount} total={totalTasks} />
+              {state.completed ? <p className="text-sm font-semibold">{t("dash.readinessScore").replace("{overall}", localizeNumber(profile.overall, lang))}</p> : null}
               <Button type="button" variant="secondary" className="mt-4 rounded-full" onClick={openStartRoadmap}>{t("dash.homeRoadmapCta")}<ArrowRight className="size-4 rtl:rotate-180" /></Button>
             </section>
+            {!state.completed ? <ProfilePreview onOpen={() => { void navigate({ to: "/assessment" }); }} /> : null}
 
-            <div className="grid gap-5 lg:grid-cols-2">
-              <section className="rounded-3xl border border-border bg-card p-6">
-                <h2 className="text-lg">{t("engine.title")}</h2>
-                <ol className="mt-4 space-y-2 text-sm">
-                  {roadmapBuildSteps.map((step) => (
-                      <li key={step.key} className="flex items-center gap-3">
-                        <span
-                          className="inline-flex size-7 shrink-0 items-center justify-center rounded-full"
-                          style={{
-                            color: step.color,
-                            background: `color-mix(in oklab, ${step.color} 12%, var(--card))`,
-                          }}
-                        >
-                          <step.icon className="size-4" strokeWidth={1.8} aria-hidden />
-                        </span>
-                        <span className="font-semibold">{t(step.key)}</span>
-                      </li>
-                    ))}
-                </ol>
-                <p className="mt-4 text-xs leading-relaxed text-muted-foreground">{t("engine.note")}</p>
-              </section>
-
+            <div>
               <section className="rounded-3xl border border-border bg-card p-6">
                 <h2 className="text-lg">{t("dash.engineHowTitle")}</h2>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{t("dash.engineHowBody")}</p>
-                <p className="mt-6 rounded-2xl border border-border bg-background p-4 text-xs leading-relaxed text-muted-foreground">
-                  {t("disclaimer.responsible")}
-                </p>
+
               </section>
             </div>
           </div>
@@ -408,7 +388,8 @@ function Dashboard() {
         ) : null}
 
         {/* ── My Profile tab ──────────────────────────── */}
-        {tab === "profile" ? (
+        {tab === "profile" && !state.completed ? <ProfilePreview onOpen={() => { void navigate({ to: "/assessment" }); }} /> : null}
+        {tab === "profile" && state.completed ? (
           <div className="rise-in mt-7 grid gap-5 lg:grid-cols-3">
             {/* Overall + donut */}
             <section className="glass-card rounded-3xl p-6 lg:col-span-2">
@@ -426,13 +407,13 @@ function Dashboard() {
                 <div className="relative mx-auto size-44">
                   <svg viewBox="0 0 120 120" className="size-full" aria-hidden="true">
                     <circle cx="60" cy="60" r="50" fill="none" stroke="var(--muted)" strokeWidth="9" />
-                    <circle cx="60" cy="60" r="50" fill="none" stroke="var(--navigator-teal)" strokeWidth="9" strokeLinecap="round" strokeDasharray={Math.PI * 100} strokeDashoffset={Math.PI * 100 * (1 - profile.overall / 100)} transform="rotate(-90 60 60)" />
+                    <circle className="roadmap-progress-transition" cx="60" cy="60" r="50" fill="none" stroke="var(--navigator-teal)" strokeWidth="9" strokeLinecap="round" strokeDasharray={Math.PI * 100} strokeDashoffset={Math.PI * 100 * (1 - profile.overall / 100)} transform="rotate(-90 60 60)" />
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center"><span className="text-3xl font-bold tabular-nums">{localizeNumber(profile.overall, lang)}</span><span className="text-xs text-muted-foreground">{t("q.of")} {localizeNumber(100, lang)}</span></div>
                 </div>
                 <ul className="space-y-5">{dims.map((d, index) => <li key={d.key}>
                   <div className="flex items-baseline justify-between gap-3 text-sm font-semibold"><span>{d.label}</span><span className="shrink-0 tabular-nums">{localizeNumber(d.value, lang)}%</span></div>
-                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full" style={{ width: `${d.value}%`, backgroundColor: ["var(--navigator-teal)", "var(--navigator-olive)", "var(--navigator-gold)"][index] }} /></div>
+                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted"><div className="roadmap-progress-transition h-full rounded-full" style={{ width: `${d.value}%`, backgroundColor: ["var(--navigator-teal)", "var(--navigator-olive)", "var(--navigator-gold)"][index] }} /></div>
                   <p className="mt-1 text-xs text-muted-foreground">{t("dash.weight")} {localizeNumber(d.weight, lang)}%</p>
                 </li>)}</ul>
               </div>
@@ -463,8 +444,7 @@ function Dashboard() {
 
               </section>
 
-              <CsatWidget />
-              <NpsSurvey />
+
 
 
               <section className="rounded-3xl border border-border bg-card p-6">
@@ -475,6 +455,7 @@ function Dashboard() {
                     : t("dash.bonusNotAnswered")}
                 </p>
                 <p className="mt-2 text-xs text-muted-foreground">{t("dash.bonusNote")}</p>
+                <p className="mt-2 text-xs text-muted-foreground">{t("dash.bonusNotCore")}</p>
               </section>
 
               {locked ? (
@@ -509,7 +490,7 @@ function Dashboard() {
                     <Button type="button" variant="ghost" aria-expanded={expanded} aria-controls={`gap-${g.flag}`} className="h-auto w-full flex-wrap justify-start gap-2 whitespace-normal p-0 text-start hover:bg-transparent" onClick={() => setExpandedGaps((current) => expanded ? current.filter((id) => id !== g.flag) : [...current, g.flag])}>
                       <span className="me-auto text-sm font-bold">{g.gap[lang]}</span>
                       <span className={cn("rounded-full px-2.5 py-0.5 text-[11px] font-semibold", g.priority === "high" ? "bg-destructive text-destructive-foreground" : g.priority === "medium" ? "bg-[var(--navigator-gold)] text-[var(--navigator-navy)]" : "bg-[var(--chart-5)] text-[var(--navigator-navy)]")}>{priorityLabel(g.priority)}</span>
-                      <InstitutionBadge institution={g.institution} compact />
+                      {g.institution === "Valvira / OPH" ? <><InstitutionBadge institution={g.institution} displayName={t("start.authority.Valvira")} compact /><InstitutionBadge institution={g.institution} displayName={t("start.authority.OPH")} compact /></> : <InstitutionBadge institution={g.institution} compact />}
                       {relatedSteps.length > 0 ? <span className="w-full text-xs font-normal text-muted-foreground">{t("dash.gap.relatedSteps").replace("{done}", localizeNumber(relatedSteps.filter((id) => done.has(id)).length, lang)).replace("{total}", localizeNumber(relatedSteps.length, lang))}</span> : null}
                     </Button>
                     {expanded ? <div id={`gap-${g.flag}`} className="mt-3 space-y-2 text-sm text-muted-foreground"><p className="font-semibold">{t("gap.why")}</p><p>{g.why[lang]}</p><p className="font-semibold">{t("gap.action")}</p><p>{g.action[lang]}</p>{relatedSteps.length > 0 ? <Button type="button" variant="link" className="h-auto p-0 text-xs text-secondary" onClick={openStartRoadmap}>{t("dash.gap.viewInRoadmap")}<ArrowRight className="size-3.5 rtl:rotate-180" /></Button> : null}</div> : null}
@@ -518,6 +499,8 @@ function Dashboard() {
                 {!showAllGaps && gapList.length > 3 ? <Button type="button" variant="link" className="mt-3 h-auto p-0" onClick={() => setShowAllGaps(true)}>{t("dash.showAll")}</Button> : null}
               </> : <p className="mt-3 text-sm text-muted-foreground">{t("gap.none")}</p>}
             </section>
+
+            <div className="lg:col-span-3"><CsatWidget /></div>
 
             {/* Trend — score history over time */}
             <section className="rounded-3xl border border-border bg-card p-6 lg:col-span-3">
@@ -560,6 +543,8 @@ function Dashboard() {
         {/* ── Progress tab ────────────────────────────── */}
         {tab === "progress" ? (
           <div className="navigator-entered rise-in mt-7 space-y-5">
+            {doneCount >= 3 ? <NpsSurvey /> : null}
+            {!locked ? <section className="rounded-lg border border-border bg-card p-4"><h2 className="text-sm font-semibold">{t("start.docs.counter").replace("{x}", localizeNumber(docsDone, lang)).replace("{y}", localizeNumber(docKeys.length, lang))}</h2></section> : null}
             {!hasStartPlan ? (
               <section className="border-b border-border py-6"><h2 className="text-lg">{t("prog.noSessionTitle")}</h2><Button type="button" variant="secondary" className="mt-4 rounded-full" onClick={openStartRoadmap}>{t("prog.noSessionCta")}</Button></section>
             ) : (
@@ -738,10 +723,7 @@ function Dashboard() {
                 </p>
               ) : (
                 <p className="mt-3 text-sm text-muted-foreground">
-                  {t("set.notSignedIn")}{" "}
-                  <Link to="/auth" className="font-semibold text-secondary underline underline-offset-4">
-                    {t("nav.signIn")}
-                  </Link>
+                  {t("set.notSignedIn")}
                 </p>
               )}
             </section>
