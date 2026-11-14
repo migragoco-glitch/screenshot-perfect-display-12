@@ -64,7 +64,7 @@ import { formatScoreDelta, getProfileSteps, getRelatedStepsForGap, getStepWeek }
 
 
 export const Route = createFileRoute("/dashboard")({
-  validateSearch: (search: Record<string, unknown>): { tab?: "profile" } => ({ tab: search.tab === "profile" ? "profile" : undefined }),
+  validateSearch: (search: Record<string, unknown>): { tab?: "profile" } => search["tab"] === "profile" ? { tab: "profile" } : {},
   head: () => ({
     meta: [
       { title: "Integration Profile — MigraGo dashboard" },

@@ -450,7 +450,7 @@ function StartScreen() {
                 })}
               </ol>
             </section> : null}
-            <ProfileCard completed={hasNavigator && state.completed} onIncomplete={hasNavigator ? undefined : openUpgrade} />
+            <ProfileCard completed={hasNavigator && state.completed} {...(hasNavigator ? {} : { onIncomplete: openUpgrade })} />
             {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : null}
             <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
             <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
@@ -527,7 +527,7 @@ function ProfileCard({ completed, onIncomplete }: { completed: boolean; onIncomp
   const { state } = useAppState();
   const navigate = useNavigate();
   const profile = completed ? computeProfile(state.answers, state.founderTrack === true, state.region ?? "undecided") : undefined;
-  return <ProfilePreview profile={profile} onOpen={() => { if (!completed && onIncomplete) { onIncomplete(); return; } void navigate(completed ? { to: "/dashboard", search: { tab: "profile" } } : { to: "/assessment" }); }} />;
+  return <ProfilePreview {...(profile ? { profile } : {})} onOpen={() => { if (!completed && onIncomplete) { onIncomplete(); return; } void navigate(completed ? { to: "/dashboard", search: { tab: "profile" } } : { to: "/assessment" }); }} />;
 }
 const UPGRADE_CHECKED = ["start.lock.road.weeks", "pricing.navItem3", "pricing.navItem4", "start.lock.road.track", "pricing.navItem6"] as const;
 const UPGRADE_SOON = ["start.lock.soon.sync", "start.lock.soon.pdf", "start.lock.soon.alerts"] as const;
