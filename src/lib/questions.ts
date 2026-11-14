@@ -274,8 +274,9 @@ export const QUESTIONS: Question[] = [
       o("Business owner", "صاحب کسب‌وکار"),
       o("Student", "دانشجو"),
       o("Unemployed", "بدون شغل"),
+      o("Other", "سایر"),
     ],
-    optionScores: [1, 0.85, 0.9, 0.6, 0.4],
+    optionScores: [1, 0.85, 0.9, 0.6, 0.4, 0.5],
   },
   {
     id: 14,

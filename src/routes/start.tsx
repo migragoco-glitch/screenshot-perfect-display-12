@@ -129,7 +129,6 @@ function StartScreen() {
     if (hydrated && !state.consent) void navigate({ to: "/consent", search: { next: "start" } });
   }, [hydrated, state.consent, navigate]);
 
-  if (!hydrated || !state.consent || !restored) return null;
   const selectedAreas = AREAS.filter((area) => areas.includes(area.id));
   const asked = new Set(selectedAreas.flatMap((area) => area.questions));
   const effectiveRoute = state.route ?? suggestRoute(state.answers[2]?.value);
@@ -161,14 +160,29 @@ function StartScreen() {
     }
     areaQuestions.set(area.id, ids);
   }
+  const isQuestionDone = (id: number): boolean => {
+    if (id === 2) return Boolean(effectiveRoute);
+    const q = QUESTIONS.find((item) => item.id === id);
+    return q ? isAnswered(q, state.answers[id]) : false;
+  };
   const questionCards = selectedAreas.filter((area) => (areaQuestions.get(area.id) ?? []).length > 0).map((area) => {
     const ids = areaQuestions.get(area.id) ?? [];
-    const done = ids.filter((id) => { const q = QUESTIONS.find((item) => item.id === id); return q ? isAnswered(q, state.answers[id]) : false; }).length;
+    const done = ids.filter(isQuestionDone).length;
     return { area, total: ids.length, done };
   });
   const questionsTotal = questionCards.reduce((sum, card) => sum + card.total, 0);
   const questionsDone = questionCards.reduce((sum, card) => sum + card.done, 0);
+  const hasUnansweredQuestions = questionsDone < questionsTotal;
   const questionFill = questionsTotal ? Math.round((questionsDone / questionsTotal) * 100) : null;
+
+  useEffect(() => {
+    if (!restored) return;
+    if (["choose", "info", "road"].includes(stage) && hasUnansweredQuestions) {
+      setStage("questions");
+    }
+  }, [restored, stage, hasUnansweredQuestions]);
+
+  if (!hydrated || !state.consent || !restored) return null;
 
   return (
     <div dir={dir} className="flex min-h-screen flex-col">
@@ -279,7 +293,7 @@ function StartScreen() {
                   {ids.map((id) => {
                     const question = QUESTIONS.find((item) => item.id === id);
                     if (!question) return null;
-                    return <QuestionField key={id} question={question} index={id} hideNumber={true} answer={state.answers[id]} onChange={(value) => setAnswer(id, value)} levelColor={color} accentSelected={true} />;
+                    return <QuestionField key={id} question={question} index={id} hideNumber={true} answer={state.answers[id]} onChange={(value) => setAnswer(id, value)} levelColor={color} accentSelected={true} unanswered={!isQuestionDone(id)} />;
                   })}
                 </div>
                 {area.id === "status" ? <>
@@ -298,8 +312,9 @@ function StartScreen() {
             ); })}
             <div className="mt-7 flex flex-wrap gap-3">
               <Button type="button" variant="outline" className={GHOST_BTN} onClick={() => setStage("areas")}><ArrowLeft className="rtl:rotate-180" />{t("common.back")}</Button>
-              <Button type="button" variant="secondary" className={PRIMARY_BTN} onClick={() => setStage("choose")}>{t("start.showSteps")}<ArrowRight className="rtl:rotate-180" /></Button>
+              <Button type="button" variant="secondary" className={cn(PRIMARY_BTN, "disabled:pointer-events-auto disabled:cursor-not-allowed")} disabled={hasUnansweredQuestions} aria-describedby={hasUnansweredQuestions ? "start-questions-hint" : undefined} onClick={() => setStage("choose")}>{t("start.showSteps")}<ArrowRight className="rtl:rotate-180" /></Button>
             </div>
+            {hasUnansweredQuestions ? <p id="start-questions-hint" className="mt-3 text-xs text-muted-foreground leading-relaxed">{t("start.questions.requiredHint")}</p> : null}
           </div>
         ) : null}
         {stage === "choose" ? (

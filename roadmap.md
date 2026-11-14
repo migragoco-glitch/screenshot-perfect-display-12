@@ -18,3 +18,5 @@
 - [x] Correct the desktop assessment ring mapping to teal, light teal, and gold.
 - [x] Convert the mobile assessment ring to three live dimension-color segments.
 - [x] Verify English and Persian views, progress states, and preview health.
+
+- [x] Add Q13 Other with neutral score and /start required-answer checks, optional unanswered chips, and bilingual helper text.

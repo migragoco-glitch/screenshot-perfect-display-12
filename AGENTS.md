@@ -14,3 +14,4 @@
 - Keep the needs-first /start flow URL-only and derive its steps in area-flow from shared answers and existing roadmap knowledge; its checkout return target preserves the separate flow without changing assessment scoring.
 - Keep checkout pass selection local to the checkout screen and preserve simulated tier updates and return targets; selecting a pass must not introduce expiry enforcement or change shared assessment storage.
 - Reuse FoundersCircleModal for landing Premium entry and preserve its checkout return target through consent, so email capture and the needs-first flow share the existing behavior.
+- Keep /start question completion and later-stage guards on the same applicability-aware counts, treating Q2 as complete with an effective route; keep all hooks before the hydration return to preserve hook order.
