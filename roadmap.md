@@ -1,5 +1,7 @@
 # Current roadmap
 
+- [x] Require Q7 child count with stored-type tolerance and unify both /start Premium feature lists using the approved bilingual keys.
+
 - [x] Apply approved ITEM 1 email-modal copy, checkout currency display, landing Premium button behavior, and consent return target; leave ITEM 2 untouched.
 
 - [x] Apply approved checkout pass selector, early-access discount, and scoped bilingual price wording; preserve simulated completion and untouched pages.

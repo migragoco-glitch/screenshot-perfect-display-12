@@ -486,16 +486,17 @@ function ProfileCard({ completed }: { completed: boolean }) {
     <Button type="button" variant="secondary" className={cn(PRIMARY_BTN, "mt-5 h-auto whitespace-normal")} onClick={() => { void navigate({ to: completed ? "/dashboard" : "/assessment" }); }}>{t(completed ? "start.profile.cta.dashboard" : "start.profile.cta.assessment")}<ArrowRight className="rtl:rotate-180" /></Button>
   </div>;
 }
-function UpgradeCard({ view, onUpgrade }: { view: "info" | "road"; onUpgrade: () => void }) {
+const UPGRADE_CHECKED = ["start.lock.road.weeks", "pricing.navItem3", "pricing.navItem4", "start.lock.road.track", "pricing.navItem6"] as const;
+const UPGRADE_SOON = ["start.lock.soon.sync", "start.lock.soon.pdf", "start.lock.soon.alerts"] as const;
+
+function UpgradeCard({ onUpgrade }: { view: "info" | "road"; onUpgrade: () => void }) {
   const { t } = useI18n();
-  const inclusions = view === "road" ? ["start.lock.road.weeks", "start.lock.road.details", "start.lock.road.track"] as const : ["start.lock.info.checklist"] as const;
   return <div className="mt-8 rounded-3xl border border-dashed border-border bg-muted/50 p-6">
     <Lock className="size-6 text-secondary" aria-hidden />
     <h3 className="mt-3 text-lg font-semibold">{t("start.lock.title")}</h3>
     <ul className="mt-4 space-y-3 text-sm">
-      {inclusions.map((key) => <li key={key} className="flex items-start gap-2"><Check className="size-4 shrink-0 text-secondary" aria-hidden /><span>{t(key)}</span></li>)}
-      <li className="flex items-start gap-2"><Check className="size-4 shrink-0 text-secondary" aria-hidden /><span>{t("start.lock.profile")}</span></li>
-      {(["start.lock.soon.sync", "start.lock.soon.pdf", "start.lock.soon.alerts"] as const).map((key) => <li key={key} className="flex flex-wrap items-center gap-2 text-muted-foreground"><span>{t(key)}</span><span className="rounded-md bg-muted px-2 py-1 text-xs">{t("start.soon")}</span></li>)}
+      {UPGRADE_CHECKED.map((key) => <li key={key} className="flex items-start gap-2"><Check className="size-4 shrink-0 text-secondary" aria-hidden /><span>{t(key)}</span></li>)}
+      {UPGRADE_SOON.map((key) => <li key={key} className="flex flex-wrap items-center gap-2 text-muted-foreground"><span>{t(key)}</span><span className="rounded-md bg-muted px-2 py-1 text-xs">{t("start.soon")}</span></li>)}
     </ul>
     <Button type="button" variant="secondary" className={cn(PRIMARY_BTN, "mt-5 h-auto whitespace-normal")} onClick={onUpgrade}><Lock />{t("start.upgrade")}</Button>
     <p className="mt-3 text-xs text-muted-foreground">{t("pay.demoNote")}</p>
