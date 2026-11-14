@@ -97,7 +97,7 @@
   --popover-foreground: var(--navy);
   --primary: var(--navy);
   --primary-foreground: oklch(0.98 0.006 85);
-  --secondary: var(--teal);
+  --secondary: var(--navigator-teal);
   --secondary-foreground: oklch(0.99 0.005 85);
   --muted: oklch(0.945 0.009 85);
   --muted-foreground: oklch(0.492 0.028 258);
@@ -155,6 +155,15 @@
 @layer base {
   * {
     border-color: var(--color-border);
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 1.5px solid var(--navigator-teal);
+    outline-offset: 2px;
   }
 
   body {
