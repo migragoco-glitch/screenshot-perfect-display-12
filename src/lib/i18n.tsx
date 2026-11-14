@@ -541,7 +541,6 @@ export const en = {
   "pay.emailLabel": "Your email",
   "pay.emailCta": "Save email and continue",
   "pay.emailInvalid": "Please enter a valid email address.",
-  "pay.emailThanks": "Your early-access code is reserved. Continuing to checkout…",
   "pay.emailSkip": "Continue at standard pricing",
 
   "set.account": "Account",
@@ -1404,7 +1403,6 @@ export const fa: Record<keyof typeof en, string> = {
   "pay.emailLabel": "ایمیل شما",
   "pay.emailCta": "ثبت ایمیل و ادامه",
   "pay.emailInvalid": "لطفاً یک ایمیل معتبر وارد کنید.",
-  "pay.emailThanks": "کد دسترسی زودهنگام شما رزرو شد. در حال رفتن به مرحلهٔ پرداخت…",
   "pay.emailSkip": "ادامه با قیمت استاندارد",
 
   "set.account": "حساب کاربری",
