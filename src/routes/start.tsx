@@ -113,6 +113,10 @@ function StartScreen() {
   const [firstExpanded, setFirstExpanded] = useState(false);
   const [profileWhyIds, setProfileWhyIds] = useState<string[]>([]);
   const [paywallOpen, setPaywallOpen] = useState(false);
+  const [activated, setActivated] = useState(false);
+  useEffect(() => {
+    try { if (window.sessionStorage.getItem("migrago.start.activated") === "1") { window.sessionStorage.removeItem("migrago.start.activated"); setActivated(true); } } catch { /* Storage may be unavailable. */ }
+  }, []);
   useEffect(() => {
     if (!hydrated || !state.consent || restored) return;
     try {
@@ -207,6 +211,7 @@ function StartScreen() {
     <div dir={dir} className="flex min-h-screen flex-col">
       <AppHeader />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 md:px-8 md:py-14">
+        {activated ? <div role="status" className="mb-6 flex items-start justify-between gap-3 rounded-2xl bg-secondary/12 px-4 py-3 text-sm font-semibold text-foreground"><span>{t("start.activatedBanner")}</span><button type="button" aria-label={t("common.close")} onClick={() => setActivated(false)} className="text-muted-foreground">×</button></div> : null}
         <StepTracker stage={stage} questionFill={questionFill} />
         <h1 className="text-2xl md:text-3xl">{t(stage === "info" ? "start.title.info" : stage === "road" ? "start.title.road" : "start.title")}</h1>
         {stage === "city" ? (
@@ -348,7 +353,8 @@ function StartScreen() {
                   <span className="min-w-0 flex-1">
                     <span className="block font-bold">{t(`start.choose.${view}.title`)}</span>
                     <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">{t(`start.choose.${view}.sub`)}</span>
-                    {view === "road" ? <span className="mt-2 block text-xs font-semibold">{t("start.progress").replace("{done}", localizeNumber(planDone, lang)).replace("{total}", localizeNumber(allPlanSteps.length, lang))}</span> : null}
+                    {view === "road" && !hasNavigator ? <span className="mt-2 block text-xs font-semibold">{t("start.free.totalSteps").replace("{total}", localizeNumber(allPlanSteps.length, lang))}</span> : null}
+                    {view === "road" && hasNavigator ? <span className="mt-2 block text-xs font-semibold">{t("start.progress").replace("{done}", localizeNumber(planDone, lang)).replace("{total}", localizeNumber(allPlanSteps.length, lang))}</span> : null}
                   </span>
                   <ArrowRight className="size-5 shrink-0 text-muted-foreground rtl:rotate-180" aria-hidden />
                 </button>
@@ -381,9 +387,9 @@ function StartScreen() {
               <summary className="cursor-pointer text-lg font-semibold">{t("start.checklist.title")}</summary>
               <p className="mt-3 text-sm font-semibold">{hasNavigator ? t("start.docs.counter").replace("{x}", localizeNumber(docsDone, lang)).replace("{y}", localizeNumber(docKeys.length, lang)) : t("start.docs.countOnly").replace("{y}", localizeNumber(docKeys.length, lang))}</p>
               {hasNavigator ? <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted"><div className="roadmap-progress-transition h-full bg-secondary" style={{ width: `${docKeys.length ? docsDone / docKeys.length * 100 : 0}%` }} /></div> : <p className="mt-2 text-xs text-muted-foreground">{t("start.docs.freeNote")}</p>}
-              {checklist.length ? checklist.map((item) => <div key={item.id} className="mt-5"><h4 className="text-sm font-semibold">{typeof item.title === "string" ? t(item.title) : item.title[lang]}</h4>{item.documents.map((key, index) => <label key={`${item.id}:${index}`} className="mt-3 flex items-start gap-3 text-sm">{hasNavigator ? <input type="checkbox" className="mt-1 size-4 accent-secondary" checked={docIds.includes(`${item.id}:${index}`)} onChange={() => toggleDoc(`${item.id}:${index}`)} /> : null}<span>{t(key)}</span></label>)}</div>) : <p className="mt-3 text-sm text-muted-foreground">{t("start.checklist.empty")}</p>}
+              {checklist.length ? checklist.map((item) => <div key={item.id} className="mt-5"><h4 className="text-sm font-semibold">{typeof item.title === "string" ? t(item.title) : item.title[lang]}</h4>{hasNavigator ? item.documents.map((key, index) => <label key={`${item.id}:${index}`} className="mt-3 flex items-start gap-3 text-sm"><input type="checkbox" className="mt-1 size-4 accent-[var(--status-done)]" checked={docIds.includes(`${item.id}:${index}`)} onChange={() => toggleDoc(`${item.id}:${index}`)} /><span>{t(key)}</span></label>) : <ul className="mt-2 list-disc space-y-1.5 ps-6 text-sm">{item.documents.map((key, index) => <li key={`${item.id}:${index}`}>{t(key)}</li>)}</ul>}</div>) : <p className="mt-3 text-sm text-muted-foreground">{t("start.checklist.empty")}</p>}
             </details>
-            {hasNavigator ? <><ProfileCard completed={state.completed} /><p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p></> : <UpgradeCard view="info" onUpgrade={openUpgrade} />}
+            {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : null}
             <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
             <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -397,11 +403,11 @@ function StartScreen() {
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div><h2 className="text-xl md:text-2xl">{t("start.results")}</h2><p className="mt-1 text-sm text-muted-foreground">{t("start.results.sub")}</p></div>
             </div>
-            <RoadmapSummary done={planDone} total={allPlanSteps.length} showLength />
+            <RoadmapSummary done={planDone} total={allPlanSteps.length} showLength free={!hasNavigator} />
             {steps.length ? [...new Set(steps.map((step) => step.phase))].map((phase) => {
               const phaseSteps = steps.filter((step) => step.phase === phase);
               return <Fragment key={phase}>
-                <header className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-full px-4 py-2" style={{ background: phase === 3 ? "var(--phase-olive-pill)" : PHASE_COLORS[phase - 1], color: phase === 2 || phase === 3 ? "var(--journey-pill-foreground)" : "var(--navigator-navy)" }}><h3 className="text-sm font-bold">{t(`road.phase${phase}` as "road.phase1" | "road.phase2" | "road.phase3" | "road.phase4")} · {t("start.plan.weeks").replace("{from}", localizeNumber(weeksRange(phase)[0], lang)).replace("{to}", localizeNumber(weeksRange(phase)[1], lang))}</h3><span className="text-xs font-semibold">{t("start.phase.counter").replace("{done}", localizeNumber(phaseSteps.filter((step) => doneIds.includes(step.id)).length, lang)).replace("{total}", localizeNumber(phaseSteps.length, lang))}</span></header>
+                <header className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-full px-4 py-2" style={{ background: phase === 3 ? "var(--phase-olive-pill)" : PHASE_COLORS[phase - 1], color: phase === 2 || phase === 3 ? "var(--journey-pill-foreground)" : "var(--navigator-navy)" }}><h3 className="text-sm font-bold">{t(`road.phase${phase}` as "road.phase1" | "road.phase2" | "road.phase3" | "road.phase4")}</h3><span className="text-xs font-semibold">{!hasNavigator ? t("start.free.totalSteps").replace("{total}", localizeNumber(phaseSteps.length, lang)) : t("start.phase.counter").replace("{done}", localizeNumber(phaseSteps.filter((step) => doneIds.includes(step.id)).length, lang)).replace("{total}", localizeNumber(phaseSteps.length, lang))}</span></header>
                 <ol className="mt-5 space-y-4">
                   {phaseSteps.map((step) => {
                     const done = doneIds.includes(step.id);
@@ -410,8 +416,8 @@ function StartScreen() {
                     return <li key={step.id} data-step-id={step.id} className={cn("rounded-2xl border border-border/70 p-4 transition-opacity duration-200 ease-out", done && "opacity-70")} style={stepCardStyle(step.phase)}>
                       <div className="flex items-start gap-3">
                         {hasNavigator ? <label className="relative mt-0.5 inline-flex size-5 shrink-0 cursor-pointer items-center justify-center">
-                          <input type="checkbox" checked={done} onChange={() => toggleDone(step.id)} aria-label={`${t("road.done")}: ${title}`} className="peer size-5 cursor-pointer appearance-none rounded-md border border-border bg-background transition-colors duration-200 ease-out checked:border-[var(--navigator-teal)] checked:bg-[var(--navigator-teal)]" />
-                          {done ? <Check className="check-pop pointer-events-none absolute size-3.5 text-secondary-foreground" aria-hidden /> : null}
+                          <input type="checkbox" checked={done} onChange={() => toggleDone(step.id)} aria-label={`${t("road.done")}: ${title}`} className="peer size-5 cursor-pointer appearance-none rounded-md border border-border bg-background transition-colors duration-200 ease-out checked:border-[var(--status-done)] checked:bg-[var(--status-done)]" />
+                          {done ? <Check className="check-pop pointer-events-none absolute size-3.5 text-[var(--journey-pill-foreground)]" aria-hidden /> : null}
                         </label> : null}
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
@@ -450,7 +456,7 @@ function StartScreen() {
                 })}
               </ol>
             </section> : null}
-            <ProfileCard completed={hasNavigator && state.completed} {...(hasNavigator ? {} : { onIncomplete: openUpgrade })} />
+            {hasNavigator ? <ProfileCard completed={state.completed} /> : <UpgradeCard view="road" onUpgrade={openUpgrade} />}
             {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : null}
             <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
             <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
@@ -481,7 +487,7 @@ function PremiumStepCard({ step, done, expanded, onToggleDone, onToggleExpanded,
   const title = typeof step.title === "string" ? t(step.title) : step.title[lang];
   return <li data-step-id={step.id} className={cn("rounded-lg border border-border/70 p-4", done && "opacity-70")} style={stepCardStyle(step.phase)}>
     <div className="flex items-start gap-3">
-      <input type="checkbox" checked={done} onChange={onToggleDone} aria-label={`${t("road.done")}: ${title}`} className="mt-1 size-5 shrink-0 cursor-pointer accent-secondary" />
+      <input type="checkbox" checked={done} onChange={onToggleDone} aria-label={`${t("road.done")}: ${title}`} className="mt-1 size-5 shrink-0 cursor-pointer accent-[var(--status-done)]" />
       <div className="min-w-0 flex-1">
         <Button type="button" variant="ghost" aria-expanded={expanded} aria-controls={`details-${step.id}`} onClick={onToggleExpanded} className="h-auto w-full flex-wrap justify-start gap-2 whitespace-normal p-0 text-start hover:bg-transparent">
           <span className={cn("me-auto text-sm font-bold", done && "line-through")}>{title}</span>
@@ -529,19 +535,13 @@ function ProfileCard({ completed, onIncomplete }: { completed: boolean; onIncomp
   const profile = completed ? computeProfile(state.answers, state.founderTrack === true, state.region ?? "undecided") : undefined;
   return <ProfilePreview {...(profile ? { profile } : {})} onOpen={() => { if (!completed && onIncomplete) { onIncomplete(); return; } void navigate(completed ? { to: "/dashboard", search: { tab: "profile" } } : { to: "/assessment" }); }} />;
 }
-const UPGRADE_CHECKED = ["start.lock.road.weeks", "pricing.navItem3", "pricing.navItem4", "start.lock.road.track", "pricing.navItem6"] as const;
-const UPGRADE_SOON = ["start.lock.soon.sync", "start.lock.soon.pdf", "start.lock.soon.alerts"] as const;
-
 function UpgradeCard({ onUpgrade }: { view: "info" | "road"; onUpgrade: () => void }) {
   const { t } = useI18n();
-  return <div className="mt-8 rounded-3xl border border-dashed border-border bg-muted/50 p-6">
-    <Lock className="size-6 text-secondary" aria-hidden />
-    <h3 className="mt-3 text-lg font-semibold">{t("start.lock.title")}</h3>
+  return <div className="mt-8 rounded-3xl border border-border bg-muted/50 p-6">
+    <h3 className="flex items-center gap-2 text-lg font-semibold"><Lock className="size-5 shrink-0 text-secondary" aria-hidden />{t("start.free.upgradeTitle")}</h3>
     <ul className="mt-4 space-y-3 text-sm">
-      {UPGRADE_CHECKED.map((key) => <li key={key} className="flex items-start gap-2"><Check className="size-4 shrink-0 text-secondary" aria-hidden /><span>{t(key)}</span></li>)}
-      {UPGRADE_SOON.map((key) => <li key={key} className="flex flex-wrap items-center gap-2 text-muted-foreground"><span>{t(key)}</span><span className="rounded-md bg-muted px-2 py-1 text-xs">{t("start.soon")}</span></li>)}
+      {(["start.free.f1", "start.free.f2", "start.free.f3"] as const).map((key) => <li key={key} className="flex items-start gap-2"><Check className="size-4 shrink-0 text-secondary" aria-hidden /><span>{t(key)}</span></li>)}
     </ul>
-    <Button type="button" variant="secondary" className={cn(PRIMARY_BTN, "mt-5 h-auto whitespace-normal")} onClick={onUpgrade}><Lock />{t("start.upgrade")}</Button>
-    <p className="mt-3 text-xs text-muted-foreground">{t("pay.demoNote")}</p>
+    <Button type="button" variant="secondary" className={cn(PRIMARY_BTN, "mt-5 h-auto whitespace-normal")} onClick={onUpgrade}><Lock />{t("start.free.cta")}</Button>
   </div>;
 }

@@ -7,6 +7,7 @@ import {
   GraduationCap,
   House,
   Info,
+  Landmark,
   ReceiptText,
   Rocket,
   ShieldPlus,
@@ -22,6 +23,7 @@ import {
   submitNps,
 } from "@/lib/feedback";
 import { trackEvent } from "@/lib/store";
+import { DISCOUNT, PLAN_PRICES, formatEuro } from "@/routes/checkout";
 
 const CSAT_KEY = "migrago.csat.done";
 const NPS_KEY = "migrago.nps.done";
@@ -56,7 +58,7 @@ export function InstitutionBadge({
   solid?: boolean;
 }) {
   const { t, lang } = useI18n();
-  const Icon = INSTITUTION_ICONS[institution] ?? GraduationCap;
+  const Icon = INSTITUTION_ICONS[institution] ?? ((institution as string) === "Bank" ? Landmark : GraduationCap);
   const content = (
     <>
       <Icon className="size-3.5 shrink-0" strokeWidth={1.9} aria-hidden />
@@ -158,7 +160,7 @@ export function FoundersCircleModal({
   onClose: () => void;
   onJoined: () => void;
 }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -202,7 +204,19 @@ export function FoundersCircleModal({
           </button>
         </div>
 
-        <p className="mt-3 text-sm text-muted-foreground">{t("pay.emailSub")}</p>
+        <p className="mt-3 text-sm text-muted-foreground">{t("pay.modalOffer")}</p>
+        <ul className="mt-3 space-y-1.5 text-sm font-semibold">
+          {(["30", "90"] as const).map((d) => {
+            const [before, after = ""] = t(d === "30" ? "pay.plan30Row" : "pay.plan90Row").split("{old}");
+            return (
+              <li key={d}>
+                {before.replace("{final}", formatEuro(PLAN_PRICES[d] * (1 - DISCOUNT), lang))}
+                <s className="text-xs font-normal text-muted-foreground">{formatEuro(PLAN_PRICES[d], lang)}</s>
+                {after}
+              </li>
+            );
+          })}
+        </ul>
 
             <label className="mt-5 block text-xs font-semibold text-muted-foreground">
               {t("pay.emailLabel")}
@@ -212,7 +226,7 @@ export function FoundersCircleModal({
               value={email}
               maxLength={255}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
+              className="mt-1.5 w-full rounded-xl border-[1.5px] border-[var(--status-not-done)] bg-background px-4 py-2.5 text-sm outline-none focus:border-[var(--navigator-teal)]"
             />
             {error ? <p className="mt-2 text-xs font-semibold text-destructive">{error}</p> : null}
             <p className="mt-3 text-xs text-muted-foreground">{t("pay.emailNote")}</p>

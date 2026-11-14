@@ -1,4 +1,4 @@
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import type { Profile } from "@/lib/scoring";
@@ -16,8 +16,15 @@ export function ProgressRing({ percent, empty = false, complete = false }: { per
   </div>;
 }
 
-export function RoadmapSummary({ done, total, showLength = false }: { done: number; total: number; showLength?: boolean }) {
+export function RoadmapSummary({ done, total, showLength = false, free = false }: { done: number; total: number; showLength?: boolean; free?: boolean }) {
   const { t, lang } = useI18n();
+  if (free) return <div className="space-y-2 py-5">
+    <div className="flex flex-wrap gap-2">
+      <span className="inline-flex rounded-full bg-primary px-3 py-1 text-[11px] font-semibold text-primary-foreground">{t("start.plan.length").replace("{n}", localizeNumber(12, lang))}</span>
+      <span className="inline-flex rounded-full bg-primary px-3 py-1 text-[11px] font-semibold text-primary-foreground">{t("start.free.totalSteps").replace("{total}", localizeNumber(total, lang))}</span>
+    </div>
+    <p className="flex items-center gap-1.5 text-xs text-muted-foreground"><Lock className="size-3.5" aria-hidden />{t("start.free.lockHint")}</p>
+  </div>;
   const complete = total > 0 && done === total;
   return <div className="flex flex-wrap items-center gap-5 py-5">
     <ProgressRing percent={total ? Math.round(done / total * 100) : 0} complete={complete} />

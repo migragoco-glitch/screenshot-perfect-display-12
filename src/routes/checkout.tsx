@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { CheckCircle2, CreditCard, Lock, ShieldCheck } from "lucide-react";
+import { Check, CheckCircle2, CreditCard, Lock, ShieldCheck } from "lucide-react";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { Button } from "@/components/ui/button";
 import { localizeNumber, useI18n } from "@/lib/i18n";
@@ -31,8 +31,12 @@ export const Route = createFileRoute("/checkout")({
 });
 
 type PlanDuration = "30" | "90";
-const PLAN_PRICES: Record<PlanDuration, number> = { "30": 9.99, "90": 24.99 };
-const DISCOUNT = 0.7;
+export const PLAN_PRICES: Record<PlanDuration, number> = { "30": 9.99, "90": 24.99 };
+export const DISCOUNT = 0.7;
+export const formatEuro = (v: number, lang: "en" | "fa") =>
+  lang === "fa"
+    ? `${localizeNumber(v.toFixed(2), lang).replace(".", "٫")} یورو`
+    : `€${localizeNumber(v.toFixed(2), lang)}`;
 
 function CheckoutPage() {
   const { t, lang } = useI18n();
@@ -55,10 +59,7 @@ function CheckoutPage() {
 
   const basePrice = PLAN_PRICES[plan];
   const total = code ? basePrice * (1 - DISCOUNT) : basePrice;
-  const price = (v: number) =>
-    lang === "fa"
-      ? `${localizeNumber(v.toFixed(2), lang).replace(".", "٫")} یورو`
-      : `€${localizeNumber(v.toFixed(2), lang)}`;
+  const price = (v: number) => formatEuro(v, lang);
 
   const pay = () => {
     if (!hydrated || !appState.consent || state !== "idle") return;
@@ -68,6 +69,7 @@ function CheckoutPage() {
       trackEvent({ type: "checkout_completed" });
       update({ tier: "navigator" });
       if (appState.completed) window.localStorage.setItem("migrago.justUpgraded", "1");
+      if (next === "start") window.sessionStorage.setItem("migrago.start.activated", "1");
       setState("done");
       window.setTimeout(() => void navigate({ to: next === "start" ? "/start" : navigatorCheckoutDestination(appState.completed) }), 700);
     }, 1200);
@@ -82,7 +84,9 @@ function CheckoutPage() {
         <div className="glass-card rise-in rounded-3xl p-7 md:p-9">
           <Lock className="size-7 text-secondary" aria-hidden />
           <h1 className="mt-5 text-2xl">{t("checkout.title")}</h1>
-          <p className="mt-2 text-sm text-muted-foreground">{t(next === "start" ? "checkout.start.sub" : "checkout.sub")}</p>
+          <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
+            {(["checkout.feat1", "checkout.feat2", "checkout.feat3"] as const).map((key) => <li key={key} className="flex items-start gap-2"><Check className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden /><span>{t(key)}</span></li>)}
+          </ul>
           <p className="mt-5 rounded-2xl bg-muted p-4 text-xs leading-relaxed text-muted-foreground">
             {t("checkout.testMode")}
           </p>
@@ -114,31 +118,16 @@ function CheckoutPage() {
                   <span>{t(duration === "30" ? "checkout.plan30Label" : "checkout.plan90Label")}</span>
                   <CheckCircle2 className={`size-4 shrink-0 text-navy ${plan === duration ? "visible" : "invisible"}`} aria-hidden />
                 </span>
-                <span className="text-lg font-bold">{t(duration === "30" ? "checkout.plan30Price" : "checkout.plan90Price")}</span>
-                <span className="text-xs font-normal">{t(duration === "30" ? "checkout.plan30Note" : "checkout.plan90Note")}</span>
+                <span className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-lg font-bold">{price(code ? PLAN_PRICES[duration] * (1 - DISCOUNT) : PLAN_PRICES[duration])}</span>
+                  {code ? <s className="text-xs font-normal text-muted-foreground">{price(PLAN_PRICES[duration])}</s> : null}
+                </span>
+                <span className="text-xs font-normal">{t("checkout.plan30Note")}</span>
               </Button>
             ))}
           </div>
 
           <dl className="mt-7 space-y-3 border-y border-border py-5 text-sm">
-            <div className="flex items-center justify-between gap-4">
-              <dt>{t(plan === "30" ? "checkout.plan30" : "checkout.plan90")}</dt>
-              <dd className="tabular-nums font-semibold">{price(basePrice)}</dd>
-            </div>
-            {code ? (
-              <div className="flex items-center justify-between gap-4 text-secondary">
-                <dt className="font-semibold">
-                  {t("checkout.discountLabel")} · {code}
-                </dt>
-                <dd className="tabular-nums font-semibold">
-                  {lang === "fa" ? (
-                    <><bdi dir="ltr">−{localizeNumber((basePrice - total).toFixed(2), lang).replace(".", "٫")}</bdi>{" یورو"}</>
-                  ) : (
-                    <bdi dir="ltr">−€{localizeNumber((basePrice - total).toFixed(2), lang)}</bdi>
-                  )}
-                </dd>
-              </div>
-            ) : null}
             <div className="flex items-center justify-between gap-4 pt-1 text-base font-bold">
               <dt>{t("checkout.total")}</dt>
               <dd className="tabular-nums">{price(total)}</dd>
@@ -146,7 +135,7 @@ function CheckoutPage() {
           </dl>
           <p className="mt-2 text-xs text-foreground">{t("checkout.oneTime")}</p>
 
-          {email ? <p className="mt-4 text-xs text-muted-foreground">{email}</p> : null}
+          {email ? <p className="mt-4 text-xs text-muted-foreground">{t("checkout.reservedEmail")} {email}</p> : null}
           {code ? (
             <p className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-secondary/12 px-3 py-1 text-xs font-semibold text-secondary">
               <ShieldCheck className="size-3.5" aria-hidden />
