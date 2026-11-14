@@ -381,9 +381,9 @@ export const en = {
   "consent.selfReport":
     "Your roadmap is generated entirely from the answers you provide. MigraGo does not verify the accuracy of your responses. Incomplete or inaccurate answers — whether unintentional or deliberate — may result in a roadmap that does not reflect your actual situation, and responsibility for the accuracy of your answers rests with you.",
   "q.inconsistencyVisa":
-    "Your answers about prior migration steps (Q30) and visa refusal (Q31) seem inconsistent — please review them.",
+    "Your answers about prior migration steps and visa refusal seem inconsistent — please review them.",
   "q.inconsistencyChildren":
-    "Your answers about dependent children (Q7) and who is relocating with you (Q8) seem inconsistent — please review them.",
+    "Your answers about dependent children and who is relocating with you seem inconsistent — please review them.",
   "q.inconsistencyOk": "My answers are correct — continue",
   "consent.privacy": "Read the short privacy note",
   "consent.privacyBody":
@@ -414,10 +414,12 @@ export const en = {
   "q.saved": "Answers saved",
   "q.corrupted": "We noticed an issue with your saved answers — please retake the assessment to continue.",
   "q.saveResume": "Saved automatically — you can close this and resume later.",
-  "q.submit": "Analyze my profile",
+  "q.submit": "Submit assessment",
+  "q.sharedFromStartNote": "Your answer was recorded in the roadmap stage. To change it, return to the roadmap cards.",
+  "q.sharedFromStartAction": "Go to roadmap questions",
   "q.optionalSection": "Optional — Special Track",
   "q.optionalNote":
-    "These four questions are excluded from your core score. They can unlock fast-track and talent-pathway content in your roadmap.",
+    "These questions are excluded from your core score. They can unlock fast-track and talent-pathway content in your roadmap.",
   "q.required": "Please answer the questions in this section to continue.",
   "q.detail": "Details",
   "q.number": "Number",
@@ -917,6 +919,10 @@ export const en = {
   "assess.viewRecorded": "View recorded answers",
   "assess.recordedBanner": "Recorded answers — {date}",
   "assess.cancelReassess": "Cancel re-assessment",
+  "assess.startReassess": "Start re-assessment",
+  "assess.cancel": "Cancel",
+  "assess.editingBanner": "In re-assessment mode",
+  "assess.continueReassess": "Continue re-assessment",
   "assess.cancelReassessConfirm": "Discard your draft and restore your last submitted answers?",
   "q.skipSection": "Skip this section",
   "q.restoreSection": "Restore this section",
@@ -1302,9 +1308,9 @@ export const fa: Record<keyof typeof en, string> = {
   "consent.selfReport":
     "نقشه‌راه شما کاملاً بر اساس پاسخ‌هایی که ارائه می‌دهید ساخته می‌شود. MigraGo صحت پاسخ‌های شما را بررسی یا تأیید نمی‌کند. پاسخ ناقص یا نادرست — چه غیرعمد و چه عمدی — می‌تواند به نقشه‌راهی منجر شود که با وضعیت واقعی شما هم‌خوانی ندارد، و مسئولیت صحت پاسخ‌ها بر عهدهٔ خود شماست.",
   "q.inconsistencyVisa":
-    "پاسخ‌های شما دربارهٔ اقدامات قبلی مهاجرت (پرسش ۳۰) و ریجکتی ویزا (پرسش ۳۱) ناهماهنگ به نظر می‌رسد — لطفاً آن‌ها را بازبینی کنید.",
+    "پاسخ‌های شما دربارهٔ اقدامات قبلی مهاجرت و ریجکتی ویزا ناهماهنگ به نظر می‌رسد — لطفاً آن‌ها را بازبینی کنید.",
   "q.inconsistencyChildren":
-    "پاسخ‌های شما دربارهٔ فرزندان تحت تکفل (پرسش ۷) و همراهان مهاجرت (پرسش ۸) ناهماهنگ به نظر می‌رسد — لطفاً آن‌ها را بازبینی کنید.",
+    "پاسخ‌های شما دربارهٔ فرزندان تحت تکفل و همراهان مهاجرت ناهماهنگ به نظر می‌رسد — لطفاً آن‌ها را بازبینی کنید.",
   "q.inconsistencyOk": "پاسخ‌هایم درست است — ادامه",
   "consent.privacy": "مطالعهٔ یادداشت کوتاه حریم خصوصی",
   "consent.privacyBody":
@@ -1335,10 +1341,12 @@ export const fa: Record<keyof typeof en, string> = {
   "q.saved": "پاسخ‌ها ذخیره شد",
   "q.corrupted": "مشکلی در پاسخ‌های ذخیره‌شدهٔ شما پیدا شد — لطفاً پرسشنامه را دوباره تکمیل کنید.",
   "q.saveResume": "به‌صورت خودکار ذخیره می‌شود — می‌توانید ببندید و بعداً ادامه دهید.",
-  "q.submit": "تحلیل پروفایل من",
+  "q.submit": "ثبت ارزیابی",
+  "q.sharedFromStartNote": "پاسخ شما در مرحلهٔ نقشهٔ راه ثبت شده است. برای تغییر، به کارت‌های نقشهٔ راه برگردید.",
+  "q.sharedFromStartAction": "رفتن به پرسش‌های نقشهٔ راه",
   "q.optionalSection": "اختیاری — مسیر ویژه",
   "q.optionalNote":
-    "این چهار پرسش در نمرهٔ اصلی شما محاسبه نمی‌شود و می‌تواند محتوای مسیر سریع و مسیر استعدادهای برجسته را در نقشه‌راه شما فعال کند.",
+    "این پرسش‌ها در نمرهٔ اصلی شما محاسبه نمی‌شود و می‌تواند محتوای مسیر سریع و مسیر استعدادهای برجسته را در نقشه‌راه شما فعال کند.",
   "q.required": "برای ادامه، لطفاً پرسش‌های این بخش را پاسخ دهید.",
   "q.detail": "توضیح",
   "q.number": "تعداد",
@@ -1839,6 +1847,10 @@ export const fa: Record<keyof typeof en, string> = {
   "assess.viewRecorded": "مشاهدهٔ پاسخ‌های ثبت‌شده",
   "assess.recordedBanner": "پاسخ ثبت‌شده — {date}",
   "assess.cancelReassess": "انصراف از ارزیابی مجدد",
+  "assess.startReassess": "شروع ارزیابی مجدد",
+  "assess.cancel": "انصراف",
+  "assess.editingBanner": "در حالت ارزیابی مجدد",
+  "assess.continueReassess": "ادامهٔ ارزیابی مجدد",
   "assess.cancelReassessConfirm": "پیش‌نویس حذف شود و آخرین پاسخ‌های ثبت‌شده بازگردانده شوند؟",
   "q.skipSection": "رد کردن این بخش",
   "q.restoreSection": "بازگرداندن این بخش",
