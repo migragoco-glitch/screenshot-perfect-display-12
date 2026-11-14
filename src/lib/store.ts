@@ -344,7 +344,7 @@ export function useAppState() {
   const pushSnapshot = useCallback((snap: Omit<ScoreSnapshot, "at">) => {
     const current = read();
     const last = current.history[current.history.length - 1];
-    if (last && last.overall === snap.overall && last.legal === snap.legal) return;
+    if (last && last.overall === snap.overall && last.legal === snap.legal && last.professional === snap.professional && last.psychological === snap.psychological) return;
     const next: AppState = {
       ...current,
       history: [...current.history, { at: new Date().toISOString(), ...snap }].slice(-12),

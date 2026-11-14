@@ -48,7 +48,7 @@ export type AreaOverlay = {
   documents?: TKey[];
   note?: TKey;
   sourceUrl?: string;
-  lastChecked: string;
+  lastChecked?: string;
 };
 const checked = "2026-11-06";
 const checkedToday = "2026-11-07";
