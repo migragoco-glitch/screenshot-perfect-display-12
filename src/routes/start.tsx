@@ -44,7 +44,7 @@ function saveIds(key: string, ids: string[]) {
 const ICONS = { status: Globe, id: IdCard, bank: Landmark, kela: HeartPulse, housing: House, family: Users, work: Briefcase, language: Languages, comm: Building2 };
 
 const PHASE_COLORS = ["var(--navigator-light-teal)", "var(--navigator-teal)", "var(--navigator-olive)", "var(--navigator-gold)"];
-const PRIMARY_BTN = "inline-flex items-center justify-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-bold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90 disabled:opacity-50";
+const PRIMARY_BTN = "inline-flex items-center justify-center gap-2 rounded-full bg-[#02808A] px-6 py-3 text-sm font-bold text-white transition-colors duration-200 ease-out hover:bg-[#026A73] disabled:opacity-50";
 const GHOST_BTN = "inline-flex items-center justify-center gap-2 rounded-full border border-border bg-transparent px-5 py-3 text-sm font-semibold text-muted-foreground transition-colors duration-200 ease-out hover:bg-muted hover:text-foreground";
 const LABEL = "text-[10px] font-semibold uppercase tracking-wide text-muted-foreground";
 const AREA_COLORS: Record<AreaId, string> = {

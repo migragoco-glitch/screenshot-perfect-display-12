@@ -147,7 +147,7 @@ function CheckoutPage() {
             type="button"
             disabled={state !== "idle"}
             onClick={pay}
-            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-bold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90 disabled:opacity-50"
+            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#02808A] px-5 py-3 text-sm font-bold text-white transition-colors duration-200 ease-out hover:bg-[#026A73] disabled:opacity-50"
           >
             <CreditCard className="size-4" aria-hidden />
             {state === "idle"

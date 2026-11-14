@@ -41,7 +41,7 @@ export function PhaseRing({ phases, percent, complete }: { phases: { color: stri
       })}
     </svg>
     <div className="absolute inset-0 flex items-center justify-center">
-      <span className="text-lg font-bold tabular-nums">{localizeNumber(percent, lang)}٪{lang === "en" ? "%" : ""}</span>
+      <span className="text-lg font-bold tabular-nums">{localizeNumber(percent, lang)}%</span>
     </div>
     {complete ? <span className="absolute -bottom-1 -end-1 flex size-6 items-center justify-center rounded-full bg-[#15803D] text-white"><Check className="size-3.5" strokeWidth={3} aria-hidden /></span> : null}
   </div>;

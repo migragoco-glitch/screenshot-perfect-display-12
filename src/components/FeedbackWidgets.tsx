@@ -234,7 +234,7 @@ export function FoundersCircleModal({
               type="button"
               disabled={busy}
               onClick={() => void submit()}
-              className="mt-4 w-full rounded-full bg-secondary px-5 py-3 text-sm font-bold text-secondary-foreground disabled:opacity-40"
+              className="mt-4 w-full rounded-full bg-[#02808A] px-5 py-3 text-sm font-bold text-white hover:bg-[#026A73] disabled:opacity-40"
             >
               {t("pay.emailCta")}
             </button>
