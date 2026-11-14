@@ -11,9 +11,10 @@ describe("BUILD 4 assessment rules", () => {
   });
   test("the assessment has 38 questions; Q6 and the founder questions are conditional", () => {
     expect(QUESTIONS).toHaveLength(38);
-    // Q6 applies only when Q5 is answered and not "EU/EEA/Swiss citizen" (value 1).
-    expect(applicableQuestions({ 5: { value: 1 } }).some((q) => q.id === 6)).toBe(false);
-    expect(applicableQuestions({ 5: { value: 0 } }).some((q) => q.id === 6)).toBe(true);
+    // Q6 applies only when Q5 (marital status) is married or divorced (value 1 or 2).
+    expect(applicableQuestions({ 5: { value: 0 } }).some((q) => q.id === 6)).toBe(false);
+    expect(applicableQuestions({ 5: { value: 1 } }).some((q) => q.id === 6)).toBe(true);
+    expect(applicableQuestions({ 5: { value: 2 } }).some((q) => q.id === 6)).toBe(true);
     // Q39–41 apply only on the founder track.
     expect(applicableQuestions({}).some((q) => q.id >= 39 && q.id <= 41)).toBe(false);
     expect(applicableQuestions({}, { founderTrack: true }).filter((q) => q.id >= 39 && q.id <= 41)).toHaveLength(3);
