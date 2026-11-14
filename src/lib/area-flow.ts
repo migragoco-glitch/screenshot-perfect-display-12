@@ -55,7 +55,7 @@ const checkedToday = "2026-11-07";
 export const AREA_OVERLAYS: Record<string, AreaOverlay> = {
   "vero-tax": { lastChecked: checkedToday, note: "start.step.vero-tax.note", sourceUrl: "https://www.vero.fi/en/individuals/tax-cards-and-tax-returns/arriving_in_finland/work_in_finland/" },
   "finnish-course": { lastChecked: checkedToday, deadline: "start.step.finnish-course.deadline", note: "start.step.finnish-course.note", sourceUrl: "https://www.suomi.fi/citizen/moving-and-traveling/migration/guide/as-an-immigrant-in-finland/integration-services-help-the-immigrant" },
-  "driving-licence": { phase: 4, completion: "start.step.driving-licence.completion", lastChecked: checkedToday, deadline: "start.step.driving-licence.deadline", note: "start.step.driving-licence.note", sourceUrl: "https://traficom.fi/en/drivers-and-vehicles/driving-licenses/exchanging-foreign-driving-licence-finnish-driving-licence" },
+  "driving-licence": { phase: 4, completion: "start.step.driving-licence.completion", lastChecked: "2026-11-14", deadline: "start.step.driving-licence.deadline", note: "start.step.driving-licence.note", sourceUrl: "https://traficom.fi/en/drivers-and-vehicles/driving-licenses/exchanging-foreign-driving-licence-finnish-driving-licence" },
   "te-jobseeker": { lastChecked: checked, sourceUrl: "https://tyomarkkinatori.fi/en/personal-customers/information-about-working-life/search-for-work/registration-as-a-job-seeker" },
   "cv-finnish-format": { lastChecked: checked, sourceUrl: "https://tyomarkkinatori.fi/en/personal-customers" },
   "employment-bridge": { lastChecked: checked, sourceUrl: "https://tyomarkkinatori.fi/en/personal-customers" },

@@ -10,7 +10,7 @@ import {
 } from "./questions";
 
 /**
- * Locked architecture: 42 questions → 7 levels → 3 dimensions.
+ * Locked architecture: 7 levels → 3 dimensions.
  * Legal / Status Readiness ← Level 1 (family & dependants factors only) + Level 5
  * Economic & Professional Capacity ← Level 2 + Level 3
  * Soft Skills & Psychological Readiness ← Level 4
@@ -18,7 +18,7 @@ import {
  */
 export const BUCKETS = {
   legal: { ids: [4, 6, 7, 30, 31, 32, 33, 34], weight: 30 },
-  professional: { ids: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], weight: 40 },
+  professional: { ids: [9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], weight: 40 },
   psychological: { ids: [24, 25, 26, 27, 28, 29], weight: 30 },
   bonus: { ids: [39, 40, 41], weight: 0 },
 } as const;
@@ -88,12 +88,6 @@ export function questionScore(q: Question, answers: Answers, ctx?: AnswerContext
   if (q.type === "number") {
     const v = num(a.value);
     if (v === undefined) return undefined;
-    if (q.id === 1) {
-      if (v >= 18 && v <= 35) return 1;
-      if (v <= 45) return 0.85;
-      if (v <= 55) return 0.6;
-      return 0.4;
-    }
     return 0.6;
   }
 
@@ -135,7 +129,7 @@ function bucketScore(ids: readonly number[], answers: Answers, ctx?: AnswerConte
 
 const L = (en: string, fa: string): Bilingual => ({ en, fa });
 
-/** Non-scored region preference, captured outside the 42 questions. */
+/** Non-scored region preference, captured outside the assessment questions. */
 export type Region = "helsinki" | "elsewhere" | "undecided";
 
 export function computeProfile(
@@ -279,9 +273,20 @@ export function computeProfile(
   return { overall, legal, professional, psychological, bonus, pacing, gaps, strengths, weaknesses };
 }
 
+export const TOP_BAND_THRESHOLD = 75;
+
+export type WeakestDimension = "legal" | "professional" | "psychological";
+
+/** Weakest of the three buckets; ties resolve legal > professional > psychological. */
+export function weakestDimension(p: Pick<Profile, "legal" | "professional" | "psychological">): WeakestDimension {
+  if (p.legal <= p.professional && p.legal <= p.psychological) return "legal";
+  if (p.professional <= p.psychological) return "professional";
+  return "psychological";
+}
+
 export function analysisSummary(p: Profile): Bilingual {
   const band =
-    p.overall >= 75
+    p.overall >= TOP_BAND_THRESHOLD
       ? L(
           "Your profile is strong and close to action-ready. The main task is sequencing: complete the administrative foundation first, then convert your professional profile into Finnish-market form.",
           "پروفایل شما قوی و نزدیک به آمادگی اجرایی است. کار اصلی، چینش درست گام‌ها است: نخست بنیاد اداری را کامل کنید و سپس پروفایل حرفه‌ای خود را به شکل قابل‌پذیرش بازار فنلاند دربیاورید.",

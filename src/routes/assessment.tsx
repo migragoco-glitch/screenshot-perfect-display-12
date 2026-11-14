@@ -28,6 +28,8 @@ import {
   QUESTIONS,
   SECTIONS,
   SECTION_DIMENSION,
+  assessmentProgress,
+  detailInRange,
   isAnswered,
   questionsForSection,
   type Answers,
@@ -43,12 +45,12 @@ export const Route = createFileRoute("/assessment")({
       {
         name: "description",
         content:
-          "A 7-section, 42-question assessment covering legal status, career, finances, psychological readiness and your Finland strategy.",
+          "A 7-section assessment covering legal status, career, finances, psychological readiness and your Finland strategy.",
       },
       { property: "og:title", content: "Integration readiness assessment — MigraGo" },
       {
         property: "og:description",
-        content: "42 questions, autosaved, 9–12 minutes. Build your Integration Profile.",
+        content: "A full assessment, autosaved, 9–12 minutes. Build your Integration Profile.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -145,19 +147,25 @@ function CompactProgressRing({ pct, answers }: { pct: number; answers: Answers }
 function Assessment() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const { state, hydrated, setAnswer, update, pushSnapshot, resetAnswers } = useAppState();
+  const { state, hydrated, setAnswer, update, submitAssessment, resetAnswers } = useAppState();
   const [section, setSection] = useState(1);
   const [analyzing, setAnalyzing] = useState(false);
   const [payModal, setPayModal] = useState(false);
   const [showRequired, setShowRequired] = useState(false);
   const [corrupted, setCorrupted] = useState(false);
   const [inconsistencyDismissed, setInconsistencyDismissed] = useState(false);
+  const [reassessConfirm, setReassessConfirm] = useState(false);
   const [guidedView, setGuidedView] = useState<GuidedView>("companion");
   const [companionMoment, setCompanionMoment] = useState<"start" | "mid" | "near">("start");
   const seenLevels = useRef(new Set<number>());
   // Opt-in gate for the Founder & Talent questions (Q39–41). Derived straight from
   // the (already sanitized) stored state so it is final before Step 7 first renders.
   const founderTrack = state.founderTrack ?? null;
+  // A submitted round is read-only; only an explicit re-assessment reopens it.
+  const editing = state.assessmentStatus === "editing" || !state.completed;
+  const locked = state.completed && !editing;
+  const displayAnswers = locked ? (state.submittedAnswers ?? state.answers) : state.answers;
+  const section7Skipped = state.section7Skipped === true;
 
   useEffect(() => {
     if (hydrated && !state.consent) void navigate({ to: "/consent", search: { next: "assessment" } });
@@ -178,11 +186,23 @@ function Assessment() {
     [section, state.answers, founderTrack],
   );
   const meta = SECTIONS.find((s) => s.id === section);
-  const answeredCount = QUESTIONS.filter((q) => isAnswered(q, state.answers[q.id])).length;
-  const progress = Math.round((answeredCount / QUESTIONS.length) * 100);
-  const sectionComplete = meta?.optional
+  // Shared applicable-question counts (skipped Section 7 excluded from totals).
+  const counts = assessmentProgress(state.answers, { founderTrack }, section7Skipped);
+  const answeredCount = counts.answered;
+  const progress = counts.total ? Math.round((answeredCount / counts.total) * 100) : 0;
+  const rangeInvalid = visible.some(
+    (q) =>
+      q.detailType === "number" &&
+      (q.id === 7 || q.id === 39) &&
+      state.answers[q.id]?.detail !== undefined &&
+      state.answers[q.id]?.detail !== "" &&
+      !detailInRange(q, state.answers[q.id]?.detail),
+  );
+  const sectionComplete = locked
     ? true
-    : visible.every((q) => isAnswered(q, state.answers[q.id]));
+    : meta?.optional
+      ? true
+      : visible.every((q) => isAnswered(q, state.answers[q.id])) && !rangeInvalid;
 
   // Gentle, non-blocking consistency flags shown on Step 7 only. Never alters
   // answers or scores — purely a review prompt for the user.
@@ -283,13 +303,13 @@ function Assessment() {
         ...(pathway ? { pathway } : {}),
       });
       trackEvent({ type: "paywall_view" });
-      pushSnapshot({
+      // Explicit final submit: locks the round and records one dated snapshot.
+      submitAssessment({
         overall: profile.overall,
         legal: profile.legal,
         professional: profile.professional,
         psychological: profile.psychological,
       });
-      update({ completed: true });
       window.setTimeout(() => {
         void navigate({ to: "/dashboard" });
       }, 2600);
@@ -434,6 +454,40 @@ function Assessment() {
           <div className="mt-4 rounded-2xl border border-accent/50 bg-accent/10 p-4">
             <p className="text-sm font-bold">{t("q.optionalSection")}</p>
             <p className="mt-1 text-xs text-muted-foreground">{t("q.optionalNote")}</p>
+            {!locked ? (
+              <button
+                type="button"
+                onClick={() => update({ section7Skipped: !section7Skipped })}
+                className="mt-3 inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-xs font-semibold transition-colors duration-200 ease-out hover:bg-muted"
+              >
+                {t(section7Skipped ? "q.restoreSection" : "q.skipSection")}
+              </button>
+            ) : null}
+          </div>
+        ) : null}
+        {locked ? (
+          <div className="mt-4 rounded-2xl border border-border bg-muted/50 p-4">
+            <p className="inline-flex items-center gap-1.5 text-sm font-semibold">
+              <Check className="size-4 text-secondary" aria-hidden />
+              {t("assess.locked")}
+            </p>
+            {reassessConfirm ? (
+              <div className="mt-3">
+                <p className="text-xs leading-relaxed text-muted-foreground">{t("assess.reassessConfirm")}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Button type="button" variant="secondary" className="rounded-full" onClick={() => { update({ assessmentStatus: "editing" }); setReassessConfirm(false); }}>
+                    {t("assess.reassess")}
+                  </Button>
+                  <Button type="button" variant="outline" className="rounded-full" onClick={() => setReassessConfirm(false)}>
+                    {t("common.back")}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <Button type="button" variant="outline" className="mt-3 rounded-full" onClick={() => setReassessConfirm(true)}>
+                {t("assess.reassess")}
+              </Button>
+            )}
           </div>
         ) : null}
         <p className="mt-3 inline-flex items-center gap-2 text-xs text-muted-foreground">
@@ -477,9 +531,11 @@ function Assessment() {
               key={q.id}
               question={q}
               index={q.id}
-              answer={state.answers[q.id]}
+              answer={displayAnswers[q.id]}
               levelColor={LEVEL_COLORS[section - 1] ?? "var(--navigator-teal)"}
+              readOnly={locked}
               onChange={(v) => {
+                if (locked) return;
                 setAnswer(q.id, v);
                 setShowRequired(false);
               }}
@@ -539,14 +595,14 @@ function Assessment() {
               {t("q.next")}
               <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
             </button>
-          ) : (
+          ) : locked ? null : (
             <button
               type="button"
               onClick={submit}
               className="inline-flex items-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
             >
               <Sparkles className="size-4" aria-hidden />
-              {t("q.submit")}
+              {t(editing && state.completed ? "q.submitReassess" : "q.submit")}
             </button>
           )}
         </div>

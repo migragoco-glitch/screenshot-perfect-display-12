@@ -71,7 +71,7 @@ export const en = {
   "start.step.finnish-course.deadline": "The initial assessment and the first integration plan must be done within 3 years of your first residence permit or the registration of your right of residence.",
   "start.step.finnish-course.note": "Ask your municipality's guidance services or the local employment services (TE office) about the initial assessment and your integration plan. Since 2025, multilingual civic orientation is offered to all new immigrants as part of the plan.",
   "start.step.driving-licence.title": "If you drive: check how long your foreign driving licence is valid in Finland",
-  "start.step.driving-licence.deadline": "EU and EEA licences stay valid until they expire. A licence from a country that signed the Geneva or Vienna road traffic convention is valid for 2 years after you move permanently to Finland. A licence from another country is valid for 1 year after you are entered in the Finnish Population Information System; after that you need a Finnish driving test.",
+  "start.step.driving-licence.deadline": "Driving licences from EU/EEA countries are valid until their expiry date. Licences from countries party to the Geneva or Vienna Convention are valid for 2 years after moving to Finland. Licences from other recognised countries are valid for 1 year after settling in Finland, and only for mopeds, motorcycles and cars. After that, a Finnish driving licence is required (exchange or test, depending on the issuing country).",
   "start.step.driving-licence.note": "To exchange, book an appointment at an Ajovarma service point. Your licence must still be valid when you exchange it. Check which country group your licence belongs to on the Traficom page.",
   "start.step.driving-licence.completion": "You know which rule applies to your licence and have noted the date by which you must exchange it or take a test.",
   "start.area.status.title": "Residence and route",
@@ -161,7 +161,7 @@ export const en = {
   "start.selectAll": "Select all",
   "start.continueAreas": "Continue with {n} items",
   "start.noAreas": "Select at least one item.",
-  "start.asked": "{n} of 42 questions asked",
+  "start.asked": "{n} questions asked",
   "start.results": "Actions you need, in order",
   "start.results.sub": "Based on your choices and answers, in chronological order.",
   "start.choose.title": "What would you like to see?",
@@ -326,7 +326,7 @@ export const en = {
   "pricing.navPrice": "€9.99",
   "pricing.perMonth": " / 30 days",
   "pricing.navDesc":
-    "Full 42-question assessment\nIntegration Profile\n Your personalized pathway\n Your 12-week roadmap\nProgress tracking and expanded actionable insights",
+    "Full assessment\nIntegration Profile\n Your personalized pathway\n Your 12-week roadmap\nProgress tracking and expanded actionable insights",
   "pricing.stab": "MigraGo Advanced Integration Plan",
   "pricing.stabPrice": "€249",
   "pricing.stabDesc":
@@ -446,7 +446,7 @@ export const en = {
   "dash.strengths": "Strengths",
   "dash.gaps": "Priority gaps",
   "dash.editAnswers": "Edit my answers",
-  "dash.recalc": "Recalculated live from your latest answers.",
+  "dash.recalc": "Based on the assessment submitted on {date}.",
   "dash.history": "Score history",
   "dash.noHistory": "Your first snapshot is saved. Edit an answer to see your profile evolve.",
   "dash.roadmapTab": "12-Week Roadmap",
@@ -457,7 +457,7 @@ export const en = {
 
   "pay.title": "Your profile is ready",
   "pay.sub":
-    "The Free plan includes a step-by-step roadmap with the responsible authority and official link for each step. Premium adds the full 42-question assessment, a readiness profile, a 12-week roadmap, step tracking and a document checklist. 30-day access €9.99 or 90-day access €24.99; one-time payment, no automatic renewal.",
+    "The Free plan includes a step-by-step roadmap with the responsible authority and official link for each step. Premium adds the full assessment, a readiness profile, a 12-week roadmap, step tracking and a document checklist. 30-day access €9.99 or 90-day access €24.99; one-time payment, no automatic renewal.",
   "pay.teaser": "Locked preview",
   "pay.unlock": "Activate Premium",
   "pay.later": "Stay on the free overview",
@@ -589,7 +589,7 @@ export const en = {
   "qc.progressLabel": "Quick Check progress",
   "qc.upgradeTitle": "Want the full picture?",
   "qc.upgradeDesc":
-    "Premium includes the full 42-question assessment, your complete Smart Integration Profile, a personalized pathway and the full 12-week roadmap with progress tracking. Your Quick Check answers carry over.",
+    "Premium includes the full assessment, your complete Smart Integration Profile, a personalized pathway and the full 12-week roadmap with progress tracking. Your Quick Check answers carry over.",
   "qc.upgradeCta": "Upgrade to Premium",
 
   "pay.emailTitle": "Early-access price",
@@ -683,13 +683,13 @@ export const en = {
   "faq.sub": "The short answers to what newcomers ask us most.",
   "faq.q1": "Do I need an account to use MigraGo?",
   "faq.a1":
-    "No account is required for the free 6-question Quick Check, your preliminary profile and recommended first steps. The full 42-question assessment and its results require Premium (€9.99/month).",
+    "No account is required for the free 6-question Quick Check, your preliminary profile and recommended first steps. The full assessment and its results require Premium (€9.99/month).",
   "faq.q2": "What is included in the free tier?",
   "faq.a2":
-    "Registration and onboarding, the free 6-question Quick Check in under one minute, a preliminary profile and recommended first steps. The full 42-question assessment, Smart Integration Profile, personalized pathway and 12-week roadmap belong to Premium (€9.99/month), not the free tier.",
+    "Registration and onboarding, the free 6-question Quick Check in under one minute, a preliminary profile and recommended first steps. The full assessment, Smart Integration Profile, personalized pathway and 12-week roadmap belong to Premium (€9.99/month), not the free tier.",
   "faq.q3": "What do I get with Premium (€9.99/month)?",
   "faq.a3":
-    "The full 42-question assessment, Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights. Your Quick Check answers carry over to the full assessment.",
+    "The full assessment, Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights. Your Quick Check answers carry over to the full assessment.",
   "faq.q4": "How is my roadmap generated?",
   "faq.a4":
     "Your assessment responses evaluate your current status across three core dimensions and identify existing gaps. The system then maps these gaps against the official regulations and procedures of the destination country, structuring the required actions into a 12-week plan across four operational phases..",
@@ -838,7 +838,7 @@ export const en = {
   "readiness.moderate": "Moderate Readiness",
   "readiness.developing": "Developing Readiness",
   "readiness.note":
-    "Calculated from your answers to the 42 assessment questions. It is not a visa probability, immigration eligibility, legal or government score, or psychological diagnosis.",
+    "Calculated from your assessment answers. It is not a visa probability, immigration eligibility, legal or government score, or psychological diagnosis.",
 
   "dash.dim3Note":
     "These results reflect self-reported patterns, not a professional evaluation.",
@@ -903,15 +903,28 @@ export const en = {
   "prog.locked": "Progress becomes available once your roadmap is unlocked.",
 
   "report.open": "Open my report",
-  "report.answered": "questions answered of 42",
+  "report.answered": "questions answered",
   "report.disclaimer": "Disclaimer",
 
   "assess.title": "My Assessment",
-  "assess.structure": "7 sections · 42 questions",
+  "assess.structure": "7 sections",
   "assess.completed": "Assessment completed",
   "assess.notCompleted": "Assessment not completed yet",
   "assess.open": "Open assessment",
   "assess.answeredOf": "answered of",
+  "assess.locked": "Answer submitted",
+  "assess.reassess": "Re-assess",
+  "assess.reassessConfirm": "Your previous status is kept with its date, and the new score is recorded separately.",
+  "q.skipSection": "Skip this section",
+  "q.restoreSection": "Restore this section",
+  "q.range.children": "Enter a whole number between 1 and 15.",
+  "q.range.managed": "Enter a whole number between 1 and 50.",
+  "q.submitReassess": "Submit re-assessment",
+  "dash.snapshotBaseline": "Baseline",
+  "dash.analysis.weakest": "In this assessment, your weakest dimension is “{dimension}”.",
+  "dash.analysis.weakest.legal": "Before anything else, clarify your documents and residence status.",
+  "dash.analysis.weakest.professional": "Make job preparation and financial readiness your priority.",
+  "dash.analysis.weakest.psychological": "Make language, your social network and adapting to the local culture your priority.",
 
   "disclaimer.responsible":
     "MigraGo provides digital integration pathway support and structured information. It does not provide legal representation, make government decisions, guarantee immigration outcomes, or replace qualified professionals or public authorities.",
@@ -972,7 +985,7 @@ export const fa: Record<keyof typeof en, string> = {
   "start.step.finnish-course.deadline": "ارزیابی اولیه و نخستین برنامهٔ ادغام باید ظرف ۳ سال از اولین اجازهٔ اقامت یا ثبت حق اقامت شما انجام شود.",
   "start.step.finnish-course.note": "درباره‌ٔ ارزیابی اولیه و برنامهٔ ادغام از خدمات راهنمایی شهرداری یا خدمات اشتغال محلی (TE) بپرسید. از ۲۰۲۵، آموزش چندزبانهٔ آشنایی با جامعه به همهٔ مهاجران جدید در چارچوب این برنامه ارائه می‌شود.",
   "start.step.driving-licence.title": "اگر رانندگی می‌کنید: مدت اعتبار گواهینامهٔ خارجی خود در فنلاند را بررسی کنید",
-  "start.step.driving-licence.deadline": "گواهینامهٔ کشورهای اتحادیهٔ اروپا و EEA تا پایان اعتبارش معتبر است. گواهینامهٔ کشوری که کنوانسیون ژنو یا وین را امضا کرده، ۲ سال پس از اقامت دائم در فنلاند معتبر است. گواهینامهٔ کشورهای دیگر ۱ سال پس از ثبت شما در سامانهٔ اطلاعات جمعیت فنلاند معتبر است؛ بعد از آن آزمون رانندگی فنلاند لازم است.",
+  "start.step.driving-licence.deadline": "گواهینامهٔ کشورهای اتحادیهٔ اروپا و EEA تا پایان اعتبارش معتبر است. گواهینامهٔ کشورهای عضو کنوانسیون ژنو یا وین تا ۲ سال پس از نقل‌مکان به فنلاند معتبر است. گواهینامهٔ سایر کشورهای شناخته‌شده تا ۱ سال پس از استقرار در فنلاند و فقط برای موتور، موتورسیکلت و خودرو سواری معتبر است. پس از آن گواهینامهٔ فنلاندی لازم است (تعویض یا آزمون، بسته به کشور صادرکننده).",
   "start.step.driving-licence.note": "برای تعویض، در یکی از دفاتر Ajovarma وقت بگیرید. گواهینامهٔ شما باید هنگام تعویض هنوز معتبر باشد. گروه کشور صادرکنندهٔ گواهینامهٔ خود را در صفحهٔ Traficom ببینید.",
   "start.step.driving-licence.completion": "می‌دانید چه قاعده‌ای برای گواهینامهٔ شما اعمال می‌شود و تاریخ مهلت تعویض یا آزمون را یادداشت کرده‌اید.",
   "start.area.status.title": "اقامت و مسیر",
@@ -1068,7 +1081,7 @@ export const fa: Record<keyof typeof en, string> = {
   "start.selectAll": "انتخاب همه",
   "start.continueAreas": "ادامه با {n} مورد",
   "start.noAreas": "حداقل یک مورد را انتخاب کنید.",
-  "start.asked": "{n} پرسش از ۴۲ پرسش مطرح شده",
+  "start.asked": "{n} پرسش مطرح شده",
   "start.results": "اقدامات مورد نیاز شما",
   "start.results.sub": "بر اساس انتخاب‌ها و پاسخ‌هایتان، به ترتیب زمان.",
   "start.choose.title": "چه چیزی می‌خواهید ببینید؟",
@@ -1231,7 +1244,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.navPrice": "۹٫۹۹ یورو",
   "pricing.perMonth": " / ۳۰ روز",
   "pricing.navDesc":
-    "ارزیابی کامل ۴۲ پرسشی\nپروفایل ادغام \n مسیر شخصی‌سازی‌ شدهٔ شما  \nنقشه‌ راه ۱۲ هفته‌ایی\n پیگیری پیشرفت و بینش‌های عملی گسترده‌تر",
+    "ارزیابی کامل\nپروفایل ادغام \n مسیر شخصی‌سازی‌ شدهٔ شما  \nنقشه‌ راه ۱۲ هفته‌ایی\n پیگیری پیشرفت و بینش‌های عملی گسترده‌تر",
   "pricing.stab": "طرح پیشرفتهٔ ادغام میگراگو",
   "pricing.stabPrice": "۲۴۹ یورو",
   "pricing.stabDesc":
@@ -1350,7 +1363,7 @@ export const fa: Record<keyof typeof en, string> = {
   "dash.strengths": "نقاط قوت",
   "dash.gaps": "شکاف‌های اولویت‌دار",
   "dash.editAnswers": "ویرایش پاسخ‌های من",
-  "dash.recalc": "به‌صورت زنده از آخرین پاسخ‌های شما محاسبه شده است.",
+  "dash.recalc": "بر اساس ارزیابی ثبت‌شده در {date}",
   "dash.history": "تاریخچهٔ نمره",
   "dash.noHistory": "نخستین وضعیت ثبت شد. یک پاسخ را ویرایش کنید تا تحول پروفایل‌تان را ببینید.",
   "dash.roadmapTab": "نقشه‌راه ۱۲ هفته‌ای",
@@ -1361,7 +1374,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "pay.title": "پروفایل شما آماده است",
   "pay.sub":
-    "پلن رایگان شامل نقشهٔ راه گام‌به‌گام، نهاد مسئول و لینک رسمی هر گام است. Premium ارزیابی کامل ۴۲پرسشی، پروفایل آمادگی، نقشهٔ راه ۱۲هفته‌ای، پیگیری گام‌ها و چک‌لیست مدارک را اضافه می‌کند. دسترسی ۳۰ روزه ۹٫۹۹ یورو یا ۹۰ روزه ۲۴٫۹۹ یورو؛ پرداخت یک‌باره و بدون تمدید خودکار.",
+    "پلن رایگان شامل نقشهٔ راه گام‌به‌گام، نهاد مسئول و لینک رسمی هر گام است. Premium ارزیابی کامل، پروفایل آمادگی، نقشهٔ راه ۱۲هفته‌ای، پیگیری گام‌ها و چک‌لیست مدارک را اضافه می‌کند. دسترسی ۳۰ روزه ۹٫۹۹ یورو یا ۹۰ روزه ۲۴٫۹۹ یورو؛ پرداخت یک‌باره و بدون تمدید خودکار.",
   "pay.teaser": "پیش‌نمایش قفل‌شده",
   "pay.unlock": "فعال‌سازی Premium",
   "pay.later": "ادامه با نمای رایگان",
@@ -1494,7 +1507,7 @@ export const fa: Record<keyof typeof en, string> = {
   "qc.progressLabel": "پیشرفت بررسی سریع",
   "qc.upgradeTitle": "تصویر کامل را می‌خواهید؟",
   "qc.upgradeDesc":
-    "Premium شامل ارزیابی کامل ۴۲ پرسشی، پروفایل کامل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای با پیگیری پیشرفت است. پاسخ‌های بررسی سریع شما منتقل می‌شوند.",
+    "Premium شامل ارزیابی کامل، پروفایل کامل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای با پیگیری پیشرفت است. پاسخ‌های بررسی سریع شما منتقل می‌شوند.",
   "qc.upgradeCta": "ارتقا به Premium",
 
   "pay.emailTitle": "قیمت ویژهٔ دسترسی زودهنگام",
@@ -1588,13 +1601,13 @@ export const fa: Record<keyof typeof en, string> = {
   "faq.sub": "پاسخ کوتاه به پرسش‌هایی که تازه‌واردان بیش از همه می‌پرسند.",
   "faq.q1": "برای استفاده از میگراگو باید حساب کاربری بسازم؟",
   "faq.a1":
-    "برای بررسی سریع رایگان ۶ پرسشی، پروفایل اولیه و گام‌های پیشنهادی نخست نیازی به حساب کاربری نیست. ارزیابی کامل ۴۲ پرسشی و نتایج آن به Premium (ماهانه ۹٫۹۹ یورو) نیاز دارند.",
+    "برای بررسی سریع رایگان ۶ پرسشی، پروفایل اولیه و گام‌های پیشنهادی نخست نیازی به حساب کاربری نیست. ارزیابی کامل و نتایج آن به Premium (ماهانه ۹٫۹۹ یورو) نیاز دارند.",
   "faq.q2": "نسخهٔ رایگان شامل چه چیزهایی است؟",
   "faq.a2":
-    "ثبت‌نام و شروع کار، بررسی سریع رایگان ۶ پرسشی در کمتر از یک دقیقه، پروفایل اولیه و گام‌های پیشنهادی نخست. ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای به Premium (ماهانه ۹٫۹۹ یورو) تعلق دارند، نه نسخهٔ رایگان.",
+    "ثبت‌نام و شروع کار، بررسی سریع رایگان ۶ پرسشی در کمتر از یک دقیقه، پروفایل اولیه و گام‌های پیشنهادی نخست. ارزیابی کامل، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای به Premium (ماهانه ۹٫۹۹ یورو) تعلق دارند، نه نسخهٔ رایگان.",
   "faq.q3": "اشتراک Premium (ماهانه ۹٫۹۹ یورو) چه چیزی ارائه می‌دهد؟",
   "faq.a3":
-    "ارزیابی کامل ۴۲ پرسشی، پروفایل ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر. پاسخ‌های بررسی سریع شما به ارزیابی کامل منتقل می‌شوند.",
+    "ارزیابی کامل، پروفایل ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر. پاسخ‌های بررسی سریع شما به ارزیابی کامل منتقل می‌شوند.",
   "faq.q4": "نقشهٔ راه چگونه ساخته می‌شود؟",
   "faq.a4":
     "پاسخ‌های ارزیابی شما، وضعیت کنونی‌تان را در ابعاد سه‌گانه سنجیده و شکاف‌های موجود را شناسایی می‌کند. سامانه سپس این شکاف‌ها را با ضوابط و رویه‌های رسمی کشور مقصد تطبیق داده و اقدامات لازم را در قالب یک برنامه ۱۲ هفته‌ای (در چهار فاز عملیاتی) مرتب می‌سازد.",
@@ -1744,7 +1757,7 @@ export const fa: Record<keyof typeof en, string> = {
   "readiness.moderate": "آمادگی متوسط",
   "readiness.developing": "آمادگی در حال شکل‌گیری",
   "readiness.note":
-    "این شاخص از پاسخ‌های ۴۲ پرسش ارزیابی شما محاسبه می‌شود. این عدد احتمال ویزا، واجد شرایط بودن مهاجرتی، نمرهٔ حقوقی یا دولتی و تشخیص روان‌شناختی نیست.",
+    "این شاخص از پاسخ‌های ارزیابی شما محاسبه می‌شود. این عدد احتمال ویزا، واجد شرایط بودن مهاجرتی، نمرهٔ حقوقی یا دولتی و تشخیص روان‌شناختی نیست.",
 
   "dash.dim3Note":
     "این نتایج بازتاب الگوهای خوداظهاری شما هستند، نه یک ارزیابی تخصصی.",
@@ -1809,15 +1822,28 @@ export const fa: Record<keyof typeof en, string> = {
   "prog.locked": "پیشرفت پس از باز شدن نقشهٔ راه در دسترس قرار می‌گیرد.",
 
   "report.open": "گزارش من را باز کن",
-  "report.answered": "پرسش پاسخ‌داده‌شده از ۴۲ پرسش",
+  "report.answered": "پرسش پاسخ‌داده‌شده",
   "report.disclaimer": "سلب مسئولیت",
 
   "assess.title": "ارزیابی من",
-  "assess.structure": "۷ بخش · ۴۲ پرسش",
+  "assess.structure": "۷ بخش",
   "assess.completed": "ارزیابی کامل شده است",
   "assess.notCompleted": "ارزیابی هنوز کامل نشده است",
   "assess.open": "باز کردن ارزیابی",
   "assess.answeredOf": "پاسخ‌داده‌شده از",
+  "assess.locked": "پاسخ ثبت‌شده",
+  "assess.reassess": "ارزیابی مجدد",
+  "assess.reassessConfirm": "وضعیت قبلی شما با تاریخ آن حفظ می‌شود و نمرهٔ جدید جداگانه ثبت می‌شود.",
+  "q.skipSection": "رد کردن این بخش",
+  "q.restoreSection": "بازگرداندن این بخش",
+  "q.range.children": "عددی صحیح بین ۱ تا ۱۵ وارد کنید.",
+  "q.range.managed": "عددی صحیح بین ۱ تا ۵۰ وارد کنید.",
+  "q.submitReassess": "ثبت ارزیابی مجدد",
+  "dash.snapshotBaseline": "وضعیت اولیه",
+  "dash.analysis.weakest": "در این ارزیابی، ضعیف‌ترین بُعد شما «{dimension}» است.",
+  "dash.analysis.weakest.legal": "پیش از هر اقدام دیگر، مدارک و وضعیت اقامتی خود را روشن کنید.",
+  "dash.analysis.weakest.professional": "آماده‌سازی شغلی و تمکن مالی را در اولویت قرار دهید.",
+  "dash.analysis.weakest.psychological": "زبان، شبکهٔ اجتماعی و سازگاری با فرهنگ محلی را در اولویت قرار دهید.",
 
   "disclaimer.responsible":
     "میگراگو پشتیبانی دیجیتال مسیر ادغام و اطلاعات ساختاریافته ارائه می‌دهد. این سرویس نمایندگی حقوقی انجام نمی‌دهد، تصمیم دولتی نمی‌گیرد، نتیجهٔ مهاجرتی را تضمین نمی‌کند و جایگزین متخصصان دارای صلاحیت یا مراجع عمومی نیست.",

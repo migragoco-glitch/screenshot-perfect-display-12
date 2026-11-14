@@ -3,6 +3,7 @@ import {
   BadgeCheck,
   Briefcase,
   Building2,
+  Car,
   ExternalLink,
   GraduationCap,
   House,
@@ -42,6 +43,8 @@ export const INSTITUTION_ICONS: Record<Institution, typeof Building2> = {
   "Municipal health services": Stethoscope,
   "Study in Finland": GraduationCap,
   InfoFinland: Info,
+  Traficom: Car,
+  "Landlord or housing provider": House,
 };
 
 export function InstitutionBadge({
@@ -58,7 +61,7 @@ export function InstitutionBadge({
   solid?: boolean;
 }) {
   const { t, lang } = useI18n();
-  const Icon = INSTITUTION_ICONS[institution] ?? ((institution as string) === "Bank" ? Landmark : GraduationCap);
+  const Icon = INSTITUTION_ICONS[institution] ?? ((institution as string) === "Bank" ? Landmark : Building2);
   const content = (
     <>
       <Icon className="size-3.5 shrink-0" strokeWidth={1.9} aria-hidden />
@@ -234,7 +237,7 @@ export function FoundersCircleModal({
               type="button"
               disabled={busy}
               onClick={() => void submit()}
-              className="mt-4 w-full rounded-full bg-secondary px-5 py-3 text-sm font-bold text-secondary-foreground disabled:opacity-40"
+              className="mt-4 w-full rounded-full bg-[#02808A] px-5 py-3 text-sm font-bold text-white hover:bg-[#026A73] disabled:opacity-40"
             >
               {t("pay.emailCta")}
             </button>

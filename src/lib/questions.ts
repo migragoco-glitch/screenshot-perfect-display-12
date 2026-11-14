@@ -25,6 +25,8 @@ export type Question = {
   detailType?: "text" | "number";
   /** index of an exclusive "None" option in a multi-select */
   noneIndex?: number;
+  /** multi-select option indexes that are mutually exclusive with all other options */
+  exclusiveIndexes?: number[];
   /** second part of the same question (answer index/indices stored in `detail`) */
   sub?: {
     label: Bilingual;
@@ -107,25 +109,11 @@ const o = (en: string, fa: string): Bilingual => ({ en, fa });
 export const QUESTIONS: Question[] = [
   // ── Section 1 ───────────────────────────────────────────────
   {
-    id: 1,
-    section: 1,
-    type: "number",
-    unscored: true,
-    label: o("What is your age?", "سن شما چند سال است؟"),
-  },
-  {
     id: 2,
     section: 1,
     type: "country",
     unscored: true,
     label: o("What is your current nationality?", "ملیت کنونی شما چیست؟"),
-  },
-  {
-    id: 3,
-    section: 1,
-    type: "country",
-    unscored: true,
-    label: o("Which country do you currently reside in?", "در حال حاضر در کدام کشور زندگی می‌کنید؟"),
   },
   {
     id: 4,
@@ -195,6 +183,8 @@ export const QUESTIONS: Question[] = [
     type: "multi",
     unscored: true,
     label: o("Who will be relocating to Finland with you?", "چه کسانی همراه شما به فنلاند مهاجرت می‌کنند؟"),
+    // "Alone" (0) and "Not yet decided" (4) are exclusive with every other option.
+    exclusiveIndexes: [0, 4],
     options: [
       o("Alone", "تنها"),
       o("Spouse/partner", "همسر / شریک زندگی"),
@@ -220,16 +210,6 @@ export const QUESTIONS: Question[] = [
       o("Doctorate", "دکتری"),
     ],
     optionScores: [0.2, 0.4, 0.6, 0.8, 0.92, 1],
-  },
-  {
-    id: 10,
-    section: 2,
-    type: "text",
-    unscored: true,
-    label: o(
-      "Briefly describe your field and current job title.",
-      "به‌اختصار حوزهٔ کاری و عنوان شغلی کنونی خود را بنویسید.",
-    ),
   },
   {
     id: 11,
@@ -610,20 +590,6 @@ export const QUESTIONS: Question[] = [
 
   // ── Section 6 — context only (pathway matching & roadmap) ───
   {
-    id: 35,
-    section: 6,
-    type: "single",
-    unscored: true,
-    label: o("What is your main reason for choosing Finland?", "دلیل اصلی شما برای انتخاب فنلاند چیست؟"),
-    options: [
-      o("Safety and quality of life", "امنیت و کیفیت زندگی"),
-      o("Career growth and income", "رشد شغلی و درآمد"),
-      o("Education for yourself or your children", "تحصیل خود یا فرزندان"),
-      o("Starting a business", "راه‌اندازی کسب‌وکار"),
-      o("A combination of the above", "ترکیبی از موارد بالا"),
-    ],
-  },
-  {
     id: 36,
     section: 6,
     type: "single",
@@ -741,6 +707,29 @@ export function isQuestionApplicable(q: Question, answers: Answers, ctx?: Answer
 
 export function questionsForSection(section: number, answers: Answers, ctx?: AnswerContext) {
   return QUESTIONS.filter((q) => q.section === section && isQuestionApplicable(q, answers, ctx));
+}
+
+/** Whether a numeric detail answer stays within the approved range (Q7: 1–15, Q39: 1–50). */
+export function detailInRange(q: Question, detail: unknown): boolean {
+  const n = Number(String(detail ?? "").trim());
+  if (!Number.isInteger(n) || n < 1) return false;
+  if (q.id === 7) return n <= 15;
+  if (q.id === 39) return n <= 50;
+  return true;
+}
+
+/** Every applicable question; skipped Section 7 questions are excluded from counts. */
+export function applicableQuestions(answers: Answers, ctx?: AnswerContext, section7Skipped = false): Question[] {
+  return QUESTIONS.filter(
+    (q) => isQuestionApplicable(q, answers, ctx) && !(section7Skipped && q.section === 7),
+  );
+}
+
+/** Shared completion rule: every applicable required question answered. */
+export function assessmentProgress(answers: Answers, ctx?: AnswerContext, section7Skipped = false) {
+  const applicable = applicableQuestions(answers, ctx, section7Skipped);
+  const answered = applicable.filter((q) => isAnswered(q, answers[q.id])).length;
+  return { answered, total: applicable.length, complete: applicable.length > 0 && answered === applicable.length };
 }
 
 

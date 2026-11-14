@@ -1,6 +1,7 @@
 import { useI18n, localizeNumber } from "@/lib/i18n";
 import {
   COUNTRIES,
+  detailInRange,
   subAnswerIndex,
   subAnswerIndexes,
   type AnswerValue,
@@ -21,9 +22,11 @@ type Props = {
   /** Tint the selected option with the level color (/start only). */
   accentSelected?: boolean;
   unanswered?: boolean;
+  /** Submitted rounds render read-only. */
+  readOnly?: boolean;
 };
 
-export function QuestionField({ question: q, index, answer, onChange, levelColor, fillSelected = false, hideNumber = false, accentSelected = false, unanswered = false }: Props) {
+export function QuestionField({ question: q, index, answer, onChange, levelColor, fillSelected = false, hideNumber = false, accentSelected = false, unanswered = false, readOnly = false }: Props) {
   const { lang, t } = useI18n();
   const selected = answer?.value;
   const fillStyle = fillSelected
@@ -39,9 +42,11 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
 
   return (
     <fieldset
+      disabled={readOnly}
       className={cn(
         "assessment-question-card rounded-2xl border p-5 shadow-[var(--shadow-card)] backdrop-blur-sm md:p-6",
         q.showIf && "conditional-reveal",
+        readOnly && "opacity-90",
       )}
       style={{ "--assessment-level-color": levelColor } as React.CSSProperties}
     >
@@ -135,8 +140,11 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
               const arr = Array.isArray(selected) ? selected : [];
               const isNone = q.noneIndex === i;
               const noneSelected = q.noneIndex !== undefined && arr.includes(q.noneIndex);
+              const exclusive = q.exclusiveIndexes ?? [];
+              const exclusiveSelected = exclusive.some((index) => arr.includes(index));
               const active = arr.includes(i);
-              const disabled = noneSelected && !isNone;
+              const disabled =
+                (noneSelected && !isNone) || (exclusiveSelected && !exclusive.includes(i));
               return (
                 <button
                   key={opt.en}
@@ -149,7 +157,13 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
                       onChange({ value: active ? [] : [i] });
                       return;
                     }
-                    const next = active ? arr.filter((x) => x !== i) : [...arr, i];
+                    if (exclusive.includes(i)) {
+                      onChange({ value: active ? [] : [i] });
+                      return;
+                    }
+                    const next = active
+                      ? arr.filter((x) => x !== i)
+                      : [...arr.filter((x) => !exclusive.includes(x)), i];
                     onChange({ value: next });
                   }}
                   className={cn(
@@ -257,15 +271,20 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
             </label>
             <input
               type={q.detailType === "number" ? "number" : "text"}
-              min={q.id === 7 ? 1 : undefined}
+              min={q.detailType === "number" ? 1 : undefined}
               value={answer?.detail ?? ""}
               onChange={(e) => {
                 const detail = e.target.value;
-                if (q.id === 7 && detail !== "" && Number(detail) < 1) return;
+                if (q.detailType === "number" && detail !== "" && Number(detail) < 1) return;
                 onChange({ value: selected, detail });
               }}
               className="mt-1.5 w-full max-w-sm rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
             />
+            {q.detailType === "number" && (q.id === 7 || q.id === 39) && answer?.detail !== undefined && answer.detail !== "" && !detailInRange(q, answer.detail) ? (
+              <p role="alert" className="mt-2 text-xs font-semibold text-destructive">
+                {t(q.id === 7 ? "q.range.children" : "q.range.managed")}
+              </p>
+            ) : null}
           </div>
         ) : null}
       </div>

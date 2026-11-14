@@ -16,7 +16,38 @@ export function ProgressRing({ percent, empty = false, complete = false }: { per
   </div>;
 }
 
-export function RoadmapSummary({ done, total, showLength = false, free = false }: { done: number; total: number; showLength?: boolean; free?: boolean }) {
+/** One arc per roadmap phase; arc length ∝ step count, fill ∝ ticked steps. */
+export function PhaseRing({ phases, percent, complete }: { phases: { color: string; total: number; done: number }[]; percent: number; complete: boolean }) {
+  const { lang } = useI18n();
+  const size = 112;
+  const stroke = 9;
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const gap = 4;
+  const visible = phases.filter((p) => p.total > 0);
+  const totalSteps = visible.reduce((sum, p) => sum + p.total, 0);
+  let cursor = 0;
+  return <div className="relative size-28 shrink-0">
+    <svg viewBox={`0 0 ${size} ${size}`} className="size-full" role="img" aria-label={`${percent}%`}>
+      {visible.map((p) => {
+        const arc = totalSteps ? (p.total / totalSteps) * (c - gap * visible.length) : 0;
+        const filled = p.total ? arc * (p.done / p.total) : 0;
+        const offset = cursor;
+        cursor += arc + gap;
+        return <g key={p.color}>
+          <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={p.color} strokeOpacity={0.2} strokeWidth={stroke} strokeDasharray={`${arc} ${c - arc}`} strokeDashoffset={-offset} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
+          {filled > 0 ? <circle className="roadmap-progress-transition" cx={size / 2} cy={size / 2} r={r} fill="none" stroke={p.color} strokeWidth={stroke} strokeLinecap="round" strokeDasharray={`${filled} ${c - filled}`} strokeDashoffset={-offset} transform={`rotate(-90 ${size / 2} ${size / 2})`} /> : null}
+        </g>;
+      })}
+    </svg>
+    <div className="absolute inset-0 flex items-center justify-center">
+      <span className="text-lg font-bold tabular-nums">{localizeNumber(percent, lang)}%</span>
+    </div>
+    {complete ? <span className="absolute -bottom-1 -end-1 flex size-6 items-center justify-center rounded-full bg-[#15803D] text-white"><Check className="size-3.5" strokeWidth={3} aria-hidden /></span> : null}
+  </div>;
+}
+
+export function RoadmapSummary({ done, total, showLength = false, free = false, phases }: { done: number; total: number; showLength?: boolean; free?: boolean; phases?: { color: string; total: number; done: number }[] }) {
   const { t, lang } = useI18n();
   if (free) return <div className="space-y-2 py-5">
     <div className="flex flex-wrap gap-2">
@@ -26,8 +57,9 @@ export function RoadmapSummary({ done, total, showLength = false, free = false }
     <p className="flex items-center gap-1.5 text-xs text-muted-foreground"><Lock className="size-3.5" aria-hidden />{t("start.free.lockHint")}</p>
   </div>;
   const complete = total > 0 && done === total;
+  const percent = total ? Math.round(done / total * 100) : 0;
   return <div className="flex flex-wrap items-center gap-5 py-5">
-    <ProgressRing percent={total ? Math.round(done / total * 100) : 0} complete={complete} />
+    {phases ? <PhaseRing phases={phases} percent={percent} complete={complete} /> : <ProgressRing percent={percent} complete={complete} />}
     <div className="min-w-0 flex-1 space-y-2">
       <p className="text-sm font-semibold">{t("start.progress").replace("{done}", localizeNumber(done, lang)).replace("{total}", localizeNumber(total, lang))}</p>
       {showLength ? <span className="inline-flex rounded-full bg-primary px-3 py-1 text-[11px] font-semibold text-primary-foreground">{t("start.plan.length").replace("{n}", localizeNumber(12, lang))}</span> : null}

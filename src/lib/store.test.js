@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { hasNavigatorAccess, navigatorCheckoutDestination, sanitizeAnswers } from "./store";
 
 describe("Navigator assessment access", () => {
-  test("the free tier cannot access the full 42-question assessment", () => {
+  test("the free tier cannot access the full assessment", () => {
     expect(hasNavigatorAccess("free")).toBe(false);
   });
   test("Navigator can access the full assessment", () => {
