@@ -454,6 +454,40 @@ function Assessment() {
           <div className="mt-4 rounded-2xl border border-accent/50 bg-accent/10 p-4">
             <p className="text-sm font-bold">{t("q.optionalSection")}</p>
             <p className="mt-1 text-xs text-muted-foreground">{t("q.optionalNote")}</p>
+            {!locked ? (
+              <button
+                type="button"
+                onClick={() => update({ section7Skipped: !section7Skipped })}
+                className="mt-3 inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-xs font-semibold transition-colors duration-200 ease-out hover:bg-muted"
+              >
+                {t(section7Skipped ? "q.restoreSection" : "q.skipSection")}
+              </button>
+            ) : null}
+          </div>
+        ) : null}
+        {locked ? (
+          <div className="mt-4 rounded-2xl border border-border bg-muted/50 p-4">
+            <p className="inline-flex items-center gap-1.5 text-sm font-semibold">
+              <Check className="size-4 text-secondary" aria-hidden />
+              {t("assess.locked")}
+            </p>
+            {reassessConfirm ? (
+              <div className="mt-3">
+                <p className="text-xs leading-relaxed text-muted-foreground">{t("assess.reassessConfirm")}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Button type="button" variant="secondary" className="rounded-full" onClick={() => { update({ assessmentStatus: "editing" }); setReassessConfirm(false); }}>
+                    {t("assess.reassess")}
+                  </Button>
+                  <Button type="button" variant="outline" className="rounded-full" onClick={() => setReassessConfirm(false)}>
+                    {t("common.back")}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <Button type="button" variant="outline" className="mt-3 rounded-full" onClick={() => setReassessConfirm(true)}>
+                {t("assess.reassess")}
+              </Button>
+            )}
           </div>
         ) : null}
         <p className="mt-3 inline-flex items-center gap-2 text-xs text-muted-foreground">
@@ -497,9 +531,11 @@ function Assessment() {
               key={q.id}
               question={q}
               index={q.id}
-              answer={state.answers[q.id]}
+              answer={displayAnswers[q.id]}
               levelColor={LEVEL_COLORS[section - 1] ?? "var(--navigator-teal)"}
+              readOnly={locked}
               onChange={(v) => {
+                if (locked) return;
                 setAnswer(q.id, v);
                 setShowRequired(false);
               }}
@@ -559,14 +595,14 @@ function Assessment() {
               {t("q.next")}
               <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
             </button>
-          ) : (
+          ) : locked ? null : (
             <button
               type="button"
               onClick={submit}
               className="inline-flex items-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
             >
               <Sparkles className="size-4" aria-hidden />
-              {t("q.submit")}
+              {t(editing && state.completed ? "q.submitReassess" : "q.submit")}
             </button>
           )}
         </div>
