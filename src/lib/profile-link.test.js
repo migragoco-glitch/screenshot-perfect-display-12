@@ -41,14 +41,11 @@ describe("Approved completed-Premium profile links", () => {
     for (const [score, expected] of [[54, "+۴"], [46, "−۴"], [50, "۰"]]) expect(formatScoreDelta([{ overall: 50 }, { overall: score }], "fa")).toBe(expected);
     expect(formatScoreDelta([{ overall: 50 }], "fa")).toBe("");
   });
-  test("dedupe preserves changes in either professional or psychological score", () => {
+  test("snapshots keep the first entry as a permanent baseline plus the latest 11", () => {
     const source = readFileSync(new URL("./store.ts", import.meta.url), "utf8");
-    const match = source.match(/if \((last && last.overall === snap.overall[^\n]+)\) return;/);
-    if (!match) throw new Error("Snapshot dedupe rule missing");
-    const same = new Function("last", "snap", `return Boolean(${match[1]});`);
-    const last = { overall: 50, legal: 50, professional: 50, psychological: 50 };
-    expect(same(last, { ...last })).toBe(true);
-    expect(same(last, { ...last, professional: 51 })).toBe(false);
-    expect(same(last, { ...last, psychological: 51 })).toBe(false);
+    // Both snapshot writers must preserve history[0] and cap the rest at 11.
+    const writers = source.match(/current\.history\[0\]!,\s*\.\.\.\[\.\.\.current\.history\.slice\(1\), entry\]\.slice\(-11\)/g);
+    expect(writers?.length ?? 0).toBeGreaterThanOrEqual(2);
+    expect(source).not.toContain("last.overall === snap.overall");
   });
 });

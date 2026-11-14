@@ -9,9 +9,14 @@ describe("BUILD 4 assessment rules", () => {
     for (const kept of [2, 5, 37, 42]) expect(ids).toContain(kept);
     expect(BUCKETS.professional.ids).not.toContain(10);
   });
-  test("the assessment has 38 questions, 39 when Q6 applies", () => {
+  test("the assessment has 38 questions; Q6 and the founder questions are conditional", () => {
     expect(QUESTIONS).toHaveLength(38);
-    expect(applicableQuestions({ 5: { value: 1 } })).toHaveLength(39);
+    // Q6 applies only when Q5 is answered and not "EU/EEA/Swiss citizen" (value 1).
+    expect(applicableQuestions({ 5: { value: 1 } }).some((q) => q.id === 6)).toBe(false);
+    expect(applicableQuestions({ 5: { value: 0 } }).some((q) => q.id === 6)).toBe(true);
+    // Q39–41 apply only on the founder track.
+    expect(applicableQuestions({}).some((q) => q.id >= 39 && q.id <= 41)).toBe(false);
+    expect(applicableQuestions({}, { founderTrack: true }).filter((q) => q.id >= 39 && q.id <= 41)).toHaveLength(3);
   });
   test("skipped section 7 is excluded from the shared totals", () => {
     const full = assessmentProgress({}, { founderTrack: true }, false);
