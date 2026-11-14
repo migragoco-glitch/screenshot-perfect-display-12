@@ -207,7 +207,7 @@ export function FoundersCircleModal({
         <p className="mt-3 text-sm text-muted-foreground">{t("pay.modalOffer")}</p>
         <ul className="mt-3 space-y-1.5 text-sm font-semibold">
           {(["30", "90"] as const).map((d) => {
-            const [before, after = ""] = t(d === "30" ? "pay.plan30Row" : "pay.plan90Row").split("{old}");
+            const [before = "", after = ""] = t(d === "30" ? "pay.plan30Row" : "pay.plan90Row").split("{old}");
             return (
               <li key={d}>
                 {before.replace("{final}", formatEuro(PLAN_PRICES[d] * (1 - DISCOUNT), lang))}
