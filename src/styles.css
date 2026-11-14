@@ -74,6 +74,9 @@
   --navigator-gold: #cb902c;
   --navigator-olive-gold: #a8862e;
   --navigator-olive: #6b8e3a;
+  --phase-olive-pill: #55742b;
+  --status-done: #15803d;
+  --status-not-done: #475569;
   --navigator-cream: #faeeda;
   --readiness-cream: #f7efe5;
   --navigator-notice: #fbeaf0;
@@ -383,6 +386,8 @@
 
 @keyframes qc-ring-spin { from { transform: rotate(-360deg); } to { transform: rotate(0deg); } }
 .qc-ring-spin { animation: qc-ring-spin 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1 both; }
+.roadmap-progress-transition { transition: stroke-dashoffset 400ms ease-out, stroke 400ms ease-out, width 400ms ease-out; }
+@media (prefers-reduced-motion: reduce) { .roadmap-progress-transition { transition: none; } }
 @media (prefers-reduced-motion: reduce) { .qc-ring-spin { animation: none; } }
 
 /* Quick Check — dimensional cards and compass needle */

@@ -3,16 +3,17 @@ import { Fragment, useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, Briefcase, ListChecks, MapPin, Route as RouteIcon, Building2, Check, ExternalLink, Globe, HeartPulse, House, IdCard, Info, Landmark, Languages, Lock, Users } from "lucide-react";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { FoundersCircleModal, InstitutionBadge } from "@/components/FeedbackWidgets";
+import { ProfilePreview, RoadmapSummary } from "@/components/RoadmapSummary";
 import { QuestionField } from "@/components/QuestionField";
 import { Button } from "@/components/ui/button";
-import { AREAS, MUNICIPALITIES, STEP_AREA, documentsForSteps, planWeeks, weeksRange, buildAreaSteps, suggestRoute, formatCheckedDate, earlyChildhoodLocalUrl, type AreaId, type AreaStep } from "@/lib/area-flow";
+import { AREAS, MUNICIPALITIES, STEP_AREA, documentsForSteps, weeksRange, buildAreaSteps, suggestRoute, formatCheckedDate, earlyChildhoodLocalUrl, type AreaId, type AreaStep } from "@/lib/area-flow";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import { QUESTIONS, isAnswered, isQuestionApplicable } from "@/lib/questions";
 import { hasNavigatorAccess, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import type { Institution } from "@/lib/roadmap";
 import { computeProfile } from "@/lib/scoring";
-import { getProfileSteps, isPriorityStep } from "@/lib/profile-link";
+import { getProfileSteps, getStepWeek, isPriorityStep } from "@/lib/profile-link";
 
 export const Route = createFileRoute("/start")({
   head: () => ({ meta: [
@@ -151,6 +152,9 @@ function StartScreen() {
   }, [restored, hasNavigator, stage, allPlanSteps, firstExpanded]);
   const filteredSteps = steps.filter((step) => areas.includes(STEP_AREA[step.id] as AreaId));
   const checklist = documentsForSteps(filteredSteps);
+  const docKeys = checklist.flatMap((item) => item.documents.map((_, index) => `${item.id}:${index}`));
+  const docsDone = docKeys.filter((id) => docIds.includes(id)).length;
+  const planDone = allPlanSteps.filter((step) => doneIds.includes(step.id)).length;
   const toggleDone = (id: string) => {
     const next = doneIds.includes(id) ? doneIds.filter((value) => value !== id) : [...doneIds, id];
     setDoneIds(next); saveIds("migrago.start.done", next);
@@ -344,6 +348,7 @@ function StartScreen() {
                   <span className="min-w-0 flex-1">
                     <span className="block font-bold">{t(`start.choose.${view}.title`)}</span>
                     <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">{t(`start.choose.${view}.sub`)}</span>
+                    {view === "road" ? <span className="mt-2 block text-xs font-semibold">{t("start.progress").replace("{done}", localizeNumber(planDone, lang)).replace("{total}", localizeNumber(allPlanSteps.length, lang))}</span> : null}
                   </span>
                   <ArrowRight className="size-5 shrink-0 text-muted-foreground rtl:rotate-180" aria-hidden />
                 </button>
@@ -355,36 +360,30 @@ function StartScreen() {
         {stage === "info" ? (
           <section className="mt-8"><div className="glass-card rise-in rounded-3xl p-6 md:p-8">
             <h2 className="text-xl">{t("start.info.title")}</h2>
-            {selectedAreas.map((area) => {
+            <p className="mt-2 text-sm text-muted-foreground">{t("start.info.areasSub").replace("{n}", localizeNumber(selectedAreas.length, lang))}</p>
+            {selectedAreas.map((area, areaIndex) => {
               const areaSteps = steps.filter((step) => STEP_AREA[step.id] === area.id);
               return (
-                <section key={area.id} className="mt-8 border-t border-border pt-6">
-                  <h3 className="text-lg font-semibold">{t(area.title)}</h3>
+                <details key={area.id} open={areaIndex === 0} className="mt-8 border-t border-border pt-6">
+                  <summary className="cursor-pointer text-lg font-semibold">{t(area.title)}</summary>
                   <p className="mt-2 text-sm text-muted-foreground">{t(area.description)}</p>
                   <a href={area.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-secondary">{t("road.officialSource")}<ExternalLink className="size-4" /></a>
                   {areaSteps.length ? (
                     <ul className="mt-5 space-y-4">
-                      {areaSteps.map((step) => <li key={step.id} data-step-id={step.id} className="rounded-2xl border border-border/70 p-4 transition-opacity duration-200 ease-out" style={stepCardStyle(step.phase)}><StepBody step={step} localUrl={localUrl} /></li>)}
+                      {areaSteps.map((step) => <li key={step.id} data-step-id={step.id} className="rounded-lg border border-border/70 p-4" style={stepCardStyle(step.phase)}><details><summary className="cursor-pointer text-sm font-semibold"><span>{typeof step.title === "string" ? t(step.title) : step.title[lang]}</span>{hasNavigator ? <span className="ms-2 inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold text-[var(--journey-pill-foreground)]" style={{ background: doneIds.includes(step.id) ? "var(--status-done)" : "var(--status-not-done)" }}>{t(doneIds.includes(step.id) ? "start.info.done" : "start.info.notDone")}</span> : null}<span className="mt-2 block"><InstitutionBadge institution={step.authority as Institution} displayName={t(`start.authority.${step.authority}`)} compact /></span></summary><StepBody step={step} localUrl={localUrl} />{hasNavigator ? <Button type="button" variant="link" className="mt-3 h-auto whitespace-normal p-0 text-secondary" onClick={() => { setStage("road"); setExpandedIds([step.id]); setFirstExpanded(true); }}>{t("start.info.goToRoad")}<ArrowRight className="rtl:rotate-180" /></Button> : null}</details></li>)}
                     </ul>
                   ) : <p className="mt-4 text-sm text-muted-foreground">{t(area.id === "status" ? effectiveRoute === "nordic" ? "start.route.nordicNote" : effectiveRoute === undefined ? "start.route.choose" : "start.noSteps" : "start.noSteps")}</p>}
                   {area.id === "status" ? <p className="mt-3 text-sm text-muted-foreground">{t("start.status.scope")}</p> : null}
-                </section>
+                </details>
               );
             })}
-            {hasNavigator ? <>
-              <section className="mt-8 border-t border-border pt-6">
-                <h3 className="text-lg font-semibold">{t("start.checklist.title")}</h3>
-                {checklist.length ? checklist.map((item) => <div key={item.id} className="mt-5">
-                  <h4 className="text-sm font-semibold">{typeof item.title === "string" ? t(item.title) : item.title[lang]}</h4>
-                  {item.documents.map((key, index) => <label key={`${item.id}:${index}`} className="mt-3 flex items-start gap-3 text-sm">
-                    <input type="checkbox" className="mt-1 size-4 accent-secondary" checked={docIds.includes(`${item.id}:${index}`)} onChange={() => toggleDoc(`${item.id}:${index}`)} />
-                    <span>{t(key)}</span>
-                  </label>)}
-                </div>) : <p className="mt-3 text-sm text-muted-foreground">{t("start.checklist.empty")}</p>}
-              </section>
-              <ProfileCard completed={state.completed} />
-              <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p>
-            </> : <UpgradeCard view="info" onUpgrade={openUpgrade} />}
+            <details className="mt-8 border-t border-border pt-6">
+              <summary className="cursor-pointer text-lg font-semibold">{t("start.checklist.title")}</summary>
+              <p className="mt-3 text-sm font-semibold">{hasNavigator ? t("start.docs.counter").replace("{x}", localizeNumber(docsDone, lang)).replace("{y}", localizeNumber(docKeys.length, lang)) : t("start.docs.countOnly").replace("{y}", localizeNumber(docKeys.length, lang))}</p>
+              {hasNavigator ? <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted"><div className="roadmap-progress-transition h-full bg-secondary" style={{ width: `${docKeys.length ? docsDone / docKeys.length * 100 : 0}%` }} /></div> : <p className="mt-2 text-xs text-muted-foreground">{t("start.docs.freeNote")}</p>}
+              {checklist.length ? checklist.map((item) => <div key={item.id} className="mt-5"><h4 className="text-sm font-semibold">{typeof item.title === "string" ? t(item.title) : item.title[lang]}</h4>{item.documents.map((key, index) => <label key={`${item.id}:${index}`} className="mt-3 flex items-start gap-3 text-sm">{hasNavigator ? <input type="checkbox" className="mt-1 size-4 accent-secondary" checked={docIds.includes(`${item.id}:${index}`)} onChange={() => toggleDoc(`${item.id}:${index}`)} /> : null}<span>{t(key)}</span></label>)}</div>) : <p className="mt-3 text-sm text-muted-foreground">{t("start.checklist.empty")}</p>}
+            </details>
+            {hasNavigator ? <><ProfileCard completed={state.completed} /><p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p></> : <UpgradeCard view="info" onUpgrade={openUpgrade} />}
             <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
             <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -397,17 +396,12 @@ function StartScreen() {
           <section className="mt-8"><div className="glass-card rise-in rounded-3xl p-6 md:p-8">
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div><h2 className="text-xl md:text-2xl">{t("start.results")}</h2><p className="mt-1 text-sm text-muted-foreground">{t("start.results.sub")}</p></div>
-              <div className="flex flex-wrap items-center gap-2">
-                {hasNavigator ? <>
-                  <span className="rounded-full bg-secondary/12 px-3 py-1 text-[11px] font-semibold text-secondary">{t("start.progress").replace("{done}", localizeNumber(allPlanSteps.filter((step) => doneIds.includes(step.id)).length, lang)).replace("{total}", localizeNumber(allPlanSteps.length, lang))}</span>
-                  <span className="rounded-full border border-border bg-card px-3 py-1 text-[11px] font-semibold text-muted-foreground">{t("start.plan.length").replace("{n}", localizeNumber(planWeeks(allPlanSteps), lang))}</span>
-                </> : null}
-              </div>
             </div>
+            <RoadmapSummary done={planDone} total={allPlanSteps.length} showLength />
             {steps.length ? [...new Set(steps.map((step) => step.phase))].map((phase) => {
               const phaseSteps = steps.filter((step) => step.phase === phase);
               return <Fragment key={phase}>
-                <header className="mt-6 flex flex-wrap items-center justify-between gap-2 border-s-4 ps-3" style={{ borderColor: PHASE_COLORS[phase - 1] }}><h3 className="text-base font-bold">{t(`road.phase${phase}` as "road.phase1" | "road.phase2" | "road.phase3" | "road.phase4")}</h3><span className="text-xs text-muted-foreground">{localizeNumber(phaseSteps.length, lang)} {t("road.steps")}</span></header>
+                <header className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-full px-4 py-2" style={{ background: phase === 3 ? "var(--phase-olive-pill)" : PHASE_COLORS[phase - 1], color: phase === 2 || phase === 3 ? "var(--journey-pill-foreground)" : "var(--navigator-navy)" }}><h3 className="text-sm font-bold">{t(`road.phase${phase}` as "road.phase1" | "road.phase2" | "road.phase3" | "road.phase4")} · {t("start.plan.weeks").replace("{from}", localizeNumber(weeksRange(phase)[0], lang)).replace("{to}", localizeNumber(weeksRange(phase)[1], lang))}</h3><span className="text-xs font-semibold">{t("start.phase.counter").replace("{done}", localizeNumber(phaseSteps.filter((step) => doneIds.includes(step.id)).length, lang)).replace("{total}", localizeNumber(phaseSteps.length, lang))}</span></header>
                 <ol className="mt-5 space-y-4">
                   {phaseSteps.map((step) => {
                     const done = doneIds.includes(step.id);
@@ -456,7 +450,8 @@ function StartScreen() {
                 })}
               </ol>
             </section> : null}
-            {hasNavigator ? <><ProfileCard completed={state.completed} /><p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p></> : <UpgradeCard view="road" onUpgrade={openUpgrade} />}
+            <ProfileCard completed={hasNavigator && state.completed} {...(hasNavigator ? {} : { onIncomplete: openUpgrade })} />
+            {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : null}
             <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
             <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -490,10 +485,10 @@ function PremiumStepCard({ step, done, expanded, onToggleDone, onToggleExpanded,
       <div className="min-w-0 flex-1">
         <Button type="button" variant="ghost" aria-expanded={expanded} aria-controls={`details-${step.id}`} onClick={onToggleExpanded} className="h-auto w-full flex-wrap justify-start gap-2 whitespace-normal p-0 text-start hover:bg-transparent">
           <span className={cn("me-auto text-sm font-bold", done && "line-through")}>{title}</span>
-          <span className="rounded-full bg-primary/8 px-2.5 py-0.5 text-[11px] font-semibold text-primary">{t("start.plan.weeks").replace("{from}", localizeNumber(weeksRange(step.phase)[0], lang)).replace("{to}", localizeNumber(weeksRange(step.phase)[1], lang))}</span>
+          {getStepWeek(step) !== weeksRange(step.phase)[0] ? <span className="rounded-full bg-primary px-2.5 py-0.5 text-[11px] font-semibold text-primary-foreground">{t("road.week")} {localizeNumber(getStepWeek(step), lang)}</span> : null}
           {profilePriority ? <span className="rounded-full bg-[var(--navigator-teal)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--journey-pill-foreground)]">{t("start.priorityBadge")}</span> : null}
-          <InstitutionBadge institution={step.authority as Institution} displayName={t(`start.authority.${step.authority}`)} compact />
         </Button>
+        <div className="mt-2"><InstitutionBadge institution={step.authority as Institution} displayName={t(`start.authority.${step.authority}`)} compact /></div>
         {expanded ? <div id={`details-${step.id}`} className="mt-3 text-sm leading-relaxed text-muted-foreground">
           <StepDetails step={step} />
           <a href={step.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 font-semibold text-secondary underline underline-offset-4">{t("road.officialSource")}<ExternalLink className="size-3.5" /></a>
@@ -528,14 +523,11 @@ function StepDetails({ step }: { step: AreaStep }) {
     {step.overlay.note ? <><p className={cn(LABEL, "mt-3")}>{t("start.note")}</p><p className="mt-1 text-sm leading-relaxed">{t(step.overlay.note)}</p></> : null}
   </>;
 }
-function ProfileCard({ completed }: { completed: boolean }) {
-  const { t } = useI18n();
+function ProfileCard({ completed, onIncomplete }: { completed: boolean; onIncomplete?: () => void }) {
+  const { state } = useAppState();
   const navigate = useNavigate();
-  return <div className="mt-8 rounded-3xl border border-dashed border-border bg-muted/50 p-6">
-    <h3 className="text-lg font-semibold">{t("start.profile.title")}</h3>
-    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t("start.profile.desc")}</p>
-    <Button type="button" variant="secondary" className={cn(PRIMARY_BTN, "mt-5 h-auto whitespace-normal")} onClick={() => { void navigate({ to: completed ? "/dashboard" : "/assessment" }); }}>{t(completed ? "start.profile.cta.dashboard" : "start.profile.cta.assessment")}<ArrowRight className="rtl:rotate-180" /></Button>
-  </div>;
+  const profile = completed ? computeProfile(state.answers, state.founderTrack === true, state.region ?? "undecided") : undefined;
+  return <ProfilePreview {...(profile ? { profile } : {})} onOpen={() => { if (!completed && onIncomplete) { onIncomplete(); return; } void navigate(completed ? { to: "/dashboard", search: { tab: "profile" } } : { to: "/assessment" }); }} />;
 }
 const UPGRADE_CHECKED = ["start.lock.road.weeks", "pricing.navItem3", "pricing.navItem4", "start.lock.road.track", "pricing.navItem6"] as const;
 const UPGRADE_SOON = ["start.lock.soon.sync", "start.lock.soon.pdf", "start.lock.soon.alerts"] as const;

@@ -69,7 +69,7 @@ const KNOWLEDGE_TABLE_BASE: KnowledgeEntryBase[] = [
     priority: "high",
     title: {
       en: "Confirm your residence permit category and file the correct application",
-      fa: "دستهٔ اجازهٔ اقامت خود را تأیید و درخواست درست را ثبت کنید",
+      fa: "نوع اجازهٔ اقامت خود را تأیید و درخواست درست را ثبت کنید",
     },
     detail: {
       en: "Verify which permit track (work, study, startup, self-sufficiency) matches your answers, then submit through Enter Finland with the exact attachment list for that track.",

@@ -47,11 +47,13 @@ export function InstitutionBadge({
   href,
   displayName,
   compact = false,
+  solid = false,
 }: {
   institution: Institution;
   href?: string;
   displayName?: string;
   compact?: boolean;
+  solid?: boolean;
 }) {
   const { t, lang } = useI18n();
   const Icon = INSTITUTION_ICONS[institution] ?? GraduationCap;
@@ -59,7 +61,7 @@ export function InstitutionBadge({
     <>
       <Icon className="size-3.5 shrink-0" strokeWidth={1.9} aria-hidden />
       <span className="sr-only">{t("road.institution")}: </span>
-      <span>{displayName ?? (compact && lang === "fa" && institution === "Local municipality services" ? t("authority.combinedMunicipality") : compact && lang === "fa" && (institution === "Local Employment Services" || institution === "Municipal health services") ? t(`start.authority.${institution}`) : INSTITUTION_LABEL[institution] ?? institution)}</span>
+      <span>{displayName ?? (lang === "fa" ? t(`start.authority.${institution}`) : INSTITUTION_LABEL[institution] ?? institution)}</span>
       {href ? <ExternalLink className="size-3.5 shrink-0" aria-hidden /> : null}
     </>
   );
@@ -78,7 +80,7 @@ export function InstitutionBadge({
   }
 
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full bg-[var(--institution-tint)] px-3 py-1 text-[var(--institution-purple)] ${compact ? "text-xs normal-case tracking-normal" : ""}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 ${solid ? "bg-[var(--institution-purple)] text-[var(--institution-active-foreground)]" : "bg-[var(--institution-tint)] text-[var(--institution-purple)]"} ${compact ? "text-xs normal-case tracking-normal" : ""}`}>
       {content}
     </span>
   );
