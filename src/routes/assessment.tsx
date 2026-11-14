@@ -39,6 +39,7 @@ import { hasNavigatorAccess, storedAnswersAreConsistent, trackEvent, useAppState
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/assessment")({
+  validateSearch: (search: Record<string, unknown>): { view?: "recorded" } => search["view"] === "recorded" ? { view: "recorded" } : {},
   head: () => ({
     meta: [
       { title: "Integration readiness assessment — MigraGo" },
@@ -147,7 +148,7 @@ function CompactProgressRing({ pct, answers }: { pct: number; answers: Answers }
 function Assessment() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const { state, hydrated, setAnswer, update, submitAssessment, resetAnswers } = useAppState();
+  const { state, hydrated, setAnswer, update, submitAssessment, resetAnswers, startReassessment, cancelReassessment } = useAppState();
   const [section, setSection] = useState(1);
   const [analyzing, setAnalyzing] = useState(false);
   const [payModal, setPayModal] = useState(false);
@@ -155,17 +156,20 @@ function Assessment() {
   const [corrupted, setCorrupted] = useState(false);
   const [inconsistencyDismissed, setInconsistencyDismissed] = useState(false);
   const [reassessConfirm, setReassessConfirm] = useState(false);
+  const [cancelConfirm, setCancelConfirm] = useState(false);
+  const search = Route.useSearch();
   const [guidedView, setGuidedView] = useState<GuidedView>("companion");
   const [companionMoment, setCompanionMoment] = useState<"start" | "mid" | "near">("start");
   const seenLevels = useRef(new Set<number>());
   // Opt-in gate for the Founder & Talent questions (Q39–41). Derived straight from
   // the (already sanitized) stored state so it is final before Step 7 first renders.
-  const founderTrack = state.founderTrack ?? null;
-  // A submitted round is read-only; only an explicit re-assessment reopens it.
-  const editing = state.assessmentStatus === "editing" || !state.completed;
-  const locked = state.completed && !editing;
-  const displayAnswers = locked ? (state.submittedAnswers ?? state.answers) : state.answers;
-  const section7Skipped = state.section7Skipped === true;
+  const editing = state.assessmentStatus === "editing";
+  const readOnly = state.completed && (!editing || search.view === "recorded");
+  const displayAnswers = readOnly ? (state.submittedAnswers ?? state.answers) : state.answers;
+  const founderTrack = (readOnly ? state.submittedFounderTrack : state.founderTrack) ?? null;
+  const section7Skipped = (readOnly ? state.submittedSection7Skipped : state.section7Skipped) === true;
+  const latestSnapshot = state.history[state.history.length - 1];
+  const snapshotDate = latestSnapshot ? new Date(latestSnapshot.at).toLocaleDateString(lang === "fa" ? "fa-IR" : "en-GB", { day: "numeric", month: "short", year: "numeric" }) : "";
 
   useEffect(() => {
     if (hydrated && !state.consent) void navigate({ to: "/consent", search: { next: "assessment" } });
@@ -173,21 +177,21 @@ function Assessment() {
 
   // Validate stored answers whenever Step 7 loads; safely reset instead of crashing.
   useEffect(() => {
-    if (!hydrated || !hasNavigatorAccess(state.tier) || section !== 7) return;
+    if (!hydrated || readOnly || !hasNavigatorAccess(state.tier) || section !== 7) return;
     if (storedAnswersAreConsistent()) return;
     resetAnswers();
     setCorrupted(true);
     setSection(1);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [hydrated, state.tier, section, resetAnswers]);
+  }, [hydrated, readOnly, state.tier, section, resetAnswers]);
 
   const visible = useMemo(
-    () => questionsForSection(section, state.answers, { founderTrack }),
-    [section, state.answers, founderTrack],
+    () => questionsForSection(section, displayAnswers, { founderTrack }),
+    [section, displayAnswers, founderTrack],
   );
   const meta = SECTIONS.find((s) => s.id === section);
   // Shared applicable-question counts (skipped Section 7 excluded from totals).
-  const counts = assessmentProgress(state.answers, { founderTrack }, section7Skipped);
+  const counts = assessmentProgress(displayAnswers, { founderTrack }, section7Skipped);
   const answeredCount = counts.answered;
   const progress = counts.total ? Math.round((answeredCount / counts.total) * 100) : 0;
   const rangeInvalid = visible.some(
@@ -198,29 +202,29 @@ function Assessment() {
       state.answers[q.id]?.detail !== "" &&
       !detailInRange(q, state.answers[q.id]?.detail),
   );
-  const sectionComplete = locked
+  const sectionComplete = readOnly
     ? true
     : meta?.optional
       ? true
-      : visible.every((q) => isAnswered(q, state.answers[q.id])) && !rangeInvalid;
+      : visible.every((q) => isAnswered(q, displayAnswers[q.id])) && !rangeInvalid;
 
   // Gentle, non-blocking consistency flags shown on Step 7 only. Never alters
   // answers or scores — purely a review prompt for the user.
-  const visaInconsistent = state.answers[30]?.value === 1 && state.answers[31]?.value === 1;
+  const visaInconsistent = displayAnswers[30]?.value === 1 && displayAnswers[31]?.value === 1;
   const childrenInconsistent =
-    state.answers[7]?.value === 0 &&
-    Array.isArray(state.answers[8]?.value) &&
-    (state.answers[8]?.value as number[]).includes(2);
+    displayAnswers[7]?.value === 0 &&
+    Array.isArray(displayAnswers[8]?.value) &&
+    (displayAnswers[8]?.value as number[]).includes(2);
 
   const dimensionKey = DIMENSION_KEY[SECTION_DIMENSION[section] ?? "legal"];
 
   const completedLevels = useMemo(
     () =>
       SECTIONS.map((level) => {
-        const questions = questionsForSection(level.id, state.answers, { founderTrack });
-        return questions.length > 0 && questions.every((q) => isAnswered(q, state.answers[q.id]));
+        const questions = questionsForSection(level.id, displayAnswers, { founderTrack });
+        return questions.length > 0 && questions.every((q) => isAnswered(q, displayAnswers[q.id]));
       }),
-    [state.answers, founderTrack],
+    [displayAnswers, founderTrack],
   );
 
   useEffect(() => {
@@ -283,6 +287,7 @@ function Assessment() {
   }
 
   const submit = () => {
+    if (readOnly) return;
     if (!sectionComplete) {
       setShowRequired(true);
       return;
@@ -317,6 +322,7 @@ function Assessment() {
   };
 
   const goNext = () => {
+    if (readOnly) { moveToSection(Math.min(7, section + 1)); return; }
     if (!sectionComplete) {
       setShowRequired(true);
       return;
@@ -350,7 +356,7 @@ function Assessment() {
             </span>
           </div>
           <div className="flex items-center gap-3 md:hidden">
-            <CompactProgressRing pct={progress} answers={state.answers} />
+            <CompactProgressRing pct={progress} answers={displayAnswers} />
             <p className="text-sm font-bold leading-snug">
               {t("q.level")} {localizeNumber(section, lang)} {t("q.of")} {localizeNumber(7, lang)} — {meta?.title[lang]}
             </p>
@@ -400,6 +406,44 @@ function Assessment() {
           <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
           {t("q.backToStart")}
         </Link>
+        {readOnly ? (
+          <div className="mt-4 rounded-2xl border border-border bg-muted/50 p-4">
+            <p className="inline-flex items-center gap-1.5 text-sm font-semibold">
+              <Check className="size-4 text-secondary" aria-hidden />
+              {snapshotDate ? t("assess.recordedBanner").replace("{date}", snapshotDate) : t("assess.locked")}
+            </p>
+            {reassessConfirm ? (
+              <div className="mt-3">
+                <p className="text-xs leading-relaxed text-muted-foreground">{t("assess.reassessConfirm")}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Button type="button" variant="secondary" className="rounded-full" onClick={() => { startReassessment(); setReassessConfirm(false); void navigate({ to: "/assessment", search: {} }); }}>
+                    {t("assess.reassess")}
+                  </Button>
+                  <Button type="button" variant="outline" className="rounded-full" onClick={() => setReassessConfirm(false)}>
+                    {t("common.back")}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <Button type="button" variant="outline" className="mt-3 rounded-full" onClick={() => setReassessConfirm(true)}>
+                {t("assess.reassess")}
+              </Button>
+            )}
+          </div>
+        ) : null}
+        {editing ? (
+          <div className="mb-4">
+            {cancelConfirm ? (
+              <div>
+                <p className="text-sm">{t("assess.cancelReassessConfirm")}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Button type="button" variant="secondary" className="rounded-full" onClick={() => { cancelReassessment(); setCancelConfirm(false); setShowRequired(false); }}>{t("assess.cancelReassess")}</Button>
+                  <Button type="button" variant="outline" className="rounded-full" onClick={() => setCancelConfirm(false)}>{t("common.back")}</Button>
+                </div>
+              </div>
+            ) : <Button type="button" variant="outline" className="rounded-full" onClick={() => setCancelConfirm(true)}>{t("assess.cancelReassess")}</Button>}
+          </div>
+        ) : null}
         {guidedView === "companion" ? (
           <AssessmentGuideMoment message={t(`q.companion.${companionMoment}`)} />
         ) : guidedView === "complete" ? (
@@ -454,7 +498,7 @@ function Assessment() {
           <div className="mt-4 rounded-2xl border border-accent/50 bg-accent/10 p-4">
             <p className="text-sm font-bold">{t("q.optionalSection")}</p>
             <p className="mt-1 text-xs text-muted-foreground">{t("q.optionalNote")}</p>
-            {!locked ? (
+            {!readOnly ? (
               <button
                 type="button"
                 onClick={() => update({ section7Skipped: !section7Skipped })}
@@ -465,35 +509,10 @@ function Assessment() {
             ) : null}
           </div>
         ) : null}
-        {locked ? (
-          <div className="mt-4 rounded-2xl border border-border bg-muted/50 p-4">
-            <p className="inline-flex items-center gap-1.5 text-sm font-semibold">
-              <Check className="size-4 text-secondary" aria-hidden />
-              {t("assess.locked")}
-            </p>
-            {reassessConfirm ? (
-              <div className="mt-3">
-                <p className="text-xs leading-relaxed text-muted-foreground">{t("assess.reassessConfirm")}</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <Button type="button" variant="secondary" className="rounded-full" onClick={() => { update({ assessmentStatus: "editing" }); setReassessConfirm(false); }}>
-                    {t("assess.reassess")}
-                  </Button>
-                  <Button type="button" variant="outline" className="rounded-full" onClick={() => setReassessConfirm(false)}>
-                    {t("common.back")}
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <Button type="button" variant="outline" className="mt-3 rounded-full" onClick={() => setReassessConfirm(true)}>
-                {t("assess.reassess")}
-              </Button>
-            )}
-          </div>
-        ) : null}
-        <p className="mt-3 inline-flex items-center gap-2 text-xs text-muted-foreground">
+        {!readOnly ? <p className="mt-3 inline-flex items-center gap-2 text-xs text-muted-foreground">
           <Save className="size-3.5" aria-hidden />
           {t("q.saveResume")}
-        </p>
+        </p> : null}
 
         {section === 7 ? (
           <div className="mt-7 rounded-2xl border border-border bg-card p-4">
@@ -507,7 +526,8 @@ function Assessment() {
                   key={String(opt.value)}
                   type="button"
                   aria-pressed={founderTrack === opt.value}
-                  onClick={() => {
+                  disabled={readOnly}
+                  onClick={readOnly ? undefined : () => {
                     // One write resolves the opt-in and the pruning of Q39–41 together.
                     update({ founderTrack: opt.value });
                   }}
@@ -515,7 +535,7 @@ function Assessment() {
                     "rounded-2xl border px-5 py-2.5 text-sm font-semibold transition-all duration-200 ease-out",
                     founderTrack === opt.value
                       ? "border-secondary bg-secondary/12 ring-1 ring-secondary/40"
-                      : "border-border bg-background hover:border-secondary/40",
+                      : "border-border bg-background enabled:hover:border-secondary/40",
                   )}
                 >
                   {opt.label}
@@ -533,17 +553,16 @@ function Assessment() {
               index={q.id}
               answer={displayAnswers[q.id]}
               levelColor={LEVEL_COLORS[section - 1] ?? "var(--navigator-teal)"}
-              readOnly={locked}
-              onChange={(v) => {
-                if (locked) return;
+              readOnly={readOnly}
+              {...(!readOnly ? { onChange: (v: Parameters<typeof setAnswer>[1]) => {
                 setAnswer(q.id, v);
                 setShowRequired(false);
-              }}
+              } } : {})}
             />
           ))}
         </div>
 
-        {section === 7 && (visaInconsistent || childrenInconsistent) && !inconsistencyDismissed ? (
+        {!readOnly && section === 7 && (visaInconsistent || childrenInconsistent) && !inconsistencyDismissed ? (
           <div className="rise-in mt-5 rounded-2xl border border-accent/50 bg-accent/10 p-4">
             {visaInconsistent ? (
               <p className="text-sm font-semibold">{t("q.inconsistencyVisa")}</p>
@@ -595,7 +614,7 @@ function Assessment() {
               {t("q.next")}
               <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
             </button>
-          ) : locked ? null : (
+          ) : readOnly ? null : (
             <button
               type="button"
               onClick={submit}
@@ -607,18 +626,18 @@ function Assessment() {
           )}
         </div>
 
-        <p className="mt-6 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+        {!readOnly ? <p className="mt-6 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
           <Check className="size-3.5 text-secondary" aria-hidden />
           {t("q.saved")}{" "}
           {typeof state.answers[2]?.value === "string"
             ? COUNTRIES.find((c) => c.en === state.answers[2]?.value)?.[lang]
             : null}
-        </p>
+        </p> : null}
         </>
         )}
         </main>
         <div className="sticky top-[20rem] z-30 order-first lg:static lg:order-none">
-          <LiveProgressPanel answers={state.answers} />
+          <LiveProgressPanel answers={displayAnswers} />
         </div>
       </div>
     </div>
