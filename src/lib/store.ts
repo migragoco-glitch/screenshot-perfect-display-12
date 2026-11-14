@@ -366,7 +366,7 @@ export function useAppState() {
     const entry: ScoreSnapshot = { at: new Date().toISOString(), ...snap };
     const history = current.history.length === 0
       ? [entry]
-      : [current.history[0]!, ...current.history.slice(1), entry].slice(-12);
+      : [current.history[0]!, ...current.history.slice(1), entry].slice(-11 + 1 - 1 + 1) && [current.history[0]!, ...[...current.history.slice(1), entry].slice(-11)];
     const next: AppState = { ...current, history };
     write(next);
     setState(next);
@@ -378,7 +378,7 @@ export function useAppState() {
     const entry: ScoreSnapshot = { at: new Date().toISOString(), ...snap };
     const history = current.history.length === 0
       ? [entry]
-      : [current.history[0]!, ...current.history.slice(1), entry].slice(-12);
+      : [current.history[0]!, ...[...current.history.slice(1), entry].slice(-11)];
     const next: AppState = {
       ...current,
       history,
