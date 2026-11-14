@@ -11,6 +11,19 @@ import {
 export type Lang = "en" | "fa";
 
 export const en = {
+  "dash.homeRoadmapTitle": "Your roadmap in one place",
+  "dash.homeRoadmapCta": "Go to my roadmap",
+  "dash.engineHowTitle": "How is your roadmap built?",
+  "dash.engineHowBody": "Suggestions are built from fixed rules and your answers.",
+  "dash.deleteConfirmQuestion": "Are you sure? This cannot be undone.",
+  "dash.deleteConfirmYes": "Yes, delete",
+  "dash.deleteConfirmCancel": "Cancel",
+  "dash.showAll": "Show all",
+  "prog.noSessionTitle": "Your roadmap in one place",
+  "prog.noSessionCta": "Go to my roadmap",
+  "dash.deleteBody": "Your answers, scores and progress are saved only on this device and are never sold or shared with anyone. This button permanently removes all of them from this browser. Any email address submitted for early access is kept separately; to request its deletion, please email migrago.co@gmail.com.",
+  "authority.combinedMunicipality": "Local municipality / employment area services",
+
   "start.profile.title": "Go deeper: your full readiness profile",
   "start.profile.desc": "The full assessment builds your Integration Profile, charts and a 12-week roadmap. Your answers so far are kept, so you only answer what is missing.",
   "start.profile.cta.assessment": "Complete my full profile",
@@ -390,7 +403,7 @@ export const en = {
     "Talent & Founder potential — reported separately, never part of the 100-point base score.",
   "dash.composition": "Dimension composition",
   "dash.byDimension": "Dimension balance",
-  "dash.analysis": "AI analysis — overview",
+  "dash.analysis": "Your profile summary",
   "dash.strengths": "Strengths",
   "dash.gaps": "Priority gaps",
   "dash.editAnswers": "Edit my answers",
@@ -402,7 +415,6 @@ export const en = {
   "dash.settingsTab": "Settings",
   "dash.deleteData": "Delete all my data",
   "dash.deleteDone": "All of your data has been deleted.",
-  "dash.langSection": "Language",
 
   "pay.title": "Your profile is ready",
   "pay.sub":
@@ -550,11 +562,10 @@ export const en = {
 
   "set.account": "Account",
   "set.email": "Signed in as",
-  "set.notSignedIn": "You are not signed in. Signing in does not currently sync your roadmap progress across devices — progress is saved only on this device.",
+  "set.notSignedIn": "Your answers, scores and progress are currently saved only in this browser. Saving to your account and access from several devices are coming soon.",
   "set.legal": "Legal",
   "set.privacy": "Privacy Policy",
   "set.terms": "Terms of Service",
-  "set.gdpr": "Built with GDPR principles",
   "set.placeholderNote": "This notice outlines the privacy policy and operational terms of this software and does not constitute formal legal advice, an official opinion, or a legal ruling.",
 
   "road.done": "Done",
@@ -627,7 +638,7 @@ export const en = {
 
   "nav.faq": "FAQ",
   "nav.contact": "Contact us",
-  "set.support": "Support",
+  "set.support": "Contact",
 
   "faq.title": "Frequently asked questions",
   "faq.sub": "The short answers to what newcomers ask us most.",
@@ -769,7 +780,6 @@ export const en = {
   "tab.dashboard": "Dashboard",
   "tab.assessment": "My Assessment",
   "tab.profile": "My Profile",
-  "tab.roadmap": "My Roadmap",
   "tab.progress": "Progress",
   "tab.account": "Account",
 
@@ -827,10 +837,6 @@ export const en = {
   "engine.note":
     "Every roadmap step comes from your assessment answers, structured rules and pathway data, so you can always see why a specific action appears for you.",
 
-  "ai.title": "AI positioning",
-  "ai.label": "AI-assisted analysis and personalization",
-  "ai.body":
-    "Rules-based decision logic + structured data + evidence-based knowledge + AI-assisted personalization.",
 
   "road.action": "User Action",
   "road.whyMatters": "Why it matters",
@@ -857,15 +863,8 @@ export const en = {
   "prog.noRemaining": "No remaining high-priority actions.",
   "prog.locked": "Progress becomes available once your roadmap is unlocked.",
 
-  "report.title": "My Integration Report",
   "report.open": "Open my report",
-  "report.summaryTitle": "Assessment summary",
   "report.answered": "questions answered of 42",
-  "report.strengths": "Strengths",
-  "report.gaps": "Gaps",
-  "report.priorities": "Priorities",
-  "report.pathways": "Relevant pathways",
-  "report.roadmap": "12-week roadmap",
   "report.disclaimer": "Disclaimer",
 
   "assess.title": "My Assessment",
@@ -880,6 +879,19 @@ export const en = {
 };
 
 export const fa: Record<keyof typeof en, string> = {
+  "dash.homeRoadmapTitle": "نقشهٔ راه شما در یک جا",
+  "dash.homeRoadmapCta": "رفتن به نقشهٔ راه من",
+  "dash.engineHowTitle": "نقشهٔ راه شما چگونه ساخته می‌شود؟",
+  "dash.engineHowBody": "پیشنهادها بر پایهٔ قواعد ثابت و پاسخ‌های شما ساخته می‌شوند.",
+  "dash.deleteConfirmQuestion": "مطمئن هستید؟ این کار برگشت‌پذیر نیست.",
+  "dash.deleteConfirmYes": "بله، حذف شود",
+  "dash.deleteConfirmCancel": "انصراف",
+  "dash.showAll": "نمایش همهٔ موارد",
+  "prog.noSessionTitle": "نقشهٔ راه شما در یک جا",
+  "prog.noSessionCta": "رفتن به نقشهٔ راه من",
+  "dash.deleteBody": "پاسخ‌ها، نمرات و پیشرفت شما فقط روی همین دستگاه ذخیره می‌شوند و فروخته یا با کسی به اشتراک گذاشته نمی‌شوند. این دکمه همهٔ آن‌ها را از همین مرورگر پاک می‌کند. ایمیلی که برای دسترسی زودهنگام ثبت کرده‌اید جداگانه نگهداری می‌شود؛ برای حذف آن به migrago.co@gmail.com ایمیل بزنید.",
+  "authority.combinedMunicipality": "شهرداری و منطقهٔ اشتغال",
+
   "start.area.work.title": "مالیات و کار",
   "start.area.work.description": "کارت مالیاتی، جست‌وجوی کار، راه‌اندازی کسب‌وکار یا برنامه‌ریزی تحصیل.",
   "start.area.language.title": "زبان و ادغام",
@@ -887,7 +899,7 @@ export const fa: Record<keyof typeof en, string> = {
   "start.area.comm.title": "جامعه و زندگی روزمره",
   "start.area.comm.description": "شبکه‌های محلی و گواهینامهٔ خارجی شما.",
   "start.authority.Vero": "اداره مالیات فنلاند (Vero)",
-  "start.authority.Local Employment Services": "خدمات اشتغال محلی (TE)",
+  "start.authority.Local Employment Services": "خدمات اشتغال (TE-toimisto)",
   "start.authority.Valvira / OPH": "Valvira / سازمان ملی آموزش فنلاند (OPH)",
   "start.authority.Business Finland": "Business Finland",
   "start.authority.PRH / YTJ": "اداره ثبت فنلاند (PRH / YTJ)",
@@ -1015,8 +1027,8 @@ export const fa: Record<keyof typeof en, string> = {
   "start.authority.DVV": "DVV",
   "start.authority.Kela": "Kela",
   "start.authority.Bank": "بانک",
-  "start.authority.Local municipality services": "خدمات شهرداری محلی",
-  "start.authority.Municipal health services": "خدمات درمانی محلی",
+  "start.authority.Local municipality services": "خدمات شهرداری",
+  "start.authority.Municipal health services": "خدمات درمانی شهرداری",
   "start.area.id.title": "کد شناسایی و شهرداری",
   "start.area.id.description": "کد شناسایی شخصی، ثبت نشانی و اعلام نقل‌مکان.",
   "start.area.family.title": "خانواده و فرزندان",
@@ -1256,7 +1268,7 @@ export const fa: Record<keyof typeof en, string> = {
     "توان استعداد و کارآفرینی — جداگانه گزارش می‌شود و هرگز بخشی از نمرهٔ پایهٔ ۱۰۰ نیست.",
   "dash.composition": "ترکیب ابعاد",
   "dash.byDimension": "توازن ابعاد",
-  "dash.analysis": "تحلیل هوش مصنوعی — نمای کلی",
+  "dash.analysis": "خلاصهٔ پروفایل شما",
   "dash.strengths": "نقاط قوت",
   "dash.gaps": "شکاف‌های اولویت‌دار",
   "dash.editAnswers": "ویرایش پاسخ‌های من",
@@ -1268,7 +1280,6 @@ export const fa: Record<keyof typeof en, string> = {
   "dash.settingsTab": "تنظیمات",
   "dash.deleteData": "حذف همهٔ داده‌های من",
   "dash.deleteDone": "همهٔ داده‌های شما حذف شد.",
-  "dash.langSection": "زبان",
 
   "pay.title": "پروفایل شما آماده است",
   "pay.sub":
@@ -1417,11 +1428,10 @@ export const fa: Record<keyof typeof en, string> = {
 
   "set.account": "حساب کاربری",
   "set.email": "واردشده با",
-  "set.notSignedIn": "وارد نشده‌اید. ورود در حال حاضر پیشرفت نقشه‌راه شما را بین دستگاه‌ها همگام نمی‌کند — پیشرفت فقط روی همین دستگاه ذخیره می‌شود.",
+  "set.notSignedIn": "پاسخ‌ها، نمرات و پیشرفت شما فعلاً فقط در همین مرورگر ذخیره می‌شوند. ذخیرهٔ روی حساب و دسترسی از چند دستگاه به‌زودی اضافه می‌شود.",
   "set.legal": "اسناد حقوقی",
   "set.privacy": "سیاست حریم خصوصی",
   "set.terms": "شرایط استفاده از خدمات",
-  "set.gdpr": "ساخته‌شده بر پایهٔ اصول GDPR",
   "set.placeholderNote": "این متن حاضر صرفاً بیانگر سیاست حریم خصوصی و شرایط استفاده از این نرم‌افزار است و نباید آن را به‌عنوان رای، نظریه یا مشاوره رسمی حقوقی تلقی کرد.",
 
   "road.done": "انجام شد",
@@ -1429,7 +1439,7 @@ export const fa: Record<keyof typeof en, string> = {
   "road.signInToSave": "پیشرفت شما در حال حاضر فقط در همین مرورگر ذخیره می‌شود و با تعویض دستگاه یا مرورگر منتقل نخواهد شد.",
   "road.knowledgeVersion": "داده‌های نهادی فنلاند — به‌روزشده فوریهٔ ۲۰۲۶",
 
-  "nps.title": "چقدر احتمال دارد MigraGo را به مهاجر دیگری معرفی کنید؟",
+  "nps.title": "چقدر احتمال دارد میگراگو را به مهاجر دیگری معرفی کنید؟",
   "nps.sub": "۰ = اصلاً · ۱۰ = بسیار زیاد",
   "nps.comment": "چه چیزی می‌توانست مفیدتر باشد؟ (اختیاری)",
   "nps.submit": "ارسال بازخورد",
@@ -1494,7 +1504,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "nav.faq": "پرسش‌های پرتکرار",
   "nav.contact": "تماس با ما",
-  "set.support": "پشتیبانی",
+  "set.support": "ارتباط با ما",
 
   "faq.title": "پرسش‌های پرتکرار",
   "faq.sub": "پاسخ کوتاه به پرسش‌هایی که تازه‌واردان بیش از همه می‌پرسند.",
@@ -1637,7 +1647,6 @@ export const fa: Record<keyof typeof en, string> = {
   "tab.dashboard": "داشبورد",
   "tab.assessment": "ارزیابی من",
   "tab.profile": "پروفایل من",
-  "tab.roadmap": "نقشهٔ راه من",
   "tab.progress": "پیشرفت",
   "tab.account": "حساب کاربری",
 
@@ -1695,10 +1704,6 @@ export const fa: Record<keyof typeof en, string> = {
   "engine.note":
     "هر گام نقشهٔ راه از پاسخ‌های ارزیابی شما، قواعد ساختاریافته و دادهٔ مسیرها می‌آید؛ بنابراین همیشه می‌توانید ببینید چرا یک اقدام مشخص برای شما ظاهر شده است.",
 
-  "ai.title": "جایگاه هوش مصنوعی",
-  "ai.label": "تحلیل و شخصی‌سازی به‌کمک هوش مصنوعی",
-  "ai.body":
-    "منطق تصمیم‌گیری مبتنی بر قواعد + دادهٔ ساختاریافته + دانش مبتنی بر شواهد + شخصی‌سازی به‌کمک هوش مصنوعی.",
 
   "road.action": "اقدام کاربر",
   "road.whyMatters": "چرا اهمیت دارد",
@@ -1725,15 +1730,8 @@ export const fa: Record<keyof typeof en, string> = {
   "prog.noRemaining": "اقدام باقی‌ماندهٔ دارای اولویت بالا وجود ندارد.",
   "prog.locked": "پیشرفت پس از باز شدن نقشهٔ راه در دسترس قرار می‌گیرد.",
 
-  "report.title": "گزارش ادغام من",
   "report.open": "گزارش من را باز کن",
-  "report.summaryTitle": "خلاصهٔ ارزیابی",
   "report.answered": "پرسش پاسخ‌داده‌شده از ۴۲ پرسش",
-  "report.strengths": "نقاط قوت",
-  "report.gaps": "شکاف‌ها",
-  "report.priorities": "اولویت‌ها",
-  "report.pathways": "مسیرهای مرتبط",
-  "report.roadmap": "نقشهٔ راه ۱۲ هفته‌ای",
   "report.disclaimer": "سلب مسئولیت",
 
   "assess.title": "ارزیابی من",

@@ -1,9 +1,17 @@
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { adaptRoadmapStep, formatScoreDelta, getProfileSteps, getRelatedStepsForGap, isPriorityStep, PROFILE_STEP_IDS, WEAKNESS_GAP_FLAGS } from "./profile-link";
+import { adaptRoadmapStep, formatScoreDelta, getProfileSteps, getRelatedStepsForGap, getStepWeek, isPriorityStep, PROFILE_STEP_IDS, WEAKNESS_GAP_FLAGS } from "./profile-link";
 import { KNOWLEDGE_TABLE } from "./roadmap";
 
 describe("Approved completed-Premium profile links", () => {
+  test("overlay-only actions count in the first week of their actual phase", () => {
+    for (const id of ["eu-registration", "municipality-of-residence", "temporary-address", "move-notification", "find-home", "bank-account"]) expect(getStepWeek({ id, phase: 1 })).toBe(1);
+    expect(getStepWeek({ id: "strong-id", phase: 2 })).toBe(4);
+    expect(getStepWeek({ id: "driving-licence", phase: 4 })).toBe(10);
+  });
+  test("knowledge-backed actions retain their explicit weeks", () => {
+    for (const entry of KNOWLEDGE_TABLE) expect(getStepWeek(entry)).toBe(entry.week);
+  });
   test("only active weakness flags mark steps as priorities", () => {
     expect(isPriorityStep("te-jobseeker", ["employment_pathway"])).toBe(false);
     expect(isPriorityStep("te-jobseeker", ["employment_gap"])).toBe(true);

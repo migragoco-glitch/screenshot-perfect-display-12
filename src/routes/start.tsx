@@ -109,6 +109,8 @@ function StartScreen() {
   const [doneIds, setDoneIds] = useState<string[]>([]);
   const [docIds, setDocIds] = useState<string[]>([]);
   const [expandedIds, setExpandedIds] = useState<string[]>([]);
+  const [firstExpanded, setFirstExpanded] = useState(false);
+  const [profileWhyIds, setProfileWhyIds] = useState<string[]>([]);
   const [paywallOpen, setPaywallOpen] = useState(false);
   useEffect(() => {
     if (!hydrated || !state.consent || restored) return;
@@ -140,6 +142,13 @@ function StartScreen() {
   const userGaps = isProfileDriven ? computeProfile(state.answers, state.founderTrack === true, state.region ?? "undecided").gaps : [];
   const profileSteps = isProfileDriven ? getProfileSteps(userGaps) : [];
   const allPlanSteps = [...steps, ...profileSteps];
+  useEffect(() => {
+    const first = allPlanSteps[0];
+    if (restored && hasNavigator && stage === "road" && first && !firstExpanded) {
+      setExpandedIds([first.id]);
+      setFirstExpanded(true);
+    }
+  }, [restored, hasNavigator, stage, allPlanSteps, firstExpanded]);
   const filteredSteps = steps.filter((step) => areas.includes(STEP_AREA[step.id] as AreaId));
   const checklist = documentsForSteps(filteredSteps);
   const toggleDone = (id: string) => {
@@ -403,6 +412,7 @@ function StartScreen() {
                   {phaseSteps.map((step) => {
                     const done = doneIds.includes(step.id);
                     const title = typeof step.title === "string" ? t(step.title) : step.title[lang];
+                    if (hasNavigator) return <PremiumStepCard key={step.id} step={step} done={done} expanded={expandedIds.includes(step.id)} onToggleDone={() => toggleDone(step.id)} onToggleExpanded={() => setExpandedIds((current) => current.includes(step.id) ? current.filter((id) => id !== step.id) : [...current, step.id])} profilePriority={isProfileDriven && isPriorityStep(step.id, userGaps)} profileDriven={isProfileDriven && isPriorityStep(step.id, userGaps)} whyOpen={profileWhyIds.includes(step.id)} onToggleWhy={() => setProfileWhyIds((current) => current.includes(step.id) ? current.filter((id) => id !== step.id) : [...current, step.id])} />;
                     return <li key={step.id} data-step-id={step.id} className={cn("rounded-2xl border border-border/70 p-4 transition-opacity duration-200 ease-out", done && "opacity-70")} style={stepCardStyle(step.phase)}>
                       <div className="flex items-start gap-3">
                         {hasNavigator ? <label className="relative mt-0.5 inline-flex size-5 shrink-0 cursor-pointer items-center justify-center">
@@ -442,27 +452,7 @@ function StartScreen() {
                 {profileSteps.map((step) => {
                   const done = doneIds.includes(step.id);
                   const title = typeof step.title === "string" ? t(step.title) : step.title[lang];
-                  return <li key={step.id} data-step-id={step.id} className={cn("rounded-2xl border border-border/70 p-4 transition-opacity duration-200 ease-out", done && "opacity-70")} style={stepCardStyle(step.phase)}>
-                    <div className="flex items-start gap-3">
-                      <label className="relative mt-0.5 inline-flex size-5 shrink-0 cursor-pointer items-center justify-center">
-                        <input type="checkbox" checked={done} onChange={() => toggleDone(step.id)} aria-label={`${t("road.done")}: ${title}`} className="peer size-5 cursor-pointer appearance-none rounded-md border border-border bg-background transition-colors duration-200 ease-out checked:border-[var(--navigator-teal)] checked:bg-[var(--navigator-teal)]" />
-                        {done ? <Check className="check-pop pointer-events-none absolute size-3.5 text-secondary-foreground" aria-hidden /> : null}
-                      </label>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="rounded-full bg-primary/8 px-2.5 py-0.5 text-[11px] font-semibold text-primary">{t("start.plan.weeks").replace("{from}", localizeNumber(weeksRange(step.phase)[0], lang)).replace("{to}", localizeNumber(weeksRange(step.phase)[1], lang))}</span>
-                          {isPriorityStep(step.id, userGaps) ? <span className="rounded-full bg-[var(--navigator-teal)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--journey-pill-foreground)]">{t("start.priorityBadge")}</span> : null}
-                        </div>
-                        <StepBody step={step} localUrl={localUrl} showDetails={false} done={done} />
-                        <Button type="button" variant="link" aria-expanded={expandedIds.includes(step.id)} aria-controls={`details-${step.id}`} onClick={() => setExpandedIds((current) => current.includes(step.id) ? current.filter((id) => id !== step.id) : [...current, step.id])} className="mt-3 inline-flex h-auto items-center gap-1.5 p-0 text-[11px] font-semibold text-secondary underline underline-offset-4"><Info className="size-3.5" aria-hidden />{t(expandedIds.includes(step.id) ? "start.details.close" : "start.details.open")}</Button>
-                        {expandedIds.includes(step.id) ? <div id={`details-${step.id}`} className="mt-2 rounded-2xl border border-border bg-card p-3 text-xs leading-relaxed text-muted-foreground">
-                          <StepDetails step={step} />
-                          {step.dependency?.[lang] ? <><p className={cn(LABEL, "mt-3")}>{t("road.dependency")}</p><p className="mt-1 text-sm leading-relaxed">{step.dependency[lang]}</p></> : null}
-                          {step.completion?.[lang] ? <><p className={cn(LABEL, "mt-3")}>{t("road.completionCondition")}</p><p className="mt-1 text-sm leading-relaxed">{step.completion[lang]}</p></> : null}
-                        </div> : null}
-                      </div>
-                    </div>
-                  </li>;
+                  return <PremiumStepCard key={step.id} step={step} done={done} expanded={expandedIds.includes(step.id)} onToggleDone={() => toggleDone(step.id)} onToggleExpanded={() => setExpandedIds((current) => current.includes(step.id) ? current.filter((id) => id !== step.id) : [...current, step.id])} profilePriority={isPriorityStep(step.id, userGaps)} profileDriven whyOpen={profileWhyIds.includes(step.id)} onToggleWhy={() => setProfileWhyIds((current) => current.includes(step.id) ? current.filter((id) => id !== step.id) : [...current, step.id])} />;
                 })}
               </ol>
             </section> : null}
@@ -490,6 +480,29 @@ function StartScreen() {
       }} />
     </div>
   );
+}
+function PremiumStepCard({ step, done, expanded, onToggleDone, onToggleExpanded, profilePriority, profileDriven, whyOpen, onToggleWhy }: { step: AreaStep; done: boolean; expanded: boolean; onToggleDone: () => void; onToggleExpanded: () => void; profilePriority: boolean; profileDriven: boolean; whyOpen: boolean; onToggleWhy: () => void }) {
+  const { t, lang } = useI18n();
+  const title = typeof step.title === "string" ? t(step.title) : step.title[lang];
+  return <li data-step-id={step.id} className={cn("rounded-lg border border-border/70 p-4", done && "opacity-70")} style={stepCardStyle(step.phase)}>
+    <div className="flex items-start gap-3">
+      <input type="checkbox" checked={done} onChange={onToggleDone} aria-label={`${t("road.done")}: ${title}`} className="mt-1 size-5 shrink-0 cursor-pointer accent-secondary" />
+      <div className="min-w-0 flex-1">
+        <Button type="button" variant="ghost" aria-expanded={expanded} aria-controls={`details-${step.id}`} onClick={onToggleExpanded} className="h-auto w-full flex-wrap justify-start gap-2 whitespace-normal p-0 text-start hover:bg-transparent">
+          <span className={cn("me-auto text-sm font-bold", done && "line-through")}>{title}</span>
+          <span className="rounded-full bg-primary/8 px-2.5 py-0.5 text-[11px] font-semibold text-primary">{t("start.plan.weeks").replace("{from}", localizeNumber(weeksRange(step.phase)[0], lang)).replace("{to}", localizeNumber(weeksRange(step.phase)[1], lang))}</span>
+          {profilePriority ? <span className="rounded-full bg-[var(--navigator-teal)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--journey-pill-foreground)]">{t("start.priorityBadge")}</span> : null}
+          <InstitutionBadge institution={step.authority as Institution} displayName={t(`start.authority.${step.authority}`)} compact />
+        </Button>
+        {expanded ? <div id={`details-${step.id}`} className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          <StepDetails step={step} />
+          <a href={step.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 font-semibold text-secondary underline underline-offset-4">{t("road.officialSource")}<ExternalLink className="size-3.5" /></a>
+          {step.completion?.[lang] ? <><p className={cn(LABEL, "mt-3")}>{t("road.completionCondition")}</p><p className="mt-1">{step.completion[lang]}</p></> : null}
+          {profileDriven ? <><Button type="button" variant="link" aria-expanded={whyOpen} className="mt-3 h-auto p-0 text-xs text-secondary" onClick={onToggleWhy}><Info className="size-3.5" />{t("road.why")}</Button>{whyOpen ? <p className="mt-2 text-xs">{t("start.profileSteps.caption")}</p> : null}</> : null}
+        </div> : null}
+      </div>
+    </div>
+  </li>;
 }
 function StepBody({ step, localUrl, showDetails = true, done = false }: { step: AreaStep; localUrl: string | undefined; showDetails?: boolean; done?: boolean }) {
   const { lang, t } = useI18n();
