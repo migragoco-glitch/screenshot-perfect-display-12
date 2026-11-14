@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   CartesianGrid,
   Legend,
+  LabelList,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -47,7 +48,7 @@ import {
   InstitutionBadge,
   NpsSurvey,
 } from "@/components/FeedbackWidgets";
-import { ProfilePreview, RoadmapSummary } from "@/components/RoadmapSummary";
+import { DIMENSION_COLORS, ProfilePreview, ProfileRing, RoadmapSummary } from "@/components/RoadmapSummary";
 import { SupportChannels } from "@/components/SupportChannels";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import { TOP_BAND_THRESHOLD, analysisSummary, computeProfile, weakestDimension, type GapFlag } from "@/lib/scoring";
@@ -84,12 +85,6 @@ export const Route = createFileRoute("/dashboard")({
   }),
   component: Dashboard,
 });
-
-const DIM_COLORS = [
-  "var(--navigator-teal)",
-  "var(--navigator-light-teal)",
-  "var(--navigator-gold)",
-];
 
 const ROADMAP_PHASES = [
   {
@@ -239,9 +234,9 @@ function Dashboard() {
   }
 
   const dims = [
-    { key: "dim1", label: t("dash.dim1"), value: profile.legal, weight: 30, color: DIM_COLORS[0] },
-    { key: "dim2", label: t("dash.dim2"), value: profile.professional, weight: 40, color: DIM_COLORS[1] },
-    { key: "dim3", label: t("dash.dim3"), value: profile.psychological, weight: 30, color: DIM_COLORS[2] },
+    { key: "dim1", label: t("dash.dim1"), value: profile.legal, weight: 30, color: DIMENSION_COLORS.legal },
+    { key: "dim2", label: t("dash.dim2"), value: profile.professional, weight: 40, color: DIMENSION_COLORS.professional },
+    { key: "dim3", label: t("dash.dim3"), value: profile.psychological, weight: 30, color: DIMENSION_COLORS.psychological },
   ];
 
   const historyData = state.history.map((h, i) => ({
@@ -446,16 +441,10 @@ function Dashboard() {
               </div>
 
               <div className="mt-5 grid gap-6 sm:grid-cols-[180px_1fr] sm:items-center">
-                <div className="relative mx-auto size-44">
-                  <svg viewBox="0 0 120 120" className="size-full" aria-hidden="true">
-                    <circle cx="60" cy="60" r="50" fill="none" stroke="var(--muted)" strokeWidth="9" />
-                    <circle className="roadmap-progress-transition" cx="60" cy="60" r="50" fill="none" stroke="var(--navigator-teal)" strokeWidth="9" strokeLinecap="round" strokeDasharray={Math.PI * 100} strokeDashoffset={Math.PI * 100 * (1 - profile.overall / 100)} transform="rotate(-90 60 60)" />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center"><span className="text-3xl font-bold tabular-nums">{localizeNumber(profile.overall, lang)}</span><span className="text-xs text-muted-foreground">{t("q.of")} {localizeNumber(100, lang)}</span></div>
-                </div>
-                <ul className="space-y-5">{dims.map((d, index) => <li key={d.key}>
+                <ProfileRing profile={profile} large />
+                <ul className="space-y-5">{dims.map((d) => <li key={d.key}>
                   <div className="flex items-baseline justify-between gap-3 text-sm font-semibold"><span>{d.label}</span><span className="shrink-0 tabular-nums">{localizeNumber(d.value, lang)}%</span></div>
-                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted"><div className="roadmap-progress-transition h-full rounded-full" style={{ width: `${d.value}%`, backgroundColor: ["var(--navigator-teal)", "var(--navigator-olive)", "var(--navigator-gold)"][index] }} /></div>
+                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted"><div className="roadmap-progress-transition h-full rounded-full" style={{ width: `${d.value}%`, backgroundColor: d.color }} /></div>
                   <p className="mt-1 text-xs text-muted-foreground">{t("dash.weight")} {localizeNumber(d.weight, lang)}%</p>
                 </li>)}</ul>
               </div>
@@ -560,10 +549,10 @@ function Dashboard() {
             <section className="rounded-3xl border border-border bg-card p-6 lg:col-span-3">
               <h2 className="text-lg">{t("dash.history")}</h2>
               <p className="mt-1 text-xs text-muted-foreground">{t("dash.historyNote")}</p>
-              {historyData.length > 1 ? (
+              {historyData.length >= 1 ? (
                 <div className="mt-4 h-[280px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={historyData} margin={{ top: 8, right: 12, bottom: 18, left: 0 }}>
+                    <LineChart data={historyData} margin={{ top: 28, right: 24, bottom: 18, left: 24 }}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.35} />
                       <XAxis dataKey="n" tickLine={false} axisLine={false} tick={{ fontSize: 10 }} interval="preserveStartEnd" />
                       <YAxis domain={[0, 100]} width={30} tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
@@ -571,19 +560,21 @@ function Dashboard() {
                         contentStyle={{ borderRadius: 12, fontSize: 12, border: "1px solid var(--border)" }}
                         formatter={(v: number, name: string) => [`${v}%`, name]}
                       />
-                      <Legend verticalAlign="bottom" height={30} iconType="plainline" wrapperStyle={{ fontSize: 11 }} />
+                      <Legend verticalAlign="bottom" height={30} iconType="plainline" wrapperStyle={{ fontSize: 11 }} formatter={(value) => <span className="text-foreground">{value}</span>} />
                       <Line
                         type="monotone"
                         dataKey="overall"
                         name={t("dash.overall")}
-                        stroke="var(--plum)"
+                        stroke="var(--navigator-navy)"
                         strokeWidth={3.5}
                         dot={{ r: 3 }}
                         activeDot={{ r: 5 }}
-                      />
-                      <Line type="monotone" dataKey="legal" name={t("dash.dim1")} stroke={DIM_COLORS[0]} strokeWidth={2.5} dot={{ r: 2.5 }} />
-                      <Line type="monotone" dataKey="professional" name={t("dash.dim2")} stroke={DIM_COLORS[1]} strokeWidth={2.5} strokeDasharray="6 3" dot={{ r: 2.5 }} />
-                      <Line type="monotone" dataKey="psychological" name={t("dash.dim3")} stroke={DIM_COLORS[2]} strokeWidth={2.5} strokeDasharray="2 3" dot={{ r: 2.5 }} />
+                      >
+                        <LabelList dataKey="overall" position="top" offset={10} fill="var(--foreground)" fontSize={11} formatter={(value: unknown) => localizeNumber(Number(value), lang)} />
+                      </Line>
+                      <Line type="monotone" dataKey="legal" name={t("dash.dim1")} stroke={DIMENSION_COLORS.legal} strokeWidth={2} dot={{ r: 2.5 }} />
+                      <Line type="monotone" dataKey="professional" name={t("dash.dim2")} stroke={DIMENSION_COLORS.professional} strokeWidth={2} strokeDasharray="6 3" dot={{ r: 2.5 }} />
+                      <Line type="monotone" dataKey="psychological" name={t("dash.dim3")} stroke={DIMENSION_COLORS.psychological} strokeWidth={2} strokeDasharray="2 3" dot={{ r: 2.5 }} />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>

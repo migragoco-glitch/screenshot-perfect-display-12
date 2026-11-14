@@ -1,17 +1,23 @@
-import { ArrowRight, Check, Lock } from "lucide-react";
+import { ArrowRight, Check, Gauge, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import type { Profile } from "@/lib/scoring";
 
+export const DIMENSION_COLORS = {
+  legal: "#02808A",
+  professional: "#3AC8C3",
+  psychological: "#CB902C",
+} as const;
+
 export function ProgressRing({ percent, empty = false, complete = false }: { percent: number; empty?: boolean; complete?: boolean }) {
-  const { t, lang } = useI18n();
+  const { lang } = useI18n();
   return <div className="relative size-28 shrink-0">
     <svg viewBox="0 0 120 120" className="size-full" aria-hidden="true">
-      <circle cx="60" cy="60" r="50" fill="none" stroke="var(--muted-foreground)" strokeOpacity={0.25} strokeWidth="9" strokeDasharray={empty ? "5 7" : undefined} />
+      <circle cx="60" cy="60" r="50" fill="none" stroke={empty ? "#02808A" : "var(--muted-foreground)"} strokeOpacity={empty ? 0.2 : 0.25} strokeWidth="9" />
       {!empty ? <circle className="roadmap-progress-transition" cx="60" cy="60" r="50" fill="none" stroke={complete ? "var(--status-done)" : "var(--navigator-teal)"} strokeWidth="9" strokeLinecap="round" strokeDasharray={Math.PI * 100} strokeDashoffset={Math.PI * 100 * (1 - percent / 100)} transform="rotate(-90 60 60)" /> : null}
     </svg>
     <div className={complete ? "absolute inset-5 flex items-center justify-center rounded-full bg-[var(--status-done)] text-[var(--journey-pill-foreground)]" : "absolute inset-0 flex items-center justify-center"}>
-      <span className="text-lg font-bold tabular-nums">{empty ? `${lang === "fa" ? "؟" : "?"} ${t("q.of")} ${localizeNumber(100, lang)}` : `${localizeNumber(percent, lang)}%`}</span>
+      {empty ? <Gauge className="size-9" color="#02808A" aria-hidden /> : <span className="text-lg font-bold tabular-nums">{localizeNumber(percent, lang)}%</span>}
     </div>
   </div>;
 }
@@ -35,7 +41,7 @@ export function PhaseRing({ phases, percent, complete }: { phases: { color: stri
         const offset = cursor;
         cursor += arc + gap;
         return <g key={p.color}>
-          <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={p.color} strokeOpacity={0.2} strokeWidth={stroke} strokeDasharray={`${arc} ${c - arc}`} strokeDashoffset={-offset} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
+          <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={p.color} strokeOpacity={0.4} strokeWidth={stroke} strokeDasharray={`${arc} ${c - arc}`} strokeDashoffset={-offset} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
           {filled > 0 ? <circle className="roadmap-progress-transition" cx={size / 2} cy={size / 2} r={r} fill="none" stroke={p.color} strokeWidth={stroke} strokeLinecap="round" strokeDasharray={`${filled} ${c - filled}`} strokeDashoffset={-offset} transform={`rotate(-90 ${size / 2} ${size / 2})`} /> : null}
         </g>;
       })}
@@ -44,6 +50,37 @@ export function PhaseRing({ phases, percent, complete }: { phases: { color: stri
       <span className="text-lg font-bold tabular-nums">{localizeNumber(percent, lang)}%</span>
     </div>
     {complete ? <span className="absolute -bottom-1 -end-1 flex size-6 items-center justify-center rounded-full bg-[#15803D] text-white"><Check className="size-3.5" strokeWidth={3} aria-hidden /></span> : null}
+  </div>;
+}
+
+export function ProfileRing({ profile, large = false }: { profile: Profile; large?: boolean }) {
+  const { t, lang } = useI18n();
+  const radius = 50;
+  const circumference = 2 * Math.PI * radius;
+  const gap = 4;
+  const dimensions = [
+    { color: DIMENSION_COLORS.legal, weight: 0.3, value: profile.legal },
+    { color: DIMENSION_COLORS.professional, weight: 0.4, value: profile.professional },
+    { color: DIMENSION_COLORS.psychological, weight: 0.3, value: profile.psychological },
+  ];
+  let cursor = 0;
+  return <div className={large ? "relative mx-auto size-44 shrink-0" : "relative size-28 shrink-0"}>
+    <svg viewBox="0 0 120 120" className="size-full" aria-hidden="true">
+      {dimensions.map((dimension) => {
+        const arc = dimension.weight * (circumference - gap * dimensions.length);
+        const filled = arc * dimension.value / 100;
+        const offset = cursor;
+        cursor += arc + gap;
+        return <g key={dimension.color}>
+          <circle cx="60" cy="60" r={radius} fill="none" stroke={dimension.color} strokeOpacity={0.4} strokeWidth="9" strokeDasharray={`${arc} ${circumference - arc}`} strokeDashoffset={-offset} transform="rotate(-90 60 60)" />
+          {filled > 0 ? <circle className="roadmap-progress-transition" cx="60" cy="60" r={radius} fill="none" stroke={dimension.color} strokeWidth="9" strokeDasharray={`${filled} ${circumference - filled}`} strokeDashoffset={-offset} transform="rotate(-90 60 60)" /> : null}
+        </g>;
+      })}
+    </svg>
+    <div className="absolute inset-0 flex flex-col items-center justify-center">
+      <span className={large ? "text-3xl font-bold tabular-nums" : "text-lg font-bold tabular-nums"}>{localizeNumber(profile.overall, lang)}{large ? "" : "%"}</span>
+      {large ? <span className="text-xs text-muted-foreground">{t("q.of")} {localizeNumber(100, lang)}</span> : null}
+    </div>
   </div>;
 }
 
@@ -71,15 +108,15 @@ export function RoadmapSummary({ done, total, showLength = false, free = false, 
 export function ProfilePreview({ profile, onOpen }: { profile?: Profile; onOpen: () => void }) {
   const { t, lang } = useI18n();
   const dims = [
-    { label: t("dash.dim1"), value: profile?.legal, color: "var(--navigator-teal)" },
-    { label: t("dash.dim2"), value: profile?.professional, color: "var(--navigator-light-teal)" },
-    { label: t("dash.dim3"), value: profile?.psychological, color: "var(--navigator-gold)" },
+    { label: t("dash.dim1"), value: profile?.legal, color: DIMENSION_COLORS.legal },
+    { label: t("dash.dim2"), value: profile?.professional, color: DIMENSION_COLORS.professional },
+    { label: t("dash.dim3"), value: profile?.psychological, color: DIMENSION_COLORS.psychological },
   ];
   return <section className="mt-8 border-t border-border py-6">
     <h3 className="text-lg font-semibold">{t(profile ? "start.profile.title" : "start.emptyProfile.title")}</h3>
     {!profile ? <p className="mt-2 text-sm text-muted-foreground">{t("start.emptyProfile.sub")}</p> : null}
     <div className="mt-5 grid items-center gap-5 sm:grid-cols-[112px_1fr]">
-      <ProgressRing percent={profile?.overall ?? 0} empty={!profile} />
+      {profile ? <ProfileRing profile={profile} /> : <ProgressRing percent={0} empty />}
       <ul className="space-y-4">{dims.map((d) => <li key={d.label}><div className="flex justify-between gap-3 text-xs font-semibold"><span>{d.label}</span><span>{d.value === undefined ? "—" : `${localizeNumber(d.value, lang)}%`}</span></div><div className="mt-2 h-2 overflow-hidden rounded-full bg-muted"><div className="roadmap-progress-transition h-full rounded-full" style={{ width: `${d.value ?? 0}%`, background: d.color }} /></div></li>)}</ul>
     </div>
     {!profile ? <ul className="mt-5 space-y-2 text-sm">{(["start.emptyProfile.f1", "start.emptyProfile.f2", "start.emptyProfile.f3"] as const).map((key) => <li key={key} className="flex items-start gap-2"><Check className="size-4 shrink-0 text-secondary" /><span>{t(key)}</span></li>)}</ul> : null}
