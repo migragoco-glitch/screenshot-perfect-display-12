@@ -267,7 +267,7 @@ export const en = {
   "pricing.freeCtaContinue": "Start your free journey",
   "pricing.nav": "Premium",
   "pricing.navPrice": "€9.99",
-  "pricing.perMonth": "/month",
+  "pricing.perMonth": " / 30 days",
   "pricing.navDesc":
     "Full 42-question assessment\nIntegration Profile\n Your personalized pathway\n Your 12-week roadmap\nProgress tracking and expanded actionable insights",
   "pricing.stab": "MigraGo Advanced Integration Plan",
@@ -401,9 +401,9 @@ export const en = {
 
   "pay.title": "Your profile is ready",
   "pay.sub":
-    "Free includes the 6-question Quick Check in under one minute, a preliminary profile and recommended first steps. Premium (€9.99/month) includes the full 42-question assessment, Smart Integration Profile, personalized pathway, 12-week roadmap, action and progress tracking, and curated official resources and links. Your Quick Check answers carry over to the full assessment.",
+    "The Free plan includes a step-by-step roadmap with the responsible authority and official link for each step. Premium adds the full 42-question assessment, a readiness profile, a 12-week roadmap, step tracking and a document checklist. 30-day access €9.99 or 90-day access €24.99; one-time payment, no automatic renewal.",
   "pay.teaser": "Locked preview",
-  "pay.unlock": "Unlock for €9.99/month",
+  "pay.unlock": "Activate Premium",
   "pay.later": "Stay on the free overview",
   "pay.demoNote": "Demo checkout — no payment is taken in this MVP.",
 
@@ -422,7 +422,7 @@ export const en = {
   "road.week": "Week",
   "road.composition": "Phase composition",
   "road.steps": "steps",
-  "road.locked": "Unlock your roadmap with Premium.",
+  "road.locked": "Unlock your full roadmap with Premium.",
 
   "metrics.title": "Founder Validation Dashboard",
   "metrics.banner": "Internal validation metrics — for evaluator demonstration purposes.",
@@ -671,9 +671,19 @@ export const en = {
   "contact.futureBody":
     "An in-app AI support assistant is on the roadmap as a future capability. It is not available in this version.",
 
-  "checkout.title": "Activate the trial version",
-  "checkout.sub": "Full 42-question assessment, Integration Profile and 12-week roadmap.",
-  "checkout.start.sub": "a week-by-week plan, step details, progress tracking, one document checklist, and your full readiness profile built from your answers.",
+  "checkout.title": "Activate Premium",
+  "checkout.sub": "Unlock your full readiness profile, 12-week roadmap and progress tracking.",
+  "checkout.start.sub": "Unlock your full readiness profile, 12-week roadmap and progress tracking.",
+  "checkout.planChoose": "Choose your access",
+  "checkout.plan30Label": "30 days",
+  "checkout.plan30Price": "€9.99",
+  "checkout.plan30Note": "One-time payment",
+  "checkout.plan90Label": "90 days",
+  "checkout.plan90Price": "€24.99",
+  "checkout.plan90Note": "Equal to €8.33 per 30 days",
+  "checkout.plan30": "Premium — 30 days",
+  "checkout.plan90": "Premium — 90 days",
+  "checkout.oneTime": "One-time payment, no automatic renewal",
   "checkout.confirmation": "By continuing, you confirm you'd like to proceed with payment.",
   "checkout.plan": "Premium (monthly)",
   "checkout.discountLabel": "Early-access discount",
@@ -1120,7 +1130,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.freeCtaContinue": "شروع مسیر رایگان",
   "pricing.nav": "Premium",
   "pricing.navPrice": "۹٫۹۹ یورو",
-  "pricing.perMonth": " در ماه",
+  "pricing.perMonth": " / ۳۰ روز",
   "pricing.navDesc":
     "ارزیابی کامل ۴۲ پرسشی\nپروفایل ادغام \n مسیر شخصی‌سازی‌ شدهٔ شما  \nنقشه‌ راه ۱۲ هفته‌ایی\n پیگیری پیشرفت و بینش‌های عملی گسترده‌تر",
   "pricing.stab": "طرح پیشرفتهٔ ادغام میگراگو",
@@ -1253,9 +1263,9 @@ export const fa: Record<keyof typeof en, string> = {
 
   "pay.title": "پروفایل شما آماده است",
   "pay.sub":
-    "نسخهٔ رایگان شامل بررسی سریع ۶ پرسشی در کمتر از یک دقیقه، پروفایل اولیه و گام‌های پیشنهادی نخست است. Premium (ماهانه ۹٫۹۹ یورو) شامل ارزیابی کامل ۴۲ پرسشی، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده، نقشه‌راه ۱۲ هفته‌ای، پیگیری اقدام‌ها و پیشرفت و منابع و پیوندهای رسمی منتخب است. پاسخ‌های بررسی سریع شما به ارزیابی کامل منتقل می‌شوند.",
+    "پلن رایگان شامل نقشهٔ راه گام‌به‌گام، نهاد مسئول و لینک رسمی هر گام است. Premium ارزیابی کامل ۴۲پرسشی، پروفایل آمادگی، نقشهٔ راه ۱۲هفته‌ای، پیگیری گام‌ها و چک‌لیست مدارک را اضافه می‌کند. دسترسی ۳۰ روزه ۹٫۹۹ یورو یا ۹۰ روزه ۲۴٫۹۹ یورو؛ پرداخت یک‌باره و بدون تمدید خودکار.",
   "pay.teaser": "پیش‌نمایش قفل‌شده",
-  "pay.unlock": "فعال‌سازی با ۹٫۹۹ یورو در ماه",
+  "pay.unlock": "فعال‌سازی Premium",
   "pay.later": "ادامه با نمای رایگان",
   "pay.demoNote": "پرداخت نمایشی — در این نسخه هیچ مبلغی دریافت نمی‌شود.",
 
@@ -1274,7 +1284,7 @@ export const fa: Record<keyof typeof en, string> = {
   "road.week": "هفته",
   "road.composition": "ترکیب فازها",
   "road.steps": "گام",
-  "road.locked": "نقشه‌راه خود را با اشتراک Premium باز کنید.",
+  "road.locked": "نقشهٔ راه کامل خود را با Premium باز کنید.",
 
   "metrics.title": "داشبورد اعتبارسنجی بنیان‌گذار",
   "metrics.banner": "شاخص‌های اعتبارسنجی داخلی — برای ارائه به ارزیاب.",
@@ -1525,9 +1535,19 @@ export const fa: Record<keyof typeof en, string> = {
   "contact.futureBody":
     "دستیار پشتیبانی هوش مصنوعی درون‌برنامه‌ای در نقشهٔ راه محصول قرار دارد و در این نسخه در دسترس نیست.",
 
-  "checkout.title": "فعال‌سازی نسخهٔ آزمایشی",
-  "checkout.sub": "ارزیابی کامل ۴۲ پرسشی، پروفایل ادغام و نقشه‌راه ۱۲ هفته‌ای.",
-  "checkout.start.sub": "برنامهٔ هفته‌به‌هفته، جزئیات هر گام، پیگیری پیشرفت، یک فهرست مدارک و پروفایل کامل آمادگی ساخته‌شده از پاسخ‌های شما.",
+  "checkout.title": "فعال‌سازی Premium",
+  "checkout.sub": "پروفایل کامل آمادگی، نقشهٔ راه ۱۲هفته‌ای و پیگیری پیشرفت را باز کنید.",
+  "checkout.start.sub": "پروفایل کامل آمادگی، نقشهٔ راه ۱۲هفته‌ای و پیگیری پیشرفت را باز کنید.",
+  "checkout.planChoose": "دسترسی خود را انتخاب کنید",
+  "checkout.plan30Label": "۳۰ روز",
+  "checkout.plan30Price": "۹٫۹۹ یورو",
+  "checkout.plan30Note": "پرداخت یک‌باره",
+  "checkout.plan90Label": "۹۰ روز",
+  "checkout.plan90Price": "۲۴٫۹۹ یورو",
+  "checkout.plan90Note": "معادل ۸٫۳۳ یورو برای هر ۳۰ روز",
+  "checkout.plan30": "Premium — ۳۰ روز",
+  "checkout.plan90": "Premium — ۹۰ روز",
+  "checkout.oneTime": "پرداخت یک‌باره، بدون تمدید خودکار",
   "checkout.confirmation": "با ادامه، تأیید می‌کنید که مایل به ادامهٔ پرداخت هستید.",
   "checkout.plan": "Premium (ماهانه)",
   "checkout.discountLabel": "تخفیف دسترسی زودهنگام",

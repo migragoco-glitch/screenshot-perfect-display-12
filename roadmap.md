@@ -1,5 +1,7 @@
 # Current roadmap
 
+- [x] Apply approved checkout pass selector, early-access discount, and scoped bilingual price wording; preserve simulated completion and untouched pages.
+
 - [x] Apply approved compact country control, header links, mobile menu, and bilingual Pricing heading.
 
 - [x] Compare app and website EN/FA tier claims and correct actual app inconsistencies.

@@ -1,7 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { CreditCard, Lock, ShieldCheck } from "lucide-react";
+import { CheckCircle2, CreditCard, Lock, ShieldCheck } from "lucide-react";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
+import { Button } from "@/components/ui/button";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import { navigatorCheckoutDestination, trackEvent, useAppState } from "@/lib/store";
 
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/checkout")({
       {
         name: "description",
         content:
-          "Complete your Premium subscription to unlock the full integration profile and 12-week roadmap.",
+          "Activate Premium to unlock the full readiness profile and 12-week roadmap.",
       },
       { property: "og:title", content: "Checkout — MigraGo" },
       {
@@ -29,8 +30,9 @@ export const Route = createFileRoute("/checkout")({
   component: CheckoutPage,
 });
 
-const BASE_PRICE = 9.99;
-const DISCOUNT = 0.5;
+type PlanDuration = "30" | "90";
+const PLAN_PRICES: Record<PlanDuration, number> = { "30": 9.99, "90": 24.99 };
+const DISCOUNT = 0.7;
 
 function CheckoutPage() {
   const { t, lang } = useI18n();
@@ -40,6 +42,7 @@ function CheckoutPage() {
   const [code, setCode] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [state, setState] = useState<"idle" | "busy" | "done">("idle");
+  const [plan, setPlan] = useState<PlanDuration>("30");
 
   useEffect(() => {
     setCode(window.localStorage.getItem("migrago.discountCode"));
@@ -50,8 +53,9 @@ function CheckoutPage() {
     if (hydrated && !appState.consent) void navigate({ to: "/consent", search: { upgrade: true } });
   }, [hydrated, appState.consent, navigate]);
 
-  const total = code ? BASE_PRICE * (1 - DISCOUNT) : BASE_PRICE;
-  const price = (v: number) => `€${localizeNumber(Number(v.toFixed(2)), lang)}`;
+  const basePrice = PLAN_PRICES[plan];
+  const total = code ? basePrice * (1 - DISCOUNT) : basePrice;
+  const price = (v: number) => `€${localizeNumber(v.toFixed(2), lang)}`;
 
   const pay = () => {
     if (!hydrated || !appState.consent || state !== "idle") return;
@@ -81,17 +85,50 @@ function CheckoutPage() {
             {t("checkout.testMode")}
           </p>
 
+          <p id="checkout-plan-label" className="mt-6 text-sm font-semibold">{t("checkout.planChoose")}</p>
+          <div role="radiogroup" aria-labelledby="checkout-plan-label" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {(["30", "90"] as const).map((duration) => (
+              <Button
+                key={duration}
+                type="button"
+                variant="outline"
+                role="radio"
+                aria-checked={plan === duration}
+                disabled={state !== "idle"}
+                onClick={() => setPlan(duration)}
+                onKeyDown={(event) => {
+                  if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
+                    event.preventDefault();
+                    const other = duration === "30" ? "90" : "30";
+                    setPlan(other);
+                    document.getElementById(`checkout-plan-${other}`)?.focus();
+                  }
+                }}
+                id={`checkout-plan-${duration}`}
+                tabIndex={plan === duration ? 0 : -1}
+                className={`relative h-auto min-h-32 flex-col items-start gap-2 whitespace-normal rounded-lg p-4 text-start text-foreground hover:text-foreground ${plan === duration ? "border-2 border-navy bg-navy/10 hover:bg-navy/10" : "border border-border bg-card hover:border-navy/40 hover:bg-card"}`}
+              >
+                <span className="flex w-full items-center justify-between gap-2">
+                  <span>{t(duration === "30" ? "checkout.plan30Label" : "checkout.plan90Label")}</span>
+                  <CheckCircle2 className={`size-4 shrink-0 text-navy ${plan === duration ? "visible" : "invisible"}`} aria-hidden />
+                </span>
+                <span className="text-lg font-bold">{t(duration === "30" ? "checkout.plan30Price" : "checkout.plan90Price")}</span>
+                <span className="text-xs font-normal">{t(duration === "30" ? "checkout.plan30Note" : "checkout.plan90Note")}</span>
+              </Button>
+            ))}
+          </div>
+
           <dl className="mt-7 space-y-3 border-y border-border py-5 text-sm">
             <div className="flex items-center justify-between gap-4">
-              <dt>{t("checkout.plan")}</dt>
-              <dd className="tabular-nums font-semibold">{price(BASE_PRICE)}</dd>
+              <dt>{t(plan === "30" ? "checkout.plan30" : "checkout.plan90")}</dt>
+              <dd className="tabular-nums font-semibold">{price(basePrice)}</dd>
             </div>
             {code ? (
               <div className="flex items-center justify-between gap-4 text-secondary">
                 <dt className="font-semibold">
                   {t("checkout.discountLabel")} · {code}
                 </dt>
-                <dd className="tabular-nums font-semibold">−{price(BASE_PRICE - total)}</dd>
+                <dd className="tabular-nums font-semibold">−{price(basePrice - total)}</dd>
               </div>
             ) : null}
             <div className="flex items-center justify-between gap-4 pt-1 text-base font-bold">
@@ -99,6 +136,7 @@ function CheckoutPage() {
               <dd className="tabular-nums">{price(total)}</dd>
             </div>
           </dl>
+          <p className="mt-2 text-xs text-foreground">{t("checkout.oneTime")}</p>
 
           {email ? <p className="mt-4 text-xs text-muted-foreground">{email}</p> : null}
           {code ? (
