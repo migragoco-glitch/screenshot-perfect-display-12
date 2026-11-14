@@ -838,7 +838,7 @@ export const en = {
   "readiness.moderate": "Moderate Readiness",
   "readiness.developing": "Developing Readiness",
   "readiness.note":
-    "Calculated from your answers to the 42 assessment questions. It is not a visa probability, immigration eligibility, legal or government score, or psychological diagnosis.",
+    "Calculated from your assessment answers. It is not a visa probability, immigration eligibility, legal or government score, or psychological diagnosis.",
 
   "dash.dim3Note":
     "These results reflect self-reported patterns, not a professional evaluation.",
@@ -1757,7 +1757,7 @@ export const fa: Record<keyof typeof en, string> = {
   "readiness.moderate": "آمادگی متوسط",
   "readiness.developing": "آمادگی در حال شکل‌گیری",
   "readiness.note":
-    "این شاخص از پاسخ‌های ۴۲ پرسش ارزیابی شما محاسبه می‌شود. این عدد احتمال ویزا، واجد شرایط بودن مهاجرتی، نمرهٔ حقوقی یا دولتی و تشخیص روان‌شناختی نیست.",
+    "این شاخص از پاسخ‌های ارزیابی شما محاسبه می‌شود. این عدد احتمال ویزا، واجد شرایط بودن مهاجرتی، نمرهٔ حقوقی یا دولتی و تشخیص روان‌شناختی نیست.",
 
   "dash.dim3Note":
     "این نتایج بازتاب الگوهای خوداظهاری شما هستند، نه یک ارزیابی تخصصی.",
