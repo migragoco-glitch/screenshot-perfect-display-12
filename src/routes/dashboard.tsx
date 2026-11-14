@@ -66,6 +66,9 @@ import { fetchRoadmapProgress, setRoadmapTask } from "@/lib/feedback";
 import { useSession } from "@/lib/session";
 import { hasNavigatorAccess, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { AREAS, buildAreaSteps, suggestRoute, type AreaId } from "@/lib/area-flow";
+import { formatScoreDelta, getProfileSteps, getRelatedStepsForGap } from "@/lib/profile-link";
 
 
 export const Route = createFileRoute("/dashboard")({
@@ -201,7 +204,18 @@ function Dashboard() {
   const [done, setDone] = useState<Set<string>>(new Set());
   const [inProgress, setInProgress] = useState<Set<string>>(new Set());
   const [openWhy, setOpenWhy] = useState<string | null>(null);
+  const [startAreas, setStartAreas] = useState<AreaId[]>([]);
+  const [startDoneIds, setStartDoneIds] = useState<string[]>([]);
   const { user } = useSession();
+
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(window.sessionStorage.getItem("migrago.start.v1") ?? "null");
+      if (Array.isArray(saved?.areas)) setStartAreas(saved.areas.filter((id: unknown): id is AreaId => AREAS.some((area) => area.id === id)));
+      const ids: unknown = JSON.parse(window.localStorage.getItem("migrago.start.done") ?? "[]");
+      if (Array.isArray(ids)) setStartDoneIds(ids.filter((id): id is string => typeof id === "string"));
+    } catch { /* Storage may be unavailable or invalid. */ }
+  }, []);
 
   useEffect(() => {
     if (!user) {
@@ -243,6 +257,20 @@ function Dashboard() {
   const gapList = useMemo(() => buildGapAnalysis(profile), [profile]);
   const pathways = useMemo(() => buildPathways(profile, allItems), [profile, allItems]);
   const locked = state.tier !== "navigator";
+  const hasStartPlan = hasNavigatorAccess(state.tier) && state.completed && Boolean(state.municipality) && startAreas.length > 0;
+  const startPlanStepIds = hasStartPlan ? [
+    ...buildAreaSteps(startAreas, state.answers, state.route ?? suggestRoute(state.answers[2]?.value), state.region),
+    ...getProfileSteps(profile.gaps),
+  ].map((step) => step.id) : [];
+  const openStartRoadmap = () => {
+    if (hasStartPlan) {
+      try {
+        const saved = JSON.parse(window.sessionStorage.getItem("migrago.start.v1") ?? "null");
+        if (saved && typeof saved === "object" && Array.isArray(saved.areas)) window.sessionStorage.setItem("migrago.start.v1", JSON.stringify({ ...saved, stage: "road" }));
+      } catch { /* Fall back to the normal /start entry. */ }
+    }
+    void navigate({ to: "/start" });
+  };
 
   useEffect(() => {
     if (hydrated && (!state.completed || !hasNavigatorAccess(state.tier)) && !deleted) void navigate({ to: "/assessment" });
@@ -723,6 +751,7 @@ function Dashboard() {
                     <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
                       / {localizeNumber(100, lang)}
                     </span>
+                    {state.history.length >= 2 ? <p className="mt-2 max-w-[180px] text-center text-[11px] text-muted-foreground">{t("dash.historyChange").split("{delta}")[0]}<bdi dir="ltr">{formatScoreDelta(state.history, lang)}</bdi>{t("dash.historyChange").split("{delta}")[1]}</p> : null}
                   </div>
                 </div>
 
@@ -872,6 +901,7 @@ function Dashboard() {
                 <ul className="mt-4 grid gap-4 md:grid-cols-2">
                   {gapList.map((g) => {
                     const phase = phaseForGap(g.flag);
+                    const relatedSteps = getRelatedStepsForGap(g.flag, startPlanStepIds);
                     return (
                     <PhaseCard key={g.flag} phase={phase} hoverTint>
                       <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
@@ -898,6 +928,8 @@ function Dashboard() {
                         {t("gap.action")}
                       </p>
                       <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{g.action[lang]}</p>
+                      {hasStartPlan ? <p className="mt-3 text-xs text-muted-foreground">{t("dash.gap.relatedSteps").replace("{done}", localizeNumber(relatedSteps.filter((id) => startDoneIds.includes(id)).length, lang)).replace("{total}", localizeNumber(relatedSteps.length, lang))}</p> : null}
+                      <Button type="button" variant="link" className="mt-2 h-auto p-0 text-xs text-secondary" onClick={openStartRoadmap}>{t("dash.gap.viewInRoadmap")}<ArrowRight className="size-3.5 rtl:rotate-180" /></Button>
                     </PhaseCard>
                     );
                   })}

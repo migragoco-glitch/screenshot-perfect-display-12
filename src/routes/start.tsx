@@ -11,6 +11,8 @@ import { QUESTIONS, isAnswered, isQuestionApplicable } from "@/lib/questions";
 import { hasNavigatorAccess, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import type { Institution } from "@/lib/roadmap";
+import { computeProfile } from "@/lib/scoring";
+import { getProfileSteps, isPriorityStep } from "@/lib/profile-link";
 
 export const Route = createFileRoute("/start")({
   head: () => ({ meta: [
@@ -134,6 +136,10 @@ function StartScreen() {
   const effectiveRoute = state.route ?? suggestRoute(state.answers[2]?.value);
   const steps = buildAreaSteps(areas, state.answers, effectiveRoute, state.region);
   const hasNavigator = hasNavigatorAccess(state.tier);
+  const isProfileDriven = hasNavigator && Boolean(state.completed);
+  const userGaps = isProfileDriven ? computeProfile(state.answers, state.founderTrack === true, state.region ?? "undecided").gaps : [];
+  const profileSteps = isProfileDriven ? getProfileSteps(userGaps) : [];
+  const allPlanSteps = [...steps, ...profileSteps];
   const filteredSteps = steps.filter((step) => areas.includes(STEP_AREA[step.id] as AreaId));
   const checklist = documentsForSteps(filteredSteps);
   const toggleDone = (id: string) => {
@@ -384,8 +390,8 @@ function StartScreen() {
               <div><h2 className="text-xl md:text-2xl">{t("start.results")}</h2><p className="mt-1 text-sm text-muted-foreground">{t("start.results.sub")}</p></div>
               <div className="flex flex-wrap items-center gap-2">
                 {hasNavigator ? <>
-                  <span className="rounded-full bg-secondary/12 px-3 py-1 text-[11px] font-semibold text-secondary">{t("start.progress").replace("{done}", localizeNumber(steps.filter((step) => doneIds.includes(step.id)).length, lang)).replace("{total}", localizeNumber(steps.length, lang))}</span>
-                  <span className="rounded-full border border-border bg-card px-3 py-1 text-[11px] font-semibold text-muted-foreground">{t("start.plan.length").replace("{n}", localizeNumber(planWeeks(steps), lang))}</span>
+                  <span className="rounded-full bg-secondary/12 px-3 py-1 text-[11px] font-semibold text-secondary">{t("start.progress").replace("{done}", localizeNumber(allPlanSteps.filter((step) => doneIds.includes(step.id)).length, lang)).replace("{total}", localizeNumber(allPlanSteps.length, lang))}</span>
+                  <span className="rounded-full border border-border bg-card px-3 py-1 text-[11px] font-semibold text-muted-foreground">{t("start.plan.length").replace("{n}", localizeNumber(planWeeks(allPlanSteps), lang))}</span>
                 </> : null}
               </div>
             </div>
@@ -407,6 +413,7 @@ function StartScreen() {
                           <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
                             <span className="flex size-6 items-center justify-center rounded-full text-xs font-bold" style={{ background: PHASE_COLORS[step.phase - 1], color: step.phase === 2 ? "#fff" : "var(--navigator-navy)" }}>{localizeNumber(steps.indexOf(step) + 1, lang)}</span>
                             {hasNavigator ? <span className="rounded-full bg-primary/8 px-2.5 py-0.5 text-primary">{t("start.plan.weeks").replace("{from}", localizeNumber(weeksRange(step.phase)[0], lang)).replace("{to}", localizeNumber(weeksRange(step.phase)[1], lang))}</span> : null}
+                            {isProfileDriven && isPriorityStep(step.id, userGaps) ? <span className="rounded-full bg-[var(--navigator-teal)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--journey-pill-foreground)]">{t("start.priorityBadge")}</span> : null}
                           </div>
                           <StepBody step={step} localUrl={localUrl} showDetails={false} done={done} />
                           {hasNavigator ? <>
@@ -428,6 +435,37 @@ function StartScreen() {
                 </ol>
               </Fragment>;
             }) : <p className="mt-5 text-sm text-muted-foreground">{t("start.noSteps")}</p>}
+            {isProfileDriven && profileSteps.length > 0 ? <section className="mt-6">
+              <h3 className="text-base font-bold">{t("start.profileSteps.title")}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{t("start.profileSteps.caption")}</p>
+              <ol className="mt-5 space-y-4">
+                {profileSteps.map((step) => {
+                  const done = doneIds.includes(step.id);
+                  const title = typeof step.title === "string" ? t(step.title) : step.title[lang];
+                  return <li key={step.id} data-step-id={step.id} className={cn("rounded-2xl border border-border/70 p-4 transition-opacity duration-200 ease-out", done && "opacity-70")} style={stepCardStyle(step.phase)}>
+                    <div className="flex items-start gap-3">
+                      <label className="relative mt-0.5 inline-flex size-5 shrink-0 cursor-pointer items-center justify-center">
+                        <input type="checkbox" checked={done} onChange={() => toggleDone(step.id)} aria-label={`${t("road.done")}: ${title}`} className="peer size-5 cursor-pointer appearance-none rounded-md border border-border bg-background transition-colors duration-200 ease-out checked:border-[var(--navigator-teal)] checked:bg-[var(--navigator-teal)]" />
+                        {done ? <Check className="check-pop pointer-events-none absolute size-3.5 text-secondary-foreground" aria-hidden /> : null}
+                      </label>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="rounded-full bg-primary/8 px-2.5 py-0.5 text-[11px] font-semibold text-primary">{t("start.plan.weeks").replace("{from}", localizeNumber(weeksRange(step.phase)[0], lang)).replace("{to}", localizeNumber(weeksRange(step.phase)[1], lang))}</span>
+                          {isPriorityStep(step.id, userGaps) ? <span className="rounded-full bg-[var(--navigator-teal)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--journey-pill-foreground)]">{t("start.priorityBadge")}</span> : null}
+                        </div>
+                        <StepBody step={step} localUrl={localUrl} showDetails={false} done={done} />
+                        <Button type="button" variant="link" aria-expanded={expandedIds.includes(step.id)} aria-controls={`details-${step.id}`} onClick={() => setExpandedIds((current) => current.includes(step.id) ? current.filter((id) => id !== step.id) : [...current, step.id])} className="mt-3 inline-flex h-auto items-center gap-1.5 p-0 text-[11px] font-semibold text-secondary underline underline-offset-4"><Info className="size-3.5" aria-hidden />{t(expandedIds.includes(step.id) ? "start.details.close" : "start.details.open")}</Button>
+                        {expandedIds.includes(step.id) ? <div id={`details-${step.id}`} className="mt-2 rounded-2xl border border-border bg-card p-3 text-xs leading-relaxed text-muted-foreground">
+                          <StepDetails step={step} />
+                          {step.dependency?.[lang] ? <><p className={cn(LABEL, "mt-3")}>{t("road.dependency")}</p><p className="mt-1 text-sm leading-relaxed">{step.dependency[lang]}</p></> : null}
+                          {step.completion?.[lang] ? <><p className={cn(LABEL, "mt-3")}>{t("road.completionCondition")}</p><p className="mt-1 text-sm leading-relaxed">{step.completion[lang]}</p></> : null}
+                        </div> : null}
+                      </div>
+                    </div>
+                  </li>;
+                })}
+              </ol>
+            </section> : null}
             {hasNavigator ? <><ProfileCard completed={state.completed} /><p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p></> : <UpgradeCard view="road" onUpgrade={openUpgrade} />}
             <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
             <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
@@ -465,7 +503,7 @@ function StepBody({ step, localUrl, showDetails = true, done = false }: { step: 
     {showDetails && step.overlay.documents ? <div className="mt-3 text-sm"><p className={LABEL}>{t("start.documents")}</p><ul className="mt-1 list-disc space-y-1 ps-5">{step.overlay.documents.map((key) => <li key={key}>{t(key)}</li>)}</ul></div> : null}
     {showDetails && step.overlay.note ? <><p className={cn(LABEL, "mt-3")}>{t("start.note")}</p><p className="mt-1 text-sm leading-relaxed">{t(step.overlay.note)}</p></> : null}
     {step.id === "early-childhood-education" ? <div className="mt-3 text-sm">{localUrl ? <a href={localUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold text-secondary">{t("start.local")}<ExternalLink className="size-4" /></a> : <><p className="text-muted-foreground">{t("start.localMissing")}</p><a href={step.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-secondary underline">{t("road.officialSource")}</a></>}</div> : null}
-    {step.overlay.deadline || step.overlay.documents?.length || step.overlay.note ? <p className="mt-3 text-xs text-muted-foreground">{t("start.lastChecked")}: <time dateTime={step.overlay.lastChecked}><bdi>{formatCheckedDate(step.overlay.lastChecked, lang)}</bdi></time></p> : null}
+    {step.overlay.lastChecked && (step.overlay.deadline || step.overlay.documents?.length || step.overlay.note) ? <p className="mt-3 text-xs text-muted-foreground">{t("start.lastChecked")}: <time dateTime={step.overlay.lastChecked}><bdi>{formatCheckedDate(step.overlay.lastChecked, lang)}</bdi></time></p> : null}
   </>;
 }
 
