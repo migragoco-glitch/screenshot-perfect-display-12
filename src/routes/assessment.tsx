@@ -28,6 +28,8 @@ import {
   QUESTIONS,
   SECTIONS,
   SECTION_DIMENSION,
+  assessmentProgress,
+  detailInRange,
   isAnswered,
   questionsForSection,
   type Answers,
@@ -145,19 +147,25 @@ function CompactProgressRing({ pct, answers }: { pct: number; answers: Answers }
 function Assessment() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const { state, hydrated, setAnswer, update, pushSnapshot, resetAnswers } = useAppState();
+  const { state, hydrated, setAnswer, update, submitAssessment, resetAnswers } = useAppState();
   const [section, setSection] = useState(1);
   const [analyzing, setAnalyzing] = useState(false);
   const [payModal, setPayModal] = useState(false);
   const [showRequired, setShowRequired] = useState(false);
   const [corrupted, setCorrupted] = useState(false);
   const [inconsistencyDismissed, setInconsistencyDismissed] = useState(false);
+  const [reassessConfirm, setReassessConfirm] = useState(false);
   const [guidedView, setGuidedView] = useState<GuidedView>("companion");
   const [companionMoment, setCompanionMoment] = useState<"start" | "mid" | "near">("start");
   const seenLevels = useRef(new Set<number>());
   // Opt-in gate for the Founder & Talent questions (Q39–41). Derived straight from
   // the (already sanitized) stored state so it is final before Step 7 first renders.
   const founderTrack = state.founderTrack ?? null;
+  // A submitted round is read-only; only an explicit re-assessment reopens it.
+  const editing = state.assessmentStatus === "editing" || !state.completed;
+  const locked = state.completed && !editing;
+  const displayAnswers = locked ? (state.submittedAnswers ?? state.answers) : state.answers;
+  const section7Skipped = state.section7Skipped === true;
 
   useEffect(() => {
     if (hydrated && !state.consent) void navigate({ to: "/consent", search: { next: "assessment" } });
@@ -178,11 +186,23 @@ function Assessment() {
     [section, state.answers, founderTrack],
   );
   const meta = SECTIONS.find((s) => s.id === section);
-  const answeredCount = QUESTIONS.filter((q) => isAnswered(q, state.answers[q.id])).length;
-  const progress = Math.round((answeredCount / QUESTIONS.length) * 100);
-  const sectionComplete = meta?.optional
+  // Shared applicable-question counts (skipped Section 7 excluded from totals).
+  const counts = assessmentProgress(state.answers, { founderTrack }, section7Skipped);
+  const answeredCount = counts.answered;
+  const progress = counts.total ? Math.round((answeredCount / counts.total) * 100) : 0;
+  const rangeInvalid = visible.some(
+    (q) =>
+      q.detailType === "number" &&
+      (q.id === 7 || q.id === 39) &&
+      state.answers[q.id]?.detail !== undefined &&
+      state.answers[q.id]?.detail !== "" &&
+      !detailInRange(q, state.answers[q.id]?.detail),
+  );
+  const sectionComplete = locked
     ? true
-    : visible.every((q) => isAnswered(q, state.answers[q.id]));
+    : meta?.optional
+      ? true
+      : visible.every((q) => isAnswered(q, state.answers[q.id])) && !rangeInvalid;
 
   // Gentle, non-blocking consistency flags shown on Step 7 only. Never alters
   // answers or scores — purely a review prompt for the user.
@@ -283,13 +303,13 @@ function Assessment() {
         ...(pathway ? { pathway } : {}),
       });
       trackEvent({ type: "paywall_view" });
-      pushSnapshot({
+      // Explicit final submit: locks the round and records one dated snapshot.
+      submitAssessment({
         overall: profile.overall,
         legal: profile.legal,
         professional: profile.professional,
         psychological: profile.psychological,
       });
-      update({ completed: true });
       window.setTimeout(() => {
         void navigate({ to: "/dashboard" });
       }, 2600);
