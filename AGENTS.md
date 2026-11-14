@@ -13,3 +13,4 @@
 - Route simulated-checkout completion to the full assessment when incomplete, and to existing results when complete; never generate results from partial Quick Check answers.
 - Keep the needs-first /start flow URL-only and derive its steps in area-flow from shared answers and existing roadmap knowledge; its checkout return target preserves the separate flow without changing assessment scoring.
 - Keep checkout pass selection local to the checkout screen and preserve simulated tier updates and return targets; selecting a pass must not introduce expiry enforcement or change shared assessment storage.
+- Reuse FoundersCircleModal for landing Premium entry and preserve its checkout return target through consent, so email capture and the needs-first flow share the existing behavior.
