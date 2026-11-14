@@ -127,7 +127,7 @@ type Tab = "dashboard" | "assessment" | "profile" | "progress" | "account";
 function Dashboard() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const { state, hydrated, startReassessment, ensureBaselineSnapshot, reset } = useAppState();
+  const { state, hydrated, cancelReassessment, ensureBaselineSnapshot, reset } = useAppState();
   const search = Route.useSearch();
   const [tab, setTab] = useState<Tab>(search.tab === "profile" ? "profile" : "dashboard");
   const [buildingRoadmap, setBuildingRoadmap] = useState(false);
@@ -137,7 +137,8 @@ function Dashboard() {
   const [showAllGaps, setShowAllGaps] = useState(false);
   const [expandedGaps, setExpandedGaps] = useState<string[]>([]);
   const [showAllCompleted, setShowAllCompleted] = useState(false);
-  const [reassessConfirm, setReassessConfirm] = useState(false);
+  const [cancelConfirm, setCancelConfirm] = useState(false);
+  const editing = state.assessmentStatus === "editing";
   const [startAreas, setStartAreas] = useState<AreaId[]>([]);
   const [startDoneIds, setStartDoneIds] = useState<string[]>([]);
   const [startDocIds, setStartDocIds] = useState<string[]>([]);
@@ -325,11 +326,11 @@ function Dashboard() {
           <Button
             type="button"
             variant="outline"
-            onClick={() => void navigate({ to: "/assessment", search: state.completed ? { view: "recorded" } : {} })}
+            onClick={() => void navigate({ to: "/assessment", search: state.completed && !editing ? { view: "recorded" } : {} })}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted"
           >
             <ClipboardList className="size-4" aria-hidden />
-            {t(state.completed ? "assess.viewRecorded" : "assess.open")}
+            {t(editing ? "assess.continueReassess" : state.completed ? "assess.viewRecorded" : "assess.open")}
           </Button>
         </div>
 
@@ -398,7 +399,7 @@ function Dashboard() {
               >
                 {state.completed ? t("assess.completed") : t("assess.notCompleted")}
               </p>
-              {state.completed ? (
+              {state.completed && !editing ? (
                 <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-[11px] font-semibold text-muted-foreground">
                   <Lock className="size-3" aria-hidden />
                   {t("assess.locked")}
@@ -408,21 +409,20 @@ function Dashboard() {
               <div className="mt-5 flex flex-wrap items-center gap-3">
                 <Button
                   type="button"
-                  onClick={() => void navigate({ to: "/assessment", search: state.completed ? { view: "recorded" } : {} })}
+                  onClick={() => void navigate({ to: "/assessment", search: state.completed && !editing ? { view: "recorded" } : {} })}
                   className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground"
                 >
-                  {state.completed ? t("assess.viewRecorded") : t("assess.open")}
+                  {t(editing ? "assess.continueReassess" : state.completed ? "assess.viewRecorded" : "assess.open")}
                 </Button>
                 {state.completed && !locked ? (
-                  reassessConfirm ? (
+                  editing ? cancelConfirm ? (
                     <span className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs font-semibold">{t("assess.reassessConfirm")}</span>
-                      <Button type="button" variant="secondary" className="rounded-full" onClick={() => { startReassessment(); setReassessConfirm(false); void navigate({ to: "/assessment", search: {} }); }}>{t("assess.reassess")}</Button>
-                      <Button type="button" variant="outline" className="rounded-full" onClick={() => setReassessConfirm(false)}>{t("common.back")}</Button>
+                      <span className="text-xs font-semibold">{t("assess.cancelReassessConfirm")}</span>
+                      <Button type="button" variant="secondary" className="rounded-full" onClick={() => { cancelReassessment(); setCancelConfirm(false); }}>{t("assess.cancelReassess")}</Button>
+                      <Button type="button" variant="outline" className="rounded-full" onClick={() => setCancelConfirm(false)}>{t("assess.cancel")}</Button>
                     </span>
-                  ) : (
-                    <Button type="button" variant="outline" className="rounded-full" onClick={() => setReassessConfirm(true)}>{t("assess.reassess")}</Button>
-                  )
+                  ) : <Button type="button" variant="outline" className="rounded-full" onClick={() => setCancelConfirm(true)}>{t("assess.cancelReassess")}</Button>
+                  : <Button type="button" variant="outline" className="rounded-full" onClick={() => void navigate({ to: "/assessment", search: { reassess: "confirm" } })}>{t("assess.reassess")}</Button>
                 ) : null}
               </div>
             </section>

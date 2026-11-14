@@ -9,6 +9,8 @@ import {
 } from "@/lib/questions";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   question: Question;
@@ -24,10 +26,12 @@ type Props = {
   unanswered?: boolean;
   /** Submitted rounds render read-only. */
   readOnly?: boolean;
+  sharedFromStart?: boolean;
 };
 
-export function QuestionField({ question: q, index, answer, onChange, levelColor, fillSelected = false, hideNumber = false, accentSelected = false, unanswered = false, readOnly = false }: Props) {
+export function QuestionField({ question: q, index, answer, onChange, levelColor, fillSelected = false, hideNumber = false, accentSelected = false, unanswered = false, readOnly: submittedReadOnly = false, sharedFromStart = false }: Props) {
   const { lang, t } = useI18n();
+  const readOnly = submittedReadOnly || sharedFromStart;
   const selected = answer?.value;
   const fillStyle = fillSelected
     ? ({ backgroundColor: levelColor, borderColor: levelColor, color: "#fff" } as React.CSSProperties)
@@ -41,6 +45,7 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
   const showSub = q.sub && (q.sub.showOn === undefined || selected === q.sub.showOn);
 
   return (
+    <div>
     <fieldset
       disabled={readOnly}
       className={cn(
@@ -289,5 +294,12 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
         ) : null}
       </div>
     </fieldset>
+    {sharedFromStart ? <div className="mt-2 rounded-lg border border-border bg-muted p-3">
+      <p className="text-xs leading-relaxed text-muted-foreground">{t("q.sharedFromStartNote")}</p>
+      <Button asChild variant="link" className="mt-1 h-auto whitespace-normal px-0 text-start text-xs">
+        <Link to="/start" search={{ stage: "questions" }}>{t("q.sharedFromStartAction")}</Link>
+      </Button>
+    </div> : null}
+    </div>
   );
 }

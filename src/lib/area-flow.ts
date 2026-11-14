@@ -24,6 +24,14 @@ export const AREAS: { id: AreaId; title: TKey; description: TKey; sourceUrl: str
   { id: "comm", title: "start.area.comm.title", description: "start.area.comm.description", sourceUrl: "https://infofinland.fi/en", questions: [] },
 ];
 
+/** Restore the cards owning explicitly recorded /start answers, never infer provenance. */
+export function sharedQuestionAreas(selected: readonly AreaId[], ids: readonly number[] = []): AreaId[] {
+  const owners = AREAS.filter((area) => area.questions.some((id) => ids.includes(id))).map((area) => area.id);
+  const merged = [...new Set([...selected, ...owners])];
+  return merged.some((id) => AREAS.some((area) => area.id === id && area.questions.length > 0))
+    ? merged : [...merged, ...AREAS.filter((area) => area.questions.length > 0).map((area) => area.id)];
+}
+
 /** Derive only the explicitly supplied answers, without scored-profile defaults. */
 export function computeAreaFlags(answers: Answers) {
   const relocating = Array.isArray(answers[8]?.value) ? answers[8].value : [];

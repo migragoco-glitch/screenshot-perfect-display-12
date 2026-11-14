@@ -6,16 +6,17 @@ import { FoundersCircleModal, InstitutionBadge } from "@/components/FeedbackWidg
 import { ProfilePreview, RoadmapSummary } from "@/components/RoadmapSummary";
 import { QuestionField } from "@/components/QuestionField";
 import { Button } from "@/components/ui/button";
-import { AREAS, MUNICIPALITIES, STEP_AREA, documentsForSteps, weeksRange, buildAreaSteps, suggestRoute, formatCheckedDate, earlyChildhoodLocalUrl, type AreaId, type AreaStep } from "@/lib/area-flow";
+import { AREAS, MUNICIPALITIES, STEP_AREA, sharedQuestionAreas, documentsForSteps, weeksRange, buildAreaSteps, suggestRoute, formatCheckedDate, earlyChildhoodLocalUrl, type AreaId, type AreaStep } from "@/lib/area-flow";
 import { localizeNumber, useI18n } from "@/lib/i18n";
 import { QUESTIONS, isAnswered, isQuestionApplicable } from "@/lib/questions";
-import { hasNavigatorAccess, trackEvent, useAppState } from "@/lib/store";
+import { hasNavigatorAccess, recordStartAnswer, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import type { Institution } from "@/lib/roadmap";
 import { computeProfile } from "@/lib/scoring";
 import { getProfileSteps, getStepWeek, isPriorityStep } from "@/lib/profile-link";
 
 export const Route = createFileRoute("/start")({
+  validateSearch: (search: Record<string, unknown>): { stage?: "questions" } => search["stage"] === "questions" ? { stage: "questions" } : {},
   head: () => ({ meta: [
     { title: "First steps in Finland — MigraGo" },
     { name: "description", content: "Find your first steps for identity registration, family services, Kela and healthcare in Finland." },
@@ -103,6 +104,7 @@ function StartScreen() {
   const { lang, dir, t } = useI18n();
   const { state, hydrated, update, setAnswer, reset } = useAppState();
   const navigate = useNavigate();
+  const search = Route.useSearch();
   const [stage, setStage] = useState<Stage>("city");
   const [areas, setAreas] = useState<AreaId[]>([]);
   const [areaError, setAreaError] = useState(false);
@@ -122,16 +124,30 @@ function StartScreen() {
     if (!hydrated || !state.consent || restored) return;
     try {
       const saved: unknown = JSON.parse(window.sessionStorage.getItem(SESSION_KEY) ?? "null");
-      if (state.municipality && saved && typeof saved === "object" && "stage" in saved && "areas" in saved &&
+      if (search.stage === "questions") {
+        const savedAreas = saved && typeof saved === "object" && "areas" in saved && Array.isArray(saved.areas)
+          ? saved.areas.filter((id): id is AreaId => AREAS.some((area) => area.id === id)) : [];
+        setAreas(sharedQuestionAreas(savedAreas, state.startAnsweredIds));
+        setStage("questions");
+      } else if (state.municipality && saved && typeof saved === "object" && "stage" in saved && "areas" in saved &&
           typeof saved.stage === "string" && ["areas", "questions", "choose", "info", "road"].includes(saved.stage) && Array.isArray(saved.areas)) {
         setStage(saved.stage as Stage);
         setAreas(saved.areas.filter((id): id is AreaId => AREAS.some((area) => area.id === id)));
       } else setStage("city");
-    } catch { setStage("city"); }
+    } catch {
+      if (search.stage === "questions") { setAreas(sharedQuestionAreas([], state.startAnsweredIds)); setStage("questions"); }
+      else setStage("city");
+    }
     setDoneIds(readIds("migrago.start.done"));
     setDocIds(readIds("migrago.start.docs"));
     setRestored(true);
-  }, [hydrated, state.consent, state.municipality, restored]);
+  }, [hydrated, state.consent, state.municipality, state.startAnsweredIds, search.stage, restored]);
+  useEffect(() => {
+    if (!restored || search.stage !== "questions") return;
+    setAreas((current) => sharedQuestionAreas(current, state.startAnsweredIds));
+    setStage("questions");
+    void navigate({ to: "/start", search: {}, replace: true });
+  }, [restored, search.stage, state.startAnsweredIds, navigate]);
   useEffect(() => {
     if (restored && hydrated && state.consent) saveSession(areas, stage);
   }, [areas, stage, restored, hydrated, state.consent]);
@@ -145,7 +161,7 @@ function StartScreen() {
   const steps = buildAreaSteps(areas, state.answers, effectiveRoute, state.region);
   const hasNavigator = hasNavigatorAccess(state.tier);
   const isProfileDriven = hasNavigator && Boolean(state.completed);
-  const userGaps = isProfileDriven ? computeProfile(state.answers, state.founderTrack === true, state.region ?? "undecided").gaps : [];
+  const userGaps = isProfileDriven ? computeProfile(state.submittedAnswers ?? state.answers, state.submittedFounderTrack === true, state.submittedRegion ?? "undecided").gaps : [];
   const profileSteps = isProfileDriven ? getProfileSteps(userGaps) : [];
   const allPlanSteps = [...steps, ...profileSteps];
   useEffect(() => {
@@ -318,14 +334,14 @@ function StartScreen() {
                   {ids.map((id) => {
                     const question = QUESTIONS.find((item) => item.id === id);
                     if (!question) return null;
-                    return <QuestionField key={id} question={question} index={id} hideNumber={true} answer={state.answers[id]} onChange={(value) => setAnswer(id, value)} levelColor={color} accentSelected={true} unanswered={!isQuestionDone(id)} />;
+                    return <QuestionField key={id} question={question} index={id} hideNumber={true} answer={state.answers[id]} onChange={(value) => setAnswer(id, value, true)} levelColor={color} accentSelected={true} unanswered={!isQuestionDone(id)} />;
                   })}
                 </div>
                 {area.id === "status" ? <>
                   <div role="group" aria-label={t("start.route.label")} className="mt-5">
                     <p className="text-sm font-semibold">{t("start.route.label")}</p>
                     <div className="mt-3 flex flex-wrap gap-3">
-                      {(["eu", "nordic", "noneu"] as const).map((route) => <Button type="button" key={route} variant="secondary" aria-pressed={effectiveRoute === route} onClick={() => update({ route })} className={cn(PRIMARY_BTN, "h-auto whitespace-normal text-start", effectiveRoute === route && "ring-2 ring-secondary ring-offset-2")}>{t(`start.route.${route}`)}</Button>)}
+                      {(["eu", "nordic", "noneu"] as const).map((route) => <Button type="button" key={route} variant="secondary" aria-pressed={effectiveRoute === route} onClick={() => update({ route, startAnsweredIds: recordStartAnswer(state.startAnsweredIds, 2) })} className={cn(PRIMARY_BTN, "h-auto whitespace-normal text-start", effectiveRoute === route && "ring-2 ring-secondary ring-offset-2")}>{t(`start.route.${route}`)}</Button>)}
                     </div>
                     {state.route === undefined && effectiveRoute ? <p className="mt-3 text-sm text-muted-foreground">{t("start.route.suggested")}</p> : null}
                     {effectiveRoute === undefined ? <p className="mt-3 text-sm text-muted-foreground">{t("start.route.choose")}</p> : null}
@@ -533,7 +549,7 @@ function StepDetails({ step }: { step: AreaStep }) {
 function ProfileCard({ completed, onIncomplete }: { completed: boolean; onIncomplete?: () => void }) {
   const { state } = useAppState();
   const navigate = useNavigate();
-  const profile = completed ? computeProfile(state.answers, state.founderTrack === true, state.region ?? "undecided") : undefined;
+  const profile = completed ? computeProfile(state.submittedAnswers ?? state.answers, state.submittedFounderTrack === true, state.submittedRegion ?? "undecided") : undefined;
   return <ProfilePreview {...(profile ? { profile } : {})} onOpen={() => { if (!completed && onIncomplete) { onIncomplete(); return; } void navigate(completed ? { to: "/dashboard", search: { tab: "profile" } } : { to: "/assessment" }); }} />;
 }
 function UpgradeCard({ onUpgrade }: { view: "info" | "road"; onUpgrade: () => void }) {

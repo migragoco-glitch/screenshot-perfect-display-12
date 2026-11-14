@@ -35,11 +35,14 @@ import {
   type Answers,
 } from "@/lib/questions";
 import { BUCKETS, computeProfile } from "@/lib/scoring";
-import { hasNavigatorAccess, storedAnswersAreConsistent, trackEvent, useAppState } from "@/lib/store";
+import { assessmentQuestionNumbers, assessmentView, hasNavigatorAccess, startAnswerIds, storedAnswersAreConsistent, trackEvent, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/assessment")({
-  validateSearch: (search: Record<string, unknown>): { view?: "recorded" } => search["view"] === "recorded" ? { view: "recorded" } : {},
+  validateSearch: (search: Record<string, unknown>): { view?: "recorded"; reassess?: "confirm" } => ({
+    ...(search["view"] === "recorded" ? { view: "recorded" as const } : {}),
+    ...(search["reassess"] === "confirm" ? { reassess: "confirm" as const } : {}),
+  }),
   head: () => ({
     meta: [
       { title: "Integration readiness assessment — MigraGo" },
@@ -163,13 +166,22 @@ function Assessment() {
   const seenLevels = useRef(new Set<number>());
   // Opt-in gate for the Founder & Talent questions (Q39–41). Derived straight from
   // the (already sanitized) stored state so it is final before Step 7 first renders.
-  const editing = state.assessmentStatus === "editing";
-  const readOnly = state.completed && (!editing || search.view === "recorded");
+  const viewState = assessmentView(state, search.view);
+  const editing = viewState.mode === "editing";
+  const readOnly = viewState.readOnly;
   const displayAnswers = readOnly ? (state.submittedAnswers ?? state.answers) : state.answers;
   const founderTrack = (readOnly ? state.submittedFounderTrack : state.founderTrack) ?? null;
   const section7Skipped = (readOnly ? state.submittedSection7Skipped : state.section7Skipped) === true;
   const latestSnapshot = state.history[state.history.length - 1];
   const snapshotDate = latestSnapshot ? new Date(latestSnapshot.at).toLocaleDateString(lang === "fa" ? "fa-IR" : "en-GB", { day: "numeric", month: "short", year: "numeric" }) : "";
+  const questionNumbers = assessmentQuestionNumbers(displayAnswers, { founderTrack }, section7Skipped);
+  const sharedIds = startAnswerIds(state.startAnsweredIds);
+
+  useEffect(() => {
+    if (!hydrated || search.reassess !== "confirm") return;
+    if (viewState.mode === "submitted" && hasNavigatorAccess(state.tier)) setReassessConfirm(true);
+    void navigate({ to: "/assessment", search: search.view === "recorded" ? { view: "recorded" } : {}, replace: true });
+  }, [hydrated, search.reassess, search.view, viewState.mode, state.tier, navigate]);
 
   useEffect(() => {
     if (hydrated && !state.consent) void navigate({ to: "/consent", search: { next: "assessment" } });
@@ -406,7 +418,7 @@ function Assessment() {
           <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
           {t("q.backToStart")}
         </Link>
-        {readOnly ? (
+        {viewState.topBar === "submitted" ? (
           <div className="mt-4 rounded-2xl border border-border bg-muted/50 p-4">
             <p className="inline-flex items-center gap-1.5 text-sm font-semibold">
               <Check className="size-4 text-secondary" aria-hidden />
@@ -417,10 +429,10 @@ function Assessment() {
                 <p className="text-xs leading-relaxed text-muted-foreground">{t("assess.reassessConfirm")}</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Button type="button" variant="secondary" className="rounded-full" onClick={() => { startReassessment(); setReassessConfirm(false); void navigate({ to: "/assessment", search: {} }); }}>
-                    {t("assess.reassess")}
+                    {t("assess.startReassess")}
                   </Button>
                   <Button type="button" variant="outline" className="rounded-full" onClick={() => setReassessConfirm(false)}>
-                    {t("common.back")}
+                    {t("assess.cancel")}
                   </Button>
                 </div>
               </div>
@@ -431,14 +443,15 @@ function Assessment() {
             )}
           </div>
         ) : null}
-        {editing ? (
-          <div className="mb-4">
+        {viewState.topBar === "editing" ? (
+          <div className="mt-4 rounded-2xl border border-border bg-muted/50 p-4">
+            <p className="mb-3 text-sm font-semibold">{t("assess.editingBanner")}</p>
             {cancelConfirm ? (
               <div>
                 <p className="text-sm">{t("assess.cancelReassessConfirm")}</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Button type="button" variant="secondary" className="rounded-full" onClick={() => { cancelReassessment(); setCancelConfirm(false); setShowRequired(false); }}>{t("assess.cancelReassess")}</Button>
-                  <Button type="button" variant="outline" className="rounded-full" onClick={() => setCancelConfirm(false)}>{t("common.back")}</Button>
+                  <Button type="button" variant="outline" className="rounded-full" onClick={() => setCancelConfirm(false)}>{t("assess.cancel")}</Button>
                 </div>
               </div>
             ) : <Button type="button" variant="outline" className="rounded-full" onClick={() => setCancelConfirm(true)}>{t("assess.cancelReassess")}</Button>}
@@ -546,15 +559,16 @@ function Assessment() {
         ) : null}
 
         <div className="mt-7 space-y-4">
-          {visible.map((q) => (
+          {visible.filter((q) => questionNumbers.has(q.id)).map((q) => (
             <QuestionField
               key={q.id}
               question={q}
-              index={q.id}
+              index={questionNumbers.get(q.id) ?? 1}
               answer={displayAnswers[q.id]}
               levelColor={LEVEL_COLORS[section - 1] ?? "var(--navigator-teal)"}
               readOnly={readOnly}
-              {...(!readOnly ? { onChange: (v: Parameters<typeof setAnswer>[1]) => {
+              sharedFromStart={sharedIds.includes(q.id) && displayAnswers[q.id] !== undefined}
+              {...(!readOnly && !(sharedIds.includes(q.id) && displayAnswers[q.id] !== undefined) ? { onChange: (v: Parameters<typeof setAnswer>[1]) => {
                 setAnswer(q.id, v);
                 setShowRequired(false);
               } } : {})}

@@ -1,7 +1,36 @@
 import { describe, expect, test } from "bun:test";
-import { hasNavigatorAccess, navigatorCheckoutDestination, restoredSubmittedRound, sanitizeAnswers } from "./store";
+import { assessmentQuestionNumbers, assessmentView, hasNavigatorAccess, navigatorCheckoutDestination, recordStartAnswer, startAnswerIds, restoredSubmittedRound, sanitizeAnswers } from "./store";
+import { sharedQuestionAreas } from "./area-flow";
 
 describe("Navigator assessment access", () => {
+  test("sequential numbers remain 1..N with and without Q6 and skipped section 7", () => {
+    for (const married of [false, true]) for (const skipped of [false, true]) {
+      const numbers = assessmentQuestionNumbers({ 5: { value: married ? 1 : 0 } }, { founderTrack: true }, skipped);
+      expect([...numbers.values()]).toEqual(Array.from({ length: numbers.size }, (_, i) => i + 1));
+      expect(numbers.has(6)).toBe(married);
+      expect(numbers.has(42)).toBe(!skipped);
+      expect(numbers.size).toBe(38 - (married ? 0 : 1) - (skipped ? 4 : 0));
+    }
+  });
+  test("start answer provenance is explicit, deduplicated and absent for old data", () => {
+    expect(startAnswerIds(undefined)).toEqual([]);
+    expect(recordStartAnswer(undefined, 7)).toEqual([7]);
+    expect(recordStartAnswer([7], 7)).toEqual([7]);
+    expect(recordStartAnswer([7], 8)).toEqual([7, 8]);
+    expect(recordStartAnswer(undefined, 15)).toEqual([]);
+  });
+  test("return to roadmap questions restores owning cards even without a saved selection", () => {
+    expect(sharedQuestionAreas([], [7, 8])).toEqual(["kela", "family"]);
+    expect(sharedQuestionAreas(["bank"], [13])).toEqual(["bank", "work"]);
+    expect(sharedQuestionAreas([], [])).toContain("status");
+  });
+  test("editing wins over recorded view and modes select at most one top bar", () => {
+    for (const view of [undefined, "recorded"]) {
+      expect(assessmentView({ completed: false }, view)).toEqual({ mode: "initial", readOnly: false, topBar: null });
+      expect(assessmentView({ completed: true, assessmentStatus: "submitted" }, view)).toEqual({ mode: "submitted", readOnly: true, topBar: "submitted" });
+      expect(assessmentView({ completed: true, assessmentStatus: "editing" }, view)).toEqual({ mode: "editing", readOnly: false, topBar: "editing" });
+    }
+  });
   test("the free tier cannot access the full assessment", () => {
     expect(hasNavigatorAccess("free")).toBe(false);
   });
