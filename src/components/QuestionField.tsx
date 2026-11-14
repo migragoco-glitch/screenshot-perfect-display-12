@@ -20,9 +20,10 @@ type Props = {
   hideNumber?: boolean;
   /** Tint the selected option with the level color (/start only). */
   accentSelected?: boolean;
+  unanswered?: boolean;
 };
 
-export function QuestionField({ question: q, index, answer, onChange, levelColor, fillSelected = false, hideNumber = false, accentSelected = false }: Props) {
+export function QuestionField({ question: q, index, answer, onChange, levelColor, fillSelected = false, hideNumber = false, accentSelected = false, unanswered = false }: Props) {
   const { lang, t } = useI18n();
   const selected = answer?.value;
   const fillStyle = fillSelected
@@ -49,7 +50,11 @@ export function QuestionField({ question: q, index, answer, onChange, levelColor
         {!hideNumber ? <span className="assessment-question-number mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold">
           {localizeNumber(index, lang)}
         </span> : null}
-        <p className="text-[15px] font-semibold leading-relaxed">{q.label[lang]}</p>
+        <p className="text-[15px] font-semibold leading-relaxed">{q.label[lang]}{unanswered ? (
+          <span className="ms-2 inline-flex items-center rounded-full border border-border bg-muted/80 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+            {t("start.unanswered")}
+          </span>
+        ) : null}</p>
       </div>
 
       {isBracket ? (
