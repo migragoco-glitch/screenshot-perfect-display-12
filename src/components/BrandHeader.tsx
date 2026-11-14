@@ -202,7 +202,7 @@ export function AppHeader({ registered, quickCheckCta = false }: { registered?: 
 export function SiteFooter() {
   const { t } = useI18n();
   return (
-    <footer className="border-t border-border/70 bg-primary text-primary-foreground">
+    <footer className="border-t border-border/70 text-white" style={{ backgroundColor: "#021C3B" }}>
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 md:grid-cols-2 md:px-8">
         <div className="flex flex-col items-start gap-4">
           <div className="inline-flex w-fit items-center gap-3.5 rounded-xl bg-white p-3 shadow-[var(--shadow-card)]">
@@ -227,15 +227,15 @@ export function SiteFooter() {
               </span>
             </a>
           </div>
-          <p className="text-lg font-semibold text-primary-foreground">
+          <p className="text-lg font-semibold text-white">
             {t("footer.tagline")}
           </p>
-          <p className="max-w-md text-sm leading-relaxed text-primary-foreground/80">
+          <p className="max-w-md text-sm leading-relaxed text-white/85">
             {t("footer.description")}
           </p>
         </div>
         <div className="flex flex-col items-start">
-          <p className="max-w-3xl text-sm leading-relaxed text-primary-foreground/80">
+          <p className="max-w-3xl text-sm leading-relaxed text-white/85">
             {t("footer.legal")}
           </p>
           <nav className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold">
@@ -266,7 +266,7 @@ export function SiteFooter() {
               {t("support.whatsapp")}
             </a>
           </nav>
-          <p className="mt-5 text-xs uppercase tracking-[0.2em] text-primary-foreground/60">
+          <p className="mt-5 text-xs uppercase tracking-[0.2em] text-white/85">
             {t("footer.rights")}
           </p>
         </div>
