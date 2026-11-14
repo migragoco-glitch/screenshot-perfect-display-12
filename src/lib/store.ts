@@ -28,6 +28,12 @@ export type AppState = {
   tier: "free" | "navigator";
   history: ScoreSnapshot[];
   founderTrack?: boolean;
+  /** Locked copy of the last submitted round; locked views read only this. */
+  submittedAnswers?: Answers;
+  /** submitted = answers read-only; editing = a re-assessment round is in progress. */
+  assessmentStatus?: "submitted" | "editing";
+  /** Section 7 skip flag; part of the locked/submitted state. */
+  section7Skipped?: boolean;
   /** Optional, non-scored: intended settlement region in Finland. */
   region?: "helsinki" | "elsewhere" | "undecided";
   municipality?: string;
@@ -200,7 +206,18 @@ function read(): AppState {
     const parsed = JSON.parse(raw) as AppState;
     const history = Array.isArray(parsed?.history) ? parsed.history : [];
     const ctx: AnswerContext = { founderTrack: parsed?.founderTrack ?? null };
-    return { ...emptyState, ...parsed, history, answers: sanitizeAnswers(parsed?.answers, true, ctx) };
+    const answers = sanitizeAnswers(parsed?.answers, true, ctx);
+    const submittedAnswers = sanitizeAnswers(parsed?.submittedAnswers, true, ctx);
+    // Existing users with completed answers are treated as a submitted round.
+    const legacySubmitted = parsed?.completed && Object.keys(submittedAnswers).length === 0 && Object.keys(answers).length > 0;
+    return {
+      ...emptyState,
+      ...parsed,
+      history,
+      answers,
+      submittedAnswers: legacySubmitted ? answers : submittedAnswers,
+      assessmentStatus: parsed?.assessmentStatus ?? (parsed?.completed ? "submitted" : undefined),
+    };
   } catch {
     return emptyState;
   }
@@ -341,14 +358,42 @@ export function useAppState() {
     setState(next);
   }, []);
 
+  // Snapshots are created only on explicit submit. The first snapshot is the
+  // permanent baseline; otherwise only the latest 11 are kept alongside it.
   const pushSnapshot = useCallback((snap: Omit<ScoreSnapshot, "at">) => {
     const current = read();
-    const last = current.history[current.history.length - 1];
-    if (last && last.overall === snap.overall && last.legal === snap.legal && last.professional === snap.professional && last.psychological === snap.psychological) return;
+    const entry: ScoreSnapshot = { at: new Date().toISOString(), ...snap };
+    const history = current.history.length === 0
+      ? [entry]
+      : [current.history[0]!, ...current.history.slice(1), entry].slice(-12);
+    const next: AppState = { ...current, history };
+    write(next);
+    setState(next);
+  }, []);
+
+  /** Explicit final submit: locks the round and records one dated snapshot. */
+  const submitAssessment = useCallback((snap: Omit<ScoreSnapshot, "at">) => {
+    const current = read();
+    const entry: ScoreSnapshot = { at: new Date().toISOString(), ...snap };
+    const history = current.history.length === 0
+      ? [entry]
+      : [current.history[0]!, ...current.history.slice(1), entry].slice(-12);
     const next: AppState = {
       ...current,
-      history: [...current.history, { at: new Date().toISOString(), ...snap }].slice(-12),
+      history,
+      submittedAnswers: current.answers,
+      assessmentStatus: "submitted",
+      completed: true,
     };
+    write(next);
+    setState(next);
+  }, []);
+
+  /** One-time migration: completed users without any snapshot get exactly one. */
+  const ensureBaselineSnapshot = useCallback((snap: Omit<ScoreSnapshot, "at">) => {
+    const current = read();
+    if (!current.completed || current.history.length > 0) return;
+    const next: AppState = { ...current, history: [{ at: new Date().toISOString(), ...snap }] };
     write(next);
     setState(next);
   }, []);
@@ -359,7 +404,7 @@ export function useAppState() {
     setState(emptyState);
   }, []);
 
-  return { state, hydrated, update, setAnswer, clearAnswers, pushSnapshot, reset, resetAnswers };
+  return { state, hydrated, update, setAnswer, clearAnswers, pushSnapshot, submitAssessment, ensureBaselineSnapshot, reset, resetAnswers };
 }
 
 // --- Real vs simulated data separation (founder dashboard) ---
