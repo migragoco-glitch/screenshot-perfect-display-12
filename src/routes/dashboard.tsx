@@ -138,6 +138,7 @@ function Dashboard() {
   const [showAllGaps, setShowAllGaps] = useState(false);
   const [expandedGaps, setExpandedGaps] = useState<string[]>([]);
   const [showAllCompleted, setShowAllCompleted] = useState(false);
+  const [reassessConfirm, setReassessConfirm] = useState(false);
   const [startAreas, setStartAreas] = useState<AreaId[]>([]);
   const [startDoneIds, setStartDoneIds] = useState<string[]>([]);
   const [startDocIds, setStartDocIds] = useState<string[]>([]);
@@ -244,7 +245,7 @@ function Dashboard() {
   ];
 
   const historyData = state.history.map((h, i) => ({
-    n: `${t("dash.snapshot")} ${localizeNumber(i + 1, lang)} — ${new Date(h.at).toLocaleDateString(
+    n: `${i === 0 ? t("dash.snapshotBaseline") : `${t("dash.snapshot")} ${localizeNumber(i + 1, lang)}`} — ${new Date(h.at).toLocaleDateString(
       lang === "fa" ? "fa-IR" : "en-GB",
       { day: "numeric", month: "short" },
     )}`,
