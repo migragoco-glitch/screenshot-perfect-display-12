@@ -562,6 +562,8 @@ const KNOWLEDGE_TABLE_BASE: KnowledgeEntryBase[] = [
 ];
 
 export const OFFICIAL_SOURCE: Record<Institution, string> = {
+  Traficom: "https://traficom.fi/en",
+  "Landlord or housing provider": "https://www.suomi.fi/citizen/housing",
   Migri: "https://migri.fi/en/home",
   DVV: "https://dvv.fi/en/individuals",
   Vero: "https://www.vero.fi/en/individuals/",

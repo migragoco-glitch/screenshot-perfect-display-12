@@ -210,13 +210,14 @@ function read(): AppState {
     const submittedAnswers = sanitizeAnswers(parsed?.submittedAnswers, true, ctx);
     // Existing users with completed answers are treated as a submitted round.
     const legacySubmitted = parsed?.completed && Object.keys(submittedAnswers).length === 0 && Object.keys(answers).length > 0;
+    const assessmentStatus = parsed?.assessmentStatus ?? (parsed?.completed ? "submitted" : undefined);
     return {
       ...emptyState,
       ...parsed,
       history,
       answers,
       submittedAnswers: legacySubmitted ? answers : submittedAnswers,
-      assessmentStatus: parsed?.assessmentStatus ?? (parsed?.completed ? "submitted" : undefined),
+      ...(assessmentStatus !== undefined ? { assessmentStatus } : {}),
     };
   } catch {
     return emptyState;

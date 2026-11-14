@@ -252,6 +252,8 @@ export function buildGapAnalysis(profile: Profile): GapEntry[] {
 
 /** Institution → pathway presentation (reference only, no government integration). */
 export const INSTITUTION_PATHWAY: Record<Institution, Bilingual> = {
+  Traficom: { en: "Driving licence & vehicle pathway (Traficom)", fa: "مسیر گواهینامه و وسیلهٔ نقلیه (Traficom)" },
+  "Landlord or housing provider": { en: "Housing pathway (landlord or housing provider)", fa: "مسیر مسکن (مالک یا ارائه‌دهندهٔ مسکن)" },
   Migri: { en: "Residence permit & status pathway (Migri)", fa: "مسیر اجازهٔ اقامت و وضعیت (Migri)" },
   DVV: { en: "Population registration pathway (DVV)", fa: "مسیر ثبت جمعیت (DVV)" },
   Vero: { en: "Taxation pathway (Vero)", fa: "مسیر مالیاتی (Vero)" },
