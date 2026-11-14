@@ -16,3 +16,4 @@
 - Reuse FoundersCircleModal for landing Premium entry and preserve its checkout return target through consent, so email capture and the needs-first flow share the existing behavior.
 - Keep /start question completion and later-stage guards on the same applicability-aware counts, treating Q2 as complete with an effective route; keep all hooks before the hydration return to preserve hook order.
 - Keep completed-Premium profile links in the pure profile-link helper, reusing knowledge entries and /start completion IDs without changing either roadmap generator; omit check dates without a matching overlay source.
+- Premium dashboard progress derives from the same area steps, profile additions and stored completion IDs as /start; resolve knowledge weeks in the profile-link helper and use the existing phase start for overlay-only steps, so no second roadmap is generated.

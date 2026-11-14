@@ -38,6 +38,11 @@ export function getRelatedStepsForGap(gapFlag: GapFlag, currentPlanStepIds: read
     entry.requires?.includes(gapFlag)).map((entry) => entry.id);
 }
 
+/** Preserve knowledge timing; overlay-only steps start in their existing phase. */
+export function getStepWeek(step: Pick<AreaStep, "id" | "phase">): number {
+  return KNOWLEDGE_TABLE.find((entry) => entry.id === step.id)?.week ?? 3 * (step.phase - 1) + 1;
+}
+
 export function formatScoreDelta(history: readonly ScoreSnapshot[], lang: Lang): string {
   const last = history[history.length - 1];
   const previous = history[history.length - 2];

@@ -46,18 +46,20 @@ export function InstitutionBadge({
   institution,
   href,
   displayName,
+  compact = false,
 }: {
   institution: Institution;
   href?: string;
   displayName?: string;
+  compact?: boolean;
 }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const Icon = INSTITUTION_ICONS[institution] ?? GraduationCap;
   const content = (
     <>
       <Icon className="size-3.5 shrink-0" strokeWidth={1.9} aria-hidden />
       <span className="sr-only">{t("road.institution")}: </span>
-      <span>{displayName ?? INSTITUTION_LABEL[institution] ?? institution}</span>
+      <span>{displayName ?? (compact && lang === "fa" && institution === "Local municipality services" ? t("authority.combinedMunicipality") : compact && lang === "fa" && (institution === "Local Employment Services" || institution === "Municipal health services") ? t(`start.authority.${institution}`) : INSTITUTION_LABEL[institution] ?? institution)}</span>
       {href ? <ExternalLink className="size-3.5 shrink-0" aria-hidden /> : null}
     </>
   );
@@ -76,7 +78,7 @@ export function InstitutionBadge({
   }
 
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--institution-tint)] px-3 py-1 text-[var(--institution-purple)]">
+    <span className={`inline-flex items-center gap-1.5 rounded-full bg-[var(--institution-tint)] px-3 py-1 text-[var(--institution-purple)] ${compact ? "text-xs normal-case tracking-normal" : ""}`}>
       {content}
     </span>
   );
@@ -257,7 +259,7 @@ export function NpsSurvey() {
   };
 
   return (
-    <section className="rise-in mt-6 rounded-3xl border border-border bg-card p-6">
+    <section className="rise-in mt-6 rounded-3xl border border-border bg-card p-4 sm:p-5">
       {state === "thanks" ? (
         <p className="text-sm font-semibold text-secondary">{t("nps.thanks")}</p>
       ) : (
@@ -289,8 +291,8 @@ export function NpsSurvey() {
                 onClick={() => setScore(n)}
                 className={
                   score === n
-                    ? "size-9 rounded-xl bg-primary text-xs font-bold text-primary-foreground"
-                    : "size-9 rounded-xl border border-border bg-background text-xs font-semibold transition-colors duration-200 ease-out hover:bg-muted"
+                    ? "size-8 rounded-lg bg-primary text-xs font-bold text-primary-foreground"
+                    : "size-8 rounded-lg border border-border bg-background text-xs font-semibold transition-colors duration-200 ease-out hover:bg-muted"
                 }
               >
                 {localizeNumber(n, lang)}
@@ -304,7 +306,7 @@ export function NpsSurvey() {
           <textarea
             value={comment}
             maxLength={1000}
-            rows={3}
+            rows={2}
             onChange={(e) => setComment(e.target.value)}
             className="mt-1.5 w-full rounded-xl border border-input bg-background px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-ring"
           />
