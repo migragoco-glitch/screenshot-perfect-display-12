@@ -21,7 +21,9 @@ export type Institution =
   | "Business Finland"
   | "Municipal health services"
   | "Study in Finland"
-  | "InfoFinland";
+  | "InfoFinland"
+  | "Traficom"
+  | "Landlord or housing provider";
 
 /** Full public-facing label for each institution. */
 export const INSTITUTION_LABEL: Record<Institution, string> = {
@@ -38,6 +40,8 @@ export const INSTITUTION_LABEL: Record<Institution, string> = {
   "Municipal health services": "Municipal health services",
   "Study in Finland": "Study in Finland",
   InfoFinland: "InfoFinland",
+  Traficom: "Traficom",
+  "Landlord or housing provider": "Landlord or housing provider",
 };
 
 export type Phase = 1 | 2 | 3 | 4;
