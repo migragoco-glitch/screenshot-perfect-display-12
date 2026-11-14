@@ -570,7 +570,7 @@ function Dashboard() {
                         dot={{ r: 3 }}
                         activeDot={{ r: 5 }}
                       >
-                        <LabelList dataKey="overall" position="top" offset={10} fill="var(--foreground)" fontSize={11} formatter={(value) => localizeNumber(Number(value), lang)} />
+                        <LabelList dataKey="overall" position="top" offset={10} fill="var(--foreground)" fontSize={11} formatter={(value: unknown) => localizeNumber(Number(value), lang)} />
                       </Line>
                       <Line type="monotone" dataKey="legal" name={t("dash.dim1")} stroke={DIMENSION_COLORS.legal} strokeWidth={2} dot={{ r: 2.5 }} />
                       <Line type="monotone" dataKey="professional" name={t("dash.dim2")} stroke={DIMENSION_COLORS.professional} strokeWidth={2} strokeDasharray="6 3" dot={{ r: 2.5 }} />
