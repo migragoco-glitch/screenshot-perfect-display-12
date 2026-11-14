@@ -1,5 +1,7 @@
 # Current roadmap
 
+- [ ] Apply approved completed-Premium profile priorities, additional steps, gap links and score-history changes with the three corrections.
+
 - [x] Require Q7 child count with stored-type tolerance and unify both /start Premium feature lists using the approved bilingual keys.
 
 - [x] Apply approved ITEM 1 email-modal copy, checkout currency display, landing Premium button behavior, and consent return target; leave ITEM 2 untouched.
