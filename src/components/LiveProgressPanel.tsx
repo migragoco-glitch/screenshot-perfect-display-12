@@ -11,7 +11,7 @@ const DIM_COLORS = [
 ];
 
 function completion(ids: readonly number[], answers: Answers) {
-  const qs = QUESTIONS.filter((q) => ids.includes(q.id) && (!q.showIf || q.showIf(answers)));
+  const qs = QUESTIONS.filter((q) => ids.includes(q.id) && q.section < 7 && (!q.showIf || q.showIf(answers)));
   if (!qs.length) return 0;
   const done = qs.filter((q) => isAnswered(q, answers[q.id])).length;
   return Math.round((done / qs.length) * 100);
@@ -91,7 +91,7 @@ export function LiveProgressPanel({ answers }: { answers: Answers }) {
   const { t } = useI18n();
 
   const { overall, dims } = useMemo(() => {
-    const all = QUESTIONS.filter((q) => !q.showIf || q.showIf(answers));
+    const all = QUESTIONS.filter((q) => q.section < 7 && (!q.showIf || q.showIf(answers)));
     const done = all.filter((q) => isAnswered(q, answers[q.id])).length;
     return {
       overall: all.length ? Math.round((done / all.length) * 100) : 0,

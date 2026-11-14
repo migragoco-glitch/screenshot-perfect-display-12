@@ -560,7 +560,7 @@ function Dashboard() {
                         contentStyle={{ borderRadius: 12, fontSize: 12, border: "1px solid var(--border)" }}
                         formatter={(v: number, name: string) => [`${v}%`, name]}
                       />
-                      <Legend verticalAlign="bottom" height={30} iconType="plainline" wrapperStyle={{ fontSize: 11 }} formatter={(value) => <span className="text-foreground">{value}</span>} />
+                      <Legend verticalAlign="bottom" height={30} iconType="plainline" wrapperStyle={{ fontSize: 13 }} formatter={(value) => <span className="text-foreground">{value}</span>} />
                       <Line
                         type="monotone"
                         dataKey="overall"
@@ -570,7 +570,7 @@ function Dashboard() {
                         dot={{ r: 3 }}
                         activeDot={{ r: 5 }}
                       >
-                        <LabelList dataKey="overall" position="top" offset={10} fill="var(--foreground)" fontSize={11} formatter={(value: unknown) => localizeNumber(Number(value), lang)} />
+                        <LabelList dataKey="overall" position="top" offset={10} fill="var(--foreground)" fontSize={12} fontWeight="bold" formatter={(value: unknown) => localizeNumber(Number(value), lang)} />
                       </Line>
                       <Line type="monotone" dataKey="legal" name={t("dash.dim1")} stroke={DIMENSION_COLORS.legal} strokeWidth={2} dot={{ r: 2.5 }} />
                       <Line type="monotone" dataKey="professional" name={t("dash.dim2")} stroke={DIMENSION_COLORS.professional} strokeWidth={2} strokeDasharray="6 3" dot={{ r: 2.5 }} />

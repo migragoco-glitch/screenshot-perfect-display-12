@@ -727,7 +727,8 @@ export function applicableQuestions(answers: Answers, ctx?: AnswerContext, secti
 
 /** Shared completion rule: every applicable required question answered. */
 export function assessmentProgress(answers: Answers, ctx?: AnswerContext, section7Skipped = false) {
-  const applicable = applicableQuestions(answers, ctx, section7Skipped);
+  // Optional Section 7 never counts toward totals or completion.
+  const applicable = applicableQuestions(answers, ctx, section7Skipped).filter((q) => q.section < 7);
   const answered = applicable.filter((q) => isAnswered(q, answers[q.id])).length;
   return { answered, total: applicable.length, complete: applicable.length > 0 && answered === applicable.length };
 }

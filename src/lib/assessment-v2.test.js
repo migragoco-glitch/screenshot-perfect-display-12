@@ -22,7 +22,8 @@ describe("BUILD 4 assessment rules", () => {
   test("skipped section 7 is excluded from the shared totals", () => {
     const full = assessmentProgress({}, { founderTrack: true }, false);
     const skipped = assessmentProgress({}, { founderTrack: true }, true);
-    expect(skipped.total).toBe(full.total - 4);
+    expect(skipped.total).toBe(full.total);
+    expect(full.total).toBe(applicableQuestions({}, { founderTrack: true }).filter((q) => q.section < 7).length);
     expect(skipped.complete).toBe(false);
   });
   test("Q8 marks Alone and Not yet decided as exclusive", () => {
