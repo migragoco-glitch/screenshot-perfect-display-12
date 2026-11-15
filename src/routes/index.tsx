@@ -2,14 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Clock, Crown, Gift, Landmark, Route as RouteIcon, UserRoundCheck, Hourglass, Sparkles } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
-import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { FoundersCircleModal } from "@/components/FeedbackWidgets";
 import { Button } from "@/components/ui/button";
 import { localizeNumber, useI18n, type TKey } from "@/lib/i18n";
 import { RoadmapBars } from "@/components/RoadmapBars";
 import { useAppState } from "@/lib/store";
-import { TITLE_OVERRIDES } from "@/lib/area-flow";
+import { AREAS, type AreaId, TITLE_OVERRIDES } from "@/lib/area-flow";
 import { KNOWLEDGE_TABLE } from "@/lib/roadmap";
 
 function mockStepTitle(id: string, lang: "en" | "fa", t: (key: TKey) => string) {
@@ -172,6 +171,7 @@ function MiniDonut({ label, value, color }: { label: string; value: number; colo
   const c = 2 * Math.PI * r;
   const { ref, entered } = useInViewOnce<HTMLDivElement>();
   const displayedValue = useCountUp(value, entered, 1100);
+  const reducedMotion = useReducedMotion();
   return (
     <div ref={ref} className="flex flex-col items-center gap-1.5">
       <div className="relative">
@@ -195,7 +195,7 @@ function MiniDonut({ label, value, color }: { label: string; value: number; colo
             strokeDasharray={c}
             strokeDashoffset={entered ? c - (c * value) / 100 : c}
             transform={`rotate(-90 ${size / 2} ${size / 2})`}
-            style={{ transition: "stroke-dashoffset 1100ms ease-out" }}
+            style={{ transition: `stroke-dashoffset ${reducedMotion ? 0 : 1100}ms ease-out` }}
           />
         </svg>
         <span
@@ -221,24 +221,58 @@ function RoadmapPreview() {
   );
 }
 
-const HOW_CHIPS = [
-  { key: "start.area.status.title", bg: "#02808A", fg: "#fff" },
-  { key: "start.area.housing.title", bg: "#3AC8C3", fg: "#021C3B" },
-  { key: "start.area.comm.title", bg: "#6B8E3A", fg: "#fff" },
-  { key: "start.area.family.title", bg: "#CB902C", fg: "#021C3B" },
-] as const;
+const HOW_AREA_COLORS: Record<AreaId, string> = {
+  status: "light-teal", id: "light-teal", bank: "light-teal",
+  housing: "teal", kela: "teal", work: "gold",
+  family: "olive", language: "olive", comm: "gold",
+};
+
+function HowRoadmapBars() {
+  const { ref, entered } = useInViewOnce<HTMLDivElement>();
+  return <div ref={ref}><RoadmapBars compact entered={entered} /></div>;
+}
+
+function HowReadinessDonut() {
+  const { t, lang } = useI18n();
+  const { ref, entered } = useInViewOnce<HTMLDivElement>();
+  const value = useCountUp(73, entered, 1100);
+  const reducedMotion = useReducedMotion();
+  const r = 44;
+  const c = 2 * Math.PI * r;
+  const seg = c / 3;
+  return (
+    <div ref={ref} className="relative size-[104px]">
+      <svg width={104} height={104} viewBox="0 0 104 104">
+        {(["var(--navigator-teal)", "var(--navigator-light-teal)", "var(--navigator-gold)"] as const).map((color, i) => (
+          <circle key={color} cx={52} cy={52} r={r} fill="none" stroke={color} strokeWidth={12}
+            strokeDasharray={`${entered ? seg - 4 : 0} ${entered ? c - seg + 4 : c}`}
+            strokeDashoffset={-seg * i} transform="rotate(-90 52 52)"
+            style={{ transition: `stroke-dasharray ${reducedMotion ? 0 : 1100}ms ease-out` }} />
+        ))}
+      </svg>
+      <span className="absolute inset-0 flex flex-col items-center justify-center leading-tight">
+        <span className="text-[24px] font-bold">{localizeNumber(value, lang)}</span>
+        <span className="text-[10px] text-muted-foreground">{t("how.mock.outOf")}</span>
+      </span>
+    </div>
+  );
+}
 
 function HowRing({ size, stroke, value, color, label }: { size: number; stroke: number; value: number; color: string; label: string }) {
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
+  const { ref, entered } = useInViewOnce<HTMLDivElement>();
+  const displayedValue = useCountUp(value, entered, 1100);
+  const reducedMotion = useReducedMotion();
+  const { lang } = useI18n();
   return (
-    <div className="flex min-w-0 flex-col items-center gap-1">
+    <div ref={ref} className="flex min-w-0 flex-col items-center gap-1">
       <div className="relative">
         <svg width={size} height={size}>
           <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#E3E9EB" strokeWidth={stroke} />
-          <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c - (c * value) / 100} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
+          <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeLinecap="round" strokeDasharray={c} strokeDashoffset={entered ? c - (c * value) / 100 : c} transform={`rotate(-90 ${size / 2} ${size / 2})`} style={{ transition: `stroke-dashoffset ${reducedMotion ? 0 : 1100}ms ease-out` }} />
         </svg>
-        <span className="absolute inset-0 flex items-center justify-center text-[11px] font-bold">{label}</span>
+        <span className="absolute inset-0 flex items-center justify-center text-[11px] font-bold" aria-label={label}>{localizeNumber(displayedValue, lang)}</span>
       </div>
     </div>
   );
@@ -258,75 +292,31 @@ function Landing() {
 
       <main>
         {/* Hero */}
-        <section className="brand-motif border-b border-border/70">
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 md:grid-cols-[1.15fr_0.85fr] md:items-center md:px-8 md:py-24">
-            <div className="rise-in">
-
-            <p className="mt-4 text-xs font-semibold text-secondary">
-              {t("hero.eyebrow")}
-            </p>
-
-            <h1 className="mt-2 text-3xl leading-[1.08] md:text-5xl">
-                <span className="text-gradient-brand">{t("hero.title")}</span>
-              </h1>
-              <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                {t("hero.sub")}
-              </p>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                {t("hero.sub2")}
-              </p>
-              <p className="mt-4 max-w-2xl text-base font-semibold text-foreground md:text-lg">
-                {t("hero.tagline")}
-              </p>
-
-              <div className="mt-9 flex flex-wrap items-center gap-4">
-                <Link
-                  to="/start"
-                  className="group inline-flex items-center gap-2 rounded-full bg-[var(--navigator-teal)] px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-card)] transition-colors duration-200 ease-out hover:bg-[var(--navigator-teal)]/90"
-                >
-                  {t("hero.startCta")}
-                  <ArrowRight className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" aria-hidden />
-                </Link>
-                <Link
-                  to="/"
-                  hash="how-it-works"
-                  className="text-sm font-semibold text-muted-foreground underline underline-offset-4 hover:text-foreground"
-                >
-                  {t("hero.howCta")}
-                </Link>
-                <span className="text-xs text-muted-foreground">{t("hero.time")}</span>
-              </div>
-            </div>
-
-            <div className="relative">
-              <div
-                className="absolute -end-3 -top-6 bottom-6 w-60 rounded-2xl lg:-end-6 lg:-top-10 lg:bottom-10 lg:w-[26rem]"
-                style={{ backgroundColor: "#02808A" }}
-                aria-hidden
-              />
-              <div className="relative">
-              <div className="glass-card relative rounded-3xl p-6 md:p-8">
-              <span className="absolute -top-3 start-3 flex size-[26px] items-center justify-center rounded-full bg-[var(--navigator-light-teal)]" aria-hidden>
-                <img src={arrowMarkAsset.url} alt="" className="h-4 w-auto object-contain" />
-              </span>
-              <div className="mt-5 rounded-[10px] border border-border bg-[#F7F4EE] p-4">
-                <SampleDonut />
-                <div className="mt-5 grid grid-cols-3 gap-3">
-                  {SAMPLE.map((d) => (
-                    <MiniDonut
-                      key={d.key}
-                      label={t(d.key)}
-                      value={d.value}
-                      color={d.color}
-                    />
-                  ))}
+        <section className="brand-motif home-hero-section border-b border-border/70">
+          <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
+            <div className="home-hero-stack">
+              <div className="home-hero-plate rounded-2xl" aria-hidden />
+              <div className="glass-card home-hero-front relative rounded-3xl p-6 text-center md:p-8">
+                <p className="mt-4 text-xs font-semibold text-secondary">{t("hero.eyebrow")}</p>
+                <h1 className="mt-2 text-3xl leading-[1.08] md:text-5xl">
+                  <span className="text-gradient-brand">{t("hero.title")}</span>
+                </h1>
+                <div className="home-hero-paragraphs mt-6">
+                  <p className="text-base leading-relaxed text-muted-foreground md:text-lg">{t("hero.sub")}</p>
+                  <p className="text-base leading-relaxed text-muted-foreground md:text-lg">{t("hero.sub2")}</p>
                 </div>
-                <p className="mt-5 border-t border-border pt-4 text-xs text-muted-foreground">
-                  {t("hero.previewNote")}
-                </p>
-              </div>
-              <RoadmapPreview />
-              </div>
+                <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+                  <Button asChild className="home-hero-button group h-auto rounded-full bg-[var(--navigator-teal)] px-6 py-3.5 text-sm font-semibold text-secondary-foreground shadow-[var(--shadow-card)] hover:bg-[var(--navigator-teal)]/90">
+                    <Link to="/start">{t("hero.startCta")}<ArrowRight className="size-4 rtl:rotate-180" aria-hidden /></Link>
+                  </Button>
+                  <Button asChild variant="link" className="home-hero-button h-auto p-0 text-sm font-semibold text-muted-foreground underline underline-offset-4 hover:text-foreground">
+                    <Link to="/" hash="how-it-works">{t("hero.howCta")}</Link>
+                  </Button>
+                  <span className="text-xs text-muted-foreground">{t("hero.time")}</span>
+                </div>
+                <div className="home-hero-closing mt-6 rounded-[10px] border border-border p-4">
+                  <p className="text-base font-semibold text-foreground md:text-lg">{t("hero.tagline")}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -343,7 +333,9 @@ function Landing() {
                 { n: 3, title: "how.s3.t", description: "how.s3.d" },
                 { n: 4, title: "how.s4.t", description: "how.s4.d" },
               ] as const).map((step) => (
-                <li key={step.n} className="how-card">
+                <li key={step.n} className={`how-stack how-step-${step.n}`}>
+                  <div className="how-plate" aria-hidden />
+                  <Link to="/start" className="how-card glass-card rounded-3xl">
                   <div className="how-card-inner">
                     <div className="how-card-text">
                       <div className="how-card-head">
@@ -354,7 +346,7 @@ function Landing() {
                         {t(step.description).split("\n").map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                       </div>
                     </div>
-                    <div aria-hidden="true" className="how-panel">
+                    <div aria-hidden="true" className={`how-panel${step.n === 2 ? " how-panel-areas" : ""}`}>
                       {step.n === 1 ? (
                         <div className="space-y-2">
                           <div className="flex min-w-0 items-center justify-between gap-2 rounded-lg bg-card px-3 py-2 text-sm font-semibold" style={{ border: "1.5px solid #3AC8C3" }}>
@@ -368,9 +360,9 @@ function Landing() {
                           ))}
                         </div>
                       ) : step.n === 2 ? (
-                        <div className="flex flex-wrap gap-2">
-                          {HOW_CHIPS.map(({ key, bg, fg }) => (
-                            <span key={key} className="min-w-0 rounded-full text-[13px] font-bold" style={{ background: bg, color: fg, padding: "6px 14px" }}>{t(key)}</span>
+                        <div className="how-area-chips">
+                          {AREAS.map((area) => (
+                            <span key={area.id} className={`how-area-chip how-area-${HOW_AREA_COLORS[area.id]}`}>{t(area.title)}</span>
                           ))}
                         </div>
                       ) : step.n === 3 ? (
@@ -379,7 +371,7 @@ function Landing() {
                             <span className="min-w-0 rounded-full px-3 py-1 text-[12px] font-bold" style={{ background: "#02808A", color: "#fff" }}>{t("start.choose.road.title")}</span>
                             <span className="min-w-0 rounded-full px-3 py-1 text-[12px] font-bold" style={{ background: "#FBF1DE", color: "#9A6B16" }}>{t("start.choose.info.title")}</span>
                           </div>
-                          <RoadmapBars compact />
+                          <HowRoadmapBars />
                           <div className="flex min-w-0 items-center gap-2 rounded-lg bg-card px-3 py-2 text-[12px]" style={{ borderInlineStart: "4px solid #6B8E3A" }}>
                             <Clock className="size-3.5 shrink-0" style={{ color: "#6B8E3A" }} />
                             <span className="min-w-0 flex-1">{mockStepTitle("dvv-id-code", lang, t)}</span>
@@ -388,18 +380,7 @@ function Landing() {
                         </div>
                       ) : (
                         <div className="flex flex-col items-center gap-3">
-                          <div className="relative size-[104px]">
-                            <svg width={104} height={104} viewBox="0 0 104 104">
-                              {(["#02808A", "#3AC8C3", "#CB902C"] as const).map((color, i) => {
-                                const r = 44; const c = 2 * Math.PI * r; const seg = c / 3;
-                                return <circle key={color} cx={52} cy={52} r={r} fill="none" stroke={color} strokeWidth={12} strokeDasharray={`${seg - 4} ${c - seg + 4}`} strokeDashoffset={-seg * i} transform="rotate(-90 52 52)" />;
-                              })}
-                            </svg>
-                            <span className="absolute inset-0 flex flex-col items-center justify-center leading-tight">
-                              <span className="text-[24px] font-bold">{localizeNumber(73, lang)}</span>
-                              <span className="text-[10px] text-muted-foreground">{t("how.mock.outOf")}</span>
-                            </span>
-                          </div>
+                          <HowReadinessDonut />
                           <div className="grid w-full grid-cols-3 gap-2">
                             {([["dash.dim1", 65, "#02808A"], ["dash.dim2", 74, "#3AC8C3"], ["dash.dim3", 81, "#CB902C"]] as const).map(([key, value, color]) => (
                               <div key={key} className="flex min-w-0 flex-col items-center gap-1">
@@ -413,6 +394,7 @@ function Landing() {
                       )}
                     </div>
                   </div>
+                  </Link>
                 </li>
               ))}
             </ol>
