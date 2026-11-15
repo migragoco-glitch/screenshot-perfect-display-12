@@ -185,6 +185,13 @@ function Dashboard() {
   const startPlanStepIds = allItems.map((step) => step.id);
   const done = new Set(startDoneIds);
   const roadmap = [1, 2, 3, 4].map((phase) => ({ phase, items: allItems.filter((step) => step.phase === phase) }));
+  const activePhases = roadmap.filter((phase) => phase.items.length > 0);
+  const progressGradient = (tinted: boolean) => activePhases.length
+    ? `linear-gradient(to right, ${activePhases.map((phase, index) => {
+      const color = ROADMAP_PHASES[phase.phase - 1]?.value ?? "var(--navigator-teal)";
+      return `${tinted ? `color-mix(in oklab, ${color} 18%, var(--card))` : color} ${index / activePhases.length * 100}% ${(index + 1) / activePhases.length * 100}%`;
+    }).join(", ")})`
+    : "var(--card)";
   const roadmapDoneCount = roadmapSteps.filter((step) => done.has(step.id)).length;
   const roadmapPhases = [1, 2, 3, 4].map((phase) => ({
     color: ROADMAP_PHASES[phase - 1]?.value ?? "var(--navigator-teal)",
@@ -606,16 +613,14 @@ function Dashboard() {
                   <div
                     className="mt-3 h-2.5 w-full overflow-hidden rounded-full"
                     style={{
-                      background:
-                        "linear-gradient(to right, color-mix(in oklab, var(--navigator-light-teal) 18%, var(--card)) 0 25%, color-mix(in oklab, var(--navigator-teal) 18%, var(--card)) 25% 50%, color-mix(in oklab, var(--navigator-olive) 18%, var(--card)) 50% 75%, color-mix(in oklab, var(--navigator-gold) 18%, var(--card)) 75% 100%)",
+                      background: progressGradient(true),
                     }}
                   >
                     <div
                       className="h-full rounded-full transition-all duration-500 ease-out"
                       style={{
                         width: `${totalTasks ? (doneCount / totalTasks) * 100 : 0}%`,
-                        background:
-                          "linear-gradient(to right, var(--navigator-light-teal) 0 25%, var(--navigator-teal) 25% 50%, var(--navigator-olive) 50% 75%, var(--navigator-gold) 75% 100%)",
+                        background: progressGradient(false),
                       }}
                     />
                   </div>
@@ -629,7 +634,8 @@ function Dashboard() {
                   <section className="rounded-3xl border border-border bg-card p-6 text-[var(--navigator-navy)]">
                     <h2 className="text-lg text-[var(--navigator-navy)]">{t("prog.phase")}</h2>
                     <ul className="mt-4 space-y-4">
-                      {roadmap.map((phase, i) => {
+                      {activePhases.map((phase) => {
+                        const i = phase.phase - 1;
                         const total = phase.items.length;
                         const completed = phase.items.filter((it) => done.has(it.id)).length;
                         const pct = total ? Math.round((completed / total) * 100) : 0;
