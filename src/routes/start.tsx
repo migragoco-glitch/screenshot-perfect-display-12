@@ -46,9 +46,9 @@ function saveIds(key: string, ids: string[]) {
 const ICONS = { status: Globe, id: IdCard, bank: Landmark, kela: HeartPulse, housing: House, family: Users, work: Briefcase, language: Languages, comm: Building2 };
 
 const PHASE_COLORS = ["var(--navigator-light-teal)", "var(--navigator-teal)", "var(--navigator-olive)", "var(--navigator-gold)"];
-const PRIMARY_BTN = "inline-flex items-center justify-center gap-2 rounded-full bg-[#02808A] px-6 py-3 text-sm font-bold text-white transition-colors duration-200 ease-out hover:bg-[#026A73] disabled:opacity-50";
-const GHOST_BTN = "inline-flex items-center justify-center gap-2 rounded-full border border-border bg-transparent px-5 py-3 text-sm font-semibold text-muted-foreground transition-colors duration-200 ease-out hover:bg-muted hover:text-foreground";
-const LABEL = "text-[10px] font-semibold uppercase tracking-wide text-muted-foreground";
+const PRIMARY_BTN = "start-primary inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold disabled:opacity-50";
+const GHOST_BTN = "start-secondary inline-flex items-center justify-center gap-2 rounded-full border bg-transparent px-5 py-3 text-sm font-semibold";
+const LABEL = "start-label text-xs font-semibold uppercase tracking-wide";
 const AREA_COLORS: Record<AreaId, string> = {
   status: "var(--navigator-light-teal)", id: "var(--navigator-light-teal)", bank: "var(--navigator-light-teal)",
   kela: "var(--navigator-teal)", housing: "var(--navigator-teal)", work: "var(--navigator-gold)",
@@ -95,10 +95,6 @@ function MiniRing({ value, total, color, size = 40 }: { value: number; total: nu
     <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--muted)" strokeWidth={stroke} />
     <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c - c * pct} transform={`rotate(-90 ${size / 2} ${size / 2})`} style={{ transition: "stroke-dashoffset 300ms ease-out" }} />
   </svg>;
-}
-function stepCardStyle(phase: number) {
-  const color = PHASE_COLORS[phase - 1] ?? "var(--navigator-light-teal)";
-  return { borderLeftColor: color, borderLeftWidth: "4px", background: `color-mix(in oklab, ${color} 7%, var(--card))` };
 }
 
 function StartScreen() {
@@ -228,12 +224,12 @@ function StartScreen() {
   return (
     <div dir={dir} className="flex min-h-screen flex-col">
       <AppHeader />
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 md:px-8 md:py-14">
+      <main className="start-page mx-auto w-full max-w-3xl flex-1 px-4 py-10 md:px-8 md:py-14">
         {activated && hasNavigator ? <div role="status" className="mb-6 flex items-start justify-between gap-3 rounded-2xl bg-secondary/12 px-4 py-3 text-sm font-semibold text-foreground"><span>{t("start.activatedBanner")}</span><button type="button" aria-label={t("common.close")} onClick={() => { setActivated(false); try { window.sessionStorage.removeItem("migrago.start.activated"); } catch { /* Storage may be unavailable. */ } }} className="text-muted-foreground">×</button></div> : null}
         <StepTracker stage={stage} questionFill={questionFill} />
         <h1 className="text-2xl md:text-3xl">{t(stage === "info" ? "start.title.info" : stage === "road" ? "start.title.road" : "start.title")}</h1>
         {stage === "city" ? (
-          <section className="mt-8"><div className="rise-in rounded-3xl border-x border-b border-t-[5px] border-border bg-card p-6 shadow-[var(--shadow-card)] md:p-8" style={{ borderTopColor: "var(--navigator-light-teal)" }}>
+          <section className="start-stack mt-8"><div className="start-front glass-card rounded-3xl p-6 md:p-8">
             <div className="flex items-start gap-4">
               <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl shadow-[0_4px_14px_rgba(58,200,195,0.25)]" style={{ background: tint("var(--navigator-light-teal)", 15), color: "var(--navigator-teal)" }}><MapPin className="size-6" aria-hidden /></span>
               <div className="min-w-0">
@@ -244,7 +240,7 @@ function StartScreen() {
             <select id="start-municipality" value={state.municipality ?? ""} onChange={(event) => {
               const municipality = event.target.value;
               if (municipality) update({ municipality, region: ["Helsinki", "Espoo", "Vantaa"].includes(municipality) ? "helsinki" : "elsewhere" });
-            }} className="mt-5 w-full rounded-xl border-2 bg-background px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--navigator-light-teal)]/30" style={{ borderColor: "var(--navigator-light-teal)" }}>
+            }} className="start-input mt-5 w-full rounded-xl border-2 bg-background px-4 py-3 text-sm outline-none">
               <option value="" disabled>{t("start.chooseCity")}</option>
               {MUNICIPALITIES.map((city) => <option key={city} value={city}>{t(`start.city.${city}`)}</option>)}
             </select>
@@ -253,7 +249,7 @@ function StartScreen() {
                 const active = state.municipality === city;
                 return <button type="button" key={city} aria-pressed={active} onClick={() => update({ municipality: city, region: ["Helsinki", "Espoo", "Vantaa"].includes(city) ? "helsinki" : "elsewhere" })}
                   className="rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors duration-200 ease-out hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2"
-                  style={{ borderColor: active ? color : `color-mix(in srgb, ${color} 40%, transparent)`, borderWidth: active ? 2 : 1, background: tint(color, active ? 20 : 12), outlineColor: color }}>
+                  style={{ borderColor: active ? "var(--navigator-navy)" : `color-mix(in srgb, ${color} 40%, transparent)`, borderWidth: active ? 2 : 1, background: tint(color, active ? 20 : 12), outlineColor: color }}>
                   {t(`start.city.${city}`)}
                 </button>;
               })}
@@ -264,7 +260,7 @@ function StartScreen() {
           </div></section>
         ) : null}
         {stage === "areas" ? (
-          <section className="mt-8"><div className="glass-card rise-in rounded-3xl p-6 md:p-8">
+          <section className="start-stack mt-8"><div className="start-front glass-card rounded-3xl p-6 md:p-8">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-xl">{t("start.areas")}</h2>
               <Button type="button" variant="outline" className={GHOST_BTN} onClick={() => { setAreas(AREAS.map((area) => area.id)); setAreaError(false); }}><Check />{t("start.selectAll")}</Button>
@@ -277,13 +273,11 @@ function StartScreen() {
                 return <Button type="button" key={area.id} variant="outline" aria-pressed={active} onClick={() => {
                   setAreas((current) => active ? current.filter((id) => id !== area.id) : [...current, area.id]);
                   setAreaError(false);
-                }} style={active ? { borderColor: chipColor, background: tint(chipColor, 12) } : undefined} className={cn("relative h-auto flex flex-col items-start justify-start gap-3 whitespace-normal rounded-2xl p-5 text-start text-foreground transition-all duration-200 ease-out hover:-translate-y-0.5 hover:text-foreground hover:shadow-[var(--shadow-lift)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary", active ? "border-2 shadow-[var(--shadow-lift)]" : "border border-border bg-card hover:bg-card")}>
+                }} style={{ "--start-area-color": chipColor } as React.CSSProperties} className="start-area relative h-auto flex flex-col items-start justify-start gap-3 whitespace-normal rounded-2xl p-5 text-start">
                   {active ? (
-                    <span aria-hidden="true" className="absolute top-3.5 end-3.5 flex size-6 items-center justify-center rounded-full text-white shadow-sm" style={{ background: chipColor }}>
-                      <Check className="size-3.5 stroke-[3]" />
-                    </span>
+                    <span aria-hidden="true" className="start-area-check absolute top-3.5 end-3.5 flex size-6 items-center justify-center rounded-full"><Check className="size-3.5 stroke-[3]" /></span>
                   ) : <span aria-hidden="true" className="absolute top-3.5 end-3.5 size-6 rounded-full border-2 border-muted-foreground/30" />}
-                  <span className={cn("flex size-12 items-center justify-center rounded-full", !active && "bg-muted/70 text-muted-foreground")} style={active ? { background: chipColor, color: "#fff" } : undefined}><Icon className="size-6" /></span>
+                  <span className="start-area-icon flex size-12 items-center justify-center rounded-full"><Icon className="size-6" /></span>
                   <span className="text-sm font-bold">{t(area.title)}</span>
                   <span className="text-xs font-normal leading-relaxed text-muted-foreground">{t(area.description)}</span>
                 </Button>;
@@ -300,7 +294,7 @@ function StartScreen() {
           </div></section>
         ) : null}
         {stage === "questions" ? (
-          <div className="glass-card rise-in mt-8 rounded-3xl p-6 md:p-8">
+          <div className="start-stack mt-8"><div className="start-front start-questions glass-card rounded-3xl p-6 md:p-8">
             {questionCards.length ? <div className="rounded-2xl border border-border bg-card p-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <h2 className="text-sm font-bold">{t("start.questions.progressTitle")}</h2>
@@ -342,7 +336,7 @@ function StartScreen() {
                   <div role="group" aria-label={t("start.route.label")} className="mt-5">
                     <p className="text-sm font-semibold">{t("start.route.label")}</p>
                     <div className="mt-3 flex flex-wrap gap-3">
-                      {(["eu", "nordic", "noneu"] as const).map((route) => <Button type="button" key={route} variant="secondary" aria-pressed={effectiveRoute === route} onClick={() => update({ route, startAnsweredIds: recordStartAnswer(state.startAnsweredIds, 2) })} className={cn(PRIMARY_BTN, "h-auto whitespace-normal text-start", effectiveRoute === route && "ring-2 ring-secondary ring-offset-2")}>{t(`start.route.${route}`)}</Button>)}
+                      {(["eu", "nordic", "noneu"] as const).map((route) => <Button type="button" key={route} variant="secondary" aria-pressed={effectiveRoute === route} onClick={() => update({ route, startAnsweredIds: recordStartAnswer(state.startAnsweredIds, 2) })} className="start-option h-auto whitespace-normal rounded-full px-6 py-3 text-start text-sm font-bold">{t(`start.route.${route}`)}</Button>)}
                     </div>
                     {state.route === undefined && effectiveRoute ? <p className="mt-3 text-sm text-muted-foreground">{t("start.route.suggested")}</p> : null}
                     {effectiveRoute === undefined ? <p className="mt-3 text-sm text-muted-foreground">{t("start.route.choose")}</p> : null}
@@ -357,16 +351,15 @@ function StartScreen() {
               <Button type="button" variant="secondary" className={cn(PRIMARY_BTN, "disabled:pointer-events-auto disabled:cursor-not-allowed")} disabled={hasUnansweredQuestions} aria-describedby={hasUnansweredQuestions ? "start-questions-hint" : undefined} onClick={() => setStage("choose")}>{t("start.showSteps")}<ArrowRight className="rtl:rotate-180" /></Button>
             </div>
             {hasUnansweredQuestions ? <p id="start-questions-hint" className="mt-3 text-xs text-muted-foreground leading-relaxed">{t("start.questions.requiredHint")}</p> : null}
-          </div>
+          </div></div>
         ) : null}
         {stage === "choose" ? (
-          <section className="mt-8"><div className="glass-card rise-in rounded-3xl p-6 md:p-8">
+          <section className="start-stack mt-8"><div className="start-front glass-card rounded-3xl p-6 md:p-8">
             <h2 className="text-xl">{t("start.choose.title")}</h2>
             <div className="mt-5 grid gap-5 sm:grid-cols-2">
               {([{ view: "info", color: "var(--navigator-light-teal)", Icon: ListChecks }, { view: "road", color: "var(--navigator-gold)", Icon: RouteIcon }] as const).map(({ view, color, Icon }) => (
                 <button type="button" key={view} onClick={() => setStage(view)}
-                  className="flex min-h-24 w-full items-center gap-4 rounded-[20px] border-[1.5px] p-5 text-start transition-all duration-200 ease-out hover:-translate-y-[3px] hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.12)] active:translate-y-0 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                  style={{ borderColor: color, background: `linear-gradient(to bottom, ${tint(color, 8)}, var(--card))`, boxShadow: "inset 0 1px 0 rgba(255,255,255,0.7), 0 1px 2px rgba(0,0,0,0.05), 0 6px 16px -8px rgba(0,0,0,0.1)", ["--tw-ring-color" as string]: color }}>
+                  className="start-option flex min-h-24 w-full items-center gap-4 rounded-[20px] border p-5 text-start">
                   <span className="flex size-[52px] shrink-0 items-center justify-center rounded-2xl text-white" style={{ background: color, boxShadow: `0 6px 16px -4px color-mix(in srgb, ${color} 55%, transparent)` }}><Icon className="size-6" aria-hidden /></span>
                   <span className="min-w-0 flex-1">
                     <span className="block font-bold">{t(`start.choose.${view}.title`)}</span>
@@ -382,7 +375,7 @@ function StartScreen() {
           </div></section>
         ) : null}
         {stage === "info" ? (
-          <section className="mt-8"><div className="glass-card rise-in rounded-3xl p-6 md:p-8">
+          <section className="start-stack mt-8"><div className="start-front glass-card rounded-3xl p-6 md:p-8">
             <h2 className="text-xl">{t("start.info.title")}</h2>
             <p className="mt-2 text-sm text-muted-foreground">{t("start.info.areasSub").replace("{n}", localizeNumber(selectedAreas.length, lang))}</p>
             {selectedAreas.map((area, areaIndex) => {
@@ -394,7 +387,7 @@ function StartScreen() {
                   <a href={area.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-secondary">{t("road.officialSource")}<ExternalLink className="size-4" /></a>
                   {areaSteps.length ? (
                     <ul className="mt-5 space-y-4">
-                      {areaSteps.map((step) => <li key={step.id} data-step-id={step.id} className="rounded-lg border border-border/70 p-4" style={stepCardStyle(step.phase)}><details><summary className="cursor-pointer text-sm font-semibold"><span>{typeof step.title === "string" ? t(step.title) : step.title[lang]}</span>{hasNavigator ? <span className="ms-2 inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold text-[var(--journey-pill-foreground)]" style={{ background: doneIds.includes(step.id) ? "var(--status-done)" : "var(--status-not-done)" }}>{t(doneIds.includes(step.id) ? "start.info.done" : "start.info.notDone")}</span> : null}<span className="mt-2 block"><InstitutionBadge institution={step.authority as Institution} displayName={t(`start.authority.${step.authority}`)} compact /></span></summary><StepBody step={step} localUrl={localUrl} />{hasNavigator ? <Button type="button" variant="link" className="mt-3 h-auto whitespace-normal p-0 text-secondary" onClick={() => { setStage("road"); setExpandedIds([step.id]); setFirstExpanded(true); }}>{t("start.info.goToRoad")}<ArrowRight className="rtl:rotate-180" /></Button> : null}</details></li>)}
+                      {areaSteps.map((step) => <li key={step.id} data-step-id={step.id} className="start-step p-4"><details><summary className="cursor-pointer text-sm font-semibold"><span>{typeof step.title === "string" ? t(step.title) : step.title[lang]}</span>{hasNavigator ? <span className="ms-2 inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold text-[var(--journey-pill-foreground)]" style={{ background: doneIds.includes(step.id) ? "var(--status-done)" : "var(--status-not-done)" }}>{t(doneIds.includes(step.id) ? "start.info.done" : "start.info.notDone")}</span> : null}<span className="mt-2 block"><InstitutionBadge institution={step.authority as Institution} displayName={t(`start.authority.${step.authority}`)} compact /></span></summary><StepBody step={step} localUrl={localUrl} />{hasNavigator ? <Button type="button" variant="link" className="mt-3 h-auto whitespace-normal p-0 text-secondary" onClick={() => { setStage("road"); setExpandedIds([step.id]); setFirstExpanded(true); }}>{t("start.info.goToRoad")}<ArrowRight className="rtl:rotate-180" /></Button> : null}</details></li>)}
                     </ul>
                   ) : <p className="mt-4 text-sm text-muted-foreground">{t(area.id === "status" ? effectiveRoute === "nordic" ? "start.route.nordicNote" : effectiveRoute === undefined ? "start.route.choose" : "start.noSteps" : "start.noSteps")}</p>}
                   {area.id === "status" ? <p className="mt-3 text-sm text-muted-foreground">{t("start.status.scope")}</p> : null}
@@ -404,8 +397,8 @@ function StartScreen() {
             <details className="mt-8 border-t border-border pt-6">
               <summary className="cursor-pointer text-lg font-semibold">{t("start.checklist.title")}</summary>
               <p className="mt-3 text-sm font-semibold">{hasNavigator ? t("start.docs.counter").replace("{x}", localizeNumber(docsDone, lang)).replace("{y}", localizeNumber(docKeys.length, lang)) : t("start.docs.countOnly").replace("{y}", localizeNumber(docKeys.length, lang))}</p>
-              {hasNavigator ? <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted"><div className="roadmap-progress-transition h-full bg-secondary" style={{ width: `${docKeys.length ? docsDone / docKeys.length * 100 : 0}%` }} /></div> : <p className="mt-2 text-xs text-muted-foreground">{t("start.docs.freeNote")}</p>}
-              {checklist.length ? checklist.map((item) => <div key={item.id} className="mt-5"><h4 className="text-sm font-semibold">{typeof item.title === "string" ? t(item.title) : item.title[lang]}</h4>{hasNavigator ? item.documents.map((key, index) => <label key={`${item.id}:${index}`} className="mt-3 flex items-start gap-3 text-sm"><input type="checkbox" className="mt-1 size-4 accent-[var(--status-done)]" checked={docIds.includes(`${item.id}:${index}`)} onChange={() => toggleDoc(`${item.id}:${index}`)} /><span>{t(key)}</span></label>) : <ul className="mt-2 list-disc space-y-1.5 ps-6 text-sm">{item.documents.map((key, index) => <li key={`${item.id}:${index}`}>{t(key)}</li>)}</ul>}</div>) : <p className="mt-3 text-sm text-muted-foreground">{t("start.checklist.empty")}</p>}
+              {hasNavigator ? <div className="start-progress-track mt-2 h-1.5 overflow-hidden rounded-full"><div className="start-progress-fill roadmap-progress-transition h-full" style={{ width: `${docKeys.length ? docsDone / docKeys.length * 100 : 0}%` }} /></div> : <p className="mt-2 text-xs text-muted-foreground">{t("start.docs.freeNote")}</p>}
+              {checklist.length ? checklist.map((item) => <div key={item.id} className="mt-5"><h4 className="text-sm font-semibold">{typeof item.title === "string" ? t(item.title) : item.title[lang]}</h4>{hasNavigator ? item.documents.map((key, index) => <label key={`${item.id}:${index}`} className="mt-3 flex items-start gap-3 text-sm"><input type="checkbox" className="mt-1 size-4 accent-[var(--navigator-teal)]" checked={docIds.includes(`${item.id}:${index}`)} onChange={() => toggleDoc(`${item.id}:${index}`)} /><span>{t(key)}</span></label>) : <ul className="mt-2 list-disc space-y-1.5 ps-6 text-sm">{item.documents.map((key, index) => <li key={`${item.id}:${index}`}>{t(key)}</li>)}</ul>}</div>) : <p className="mt-3 text-sm text-muted-foreground">{t("start.checklist.empty")}</p>}
             </details>
             {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : null}
             <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
@@ -417,7 +410,7 @@ function StartScreen() {
           </div></section>
         ) : null}
         {stage === "road" ? (
-          <section className="mt-8"><div className="glass-card rise-in rounded-3xl p-6 md:p-8">
+          <section className="start-stack mt-8"><div className="start-front glass-card rounded-3xl p-6 md:p-8">
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div><h2 className="text-xl md:text-2xl">{t("start.results")}</h2><p className="mt-1 text-sm text-muted-foreground">{t("start.results.sub")}</p></div>
             </div>
@@ -432,7 +425,7 @@ function StartScreen() {
                     const done = doneIds.includes(step.id);
                     const title = typeof step.title === "string" ? t(step.title) : step.title[lang];
                     if (hasNavigator) return <PremiumStepCard key={step.id} step={step} done={done} expanded={expandedIds.includes(step.id)} onToggleDone={() => toggleDone(step.id)} onToggleExpanded={() => setExpandedIds((current) => current.includes(step.id) ? current.filter((id) => id !== step.id) : [...current, step.id])} profilePriority={isProfileDriven && isPriorityStep(step.id, userGaps)} profileDriven={isProfileDriven && isPriorityStep(step.id, userGaps)} whyOpen={profileWhyIds.includes(step.id)} onToggleWhy={() => setProfileWhyIds((current) => current.includes(step.id) ? current.filter((id) => id !== step.id) : [...current, step.id])} />;
-                    return <li key={step.id} data-step-id={step.id} className={cn("rounded-2xl border border-border/70 p-4 transition-opacity duration-200 ease-out", done && "opacity-70")} style={stepCardStyle(step.phase)}>
+                    return <li key={step.id} data-step-id={step.id} className={cn("start-step p-4", done && "opacity-70")}>
                       <div className="flex items-start gap-3">
                         {hasNavigator ? <label className="relative mt-0.5 inline-flex size-5 shrink-0 cursor-pointer items-center justify-center">
                           <input type="checkbox" checked={done} onChange={() => toggleDone(step.id)} aria-label={`${t("road.done")}: ${title}`} className="peer size-5 cursor-pointer appearance-none rounded-md border border-border bg-background transition-colors duration-200 ease-out checked:border-[var(--status-done)] checked:bg-[var(--status-done)]" />
@@ -440,7 +433,7 @@ function StartScreen() {
                         </label> : null}
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-wide">
-                            <span className="flex size-6 items-center justify-center rounded-full text-xs font-bold" style={{ background: PHASE_COLORS[step.phase - 1], color: step.phase === 2 ? "#fff" : "var(--navigator-navy)" }}>{localizeNumber(steps.indexOf(step) + 1, lang)}</span>
+                            <span className="start-step-number flex size-6 items-center justify-center rounded-full text-xs font-bold">{localizeNumber(steps.indexOf(step) + 1, lang)}</span>
                             {hasNavigator ? <span className="rounded-full bg-primary/8 px-2.5 py-0.5 text-primary">{t("start.plan.weeks").replace("{from}", localizeNumber(weeksRange(step.phase)[0], lang)).replace("{to}", localizeNumber(weeksRange(step.phase)[1], lang))}</span> : null}
                             {isProfileDriven && isPriorityStep(step.id, userGaps) ? <span className="rounded-full bg-[var(--navigator-teal)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--journey-pill-foreground)]">{t("start.priorityBadge")}</span> : null}
                           </div>
@@ -475,7 +468,7 @@ function StartScreen() {
                 })}
               </ol>
             </section> : null}
-            {hasNavigator ? <ProfileCard completed={state.completed} /> : <UpgradeCard view="road" onUpgrade={openUpgrade} />}
+            {hasNavigator ? <div className="start-profile"><ProfileCard completed={state.completed} /></div> : <UpgradeCard view="road" onUpgrade={openUpgrade} />}
             {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : null}
             <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
             <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
@@ -485,7 +478,7 @@ function StartScreen() {
             </div>
           </div></section>
         ) : null}
-        <Button type="button" variant="link" className="mt-10 h-auto p-0 text-xs font-semibold text-muted-foreground underline underline-offset-4" onClick={() => {
+        <Button type="button" variant="link" className="start-delete mt-10 h-auto p-0 text-xs font-semibold underline underline-offset-4" onClick={() => {
           if (!window.confirm(t("start.deleteConfirm"))) return;
           reset();
           try { window.sessionStorage.removeItem("migrago.start.v1"); } catch { /* Storage may be unavailable. */ }
@@ -504,13 +497,13 @@ function StartScreen() {
 function PremiumStepCard({ step, done, expanded, onToggleDone, onToggleExpanded, profilePriority, profileDriven, whyOpen, onToggleWhy }: { step: AreaStep; done: boolean; expanded: boolean; onToggleDone: () => void; onToggleExpanded: () => void; profilePriority: boolean; profileDriven: boolean; whyOpen: boolean; onToggleWhy: () => void }) {
   const { t, lang } = useI18n();
   const title = typeof step.title === "string" ? t(step.title) : step.title[lang];
-  return <li data-step-id={step.id} className={cn("rounded-lg border border-border/70 p-4", done && "opacity-70")} style={stepCardStyle(step.phase)}>
+  return <li data-step-id={step.id} className={cn("start-step p-4", done && "opacity-70")}>
     <div className="flex items-start gap-3">
-      <input type="checkbox" checked={done} onChange={onToggleDone} aria-label={`${t("road.done")}: ${title}`} className="mt-1 size-5 shrink-0 cursor-pointer accent-[var(--status-done)]" />
+      <input type="checkbox" checked={done} onChange={onToggleDone} aria-label={`${t("road.done")}: ${title}`} className="mt-1 size-5 shrink-0 cursor-pointer accent-[var(--navigator-teal)]" />
       <div className="min-w-0 flex-1">
-        <Button type="button" variant="ghost" aria-expanded={expanded} aria-controls={`details-${step.id}`} onClick={onToggleExpanded} className="h-auto w-full flex-wrap justify-start gap-2 whitespace-normal p-0 text-start hover:bg-transparent">
+        <Button type="button" variant="ghost" aria-expanded={expanded} aria-controls={`details-${step.id}`} onClick={onToggleExpanded} className="start-accordion h-auto w-full flex-wrap justify-start gap-2 whitespace-normal p-0 text-start">
           <span className={cn("me-auto text-sm font-bold", done && "line-through")}>{title}</span>
-          {getStepWeek(step) !== weeksRange(step.phase)[0] ? <span className="rounded-full bg-primary px-2.5 py-0.5 text-[11px] font-semibold text-primary-foreground">{t("road.week")} {localizeNumber(getStepWeek(step), lang)}</span> : null}
+          {getStepWeek(step) !== weeksRange(step.phase)[0] ? <span className="start-week rounded-full px-2.5 py-0.5 text-[11px] font-semibold">{t("road.week")} {localizeNumber(getStepWeek(step), lang)}</span> : null}
           {profilePriority ? <span className="rounded-full bg-[var(--navigator-teal)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--journey-pill-foreground)]">{t("start.priorityBadge")}</span> : null}
         </Button>
         <div className="mt-2"><InstitutionBadge institution={step.authority as Institution} displayName={t(`start.authority.${step.authority}`)} compact /></div>
@@ -532,7 +525,7 @@ function StepBody({ step, localUrl, showDetails = true, done = false }: { step: 
     {showDetails && step.detail ? <><p className={cn(LABEL, "mt-3")}>{t("road.whyMatters")}</p><p className="mt-1 text-sm leading-relaxed text-muted-foreground">{step.detail[lang]}</p></> : null}
     <p className={cn(LABEL, "mt-3")}>{t("road.relevantAuthority")}</p>
     <div className="mt-1"><InstitutionBadge institution={step.authority as Institution} href={step.sourceUrl} displayName={t(`start.authority.${step.authority}`)} /></div>
-    {step.overlay.deadline ? <><p className={cn(LABEL, "mt-3")}>{t("start.deadline")}</p><p className="mt-1 text-sm leading-relaxed">{t(step.overlay.deadline)}</p></> : null}
+    {step.overlay.deadline ? <><p className={cn(LABEL, "mt-3")}>{t("start.deadline")}</p><p className="start-deadline mt-1 inline-flex px-3 py-1 text-sm leading-relaxed">{t(step.overlay.deadline)}</p></> : null}
     {showDetails && step.overlay.documents ? <div className="mt-3 text-sm"><p className={LABEL}>{t("start.documents")}</p><ul className="mt-1 list-disc space-y-1 ps-5">{step.overlay.documents.map((key) => <li key={key}>{t(key)}</li>)}</ul></div> : null}
     {showDetails && step.overlay.note ? <><p className={cn(LABEL, "mt-3")}>{t("start.note")}</p><p className="mt-1 text-sm leading-relaxed">{t(step.overlay.note)}</p></> : null}
     {step.id === "early-childhood-education" ? <div className="mt-3 text-sm">{localUrl ? <a href={localUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold text-secondary">{t("start.local")}<ExternalLink className="size-4" /></a> : <><p className="text-muted-foreground">{t("start.localMissing")}</p><a href={step.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-secondary underline">{t("road.officialSource")}</a></>}</div> : null}
@@ -556,11 +549,11 @@ function ProfileCard({ completed, onIncomplete }: { completed: boolean; onIncomp
 }
 function UpgradeCard({ onUpgrade }: { view: "info" | "road"; onUpgrade: () => void }) {
   const { t } = useI18n();
-  return <div className="mt-8 rounded-3xl border border-border bg-muted/50 p-6">
+  return <div className="start-upgrade mt-8 rounded-3xl border border-border bg-muted/50 p-6">
     <h3 className="flex items-center gap-2 text-lg font-semibold"><Lock className="size-5 shrink-0 text-secondary" aria-hidden />{t("start.free.upgradeTitle")}</h3>
     <ul className="mt-4 space-y-3 text-sm">
       {(["start.free.f1", "start.free.f2", "start.free.f3"] as const).map((key) => <li key={key} className="flex items-start gap-2"><Check className="size-4 shrink-0 text-secondary" aria-hidden /><span>{t(key)}</span></li>)}
     </ul>
-    <Button type="button" variant="secondary" className={cn(PRIMARY_BTN, "mt-5 h-auto whitespace-normal")} onClick={onUpgrade}><Lock />{t("start.free.cta")}</Button>
+    <Button type="button" variant="secondary" className={cn("inline-flex items-center justify-center gap-2 rounded-full bg-[#02808A] px-6 py-3 text-sm font-bold text-white transition-colors duration-200 ease-out hover:bg-[#026A73] disabled:opacity-50", "mt-5 h-auto whitespace-normal")} onClick={onUpgrade}><Lock />{t("start.free.cta")}</Button>
   </div>;
 }
