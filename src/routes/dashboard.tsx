@@ -510,7 +510,7 @@ function Dashboard() {
 
               {locked ? (
                 <section
-                  className="rounded-3xl p-6"
+                  className="visual-preserve rounded-3xl p-6"
                   style={{ background: "var(--plum)", color: "oklch(0.97 0.006 85)" }}
                 >
                   <h2 className="text-lg">{t("pay.title")}</h2>
@@ -550,7 +550,7 @@ function Dashboard() {
               </> : <p className="mt-3 text-sm text-muted-foreground">{t("gap.none")}</p>}
             </section>
 
-            <div className="lg:col-span-3"><CsatWidget /></div>
+            <div className="visual-preserve lg:col-span-3"><CsatWidget /></div>
 
             {/* Trend — score history over time */}
             <section className="rounded-3xl border border-border bg-card p-6 lg:col-span-3">
@@ -595,7 +595,7 @@ function Dashboard() {
         {/* ── Progress tab ────────────────────────────── */}
         {tab === "progress" ? (
           <div className="navigator-entered rise-in mt-7 space-y-5">
-            {doneCount >= 3 ? <NpsSurvey /> : null}
+            {doneCount >= 3 ? <div className="visual-preserve"><NpsSurvey /></div> : null}
             {!locked ? <section className="rounded-3xl border border-border bg-card p-4"><h2 className="text-sm font-semibold">{t("start.docs.counter").replace("{x}", localizeNumber(docsDone, lang)).replace("{y}", localizeNumber(docKeys.length, lang))}</h2></section> : null}
             {!hasStartPlan ? (
               <section className="border-b border-border py-6"><h2 className="text-lg">{t("prog.noSessionTitle")}</h2><Button type="button" variant="secondary" className="visual-solid mt-4 rounded-full" onClick={openStartRoadmap}>{t("prog.noSessionCta")}</Button></section>
