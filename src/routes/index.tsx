@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Clock, Crown, Gift, Globe, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, Scale, Sparkles, Users } from "lucide-react";
+import { ArrowRight, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Clock, Crown, Gift, Landmark, Route as RouteIcon, UserRoundCheck, Hourglass, Sparkles } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { FoundersCircleModal } from "@/components/FeedbackWidgets";
 import { Button } from "@/components/ui/button";
-import { useI18n, type TKey } from "@/lib/i18n";
+import { localizeNumber, useI18n, type TKey } from "@/lib/i18n";
+import { RoadmapBars } from "@/components/RoadmapBars";
 import { useAppState } from "@/lib/store";
 import { TITLE_OVERRIDES } from "@/lib/area-flow";
 import { KNOWLEDGE_TABLE } from "@/lib/roadmap";
@@ -211,38 +212,33 @@ function MiniDonut({ label, value, color }: { label: string; value: number; colo
   );
 }
 
-const ROADMAP_PHASES = [
-  { label: "hero.roadmapWeeks1", height: "h-1/4", color: "bg-[var(--navigator-light-teal)] text-[var(--navigator-light-teal)]", icon: Scale },
-  { label: "hero.roadmapWeeks2", height: "h-[45%]", color: "bg-[var(--navigator-teal)] text-[var(--navigator-teal)]", icon: House },
-  { label: "hero.roadmapWeeks3", height: "h-[65%]", color: "bg-[var(--navigator-olive)] text-[var(--navigator-olive)]", icon: Briefcase },
-  { label: "hero.roadmapWeeks4", height: "h-full", color: "bg-[var(--navigator-gold)] text-[var(--navigator-gold)]", icon: Users },
+function RoadmapPreview() {
+  const { ref, entered } = useInViewOnce<HTMLDivElement>();
+  return (
+    <div ref={ref} className="mt-6">
+      <RoadmapBars entered={entered} />
+    </div>
+  );
+}
+
+const HOW_CHIPS = [
+  { key: "start.area.status.title", bg: "#02808A", fg: "#fff" },
+  { key: "start.area.housing.title", bg: "#3AC8C3", fg: "#021C3B" },
+  { key: "start.area.comm.title", bg: "#6B8E3A", fg: "#fff" },
+  { key: "start.area.family.title", bg: "#CB902C", fg: "#021C3B" },
 ] as const;
 
-function RoadmapPreview() {
-  const { t, lang } = useI18n();
-  const { ref, entered } = useInViewOnce<HTMLDivElement>();
-
+function HowRing({ size, stroke, value, color, label }: { size: number; stroke: number; value: number; color: string; label: string }) {
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
   return (
-    <div ref={ref} className={`mt-6 rounded-2xl bg-[var(--navigator-navy)] px-4 pb-5 pt-4${entered ? " navigator-entered" : ""}`}>
-      <div className="mt-5 grid h-44 grid-cols-4 gap-2 sm:gap-3">
-        {ROADMAP_PHASES.map((phase, index) => {
-          const PhaseIcon = phase.icon;
-          return (
-            <div key={phase.label} className="grid min-w-0 grid-rows-[1fr_auto] gap-2">
-              <div className="flex min-h-0 flex-col items-center justify-end">
-                <PhaseIcon className={`mb-2 size-4 shrink-0 ${phase.color.split(" ")[1]}`} aria-hidden />
-                <div
-                  className={`roadmap-bar w-full rounded-t-lg ${phase.height} ${phase.color.split(" ")[0]}`}
-                  style={{ animationDelay: `${(lang === "fa" ? ROADMAP_PHASES.length - 1 - index : index) * 100}ms` }}
-                  aria-hidden
-                />
-              </div>
-              <span className={`text-center text-[9px] leading-tight text-[var(--navigator-cream)] sm:text-[10px] ${index === 3 ? "font-bold" : "font-medium opacity-80"}`}>
-                {t(phase.label)}
-              </span>
-            </div>
-          );
-        })}
+    <div className="flex min-w-0 flex-col items-center gap-1">
+      <div className="relative">
+        <svg width={size} height={size}>
+          <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#E3E9EB" strokeWidth={stroke} />
+          <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c - (c * value) / 100} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
+        </svg>
+        <span className="absolute inset-0 flex items-center justify-center text-[11px] font-bold">{label}</span>
       </div>
     </div>
   );
@@ -340,82 +336,82 @@ function Landing() {
         <section id="how-it-works" className="scroll-mt-40 border-y border-border/70 bg-muted/40">
           <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
             <h2 className="text-2xl md:text-3xl">{t("how.title")}</h2>
-            <ol className="mt-8 grid gap-6 md:grid-cols-3 md:gap-8">
+            <ol className="how-grid mt-8">
               {([
                 { n: 1, title: "how.s1.t", description: "how.s1.d" },
                 { n: 2, title: "how.s2.t", description: "how.s2.d" },
                 { n: 3, title: "how.s3.t", description: "how.s3.d" },
+                { n: 4, title: "how.s4.t", description: "how.s4.d" },
               ] as const).map((step) => (
-                <li key={step.n} className="relative flex min-w-0 flex-col rounded-3xl border border-secondary/20 bg-linear-to-b from-[var(--readiness-highlight)] to-secondary/8 px-5 pt-7 text-center shadow-[var(--shadow-card)] md:px-6">
-                  {step.n < 3 ? (
-                    <span aria-hidden="true" className="absolute -end-6 top-1/2 z-10 hidden size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-[var(--readiness-highlight)] text-secondary shadow-[var(--shadow-card)] md:flex">
-                      <ArrowRight className="size-4 rtl:rotate-180" />
-                    </span>
-                  ) : null}
-                  <span className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-secondary text-lg font-bold text-secondary-foreground">
-                    {step.n}
-                  </span>
-                  <h3 className="mt-5 text-lg leading-snug">{t(step.title)}</h3>
-                  <div className="mb-7 mt-3 space-y-3 text-sm leading-relaxed text-muted-foreground">
-                    {t(step.description).split("\n").map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                  </div>
-                  <div aria-hidden="true" className="mt-auto rounded-t-2xl border border-b-0 border-border bg-[var(--readiness-highlight)] p-4 text-start text-xs shadow-[var(--shadow-card)]">
-                    {step.n === 1 ? (
-                      <>
-                        <p className="font-semibold">{t("how.mock.city")}</p>
-                        <div className="mt-2 flex min-w-0 items-center justify-between gap-2 rounded-lg border-2 px-3 py-2.5 text-muted-foreground" style={{ borderColor: "var(--navigator-light-teal)" }}>
-                          <span className="min-w-0">{t("start.chooseCity")}</span><ChevronDown className="size-3.5 shrink-0" />
-                        </div>
-                        <div className="mt-3 flex flex-wrap gap-1.5">
-                          {([["start.city.Helsinki", "var(--navigator-light-teal)"], ["start.city.Espoo", "var(--navigator-teal)"], ["start.city.Vantaa", "var(--navigator-olive)"], ["start.city.Tampere", "var(--navigator-gold)"]] as const).map(([key, color]) => (
-                            <span key={key} className="rounded-full border px-2.5 py-1 font-semibold" style={{ borderColor: `color-mix(in srgb, ${color} 40%, transparent)`, background: `color-mix(in srgb, ${color} 12%, var(--card))` }}>{t(key)}</span>
+                <li key={step.n} className="how-card">
+                  <div className="how-card-inner">
+                    <div className="how-card-text">
+                      <div className="how-card-head">
+                        <span className="how-num">{localizeNumber(step.n, lang)}</span>
+                        <h3 className="how-title">{t(step.title)}</h3>
+                      </div>
+                      <div className="how-desc">
+                        {t(step.description).split("\n").map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                      </div>
+                    </div>
+                    <div aria-hidden="true" className="how-panel">
+                      {step.n === 1 ? (
+                        <div className="space-y-2">
+                          <div className="flex min-w-0 items-center justify-between gap-2 rounded-lg bg-card px-3 py-2 text-sm font-semibold" style={{ border: "1.5px solid #3AC8C3" }}>
+                            <span className="min-w-0">{t("start.chooseCity")}</span><ChevronDown className="size-4 shrink-0" style={{ color: "#CB902C" }} />
+                          </div>
+                          {([["start.city.Helsinki", "#02808A"], ["start.city.Espoo", "#6B8E3A"], ["start.city.Vantaa", "#CB902C"], ["start.city.Tampere", "#3AC8C3"]] as const).map(([key, color]) => (
+                            <div key={key} className="flex min-w-0 items-center gap-2 rounded-lg bg-card px-3 py-2 text-[13px]">
+                              <span className="size-[10px] shrink-0 rounded-full" style={{ background: color }} />
+                              <span className="min-w-0">{t(key)}</span>
+                            </div>
                           ))}
                         </div>
-                      </>
-                    ) : step.n === 2 ? (
-                      <div className="grid grid-cols-2 gap-2">
-                        {([
-                          { key: "start.area.status.title", Icon: Globe, color: "var(--navigator-light-teal)", on: true },
-                          { key: "start.area.housing.title", Icon: House, color: "var(--navigator-teal)", on: true },
-                          { key: "start.area.comm.title", Icon: Building2, color: "var(--navigator-gold)", on: true },
-                          { key: "start.area.family.title", Icon: Users, color: "var(--navigator-olive)", on: false },
-                        ] as const).map(({ key, Icon, color, on }) => (
-                          <div key={key} className={`relative rounded-xl p-2.5 ${on ? "border-2" : "border border-border bg-card"}`} style={on ? { borderColor: color, background: `color-mix(in srgb, ${color} 12%, var(--card))` } : undefined}>
-                            {on ? <span className="absolute end-1.5 top-1.5 flex size-4 items-center justify-center rounded-full text-white" style={{ background: color }}><Check className="size-2.5" strokeWidth={3} /></span> : <span className="absolute end-1.5 top-1.5 size-4 rounded-full border-2 border-muted-foreground/30" />}
-                            <span className={`flex size-7 items-center justify-center rounded-full ${on ? "text-white" : "bg-muted/70 text-muted-foreground"}`} style={on ? { background: color } : undefined}><Icon className="size-3.5" /></span>
-                            <p className="mt-2 text-[11px] font-semibold leading-tight">{t(key)}</p>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="space-y-3">
-                        <div className="rounded-lg border border-border bg-card px-3 py-3">
-                          <p className="font-semibold">{t("start.choose.road.title")}</p>
-                          {([1, 2, 3, 4] as const).map((phase) => {
-                            const color = ["var(--navigator-light-teal)", "var(--navigator-teal)", "var(--navigator-olive)", "var(--navigator-gold)"][phase - 1]!;
-                            const items = phase === 1 ? [["dvv-id-code", "DVV"], ["municipality-of-residence", "DVV"], ["move-notification", "DVV"]] as const : phase === 2 ? [["strong-id", "Bank"], ["kela-social", "Kela"]] as const : [] as const;
-                            return <div key={phase} className="mt-2">
-                              <p className="border-s-[3px] ps-2 text-[10px] font-bold" style={{ borderColor: color }}>{t(`road.phase${phase}` as TKey)}</p>
-                              {items.map(([id, authority], index) => (
-                                <div key={id} className="mt-1.5 flex items-center gap-1.5 text-[10px]">
-                                  <span className="flex size-4 shrink-0 items-center justify-center rounded-full font-bold" style={{ background: color, color: phase === 2 ? "#fff" : "var(--navigator-navy)" }}>{phase === 1 ? index + 1 : index + 4}</span>
-                                  <span className="min-w-0 flex-1 truncate">{mockStepTitle(id, lang, t)}</span>
-                                  <span className="shrink-0 rounded bg-[var(--institution-tint)] px-1 font-semibold text-[var(--institution-purple)]">{authority}</span>
-                                </div>
-                              ))}
-                            </div>;
-                          })}
+                      ) : step.n === 2 ? (
+                        <div className="flex flex-wrap gap-2">
+                          {HOW_CHIPS.map(({ key, bg, fg }) => (
+                            <span key={key} className="min-w-0 rounded-full text-[13px] font-bold" style={{ background: bg, color: fg, padding: "6px 14px" }}>{t(key)}</span>
+                          ))}
                         </div>
-                        <div className="rounded-lg border border-border bg-card px-3 py-3">
-                          <p className="font-semibold">{t("start.choose.info.title")}</p>
-                          <p className="mt-2 text-[11px] font-semibold">{t("start.step.move-notification.title")}</p>
-                          <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[10px]">
-                            <span className="rounded bg-[var(--institution-tint)] px-1 font-semibold text-[var(--institution-purple)]">DVV</span>
-                            <span className="rounded-full px-2 py-0.5" style={{ background: "color-mix(in srgb, var(--navigator-gold) 15%, var(--card))" }}>{t("start.step.move-notification.deadline")}</span>
+                      ) : step.n === 3 ? (
+                        <div className="space-y-3">
+                          <div className="flex flex-wrap gap-2">
+                            <span className="min-w-0 rounded-full px-3 py-1 text-[12px] font-bold" style={{ background: "#02808A", color: "#fff" }}>{t("start.choose.road.title")}</span>
+                            <span className="min-w-0 rounded-full px-3 py-1 text-[12px] font-bold" style={{ background: "#FBF1DE", color: "#9A6B16" }}>{t("start.choose.info.title")}</span>
+                          </div>
+                          <RoadmapBars compact />
+                          <div className="flex min-w-0 items-center gap-2 rounded-lg bg-card px-3 py-2 text-[12px]" style={{ borderInlineStart: "4px solid #6B8E3A" }}>
+                            <Clock className="size-3.5 shrink-0" style={{ color: "#6B8E3A" }} />
+                            <span className="min-w-0 flex-1">{mockStepTitle("dvv-id-code", lang, t)}</span>
+                            <span className="shrink-0 rounded bg-[var(--institution-tint)] px-1 font-semibold text-[var(--institution-purple)]">DVV</span>
                           </div>
                         </div>
-                      </div>
-                    )}
+                      ) : (
+                        <div className="flex flex-col items-center gap-3">
+                          <div className="relative size-[104px]">
+                            <svg width={104} height={104} viewBox="0 0 104 104">
+                              {(["#02808A", "#3AC8C3", "#CB902C"] as const).map((color, i) => {
+                                const r = 44; const c = 2 * Math.PI * r; const seg = c / 3;
+                                return <circle key={color} cx={52} cy={52} r={r} fill="none" stroke={color} strokeWidth={12} strokeDasharray={`${seg - 4} ${c - seg + 4}`} strokeDashoffset={-seg * i} transform="rotate(-90 52 52)" />;
+                              })}
+                            </svg>
+                            <span className="absolute inset-0 flex flex-col items-center justify-center leading-tight">
+                              <span className="text-[24px] font-bold">{localizeNumber(73, lang)}</span>
+                              <span className="text-[10px] text-muted-foreground">{t("how.mock.outOf")}</span>
+                            </span>
+                          </div>
+                          <div className="grid w-full grid-cols-3 gap-2">
+                            {([["dash.dim1", 65, "#02808A"], ["dash.dim2", 74, "#3AC8C3"], ["dash.dim3", 81, "#CB902C"]] as const).map(([key, value, color]) => (
+                              <div key={key} className="flex min-w-0 flex-col items-center gap-1">
+                                <HowRing size={42} stroke={5} value={value} color={color} label={localizeNumber(value, lang)} />
+                                <span className="text-center text-[10.5px] font-semibold leading-tight text-muted-foreground" style={{ overflowWrap: "anywhere" }}>{t(key)}</span>
+                              </div>
+                            ))}
+                          </div>
+                          <p className="text-center text-[11.5px] text-muted-foreground">{t("how.s4.note")}</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </li>
               ))}

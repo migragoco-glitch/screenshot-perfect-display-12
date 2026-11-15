@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Briefcase, ListChecks, MapPin, Route as RouteIco
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { FoundersCircleModal, InstitutionBadge } from "@/components/FeedbackWidgets";
 import { ProfilePreview, RoadmapSummary } from "@/components/RoadmapSummary";
+import { RoadmapBars } from "@/components/RoadmapBars";
 import { QuestionField } from "@/components/QuestionField";
 import { Button } from "@/components/ui/button";
 import { AREAS, MUNICIPALITIES, STEP_AREA, sharedQuestionAreas, documentsForSteps, weeksRange, buildAreaSteps, suggestRoute, formatCheckedDate, earlyChildhoodLocalUrl, type AreaId, type AreaStep } from "@/lib/area-flow";
@@ -420,6 +421,7 @@ function StartScreen() {
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div><h2 className="text-xl md:text-2xl">{t("start.results")}</h2><p className="mt-1 text-sm text-muted-foreground">{t("start.results.sub")}</p></div>
             </div>
+            <RoadmapBars compact className="mt-5 w-full" dimmed={[1, 2, 3, 4].map((phase) => !allPlanSteps.some((step) => step.phase === phase))} />
             <RoadmapSummary done={planDone} total={allPlanSteps.length} showLength free={!hasNavigator} phases={[1, 2, 3, 4].map((phase) => ({ color: PHASE_COLORS[phase - 1]!, total: allPlanSteps.filter((step) => step.phase === phase).length, done: allPlanSteps.filter((step) => step.phase === phase && doneIds.includes(step.id)).length }))} />
             {steps.length ? [...new Set(steps.map((step) => step.phase))].map((phase) => {
               const phaseSteps = steps.filter((step) => step.phase === phase);

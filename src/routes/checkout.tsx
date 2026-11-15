@@ -85,7 +85,7 @@ function CheckoutPage() {
           <Lock className="size-7 text-secondary" aria-hidden />
           <h1 className="mt-5 text-2xl">{t("checkout.title")}</h1>
           <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
-            {(["checkout.feat1", "checkout.feat2", "checkout.feat3"] as const).map((key) => <li key={key} className="flex items-start gap-2"><Check className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden /><span>{t(key)}</span></li>)}
+            {(["checkout.feat1", "checkout.feat2", "checkout.feat3", "checkout.feat4"] as const).map((key) => <li key={key} className="flex items-start gap-2"><Check className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden /><span>{t(key)}</span></li>)}
           </ul>
           <p className="mt-5 rounded-2xl bg-muted p-4 text-xs leading-relaxed text-muted-foreground">
             {t("checkout.testMode")}
