@@ -3,7 +3,8 @@ import { useState } from "react";
 import { ChevronDown, Globe, Lock, LogOut, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import logoAsset from "@/assets/logo.png.asset.json";
+import logoLight from "@/assets/migrago-logo-light.svg";
+import logoDark from "@/assets/migrago-logo-dark.svg";
 import qrCodeAsset from "@/assets/qr-code-migrago.jpeg.asset.json";
 import { CONTACT_EMAIL, MAILTO_URL, WHATSAPP_URL } from "@/components/SupportChannels";
 import { useI18n } from "@/lib/i18n";
@@ -36,11 +37,16 @@ export const COUNTRY_OPTIONS = [
 
 export function BrandLogo({ className }: { className?: string }) {
   return (
-    <Link to="/" className={cn("inline-flex shrink-0 items-center", className)}>
+    <Link to="/" className={cn("inline-flex h-16 shrink-0 items-center md:h-20", className)}>
       <img
-        src={logoAsset.url}
+        src={logoLight}
         alt="MigraGo"
-        className="h-16 w-auto md:h-20"
+        className="h-[34px] w-auto dark:hidden md:h-10"
+      />
+      <img
+        src={logoDark}
+        alt="MigraGo"
+        className="hidden h-[34px] w-auto dark:block md:h-10"
       />
     </Link>
   );
@@ -205,12 +211,7 @@ export function SiteFooter() {
     <footer className="border-t border-border/70 text-white" style={{ backgroundColor: "#021C3B" }}>
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 md:grid-cols-2 md:px-8">
         <div className="flex flex-col items-start gap-4">
-          <div className="inline-flex w-fit items-center gap-3.5 rounded-xl bg-white p-3 shadow-[var(--shadow-card)]">
-            <img
-              src={logoAsset.url}
-              alt="MigraGo"
-              className="h-12 w-auto md:h-14"
-            />
+          <div className="inline-flex w-fit items-center rounded-xl bg-white p-4 shadow-[var(--shadow-card)]">
             <a
               href="https://www.migrago.fi"
               target="_blank"
@@ -227,6 +228,11 @@ export function SiteFooter() {
               </span>
             </a>
           </div>
+          <img
+            src={logoDark}
+            alt="MigraGo"
+            className="h-[34px] w-auto md:h-10"
+          />
           <p className="text-lg font-semibold text-white">
             {t("footer.tagline")}
           </p>
