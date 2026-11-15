@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import type { Institution } from "@/lib/roadmap";
 import { computeProfile } from "@/lib/scoring";
 import { getProfileSteps, getStepWeek, isPriorityStep } from "@/lib/profile-link";
+import penguin from "@/assets/penguin-walk.png.asset.json";
 
 export const Route = createFileRoute("/start")({
   validateSearch: (search: Record<string, unknown>): { stage?: "questions" } => search["stage"] === "questions" ? { stage: "questions" } : {},
@@ -225,7 +226,7 @@ function StartScreen() {
     <div dir={dir} className="flex min-h-screen flex-col">
       <AppHeader />
       <main className="start-page mx-auto w-full max-w-3xl flex-1 px-4 py-10 md:px-8 md:py-14">
-        {activated && hasNavigator ? <div role="status" className="mb-6 flex items-start justify-between gap-3 rounded-2xl bg-secondary/12 px-4 py-3 text-sm font-semibold text-foreground"><span>{t("start.activatedBanner")}</span><button type="button" aria-label={t("common.close")} onClick={() => { setActivated(false); try { window.sessionStorage.removeItem("migrago.start.activated"); } catch { /* Storage may be unavailable. */ } }} className="text-muted-foreground">×</button></div> : null}
+        {activated && hasNavigator ? <div role="status" className="mb-6 flex items-start justify-between gap-3 rounded-2xl bg-secondary/12 px-4 py-3 text-sm font-semibold text-foreground"><span className="flex items-center gap-3"><img src={penguin.url} alt="" aria-hidden="true" draggable={false} className="w-8 shrink-0 select-none" /><span>{t("start.activatedBanner")}</span></span><button type="button" aria-label={t("common.close")} onClick={() => { setActivated(false); try { window.sessionStorage.removeItem("migrago.start.activated"); } catch { /* Storage may be unavailable. */ } }} className="text-muted-foreground">×</button></div> : null}
         <StepTracker stage={stage} questionFill={questionFill} />
         <h1 className="text-2xl md:text-3xl">{t(stage === "info" ? "start.title.info" : stage === "road" ? "start.title.road" : "start.title")}</h1>
         {stage === "city" ? (
