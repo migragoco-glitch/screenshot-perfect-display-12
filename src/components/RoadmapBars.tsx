@@ -2,9 +2,9 @@ import { Briefcase, House, Scale, Users } from "lucide-react";
 import { useI18n, type TKey } from "@/lib/i18n";
 
 const ROADMAP_PHASES = [
-  { label: "hero.roadmapWeeks1", height: "h-1/4", compact: 31, color: "bg-[var(--navigator-light-teal)] text-[var(--navigator-light-teal)]", icon: Scale },
-  { label: "hero.roadmapWeeks2", height: "h-[45%]", compact: 53, color: "bg-[var(--navigator-teal)] text-[var(--navigator-teal)]", icon: House },
-  { label: "hero.roadmapWeeks3", height: "h-[65%]", compact: 79, color: "bg-[var(--navigator-olive)] text-[var(--navigator-olive)]", icon: Briefcase },
+  { label: "hero.roadmapWeeks1", height: "h-1/4", compact: 26, color: "bg-[var(--navigator-light-teal)] text-[var(--navigator-light-teal)]", icon: Scale },
+  { label: "hero.roadmapWeeks2", height: "h-[45%]", compact: 47, color: "bg-[var(--navigator-teal)] text-[var(--navigator-teal)]", icon: House },
+  { label: "hero.roadmapWeeks3", height: "h-[65%]", compact: 68, color: "bg-[var(--navigator-olive)] text-[var(--navigator-olive)]", icon: Briefcase },
   { label: "hero.roadmapWeeks4", height: "h-full", compact: 104, color: "bg-[var(--navigator-gold)] text-[var(--navigator-gold)]", icon: Users },
 ] as const;
 
