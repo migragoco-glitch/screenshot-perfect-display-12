@@ -491,6 +491,22 @@
 @media (prefers-reduced-motion: reduce) { .how-card { transition: none; } .how-card:hover, .how-card:focus-within { transform: none; } }
 
 /* Scoped landing layering and interactions. */
+:root {
+  --shared-header-height: 89px;
+  --shared-header-shadow: 0 8px 20px -16px rgba(2,28,59,.25);
+  --hero-eyebrow-surface: #E6F6F5;
+  --hero-eyebrow-ink: #026A73;
+}
+@media (min-width: 768px) { :root { --shared-header-height: 105px; } }
+#how-it-works, #pricing { scroll-margin-top: calc(var(--shared-header-height) + 16px); }
+.shared-brand-header { box-shadow: var(--shared-header-shadow); }
+.shared-header-menu { background: var(--readiness-highlight); border: 1px solid var(--border); color: var(--navigator-navy); }
+.shared-header-menu:hover { background: var(--readiness-highlight); color: var(--navigator-navy); }
+.shared-header-menu[aria-expanded="true"], .shared-header-menu[aria-expanded="true"]:hover { background: var(--navigator-navy); color: var(--readiness-highlight); }
+.home-hero-eyebrow { display: inline-block; margin-bottom: 16px; border-radius: 9999px; background: var(--hero-eyebrow-surface); color: var(--hero-eyebrow-ink); font-size: 13px; font-weight: 700; padding: 4px 14px; }
+@media (min-width: 768px) { .home-hero-eyebrow { font-size: 14px; } }
+.home-hero-primary { background: var(--navigator-gold); color: var(--navigator-navy); transition: transform 250ms ease-out, filter 250ms ease-out; }
+.home-hero-primary:hover { background: var(--navigator-gold); color: var(--navigator-navy); filter: brightness(1.06); }
 .home-hero-section { overflow-x: clip; }
 .home-hero-stack, .how-stack { position: relative; isolation: isolate; }
 .home-hero-stack { --layer-color: var(--navigator-teal); }

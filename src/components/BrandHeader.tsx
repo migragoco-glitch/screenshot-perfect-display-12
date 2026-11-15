@@ -170,7 +170,7 @@ export function AppHeader({ registered, quickCheckCta = false }: { registered?: 
   );
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md">
+    <header className="shared-brand-header sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-4 py-3 md:gap-3 md:px-8">
         <BrandLogo />
         <div className="ms-auto flex flex-wrap items-center gap-2">
@@ -183,7 +183,7 @@ export function AppHeader({ registered, quickCheckCta = false }: { registered?: 
           <div className="lg:hidden">
             <Popover open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <PopoverTrigger asChild>
-                <Button variant="outline" size="sm" aria-expanded={mobileMenuOpen} className="rounded-full">
+                <Button variant="outline" size="sm" aria-expanded={mobileMenuOpen} className="shared-header-menu rounded-full">
                   <Menu className="size-4" aria-hidden />{t("nav.menu")}
                 </Button>
               </PopoverTrigger>

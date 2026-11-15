@@ -297,8 +297,8 @@ function Landing() {
             <div className="home-hero-stack">
               <div className="home-hero-plate rounded-2xl" aria-hidden />
               <div className="glass-card home-hero-front relative rounded-3xl p-6 text-center md:p-8">
-                <p className="mt-4 text-xs font-semibold text-secondary">{t("hero.eyebrow")}</p>
-                <h1 className="mt-2 text-3xl leading-[1.08] md:text-5xl">
+                <p className="home-hero-eyebrow mt-4">{t("hero.eyebrow")}</p>
+                <h1 className="text-3xl leading-[1.08] md:text-5xl">
                   <span className="text-gradient-brand">{t("hero.title")}</span>
                 </h1>
                 <div className="home-hero-paragraphs mt-6">
@@ -306,7 +306,7 @@ function Landing() {
                   <p className="text-base leading-relaxed text-muted-foreground md:text-lg">{t("hero.sub2")}</p>
                 </div>
                 <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                  <Button asChild className="home-hero-button group h-auto rounded-full bg-[var(--navigator-teal)] px-6 py-3.5 text-sm font-semibold text-secondary-foreground shadow-[var(--shadow-card)] hover:bg-[var(--navigator-teal)]/90">
+                  <Button asChild className="home-hero-button home-hero-primary group h-auto rounded-full px-6 py-3.5 text-sm font-semibold shadow-[var(--shadow-card)]">
                     <Link to="/start">{t("hero.startCta")}<ArrowRight className="size-4 rtl:rotate-180" aria-hidden /></Link>
                   </Button>
                   <Button asChild variant="link" className="home-hero-button h-auto p-0 text-sm font-semibold text-muted-foreground underline underline-offset-4 hover:text-foreground">
@@ -323,7 +323,7 @@ function Landing() {
         </section>
 
         {/* How it works */}
-        <section id="how-it-works" className="scroll-mt-40 border-y border-border/70 bg-muted/40">
+        <section id="how-it-works" className="border-y border-border/70 bg-muted/40">
           <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
             <h2 className="text-2xl md:text-3xl">{t("how.title")}</h2>
             <ol className="how-grid mt-8">
@@ -404,7 +404,7 @@ function Landing() {
         {/* Institutions */}
         <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
           <div
-            className="rounded-3xl p-8 shadow-[0_10px_30px_-14px_rgba(2,28,59,0.5)] transition-shadow duration-300 ease-out hover:shadow-[0_24px_50px_-16px_rgba(2,28,59,0.65)] md:p-10"
+            className="rounded-[24px] p-8 shadow-[0_10px_30px_-14px_rgba(2,28,59,0.5)] md:p-10"
             style={{ background: "var(--plum)", color: "oklch(0.97 0.006 85)" }}
           >
             <h2 className="text-2xl md:text-3xl">{t("inst.title")}</h2>
@@ -417,7 +417,7 @@ function Landing() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={t(inst.aria)}
-                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#C8A96A] bg-transparent px-4 text-xs font-bold text-[#C8A96A] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[#C8A96A] hover:bg-[#C8A96A] hover:text-[#021C3B] hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:border-[#C8A96A] focus-visible:bg-[#C8A96A] focus-visible:text-[#021C3B] focus-visible:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F8F6F2] active:translate-y-0 active:bg-[#C8A96A] active:text-[#021C3B]"
+                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#C8A96A] bg-transparent px-4 text-xs font-bold text-[#C8A96A] transition-colors duration-200 ease-out hover:border-[#C8A96A] hover:bg-[#C8A96A] hover:text-[#021C3B] hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:border-[#C8A96A] focus-visible:bg-[#C8A96A] focus-visible:text-[#021C3B] focus-visible:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F8F6F2] active:bg-[#C8A96A] active:text-[#021C3B]"
                   >
                     <Building2 className="size-3.5 shrink-0" aria-hidden />
                     {inst.name}
