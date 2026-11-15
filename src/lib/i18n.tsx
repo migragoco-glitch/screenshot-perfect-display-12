@@ -49,7 +49,7 @@ export const en = {
   "authority.combinedMunicipality": "Local municipality / employment area services",
 
   "start.profile.title": "Go deeper: your full readiness profile",
-  "start.profile.desc": "The full assessment builds your Integration Profile, charts and a 12-week roadmap. Your answers so far are kept, so you only answer what is missing.",
+  "start.profile.desc": "The full assessment builds your Integration Profile, charts and a roadmap. Your answers so far are kept, so you only answer what is missing.",
   "start.profile.cta.assessment": "Complete my full profile",
   "start.profile.cta.dashboard": "Open my profile",
   "start.deleteData": "Delete my data on this device",
@@ -96,7 +96,7 @@ export const en = {
   "start.step.eu-registration.doc2": "Proof of your grounds for staying: employment contract, certificate of study with a statement of sufficient funds, or evidence of your means",
   "start.step.eu-registration.note": "This is a registration, not a residence permit. If your grounds are work or study, you can be registered only after the work or studies have started. You show your identity and original documents at a Migri service point.",
   "start.step.eu-registration.completion": "You have your EU registration certificate.",
-  "start.step.migri-permit.note": "First-permit fees in 2026 (online): employed person EUR 750, studies EUR 600, entrepreneur EUR 750, start-up entrepreneur EUR 650. If you need a permit, it must be granted before Kela benefits can start.",
+  "start.step.migri-permit.note": "First-permit fees in 2026 (online): employed person EUR 750, studies EUR 600, entrepreneur EUR 750, start-up entrepreneur EUR 650. If you need a residence permit, it must be granted before you start registering with later services (such as Kela).",
   "start.step.strong-id.title": "Get online banking codes (strong identification)",
   "start.step.strong-id.doc1": "Finnish personal identity code",
   "start.step.strong-id.doc2": "Valid identity document accepted by your bank",
@@ -389,12 +389,12 @@ export const en = {
   "pricing.navF1": "Week-by-week plan with step details",
   "pricing.navF0": "Everything in the free plan",
   "pricing.navF2": "Progress tracking and one document checklist",
-  "pricing.navF3": "Full readiness profile with charts and a 12-week roadmap",
+  "pricing.navF3": "Full readiness profile with charts and a roadmap",
   "pricing.navF4": "Save to your account, PDF and alerts (coming soon)",
 
   "consent.title": "Before you start: data & consent",
   "consent.p1":
-    "This assessment collects structured information about your legal status, education and career, financial capacity, psychological readiness, legal history and your Finland strategy. It is used for one purpose only: to calculate your integration-readiness profile and to personalize your 12-week roadmap.",
+    "This assessment collects structured information about your legal status, education and career, financial capacity, psychological readiness, legal history and your Finland strategy. It is used for one purpose only: to calculate your integration-readiness profile and to personalize your roadmap.",
   "consent.p2":
     "The visa-refusal question (Q31) and the immigration-violation / unauthorized-overstay question (Q33) are answered on a fixed-choice basis. Where an optional free-text reason is offered, it is used only for roadmap personalization and is never shared with government authorities.",
   "consent.p3":
@@ -450,7 +450,7 @@ export const en = {
   "loading.analyzing": "Analyzing your answers...",
   "loading.analyzingSub":
     "Matching your profile with Finland's institutional knowledge base...",
-  "loading.roadmap": "Building your 12-week roadmap...",
+  "loading.roadmap": "Building your roadmap...",
   "loading.roadmapSub": "Sequencing your priorities...",
 
   "dash.title": "Your Integration Profile",
@@ -471,7 +471,7 @@ export const en = {
   "dash.recalc": "Based on the assessment submitted on {date}.",
   "dash.history": "Score history",
   "dash.noHistory": "Your first snapshot is saved. Edit an answer to see your profile evolve.",
-  "dash.roadmapTab": "12-Week Roadmap",
+  "dash.roadmapTab": "Roadmap",
   "dash.profileTab": "Profile",
   "dash.settingsTab": "Settings",
   "dash.deleteData": "Delete all my data",
@@ -485,7 +485,7 @@ export const en = {
   "pay.later": "Stay on the free overview",
   "pay.demoNote": "Demo checkout — no payment is taken in this MVP.",
 
-  "road.title": "Your Personalized 12-Week Roadmap",
+  "road.title": "Your Personalized Roadmap",
   "road.sub":
     "Every roadmap step is linked to the relevant official institution in Finland (such as Migri or DVV).",
   "road.phase1": "Weeks 1–3 — Understand & Prepare",
@@ -708,10 +708,10 @@ export const en = {
     "No account is required for the free 6-question Quick Check, your preliminary profile and recommended first steps. The full assessment and its results require Premium (€9.99/month).",
   "faq.q2": "What is included in the free tier?",
   "faq.a2":
-    "Registration and onboarding, the free 6-question Quick Check in under one minute, a preliminary profile and recommended first steps. The full assessment, Smart Integration Profile, personalized pathway and 12-week roadmap belong to Premium (€9.99/month), not the free tier.",
-  "faq.q3": "What do I get with Premium (€9.99/month)?",
+    "In the Free plan you see your step-by-step roadmap covering 9 core settlement areas. For each step you get the responsible authority and official link, the deadline, required documents, key notes and the last-checked date. The Free plan has no time limit.",
+  "faq.q3": "What does Premium add?",
   "faq.a3":
-    "The full assessment, Integration Profile, your personalized pathway, the 12-week roadmap, progress tracking and expanded actionable insights. Your Quick Check answers carry over to the full assessment.",
+    "Premium is a one-time access pass for 30 or 90 days, with no automatic renewal. In addition to Free, it adds a week-by-week plan and full details for every step, an interactive document checklist and logging of completed steps. It also adds the full 33-question assessment with a readiness profile and chart, steps prioritized for your situation, reassessment with score history, and a personal dashboard.",
   "faq.q4": "How is my roadmap generated?",
   "faq.a4":
     "Your assessment responses evaluate your current status across three core dimensions and identify existing gaps. The system then maps these gaps against the official regulations and procedures of the destination country, structuring the required actions into a 12-week plan across four operational phases..",
@@ -726,20 +726,20 @@ export const en = {
     "The model is transparent and rule-based, not a black box: each question maps to a known weight. It is a readiness indicator, not a prediction of any authority's decision.",
   "faq.q8": "Which countries are supported?",
   "faq.a8":
-    "Finland is live today. Germany, Sweden and the Netherlands are planned next, with Canada as the first market outside Europe.",
+    "Only Finland is live at the moment.",
   "faq.q9": "Can I change my answers later?",
   "faq.a9":
-    "Yes. Edit any answer from your profile and your scores and roadmap recalculate immediately, with your score history preserved.",
-  "faq.q10": "How do I get support?",
+    "Yes. In Premium, after the full assessment you can edit your answers from the Assessment tab in the dashboard and run a reassessment. Scores and your profile are recalculated from the new answers, and your score history is kept.",
+  "faq.q10": "How do I contact MigraGo?",
   "faq.a10":
-    "Use the Contact page: email us at migrago.co@gmail.com or start a WhatsApp chat with the team. Both channels are staffed during this MVP stage; an in-app assistant is a planned future capability, not a live feature.",
+    "Use the Contact page to reach MigraGo by email at migrago.co@gmail.com or on WhatsApp.",
   "faq.q11": "What does the €249 MigraGo Advanced Integration Plan include?",
   "faq.a11":
-    "A future advanced experience designed to provide deeper integration analysis and a more comprehensive personalized roadmap. Conceptually it would offer a more detailed identification of strengths, gaps and priorities, more comprehensive personalization, a more detailed staged roadmap, relevant institutions and resources presented for information, and a comprehensive downloadable report. It is future / locked — not available in the current MVP — and there is no purchase flow for it. The current core offering is the free Quick Check tier and Premium at €9.99/month.",
+    "The €249 advanced plan is not available yet; it is locked and has no purchase flow. The Free plan and Premium (a one-time 30- or 90-day access pass) are live.",
 
   "contact.title": "Contact us",
-  "contact.sub": "Email and WhatsApp are our support channels during this MVP stage. We reply within a few working days.",
-  "contact.emailCta": "Email the MigraGo team",
+  "contact.sub": "At this MVP stage, email and WhatsApp are the ways to reach MigraGo.",
+  "contact.emailCta": "Email MigraGo",
   "contact.subject": "Subject",
   "contact.message": "Message",
   "contact.send": "Open in my email app",
@@ -748,8 +748,8 @@ export const en = {
     "An in-app AI support assistant is on the roadmap as a future capability. It is not available in this version.",
 
   "checkout.title": "Activate Premium",
-  "checkout.sub": "Unlock your full readiness profile, 12-week roadmap and progress tracking.",
-  "checkout.start.sub": "Unlock your full readiness profile, 12-week roadmap and progress tracking.",
+  "checkout.sub": "Unlock your full readiness profile, roadmap and progress tracking.",
+  "checkout.start.sub": "Unlock your full readiness profile, roadmap and progress tracking.",
   "checkout.planChoose": "Choose your access",
   "checkout.plan30Label": "30 days",
   "checkout.plan30Price": "€9.99",
@@ -787,7 +787,7 @@ export const en = {
   "support.email": "Email",
   "support.whatsapp": "WhatsApp",
   "support.whatsappCta": "Chat with us on WhatsApp",
-  "support.channels": "Support channels",
+  "support.channels": "Contact channels",
 
   "dash.balance": "Balance across dimensions",
   "dash.balanceNote": "How evenly your three dimensions sit relative to each other.",
@@ -957,7 +957,7 @@ export const en = {
   "dash.analysis.weakest.psychological": "Make language, your social network and adapting to the local culture your priority.",
 
   "disclaimer.responsible":
-    "MigraGo provides digital integration pathway support and structured information. It does not provide legal representation, make government decisions, guarantee immigration outcomes, or replace qualified professionals or public authorities.",
+    "MigraGo provides digital integration pathway guidance and structured information. It does not provide legal representation, make government decisions, guarantee immigration outcomes, or replace qualified professionals or public authorities.",
 };
 
 export const fa: Record<keyof typeof en, string> = {
@@ -1040,7 +1040,7 @@ export const fa: Record<keyof typeof en, string> = {
   "start.step.eu-registration.doc2": "مدرک مبنای اقامت: قرارداد کار، گواهی تحصیل همراه با اظهار منابع مالی کافی، یا مدرک منابع مالی",
   "start.step.eu-registration.note": "این یک ثبت است، نه اجازهٔ اقامت. اگر مبنای شما کار یا تحصیل است، فقط بعد از شروع کار یا تحصیل ثبت می‌شوید. هویت و اصل مدارک را در یکی از دفاتر Migri نشان می‌دهید.",
   "start.step.eu-registration.completion": "گواهی ثبت حق اقامت اتحادیه را دارید.",
-  "start.step.migri-permit.note": "هزینهٔ اولین اجازه در ۲۰۲۶ (آنلاین): شاغل ۷۵۰ یورو، تحصیل ۶۰۰ یورو، کارآفرین ۷۵۰ یورو، کارآفرین استارتاپی ۶۵۰ یورو. اگر اجازه لازم دارید، باید پیش از شروع مزایای Kela صادر شده باشد.",
+  "start.step.migri-permit.note": "هزینهٔ اولین اجازه در ۲۰۲۶ (آنلاین): شاغل ۷۵۰ یورو، تحصیل ۶۰۰ یورو، کارآفرین ۷۵۰ یورو، کارآفرین استارتاپی ۶۵۰ یورو. اگر به اجازهٔ اقامت نیاز دارید، باید پیش از اقدام برای ثبت‌نام در سیستم‌های بعدی (مانند Kela) صادر شده باشد.",
   "start.step.strong-id.title": "دریافت کد بانکداری آنلاین (شناسایی قوی)",
   "start.step.strong-id.doc1": "کد شناسایی شخصی فنلاندی",
   "start.step.strong-id.doc2": "مدرک هویتی معتبر که بانک شما می‌پذیرد",
@@ -1051,7 +1051,7 @@ export const fa: Record<keyof typeof en, string> = {
   "start.step.find-home.completion": "قرارداد اجارهٔ کتبی امضاشده دارید.",
 
   "start.profile.title": "عمیق‌تر شوید: پروفایل کامل آمادگی شما",
-  "start.profile.desc": "ارزیابی کامل، پروفایل ادغام، نمودارها و نقشهٔ راه ۱۲هفته‌ای شما را می‌سازد. پاسخ‌های قبلی شما حفظ می‌شود و فقط به پرسش‌های باقی‌مانده پاسخ می‌دهید.",
+  "start.profile.desc": "ارزیابی کامل، پروفایل ادغام، نمودارها و نقشهٔ راه شما را می‌سازد. پاسخ‌های قبلی شما حفظ می‌شود و فقط به پرسش‌های باقی‌مانده پاسخ می‌دهید.",
   "start.profile.cta.assessment": "تکمیل پروفایل کامل من",
   "start.profile.cta.dashboard": "باز کردن پروفایل من",
   "start.deleteData": "حذف داده‌های من از این دستگاه",
@@ -1221,7 +1221,7 @@ export const fa: Record<keyof typeof en, string> = {
   "hero.discover2": "منبع رسمی و مهلت هر امر",
   "hero.discover3": "گام‌ها به ترتیب درست",
   "hero.navigatorTitle": "SettleSmart Navigator",
-  "hero.navigatorNotice": "MigraGo یک فرم درخواست ویزا یا مشاورهٔ مهاجرتی نیست.",
+  "hero.navigatorNotice": "میگراگو یک فرم درخواست ویزا یا مشاورهٔ مهاجرتی نیست.",
   "hero.roadmapStage": "مرحلهٔ دو: نقشه‌راه شما",
   "hero.roadmapWeeks1": "هفتهٔ ۱–۳",
   "hero.roadmapWeeks2": "هفتهٔ ۴–۶",
@@ -1337,18 +1337,18 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.navF1": "برنامهٔ هفته‌به‌هفته با جزئیات هر گام",
   "pricing.navF0": "همهٔ امکانات پلن رایگان",
   "pricing.navF2": "پیگیری پیشرفت و یک فهرست مدارک",
-  "pricing.navF3": "پروفایل کامل آمادگی با نمودارها و نقشهٔ راه ۱۲هفته‌ای",
+  "pricing.navF3": "پروفایل کامل آمادگی با نمودارها و نقشهٔ راه",
   "pricing.navF4": "ذخیره روی حساب، PDF و هشدارها (به‌زودی)",
 
   "consent.title": "پیش از شروع: داده‌ها و رضایت آگاهانه",
   "consent.p1":
-    "این ارزیابی اطلاعاتی ساختارمند دربارهٔ وضعیت حقوقی، تحصیلات و سابقهٔ شغلی، توان مالی، آمادگی روانی، سابقهٔ حقوقی و راهبرد شما برای فنلاند گردآوری می‌کند. این داده‌ها تنها برای یک هدف به کار می‌رود: محاسبهٔ پروفایل آمادگی ادغام شما و شخصی‌سازی نقشه‌راه ۱۲ هفته‌ای.",
+    "این ارزیابی اطلاعاتی ساختارمند دربارهٔ وضعیت حقوقی، تحصیلات و سابقهٔ شغلی، توان مالی، آمادگی روانی، سابقهٔ حقوقی و راهبرد شما برای فنلاند گردآوری می‌کند. این داده‌ها تنها برای یک هدف به کار می‌رود: محاسبهٔ پروفایل آمادگی ادغام شما و شخصی‌سازی نقشه‌راه.",
   "consent.p2":
     "پرسش مربوط به ریجکتی ویزا (پرسش ۳۱) و پرسش مربوط به تخلف مهاجرتی / اقامت غیرمجاز (پرسش ۳۳) صرفاً به‌صورت گزینه‌ای پاسخ داده می‌شوند. در مواردی که شرح اختیاری متنی ارائه شود، تنها برای شخصی‌سازی نقشه‌راه استفاده می‌گردد و هرگز با مراجع دولتی به اشتراک گذاشته نمی‌شود.",
   "consent.p3":
     "میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام نمی‌دهد. شما می‌توانید در هر زمان از بخش تنظیمات پروفایل، حذف کامل داده‌های خود را درخواست کنید.",
   "consent.selfReport":
-    "نقشه‌راه شما کاملاً بر اساس پاسخ‌هایی که ارائه می‌دهید ساخته می‌شود. MigraGo صحت پاسخ‌های شما را بررسی یا تأیید نمی‌کند. پاسخ ناقص یا نادرست — چه غیرعمد و چه عمدی — می‌تواند به نقشه‌راهی منجر شود که با وضعیت واقعی شما هم‌خوانی ندارد، و مسئولیت صحت پاسخ‌ها بر عهدهٔ خود شماست.",
+    "نقشه‌راه شما کاملاً بر اساس پاسخ‌هایی که ارائه می‌دهید ساخته می‌شود. میگراگو صحت پاسخ‌های شما را بررسی یا تأیید نمی‌کند. پاسخ ناقص یا نادرست — چه غیرعمد و چه عمدی — می‌تواند به نقشه‌راهی منجر شود که با وضعیت واقعی شما هم‌خوانی ندارد، و مسئولیت صحت پاسخ‌ها بر عهدهٔ خود شماست.",
   "q.inconsistencyVisa":
     "پاسخ‌های شما دربارهٔ اقدامات قبلی مهاجرت و ریجکتی ویزا ناهماهنگ به نظر می‌رسد — لطفاً آن‌ها را بازبینی کنید.",
   "q.inconsistencyChildren":
@@ -1359,7 +1359,7 @@ export const fa: Record<keyof typeof en, string> = {
     "ما تنها پاسخ‌هایی که می‌دهید و تاریخچهٔ نمرهٔ شما را ذخیره می‌کنیم تا روند تحول پروفایل‌تان را نشان دهیم. هیچ پاسخی فروخته نمی‌شود، با مراجع دولتی به اشتراک گذاشته نمی‌شود و برای شناسایی شما در آمار تجمیعی به کار نمی‌رود. حذف داده‌ها، پاسخ‌ها، نمرات و نقشه‌راه شما را برای همیشه پاک می‌کند.",
   "consent.check":
     "متن بالا را خوانده‌ام و رضایت می‌دهم که میگراگو این پاسخ‌ها، از جمله جزئیات نزدیک به دادهٔ حساس، را برای تولید پروفایل و نقشه‌راه من پردازش کند (مبنای قانونی مواد ۶ و ۹ مقررات GDPR).",
-  "consent.continue": "رضایت می‌دهم — شروع ارزیابی",
+  "consent.continue": "رضایت می‌دهم و ادامه می‌دهم",
   "consent.back": "بازگشت",
   "region.label": "قصد دارید در کدام منطقهٔ فنلاند ساکن شوید؟",
   "region.optional": "اختیاری — می‌توانید از آن عبور کنید. این پرسش بر نمرهٔ شما تأثیری ندارد.",
@@ -1397,7 +1397,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "loading.analyzing": "در حال تحلیل پاسخ‌های شما…",
   "loading.analyzingSub": "در حال تطبیق پروفایل شما با پایگاه دانش نهادهای مرجع فنلاند…",
-  "loading.roadmap": "در حال ساخت نقشه‌راه ۱۲ هفته‌ای شما…",
+  "loading.roadmap": "در حال ساخت نقشه‌راه شما…",
   "loading.roadmapSub": "در حال اولویت‌بندی و ترتیب‌گذاری…",
 
   "dash.title": "پروفایل ادغام شما",
@@ -1418,7 +1418,7 @@ export const fa: Record<keyof typeof en, string> = {
   "dash.recalc": "بر اساس ارزیابی ثبت‌شده در {date}",
   "dash.history": "تاریخچهٔ نمره",
   "dash.noHistory": "نخستین وضعیت ثبت شد. یک پاسخ را ویرایش کنید تا تحول پروفایل‌تان را ببینید.",
-  "dash.roadmapTab": "نقشه‌راه ۱۲ هفته‌ای",
+  "dash.roadmapTab": "نقشه‌راه",
   "dash.profileTab": "پروفایل",
   "dash.settingsTab": "تنظیمات",
   "dash.deleteData": "حذف همهٔ داده‌های من",
@@ -1432,7 +1432,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pay.later": "ادامه با نمای رایگان",
   "pay.demoNote": "پرداخت نمایشی — در این نسخه هیچ مبلغی دریافت نمی‌شود.",
 
-  "road.title": "نقشهٔ راه ۱۲ هفته‌ای شخصی‌سازی‌شدهٔ شما",
+  "road.title": "نقشهٔ راه شخصی‌سازی‌شدهٔ شما",
   "road.sub":
     "هر گام نقشهٔ راه به نهاد رسمی مربوط در فنلاند (مانند Migri یا DVV) متصل است.",
   "road.phase1": "هفتهٔ ۱ تا ۳ — شناخت و آماده‌سازی",
@@ -1488,14 +1488,14 @@ export const fa: Record<keyof typeof en, string> = {
 
   "auth.subtitle":
     "ورود در حال حاضر پیشرفت شما را بین دستگاه‌ها همگام نمی‌کند. پاسخ‌های ارزیابی و پیشرفت نقشه‌راه شما فقط روی همین دستگاه/مرورگر ذخیره می‌شود.",
-  "auth.email": "رایانامه",
+  "auth.email": "ایمیل",
   "auth.password": "گذرواژه (حداقل ۸ نویسه)",
   "auth.signIn": "ورود",
   "auth.signUp": "ساخت حساب",
   "auth.google": "ادامه با گوگل",
   "auth.toggleToSignUp": "هنوز حساب ندارید؟ یک حساب بسازید",
   "auth.toggleToSignIn": "حساب دارید؟ وارد شوید",
-  "auth.checkEmail": "برای تأیید نشانی رایانامه، صندوق ورودی خود را بررسی کنید.",
+  "auth.checkEmail": "برای تأیید نشانی ایمیل، صندوق ورودی خود را بررسی کنید.",
   "auth.showPassword": "نمایش گذرواژه",
   "auth.hidePassword": "پنهان کردن گذرواژه",
 
@@ -1595,16 +1595,16 @@ export const fa: Record<keyof typeof en, string> = {
   "metrics.csatMatch": "پاسخ مثبت",
   "metrics.nps": "امتیاز توصیه (NPS)",
   "metrics.npsAvg": "میانگین امتیاز",
-  "metrics.emailLeads": "ثبت رایانامه (دسترسی زودهنگام)",
-  "metrics.responses": "ثبت رایانامه",
+  "metrics.emailLeads": "ثبت ایمیل (دسترسی زودهنگام)",
+  "metrics.responses": "ثبت ایمیل",
   "metrics.live": "دادهٔ زندهٔ نمونهٔ اولیه",
 
   "privacy.title": "سیاست حریم خصوصی",
   "privacy.body":
-    "میگراگو به حریم خصوصی شما اهمیت می‌دهد. در نسخهٔ فعلی محصول (MVP): پاسخ‌های ارزیابی شما فقط در مرورگرتان ذخیره می‌شوند و به سرورهای ما ارسال نمی‌شوند. نشانی رایانامه‌ای که برای اطلاع‌رسانی دسترسی زودهنگام ثبت می‌کنید، به‌صورت ایمن نگهداری و تنها برای همین هدف استفاده می‌شود. بازخوردهایی که ارسال می‌کنید بدون هیچ اطلاعات شناسایی‌کننده ذخیره می‌شوند. هر زمان بخواهید، می‌توانید داده‌های محلی خود را از بخش تنظیمات مرورگر حذف کنید. این سیاست هم‌زمان با تکمیل بخش‌های پولی و سیستم حساب کاربری میگراگو، با نسخه‌ای جامع‌تر و منطبق با الزامات GDPR جایگزین خواهد شد.\u00a0",
+    "میگراگو به حریم خصوصی شما اهمیت می‌دهد. در نسخهٔ فعلی محصول (MVP): پاسخ‌های ارزیابی شما فقط در مرورگرتان ذخیره می‌شوند و به سرورهای ما ارسال نمی‌شوند. نشانی ایمیلی که برای اطلاع‌رسانی دسترسی زودهنگام ثبت می‌کنید، به‌صورت ایمن نگهداری و تنها برای همین هدف استفاده می‌شود. بازخوردهایی که ارسال می‌کنید بدون هیچ اطلاعات شناسایی‌کننده ذخیره می‌شوند. هر زمان بخواهید، می‌توانید داده‌های محلی خود را از بخش تنظیمات مرورگر حذف کنید. این سیاست هم‌زمان با تکمیل بخش‌های پولی و سیستم حساب کاربری میگراگو، با نسخه‌ای جامع‌تر و منطبق با الزامات GDPR جایگزین خواهد شد.\u00a0",
   "terms.title": "شرایط استفاده از خدمات",
   "terms.body":
-    "این متن، نسخهٔ نمونه برای پیش‌نمونهٔ MigraGo است. MigraGo تنها راهنمایی اطلاع‌رسانی ارائه می‌دهد؛ جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و هیچ تضمینی برای صدور اجازهٔ اقامت یا نتیجهٔ ادغام نمی‌دهد. همیشه الزامات را با نهاد مسئول فنلاندی راستی‌آزمایی کنید.",
+    "این متن، نسخهٔ نمونه برای پیش‌نمونهٔ میگراگو است. میگراگو تنها راهنمایی اطلاع‌رسانی ارائه می‌دهد؛ جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و هیچ تضمینی برای صدور اجازهٔ اقامت یا نتیجهٔ ادغام نمی‌دهد. همیشه الزامات را با نهاد مسئول فنلاندی راستی‌آزمایی کنید.",
 
   // ── ویرایش اصلاحی نسخهٔ ۲ ─────────────────────────────────
   "hero.country": "فنلاند",
@@ -1656,10 +1656,10 @@ export const fa: Record<keyof typeof en, string> = {
     "برای بررسی سریع رایگان ۶ پرسشی، پروفایل اولیه و گام‌های پیشنهادی نخست نیازی به حساب کاربری نیست. ارزیابی کامل و نتایج آن به Premium (ماهانه ۹٫۹۹ یورو) نیاز دارند.",
   "faq.q2": "نسخهٔ رایگان شامل چه چیزهایی است؟",
   "faq.a2":
-    "ثبت‌نام و شروع کار، بررسی سریع رایگان ۶ پرسشی در کمتر از یک دقیقه، پروفایل اولیه و گام‌های پیشنهادی نخست. ارزیابی کامل، پروفایل هوشمند ادغام، مسیر شخصی‌سازی‌شده و نقشه‌راه ۱۲ هفته‌ای به Premium (ماهانه ۹٫۹۹ یورو) تعلق دارند، نه نسخهٔ رایگان.",
-  "faq.q3": "اشتراک Premium (ماهانه ۹٫۹۹ یورو) چه چیزی ارائه می‌دهد؟",
+    "در نسخهٔ رایگان، نقشهٔ راه گام‌به‌گام شما را با پوشش ۹ حوزهٔ اصلی استقرار می‌بینید. برای هر گام، نهاد مسئول و لینک رسمی، مهلت، مدارک لازم، یادداشت‌های مهم و تاریخ آخرین بررسی را دارید. نسخهٔ رایگان محدودیت زمانی ندارد.",
+  "faq.q3": "Premium چه چیزی اضافه می‌کند؟",
   "faq.a3":
-    "ارزیابی کامل، پروفایل ادغام، مسیر شخصی‌سازی‌شدهٔ شما، نقشه‌راه ۱۲ هفته‌ای، پیگیری پیشرفت و بینش‌های عملی گسترده‌تر. پاسخ‌های بررسی سریع شما به ارزیابی کامل منتقل می‌شوند.",
+    "Premium یک دسترسی یک‌باره ۳۰ یا ۹۰ روزه است و تمدید خودکار ندارد. علاوه بر امکانات رایگان، برنامهٔ هفته‌به‌هفته و جزئیات کامل هر گام، چک‌لیست تعاملی مدارک و ثبت گام‌های انجام‌شده را دارد. همچنین ارزیابی کامل ۳۳ پرسشی با پروفایل آمادگی و نمودار، اولویت‌بندی گام‌ها بر اساس وضعیت شما، ارزیابی مجدد با تاریخچهٔ نمره‌ها و داشبورد شخصی را اضافه می‌کند.",
   "faq.q4": "نقشهٔ راه چگونه ساخته می‌شود؟",
   "faq.a4":
     "پاسخ‌های ارزیابی شما، وضعیت کنونی‌تان را در ابعاد سه‌گانه سنجیده و شکاف‌های موجود را شناسایی می‌کند. سامانه سپس این شکاف‌ها را با ضوابط و رویه‌های رسمی کشور مقصد تطبیق داده و اقدامات لازم را در قالب یک برنامه ۱۲ هفته‌ای (در چهار فاز عملیاتی) مرتب می‌سازد.",
@@ -1668,37 +1668,37 @@ export const fa: Record<keyof typeof en, string> = {
     "خیر. میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام نمی‌دهد. همیشه الزامات را با نهاد مسئول راستی‌آزمایی کنید.",
   "faq.q6": "داده‌های من کجا ذخیره می‌شود و چگونه حذف می‌شود؟",
   "faq.a6":
-    "پاسخ‌های ارزیابی و پیشرفت نقشه‌راه فقط در مرورگر شما، روی همان دستگاه ذخیره می‌شوند. بازخوردهایی که ارسال می‌کنید و نشانی رایانامه‌ای که برای اطلاع‌رسانی دسترسی زودهنگام ثبت می‌کنید، جدا از دادهٔ ارزیابی و به‌صورت امن نگهداری می‌شوند. هر زمان می‌توانید تمام دادهٔ محلی خود را از بخش تنظیمات حذف کنید.",
+    "پاسخ‌های ارزیابی و پیشرفت نقشه‌راه فقط در مرورگر شما، روی همان دستگاه ذخیره می‌شوند. بازخوردهایی که ارسال می‌کنید و نشانی ایمیلی که برای اطلاع‌رسانی دسترسی زودهنگام ثبت می‌کنید، جدا از دادهٔ ارزیابی و به‌صورت امن نگهداری می‌شوند. هر زمان می‌توانید تمام دادهٔ محلی خود را از بخش تنظیمات حذف کنید.",
   "faq.q7": "نمره‌ها چقدر دقیق‌اند؟",
   "faq.a7":
     "مدل شفاف و قاعده‌محور است، نه جعبه‌سیاه: هر پرسش وزن مشخصی دارد. این نمره یک شاخص آمادگی است، نه پیش‌بینی تصمیم هیچ مرجع رسمی.",
   "faq.q8": "چه کشورهایی پشتیبانی می‌شوند؟",
   "faq.a8":
-    "امروز فنلاند فعال است. آلمان، سوئد و هلند در برنامهٔ بعدی هستند و کانادا نخستین بازار خارج از اروپا خواهد بود.",
+    "در حال حاضر فقط فنلاند فعال است.",
   "faq.q9": "می‌توانم بعداً پاسخ‌هایم را تغییر دهم؟",
   "faq.a9":
-    "بله. هر پاسخ را از پروفایل خود ویرایش کنید؛ نمره‌ها و نقشهٔ راه بی‌درنگ بازمحاسبه می‌شوند و تاریخچهٔ نمرهٔ شما حفظ می‌ماند.",
-  "faq.q10": "چگونه پشتیبانی بگیرم؟",
+    "بله. در Premium می‌توانید پس از ارزیابی کامل، پاسخ‌های خود را از بخش «ارزیابی من» در داشبورد ویرایش کنید و ارزیابی مجدد انجام دهید. نمره‌ها و پروفایل بر اساس پاسخ‌های جدید دوباره محاسبه می‌شوند و تاریخچهٔ نمره‌ها حفظ می‌شود.",
+  "faq.q10": "چگونه با میگراگو تماس بگیرم؟",
   "faq.a10":
-    "از صفحهٔ تماس با ما استفاده کنید: رایانامه به نشانی migrago.co@gmail.com یا گفت‌وگوی مستقیم در واتس‌اپ. هر دو کانال در این مرحلهٔ MVP فعال‌اند؛ دستیار درون‌برنامه‌ای یک قابلیت آینده است و اکنون فعال نیست.",
+    "از صفحهٔ «تماس با ما» می‌توانید با ایمیل migrago.co@gmail.com یا واتس‌اپ پیام بفرستید.",
   "faq.q11": "طرح پیشرفتهٔ ادغام میگراگو (۲۴۹ یورو) شامل چه چیزهایی است؟",
   "faq.a11":
-    "یک تجربهٔ پیشرفتهٔ آینده که برای ارائهٔ تحلیل عمیق‌تر ادغام و نقشهٔ راه شخصی‌سازی‌شدهٔ جامع‌تر طراحی شده است. از نظر مفهومی می‌تواند شناسایی دقیق‌تر نقاط قوت، شکاف‌ها و اولویت‌ها، شخصی‌سازی جامع‌تر، نقشهٔ راه مرحله‌ای و دقیق‌تر، نهادها و منابع مرتبط را به‌صورت اطلاع‌رسانی، و یک گزارش جامع قابل دانلود ارائه دهد. این محصول آینده / قفل‌شده است — در نسخهٔ کنونی (MVP) در دسترس نیست و هیچ فرایند خریدی برای آن وجود ندارد. عرضهٔ اصلی کنونی، سطح رایگان بررسی سریع و Premium با ۹٫۹۹ یورو در ماه است.",
+    "طرح پیشرفتهٔ ۲۴۹ یورویی هنوز در دسترس نیست و قفل است؛ برای آن فرایند خریدی وجود ندارد. نسخهٔ رایگان و Premium (دسترسی یک‌باره ۳۰ یا ۹۰ روزه) فعال‌اند.",
 
 
   "contact.title": "تماس با ما",
-  "contact.sub": "در این مرحلهٔ MVP، رایانامه و واتس‌اپ کانال‌های پشتیبانی ما هستند. معمولاً ظرف چند روز کاری پاسخ می‌دهیم.",
-  "contact.emailCta": "ارسال رایانامه به تیم میگراگو",
+  "contact.sub": "در این مرحله، ایمیل و واتس‌اپ راه‌های تماس با میگراگو هستند.",
+  "contact.emailCta": "ارسال ایمیل به میگراگو",
   "contact.subject": "موضوع",
   "contact.message": "پیام",
-  "contact.send": "باز کردن در برنامهٔ رایانامه",
+  "contact.send": "باز کردن در برنامهٔ ایمیل",
   "contact.futureTitle": "برنامهٔ آینده — هنوز فعال نیست",
   "contact.futureBody":
     "دستیار پشتیبانی هوش مصنوعی درون‌برنامه‌ای در نقشهٔ راه محصول قرار دارد و در این نسخه در دسترس نیست.",
 
   "checkout.title": "فعال‌سازی Premium",
-  "checkout.sub": "پروفایل کامل آمادگی، نقشهٔ راه ۱۲هفته‌ای و پیگیری پیشرفت را باز کنید.",
-  "checkout.start.sub": "پروفایل کامل آمادگی، نقشهٔ راه ۱۲هفته‌ای و پیگیری پیشرفت را باز کنید.",
+  "checkout.sub": "پروفایل کامل آمادگی، نقشهٔ راه و پیگیری پیشرفت را باز کنید.",
+  "checkout.start.sub": "پروفایل کامل آمادگی، نقشهٔ راه و پیگیری پیشرفت را باز کنید.",
   "checkout.planChoose": "دسترسی خود را انتخاب کنید",
   "checkout.plan30Label": "۳۰ روز",
   "checkout.plan30Price": "۹٫۹۹ یورو",
@@ -1729,14 +1729,14 @@ export const fa: Record<keyof typeof en, string> = {
   "road.tasksOf": "از",
 
   "metrics.emailVsPay":
-    "ثبت رایانامه سیگنال جذب سرنخ است و پرداخت‌ها سیگنال تمایل واقعی به پرداخت. این دو جداگانه شمارش می‌شوند.",
+    "ثبت ایمیل سیگنال جذب سرنخ است و پرداخت‌ها سیگنال تمایل واقعی به پرداخت. این دو جداگانه شمارش می‌شوند.",
   "metrics.checkoutSection": "پرداخت‌های ۹٫۹۹ یورویی (پرداخت آزمایشی شبیه‌سازی‌شده — پرداخت واقعی نیست)",
 
   // ── ویرایش اصلاحی: دور پایانی ─────────────────────────────
-  "support.email": "رایانامه",
+  "support.email": "ایمیل",
   "support.whatsapp": "واتس‌اپ",
   "support.whatsappCta": "گفت‌وگو در واتس‌اپ",
-  "support.channels": "راه‌های پشتیبانی",
+  "support.channels": "راه‌های تماس",
 
   "dash.balance": "توازن میان ابعاد",
   "dash.balanceNote": "نشان می‌دهد سه بُعد شما نسبت به یکدیگر چقدر متوازن‌اند.",
@@ -1750,7 +1750,7 @@ export const fa: Record<keyof typeof en, string> = {
   "metrics.demoBody":
     "یک حساب نمایشی جداگانه و فقط‌خواندنی بسازید تا با ارزیاب بیرونی به اشتراک بگذارید. گذرواژهٔ اصلی بنیان‌گذار محرمانه می‌ماند و قفل صفحه هرگز غیرفعال نمی‌شود.",
   "metrics.demoLabel": "برچسب (برای چه کسی)",
-  "metrics.demoEmail": "رایانامهٔ حساب نمایشی",
+  "metrics.demoEmail": "ایمیلٔ حساب نمایشی",
   "metrics.demoCreate": "ایجاد دسترسی نمایشی",
   "metrics.demoRevoke": "لغو دسترسی",
   "metrics.demoRestore": "فعال‌سازی دوباره",
@@ -1773,7 +1773,7 @@ export const fa: Record<keyof typeof en, string> = {
   "metrics.demoRevoked": "لغو شده",
   "metrics.demoCode": "کد دسترسی",
   "metrics.demoRole": "شما با دسترسی موقت نمایشی (فقط‌خواندنی) وارد شده‌اید.",
-  "metrics.gateEmail": "رایانامه (فقط برای حساب‌های نمایشی)",
+  "metrics.gateEmail": "ایمیل (فقط برای حساب‌های نمایشی)",
   "metrics.dataMode": "داده‌های نمایش‌داده‌شده",
   "metrics.realOnly": "فقط داده‌های واقعی",
   "metrics.includeSim": "شامل داده‌های شبیه‌سازی‌شدهٔ نمایشی",
@@ -1906,7 +1906,7 @@ export const fa: Record<keyof typeof en, string> = {
   "dash.analysis.weakest.psychological": "زبان، شبکهٔ اجتماعی و سازگاری با فرهنگ محلی را در اولویت قرار دهید.",
 
   "disclaimer.responsible":
-    "میگراگو پشتیبانی دیجیتال مسیر ادغام و اطلاعات ساختاریافته ارائه می‌دهد. این سرویس نمایندگی حقوقی انجام نمی‌دهد، تصمیم دولتی نمی‌گیرد، نتیجهٔ مهاجرتی را تضمین نمی‌کند و جایگزین متخصصان دارای صلاحیت یا مراجع عمومی نیست.",
+    "میگراگو راهنمای دیجیتال مسیر ادغام و اطلاعات ساختاریافته ارائه می‌دهد. این سرویس نمایندگی حقوقی انجام نمی‌دهد، تصمیم دولتی نمی‌گیرد، نتیجهٔ مهاجرتی را تضمین نمی‌کند و جایگزین متخصصان دارای صلاحیت یا مراجع عمومی نیست.",
 };
 
 const dicts = { en, fa };
