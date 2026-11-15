@@ -275,15 +275,15 @@ function Assessment() {
     return (
       <div className="flex min-h-screen flex-col">
         <AppHeader />
-        <main className="mx-auto w-full max-w-lg flex-1 px-4 py-14 md:px-8">
+        <main className="visual-page visual-assessment mx-auto w-full max-w-lg flex-1 px-4 py-14 md:px-8">
           <section className="glass-card rounded-3xl p-7 md:p-9">
             <h1 className="text-2xl">{t("pricing.nav")}</h1>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t("pay.sub")}</p>
             <p className="mt-4 text-3xl font-bold text-secondary">{t("pricing.navPrice")}<span className="text-sm font-medium text-muted-foreground">{t("pricing.perMonth")}</span></p>
-            <Button variant="secondary" className="mt-6 h-auto w-full whitespace-normal rounded-full px-5 py-3 text-sm font-bold" onClick={() => { trackEvent({ type: "upgrade_click" }); setPayModal(true); }}>
+            <Button variant="secondary" className="visual-solid mt-6 h-auto w-full whitespace-normal rounded-full px-5 py-3 text-sm font-bold" onClick={() => { trackEvent({ type: "upgrade_click" }); setPayModal(true); }}>
               {t("pricing.upgrade")}<ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
             </Button>
-            <Button variant="link" className="mt-3 h-auto w-full whitespace-normal text-xs" onClick={() => void navigate({ to: "/quick-check" })}>{t("pricing.freeCta")}</Button>
+            <Button variant="link" className="visual-link mt-3 h-auto w-full whitespace-normal text-xs" onClick={() => void navigate({ to: "/quick-check" })}>{t("pricing.freeCta")}</Button>
             <p className="mt-4 text-xs text-muted-foreground">{t("pay.demoNote")}</p>
           </section>
         </main>
@@ -410,10 +410,10 @@ function Assessment() {
       </div>
 
       <div className="mx-auto flex max-w-4xl flex-col gap-6 px-4 py-10 md:px-8 lg:grid lg:max-w-6xl lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
-        <main className="min-w-0">
+        <main className="visual-page visual-assessment min-w-0">
         <Link
           to="/start"
-          className="mb-4 inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted"
+          className="visual-outline mb-4 inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted"
         >
           <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
           {t("q.backToStart")}
@@ -428,16 +428,16 @@ function Assessment() {
               <div className="mt-3">
                 <p className="text-xs leading-relaxed text-muted-foreground">{t("assess.reassessConfirm")}</p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <Button type="button" variant="secondary" className="rounded-full" onClick={() => { startReassessment(); setReassessConfirm(false); void navigate({ to: "/assessment", search: {} }); }}>
+                  <Button type="button" variant="secondary" className="visual-solid rounded-full" onClick={() => { startReassessment(); setReassessConfirm(false); void navigate({ to: "/assessment", search: {} }); }}>
                     {t("assess.startReassess")}
                   </Button>
-                  <Button type="button" variant="outline" className="rounded-full" onClick={() => setReassessConfirm(false)}>
+                  <Button type="button" variant="outline" className="visual-outline rounded-full" onClick={() => setReassessConfirm(false)}>
                     {t("assess.cancel")}
                   </Button>
                 </div>
               </div>
             ) : (
-              <Button type="button" variant="outline" className="mt-3 rounded-full" onClick={() => setReassessConfirm(true)}>
+              <Button type="button" variant="outline" className="visual-outline mt-3 rounded-full" onClick={() => setReassessConfirm(true)}>
                 {t("assess.reassess")}
               </Button>
             )}
@@ -450,11 +450,11 @@ function Assessment() {
               <div>
                 <p className="text-sm">{t("assess.cancelReassessConfirm")}</p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <Button type="button" variant="secondary" className="rounded-full" onClick={() => { cancelReassessment(); setCancelConfirm(false); setShowRequired(false); }}>{t("assess.cancelReassess")}</Button>
-                  <Button type="button" variant="outline" className="rounded-full" onClick={() => setCancelConfirm(false)}>{t("assess.cancel")}</Button>
+                  <Button type="button" variant="secondary" className="visual-solid rounded-full" onClick={() => { cancelReassessment(); setCancelConfirm(false); setShowRequired(false); }}>{t("assess.cancelReassess")}</Button>
+                  <Button type="button" variant="outline" className="visual-outline rounded-full" onClick={() => setCancelConfirm(false)}>{t("assess.cancel")}</Button>
                 </div>
               </div>
-            ) : <Button type="button" variant="outline" className="rounded-full" onClick={() => setCancelConfirm(true)}>{t("assess.cancelReassess")}</Button>}
+            ) : <Button type="button" variant="outline" className="visual-outline rounded-full" onClick={() => setCancelConfirm(true)}>{t("assess.cancelReassess")}</Button>}
           </div>
         ) : null}
         {guidedView === "companion" ? (
@@ -481,7 +481,7 @@ function Assessment() {
             <button
               type="button"
               onClick={() => setGuidedView("questions")}
-              className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 hover:bg-secondary/90"
+              className="visual-solid mt-7 inline-flex items-center gap-2 rounded-2xl bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 hover:bg-secondary/90"
             >
               {t("q.beginLevel")}
               <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
@@ -491,7 +491,7 @@ function Assessment() {
         <>
         <h1 className="text-2xl md:text-3xl">{meta?.title[lang]}</h1>
         <p
-          className="mt-3 inline-flex items-start gap-2 rounded-2xl border border-secondary/25 bg-secondary/8 px-3.5 py-2 text-xs text-muted-foreground"
+          className="assessment-info mt-3 inline-flex items-start gap-2 rounded-2xl border border-secondary/25 bg-secondary/8 px-3.5 py-2 text-xs text-muted-foreground"
           title={t("q.feedsInto")}
         >
           <Info className="mt-0.5 size-3.5 shrink-0 text-secondary" aria-hidden />
@@ -508,14 +508,14 @@ function Assessment() {
           </span>
         </p>
         {meta?.optional ? (
-          <div className="mt-4 rounded-2xl border border-accent/50 bg-accent/10 p-4">
+          <div className="assessment-notice mt-4 rounded-3xl border border-accent/50 bg-accent/10 p-4">
             <p className="text-sm font-bold">{t("q.optionalSection")}</p>
             <p className="mt-1 text-xs text-muted-foreground">{t("q.optionalNote")}</p>
             {!readOnly ? (
               <button
                 type="button"
                 onClick={() => update({ section7Skipped: !section7Skipped })}
-                className="mt-3 inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-xs font-semibold transition-colors duration-200 ease-out hover:bg-muted"
+                className="visual-outline mt-3 inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-xs font-semibold transition-colors duration-200 ease-out hover:bg-muted"
               >
                 {t(section7Skipped ? "q.restoreSection" : "q.skipSection")}
               </button>
@@ -545,7 +545,7 @@ function Assessment() {
                     update({ founderTrack: opt.value });
                   }}
                   className={cn(
-                    "rounded-2xl border px-5 py-2.5 text-sm font-semibold transition-all duration-200 ease-out",
+                    "assessment-option rounded-2xl border px-5 py-2.5 text-sm font-semibold transition-all duration-200 ease-out",
                     founderTrack === opt.value
                       ? "border-secondary bg-secondary/12 ring-1 ring-secondary/40"
                       : "border-border bg-background enabled:hover:border-secondary/40",
@@ -578,7 +578,7 @@ function Assessment() {
         </div>
 
         {!readOnly && section === 7 && (visaInconsistent || childrenInconsistent) && !inconsistencyDismissed ? (
-          <div className="rise-in mt-5 rounded-2xl border border-accent/50 bg-accent/10 p-4">
+          <div className="assessment-notice mt-5 rounded-3xl border border-accent/50 bg-accent/10 p-4">
             {visaInconsistent ? (
               <p className="text-sm font-semibold">{t("q.inconsistencyVisa")}</p>
             ) : null}
@@ -614,7 +614,7 @@ function Assessment() {
             type="button"
             disabled={section === 1}
             onClick={() => moveToSection(Math.max(1, section - 1))}
-            className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted disabled:opacity-40"
+            className="visual-outline inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted disabled:opacity-40"
           >
             <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
             {t("q.prev")}
@@ -624,7 +624,7 @@ function Assessment() {
             <button
               type="button"
               onClick={goNext}
-              className="inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] transition-all duration-200 ease-out hover:bg-primary/90 hover:shadow-[0_0_0_4px_rgba(42,144,143,0.18),inset_0_1px_0_rgba(255,255,255,0.18)]"
+              className="visual-solid inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] transition-all duration-200 ease-out hover:bg-primary/90 hover:shadow-[0_0_0_4px_rgba(42,144,143,0.18),inset_0_1px_0_rgba(255,255,255,0.18)]"
             >
               {t("q.next")}
               <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
@@ -633,7 +633,7 @@ function Assessment() {
             <button
               type="button"
               onClick={submit}
-              className="inline-flex items-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
+              className="visual-solid inline-flex items-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/90"
             >
               <Sparkles className="size-4" aria-hidden />
               {t(editing && state.completed ? "q.submitReassess" : "q.submit")}

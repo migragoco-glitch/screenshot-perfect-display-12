@@ -29,17 +29,17 @@ function PrivacyPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <AppHeader />
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12 md:px-8 md:py-16">
-        <div className="glass-card rise-in rounded-3xl p-7 md:p-10">
-          <ShieldCheck className="size-7 text-secondary" aria-hidden />
+      <main className="visual-page legal-page mx-auto w-full max-w-3xl flex-1 px-4 py-12 md:px-8 md:py-16">
+        <div className="glass-card rounded-3xl border-t-[5px] border-t-[var(--plum)] p-7 md:p-10">
+          <div className="flex size-12 items-center justify-center rounded-full bg-[var(--plum)] text-[var(--institution-active-foreground)] shadow-sm" aria-hidden><ShieldCheck className="size-6" /></div>
           <h1 className="mt-5 text-2xl md:text-3xl">{t("privacy.title")}</h1>
           <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{t("privacy.body")}</p>
-          <p className="mt-6 rounded-2xl bg-muted p-4 text-xs text-muted-foreground">
+          <p className="legal-notice mt-6">
             {t("set.placeholderNote")}
           </p>
           <Link
             to="/dashboard"
-            className="mt-7 inline-flex text-sm font-semibold text-secondary underline underline-offset-4"
+            className="mt-7 inline-flex text-sm font-semibold text-[var(--plum)] underline decoration-[var(--plum)] underline-offset-4 hover:opacity-85 dark:text-foreground"
           >
             {t("common.back")}
           </Link>

@@ -401,7 +401,7 @@ function StartScreen() {
               {checklist.length ? checklist.map((item) => <div key={item.id} className="mt-5"><h4 className="text-sm font-semibold">{typeof item.title === "string" ? t(item.title) : item.title[lang]}</h4>{hasNavigator ? item.documents.map((key, index) => <label key={`${item.id}:${index}`} className="mt-3 flex items-start gap-3 text-sm"><input type="checkbox" className="mt-1 size-4 accent-[var(--navigator-teal)]" checked={docIds.includes(`${item.id}:${index}`)} onChange={() => toggleDoc(`${item.id}:${index}`)} /><span>{t(key)}</span></label>) : <ul className="mt-2 list-disc space-y-1.5 ps-6 text-sm">{item.documents.map((key, index) => <li key={`${item.id}:${index}`}>{t(key)}</li>)}</ul>}</div>) : <p className="mt-3 text-sm text-muted-foreground">{t("start.checklist.empty")}</p>}
             </details>
             {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : null}
-            <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
+            <p className="legal-notice mt-6">{t("start.disclaimer")}</p>
             <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button type="button" variant="outline" className={GHOST_BTN} onClick={() => setStage("choose")}><ArrowLeft className="rtl:rotate-180" />{t("common.back")}</Button>
@@ -470,7 +470,7 @@ function StartScreen() {
             </section> : null}
             {hasNavigator ? <div className="start-profile"><ProfileCard completed={state.completed} /></div> : <UpgradeCard view="road" onUpgrade={openUpgrade} />}
             {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : null}
-            <p className="mt-6 text-xs text-muted-foreground">{t("start.disclaimer")}</p>
+            <p className="legal-notice mt-6">{t("start.disclaimer")}</p>
             <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button type="button" variant="outline" className={GHOST_BTN} onClick={() => setStage("choose")}><ArrowLeft className="rtl:rotate-180" />{t("common.back")}</Button>

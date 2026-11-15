@@ -229,7 +229,7 @@ export function FoundersCircleModal({
               value={email}
               maxLength={255}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1.5 w-full rounded-xl border-[1.5px] border-[var(--status-not-done)] bg-background px-4 py-2.5 text-sm outline-none focus:border-[var(--navigator-teal)]"
+              className="founders-email mt-1.5 w-full rounded-xl border-[1.5px] border-[var(--status-not-done)] bg-background px-4 py-2.5 text-sm outline-none focus:border-[var(--navigator-teal)]"
             />
             {error ? <p className="mt-2 text-xs font-semibold text-destructive">{error}</p> : null}
             <p className="mt-3 text-xs text-muted-foreground">{t("pay.emailNote")}</p>
@@ -310,8 +310,8 @@ export function NpsSurvey() {
                 onClick={() => setScore(n)}
                 className={
                   score === n
-                    ? "size-8 rounded-lg bg-primary text-xs font-bold text-primary-foreground"
-                    : "size-8 rounded-lg border border-border bg-background text-xs font-semibold transition-colors duration-200 ease-out hover:bg-muted"
+                    ? "size-8 rounded-xl bg-primary text-xs font-bold text-primary-foreground"
+                    : "size-8 rounded-xl border border-border bg-background text-xs font-semibold transition-colors duration-200 ease-out hover:bg-muted"
                 }
               >
                 {localizeNumber(n, lang)}

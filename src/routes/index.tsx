@@ -526,7 +526,7 @@ function Landing() {
               </button>
             </article>
           </div>
-          <p className="mt-6 text-xs text-muted-foreground" dir={lang === "fa" ? "rtl" : "ltr"}>
+          <p className="legal-notice mt-6" dir={lang === "fa" ? "rtl" : "ltr"}>
             {t("about.boundaries")}
           </p>
         </section>
