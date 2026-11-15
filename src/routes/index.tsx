@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Gift, Globe, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, Scale, Sparkles, Users } from "lucide-react";
+import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Clock, Crown, Gift, Globe, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, Scale, Sparkles, Users } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { FoundersCircleModal } from "@/components/FeedbackWidgets";
+import { Button } from "@/components/ui/button";
 import { useI18n, type TKey } from "@/lib/i18n";
 import { useAppState } from "@/lib/store";
 import { TITLE_OVERRIDES } from "@/lib/area-flow";
@@ -252,6 +253,7 @@ function Landing() {
   const { state } = useAppState();
   const navigate = useNavigate();
   const [paywallOpen, setPaywallOpen] = useState(false);
+  const [pricingDuration, setPricingDuration] = useState<"30" | "90">("30");
   const hasSavedProgress = Object.keys(state.answers).length > 0;
 
   return (
@@ -453,68 +455,64 @@ function Landing() {
         {/* Tiers */}
         <section id="pricing" className="mx-auto max-w-7xl px-4 pb-20 md:px-8">
           <h2 className="text-2xl md:text-3xl">{t("pricing.title")}</h2>
-          <div className="mt-8 grid gap-5 lg:grid-cols-3">
-            <article className="flex flex-col rounded-2xl border-2 border-[var(--navigator-gold)] bg-card p-7 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] focus-within:shadow-[var(--shadow-lift)]">
-              <h3 className="flex items-center gap-2 text-lg">
-                <Gift className="size-5 shrink-0 text-[var(--navigator-gold)]" aria-hidden />
-                {t("pricing.freeName")}
-              </h3>
-              <p className="mt-2 min-h-8 text-xs text-foreground/80">{t("pricing.freeTagline")}</p>
-              <div className="mt-3">
-                <p className="text-3xl font-bold text-[var(--navigator-gold)]">{t("pricing.freePriceAmount")}</p>
-                <div className="min-h-6" aria-hidden />
-                <div className="mt-1 min-h-5" aria-hidden />
+          <div className="mt-8 grid gap-[18px] lg:grid-cols-3">
+            <article className="home-price-card home-price-free" aria-label={t("pricing.freeName")}>
+              <span className="home-price-badge"><Gift className="size-4 shrink-0" aria-hidden />{t("pricing.freeName")}</span>
+              <div className="home-price-zero">
+                <p className="text-[22px] font-medium">{t("pricing.freePriceAmount")}</p>
+                <p className="home-price-secondary text-xs">{t("pricing.noTimeLimit")}</p>
               </div>
-              <Link
-                to={state.consent ? "/start" : "/consent"}
-                search={state.consent ? {} : { next: "start" }}
-                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--navigator-gold)] px-5 py-3 text-sm font-semibold text-primary-foreground transition-all duration-200 ease-out hover:brightness-95 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--navigator-gold)] active:scale-[0.98] active:brightness-90"
-              >
-                {t("pricing.freeStart")}
-              </Link>
-              <hr className="my-5 border-t border-border" />
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t("pricing.freeLead")}</p>
-              <ul className="mt-5 flex-1 space-y-4">
-                {(["pricing.freeItem1", "pricing.freeItem2", "pricing.freeItem3", "pricing.freeItem4", "pricing.freeItem5", "pricing.freeItem6"] as const).map((k) => (
-                  <li key={k} className="flex items-start gap-3">
-                    <Check className="mt-0.5 size-4 shrink-0 text-[var(--navigator-gold)]" aria-hidden />
-                    <p className="text-sm font-semibold text-foreground">{t(k)}</p>
-                  </li>
+              <p className="home-price-lead">{t("pricing.freeLead")}</p>
+              <ul className="home-price-bullets">
+                {(["pricing.freeSummary1", "pricing.freeItem3", "pricing.freeItem4", "pricing.freeSummary4"] as const).map((key) => (
+                  <li key={key}><Check aria-hidden /><span>{t(key)}</span></li>
                 ))}
               </ul>
+              <details className="home-price-details">
+                <summary>{t("pricing.allFeatures")}</summary>
+                <ul>
+                  {(["pricing.freeItem1", "pricing.freeItem2", "pricing.freeItem3", "pricing.freeItem4", "pricing.freeItem5", "pricing.freeItem6"] as const).map((key) => (
+                    <li key={key}><Check aria-hidden /><span>{t(key)}</span></li>
+                  ))}
+                </ul>
+              </details>
+              <Button asChild className="home-price-cta">
+                <Link to={state.consent ? "/start" : "/consent"} search={state.consent ? {} : { next: "start" }}>{t("pricing.freeStart")}</Link>
+              </Button>
             </article>
 
-            <article className="relative flex flex-col rounded-2xl border-2 border-navy bg-card p-7 shadow-[var(--shadow-lift)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-xl focus-within:shadow-xl">
-              <h3 className="text-lg">{t("pricing.nav")}</h3>
-              <p className="mt-2 min-h-8 text-xs text-foreground/80">{t("pricing.navTagline")}</p>
-              <div className="mt-3">
-                <p className="min-h-9 text-2xl font-bold text-navy">{t("pricing.navPrice30")}</p>
-                <p className="min-h-6 text-xl font-semibold text-navy">{t("pricing.navPrice90")}</p>
-                <p className="mt-1 min-h-5 text-xs text-foreground">{t("pricing.navPriceNote")}</p>
+            <article className="home-price-card home-price-premium" aria-label={t("pricing.nav")}>
+              <span className="home-price-badge"><Crown className="size-4 shrink-0" aria-hidden />{t("pricing.nav")}</span>
+              <div className="home-price-tiles" role="group" aria-label={t("checkout.planChoose")}>
+                {(["30", "90"] as const).map((duration) => (
+                  <Button key={duration} type="button" variant="outline" aria-pressed={pricingDuration === duration} onClick={() => setPricingDuration(duration)} className="home-price-tile">
+                    <span className="text-[22px] font-medium"><bdi>{t(duration === "30" ? "checkout.plan30Price" : "checkout.plan90Price")}</bdi></span>
+                    <span className="text-xs">{t(duration === "30" ? "pricing.access30" : "pricing.access90")}</span>
+                    <span className={`home-price-saving ${duration === "30" ? "invisible" : ""}`} aria-hidden={duration === "30"}>{t("pricing.save17")}</span>
+                  </Button>
+                ))}
               </div>
-              <button
-                type="button"
-                onClick={() => {
-                  if (state.tier === "navigator") {
-                    void navigate({ to: "/start" });
-                    return;
-                  }
-                  setPaywallOpen(true);
-                }}
-                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-navy px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors duration-200 ease-out hover:bg-navy/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy active:scale-[0.98]"
-              >
-                {t("pricing.navStart")}
-              </button>
-              <hr className="my-5 border-t border-border" />
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t("pricing.navLead")}</p>
-              <ul className="mt-5 flex-1 space-y-4">
-                {(["pricing.navItem1", "pricing.navItem2", "pricing.navItem3", "pricing.navItem4", "pricing.navItem5", "pricing.navItem6", "pricing.navItem7"] as const).map((k) => (
-                  <li key={k} className="flex items-start gap-3">
-                    <Check className={`mt-0.5 size-4 shrink-0 ${k === "pricing.navItem7" ? "text-muted-foreground" : "text-navy"}`} aria-hidden />
-                    <p className={`text-sm font-semibold ${k === "pricing.navItem7" ? "text-muted-foreground" : "text-foreground"}`}>{t(k)}</p>
-                  </li>
+              <p className="home-price-secondary mt-2 text-center text-xs">{t("pricing.navPriceNote")}</p>
+              <p className="home-price-lead">{t("pricing.navLead")}</p>
+              <ul className="home-price-bullets">
+                {(["pricing.navSummary1", "pricing.navSummary2", "pricing.navSummary3", "pricing.navPriority", "pricing.navSummary5"] as const).map((key) => (
+                  <li key={key}><Check aria-hidden /><span>{t(key)}</span></li>
                 ))}
               </ul>
+              <details className="home-price-details">
+                <summary>{t("pricing.allFeatures")}</summary>
+                <ul>
+                  {(["pricing.navItem1", "pricing.navItem2", "pricing.navItem3", "pricing.navItem4", "pricing.navItem5", "pricing.navAssessment", "pricing.navProfileFull", "pricing.navPriority", "pricing.navHistoryFull", "pricing.navDashboardFull", "pricing.navItem7"] as const).map((key) => (
+                    <li key={key} className={key === "pricing.navItem7" ? "home-price-secondary" : ""}>
+                      {key === "pricing.navItem7" ? <Clock aria-hidden /> : <Check aria-hidden />}<span>{t(key)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+              <Button type="button" className="home-price-cta" onClick={() => {
+                if (state.tier === "navigator") { void navigate({ to: "/start" }); return; }
+                setPaywallOpen(true);
+              }}>{t("pricing.navStart")}</Button>
             </article>
 
             <article className="relative overflow-hidden rounded-2xl border border-dashed border-[color:var(--plum)]/30 bg-muted/50 p-7">
