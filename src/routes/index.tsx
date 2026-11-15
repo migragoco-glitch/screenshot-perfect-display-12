@@ -292,8 +292,8 @@ function Landing() {
 
       <main>
         {/* Hero */}
-        <section className="brand-motif home-hero-section border-b border-border/70">
-          <div className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
+        <section className="home-hero-section border-b border-border/70">
+          <div className="pe-3 pt-[36px] pb-16 md:pe-6 md:pt-[52px] md:pb-24">
             <div className="home-hero-stack">
               <div className="home-hero-plate rounded-2xl" aria-hidden />
               <div className="glass-card home-hero-front relative rounded-3xl p-6 text-center md:p-8">
