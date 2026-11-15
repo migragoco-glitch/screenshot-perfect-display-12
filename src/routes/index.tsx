@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Briefcase, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Clock, Crown, Gift, Globe, Landmark, Route as RouteIcon, UserRoundCheck, House, Hourglass, Scale, Sparkles, Users } from "lucide-react";
+import { ArrowRight, Building2, CalendarDays, ChartLine, Check, ChevronDown, ClipboardCheck, Clock, Crown, Gift, Landmark, Route as RouteIcon, UserRoundCheck, Hourglass, Sparkles } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import arrowMarkAsset from "@/assets/migrago-arrow-gold.png.asset.json";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
