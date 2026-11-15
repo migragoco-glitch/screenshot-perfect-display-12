@@ -85,8 +85,8 @@ function AuthPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <AppHeader />
-      <main className="mx-auto w-full max-w-md flex-1 px-4 py-14 md:px-8">
-        <div className="glass-card rise-in rounded-3xl p-7 md:p-9">
+      <main className="visual-page visual-auth mx-auto w-full max-w-md flex-1 px-4 py-14 md:px-8">
+        <div className="auth-layer glass-card rounded-3xl p-7 md:p-9">
           <LogIn className="size-7 text-secondary" aria-hidden />
           <h1 className="mt-5 text-2xl">{mode === "in" ? t("auth.signIn") : t("auth.signUp")}</h1>
           <p className="mt-2 text-sm text-muted-foreground">{t("auth.subtitle")}</p>

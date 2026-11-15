@@ -319,7 +319,7 @@ function Dashboard() {
     <div className="min-h-screen">
       <AppHeader registered />
 
-      <main className="mx-auto max-w-7xl px-4 py-10 md:px-8">
+      <main className="visual-page visual-dashboard mx-auto max-w-7xl px-4 py-10 md:px-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="text-2xl md:text-3xl">{t("journey.title")}</h1>
@@ -328,7 +328,7 @@ function Dashboard() {
           <Button
             type="button"
             variant="outline"
-            onClick={() => void navigate({ to: "/assessment", search: state.completed && !editing ? { view: "recorded" } : {} })}
+            onClick={() = className="visual-outline"> void navigate({ to: "/assessment", search: state.completed && !editing ? { view: "recorded" } : {} })}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted"
           >
             <ClipboardList className="size-4" aria-hidden />
@@ -363,7 +363,7 @@ function Dashboard() {
               <h2 className="text-lg">{t("dash.homeRoadmapTitle")}</h2>
               <RoadmapSummary done={roadmapDoneCount} total={roadmapSteps.length} phases={roadmapPhases} />
               {state.completed ? <p className="text-sm font-semibold">{t("dash.readinessScore").replace("{overall}", localizeNumber(profile.overall, lang))}</p> : null}
-              <Button type="button" variant="secondary" className="mt-4 rounded-full" onClick={openStartRoadmap}>{t("dash.homeRoadmapCta")}<ArrowRight className="size-4 rtl:rotate-180" /></Button>
+              <Button type="button" variant="secondary" className="visual-solid mt-4 rounded-full" onClick={openStartRoadmap}>{t("dash.homeRoadmapCta")}<ArrowRight className="size-4 rtl:rotate-180" /></Button>
             </section>
             {!state.completed ? <ProfilePreview onOpen={() => { void navigate({ to: "/assessment" }); }} /> : null}
 
@@ -420,11 +420,11 @@ function Dashboard() {
                   editing ? cancelConfirm ? (
                     <span className="flex flex-wrap items-center gap-2">
                       <span className="text-xs font-semibold">{t("assess.cancelReassessConfirm")}</span>
-                      <Button type="button" variant="secondary" className="rounded-full" onClick={() => { cancelReassessment(); setCancelConfirm(false); }}>{t("assess.cancelReassess")}</Button>
-                      <Button type="button" variant="outline" className="rounded-full" onClick={() => setCancelConfirm(false)}>{t("assess.cancel")}</Button>
+                      <Button type="button" variant="secondary" className="visual-solid rounded-full" onClick={() => { cancelReassessment(); setCancelConfirm(false); }}>{t("assess.cancelReassess")}</Button>
+                      <Button type="button" variant="outline" className="visual-outline rounded-full" onClick={() => setCancelConfirm(false)}>{t("assess.cancel")}</Button>
                     </span>
-                  ) : <Button type="button" variant="outline" className="rounded-full" onClick={() => setCancelConfirm(true)}>{t("assess.cancelReassess")}</Button>
-                  : <Button type="button" variant="outline" className="rounded-full" onClick={() => void navigate({ to: "/assessment", search: { reassess: "confirm" } })}>{t("assess.reassess")}</Button>
+                  ) : <Button type="button" variant="outline" className="visual-outline rounded-full" onClick={() => setCancelConfirm(true)}>{t("assess.cancelReassess")}</Button>
+                  : <Button type="button" variant="outline" className="visual-outline rounded-full" onClick={() => void navigate({ to: "/assessment", search: { reassess: "confirm" } })}>{t("assess.reassess")}</Button>
                 ) : null}
               </div>
             </section>
@@ -457,7 +457,7 @@ function Dashboard() {
               </div>
               {state.history.length >= 2 ? <p className="mt-4 text-xs text-muted-foreground">{t("dash.historyChange").split("{delta}")[0]}<bdi dir="ltr">{formatScoreDelta(state.history, lang)}</bdi>{t("dash.historyChange").split("{delta}")[1]}</p> : null}
               <p className="mt-4 text-xs text-muted-foreground">{t("dash.dim3Note")}</p>
-              <Button type="button" variant="secondary" className="mt-5 rounded-full" onClick={openStartRoadmap}>{t("dash.homeRoadmapCta")}<ArrowRight className="size-4 rtl:rotate-180" /></Button>
+              <Button type="button" variant="secondary" className="visual-solid mt-5 rounded-full" onClick={openStartRoadmap}>{t("dash.homeRoadmapCta")}<ArrowRight className="size-4 rtl:rotate-180" /></Button>
             </section>
 
             {/* Analysis + paywall */}
@@ -536,17 +536,17 @@ function Dashboard() {
                 <ul className="mt-4 space-y-3">{(showAllGaps ? gapList : gapList.slice(0, 3)).map((g) => {
                   const relatedSteps = getRelatedStepsForGap(g.flag, startPlanStepIds);
                   const expanded = expandedGaps.includes(g.flag);
-                  return <li key={g.flag} className="rounded-lg border border-border p-4">
+                  return <li key={g.flag} className="visual-gap rounded-2xl border border-border p-4">
                     <Button type="button" variant="ghost" aria-expanded={expanded} aria-controls={`gap-${g.flag}`} className="h-auto w-full flex-wrap justify-start gap-2 whitespace-normal p-0 text-start hover:bg-transparent" onClick={() => setExpandedGaps((current) => expanded ? current.filter((id) => id !== g.flag) : [...current, g.flag])}>
                       <span className="me-auto text-sm font-bold">{g.gap[lang]}</span>
                       <span className={cn("rounded-full px-2.5 py-0.5 text-[11px] font-semibold", g.priority === "high" ? "bg-destructive text-destructive-foreground" : g.priority === "medium" ? "bg-[var(--navigator-gold)] text-[var(--navigator-navy)]" : "bg-[var(--chart-5)] text-[var(--navigator-navy)]")}>{priorityLabel(g.priority)}</span>
                       {g.institution === "Valvira / OPH" ? <><InstitutionBadge institution={g.institution} displayName={t("start.authority.Valvira")} compact /><InstitutionBadge institution={g.institution} displayName={t("start.authority.OPH")} compact /></> : <InstitutionBadge institution={g.institution} compact />}
                       {relatedSteps.length > 0 ? <span className="w-full text-xs font-normal text-muted-foreground">{t("dash.gap.relatedSteps").replace("{done}", localizeNumber(relatedSteps.filter((id) => done.has(id)).length, lang)).replace("{total}", localizeNumber(relatedSteps.length, lang))}</span> : null}
                     </Button>
-                    {expanded ? <div id={`gap-${g.flag}`} className="mt-3 space-y-2 text-sm text-muted-foreground"><p className="font-semibold">{t("gap.why")}</p><p>{g.why[lang]}</p><p className="font-semibold">{t("gap.action")}</p><p>{g.action[lang]}</p>{relatedSteps.length > 0 ? <Button type="button" variant="link" className="h-auto p-0 text-xs text-secondary" onClick={openStartRoadmap}>{t("dash.gap.viewInRoadmap")}<ArrowRight className="size-3.5 rtl:rotate-180" /></Button> : null}</div> : null}
+                    {expanded ? <div id={`gap-${g.flag}`} className="mt-3 space-y-2 text-sm text-muted-foreground"><p className="font-semibold">{t("gap.why")}</p><p>{g.why[lang]}</p><p className="font-semibold">{t("gap.action")}</p><p>{g.action[lang]}</p>{relatedSteps.length > 0 ? <Button type="button" variant="link" className="visual-link h-auto p-0 text-xs text-secondary" onClick={openStartRoadmap}>{t("dash.gap.viewInRoadmap")}<ArrowRight className="size-3.5 rtl:rotate-180" /></Button> : null}</div> : null}
                   </li>;
                 })}</ul>
-                {!showAllGaps && gapList.length > 3 ? <Button type="button" variant="link" className="mt-3 h-auto p-0" onClick={() => setShowAllGaps(true)}>{t("dash.showAll")}</Button> : null}
+                {!showAllGaps && gapList.length > 3 ? <Button type="button" variant="link" className="visual-link mt-3 h-auto p-0" onClick={() => setShowAllGaps(true)}>{t("dash.showAll")}</Button> : null}
               </> : <p className="mt-3 text-sm text-muted-foreground">{t("gap.none")}</p>}
             </section>
 
@@ -596,9 +596,9 @@ function Dashboard() {
         {tab === "progress" ? (
           <div className="navigator-entered rise-in mt-7 space-y-5">
             {doneCount >= 3 ? <NpsSurvey /> : null}
-            {!locked ? <section className="rounded-lg border border-border bg-card p-4"><h2 className="text-sm font-semibold">{t("start.docs.counter").replace("{x}", localizeNumber(docsDone, lang)).replace("{y}", localizeNumber(docKeys.length, lang))}</h2></section> : null}
+            {!locked ? <section className="rounded-3xl border border-border bg-card p-4"><h2 className="text-sm font-semibold">{t("start.docs.counter").replace("{x}", localizeNumber(docsDone, lang)).replace("{y}", localizeNumber(docKeys.length, lang))}</h2></section> : null}
             {!hasStartPlan ? (
-              <section className="border-b border-border py-6"><h2 className="text-lg">{t("prog.noSessionTitle")}</h2><Button type="button" variant="secondary" className="mt-4 rounded-full" onClick={openStartRoadmap}>{t("prog.noSessionCta")}</Button></section>
+              <section className="border-b border-border py-6"><h2 className="text-lg">{t("prog.noSessionTitle")}</h2><Button type="button" variant="secondary" className="visual-solid mt-4 rounded-full" onClick={openStartRoadmap}>{t("prog.noSessionCta")}</Button></section>
             ) : (
               <>
                 <section className="rounded-3xl border border-border bg-card p-6 text-[var(--navigator-navy)]">
@@ -734,7 +734,7 @@ function Dashboard() {
                     ) : (
                       <p className="mt-3 text-sm text-muted-foreground">{t("prog.none")}</p>
                     )}
-                    {!showAllCompleted && doneCount > 5 ? <Button type="button" variant="link" className="mt-3 h-auto p-0" onClick={() => setShowAllCompleted(true)}>{t("dash.showAll")}</Button> : null}
+                    {!showAllCompleted && doneCount > 5 ? <Button type="button" variant="link" className="visual-link mt-3 h-auto p-0" onClick={() => setShowAllCompleted(true)}>{t("dash.showAll")}</Button> : null}
                   </section>
 
                   <section className="rounded-3xl border border-border border-s-4 border-s-destructive bg-[var(--readiness-cream)] p-6 text-[var(--navigator-navy)]">
@@ -758,7 +758,7 @@ function Dashboard() {
               </>
             )}
 
-            <p className="text-xs leading-relaxed text-muted-foreground">{t("disclaimer.responsible")}</p>
+            <p className="legal-notice">{t("disclaimer.responsible")}</p>
           </div>
         ) : null}
 
@@ -791,7 +791,7 @@ function Dashboard() {
                   {t("set.terms")}
                 </Link>
               </div>
-              <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+              <p className="legal-notice mt-4">
                 {t("disclaimer.responsible")}
               </p>
             </section>
@@ -818,13 +818,13 @@ function Dashboard() {
               <p className="mt-2 text-sm text-muted-foreground">{t("dash.deleteBody")}</p>
               {deleted ? <p className="mt-4 text-sm font-semibold text-secondary">{t("dash.deleteDone")}</p> : confirmDelete ? <div className="mt-4">
                 <p className="text-sm font-semibold text-destructive">{t("dash.deleteConfirmQuestion")}</p>
-                <div className="mt-3 flex flex-wrap gap-3"><Button type="button" variant="destructive" onClick={() => {
+                <div className="mt-3 flex flex-wrap gap-3"><Button type="button" variant="destructive" className="rounded-full" onClick={() => {
                   reset();
                   for (const key of ["migrago.start.done", "migrago.start.docs", "migrago.inProgress"]) window.localStorage.removeItem(key);
                   for (const key of ["migrago.start.v1", "migrago.start.done"]) window.sessionStorage.removeItem(key);
                   setDeleted(true);
                   void navigate({ to: "/" });
-                }}><Trash2 className="size-4" />{t("dash.deleteConfirmYes")}</Button><Button type="button" variant="outline" onClick={() => setConfirmDelete(false)}>{t("dash.deleteConfirmCancel")}</Button></div>
+                }}><Trash2 className="size-4" />{t("dash.deleteConfirmYes")}</Button><Button type="button" variant="outline" onClick={() = className="visual-outline"> setConfirmDelete(false)}>{t("dash.deleteConfirmCancel")}</Button></div>
               </div> : <Button type="button" variant="destructive" className="mt-4 rounded-full" onClick={() => setConfirmDelete(true)}><Trash2 className="size-4" />{t("dash.deleteData")}</Button>}
 
             </section>

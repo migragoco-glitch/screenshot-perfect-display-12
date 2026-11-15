@@ -33,7 +33,7 @@ function FaqPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <AppHeader />
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-14 md:px-8">
+      <main className="visual-page visual-faq mx-auto w-full max-w-3xl flex-1 px-4 py-14 md:px-8">
         <HelpCircle className="size-7 text-secondary" aria-hidden />
         <h1 className="mt-5 text-3xl">{t("faq.title")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">{t("faq.sub")}</p>
@@ -42,7 +42,7 @@ function FaqPage() {
           {ITEMS.map((n) => (
             <details
               key={n}
-              className="group rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]"
+              className="group glass-card rounded-3xl p-5"
             >
               <summary className="cursor-pointer list-none text-sm font-semibold marker:hidden">
                 {t(`faq.q${n}` as never)}
@@ -54,7 +54,7 @@ function FaqPage() {
           ))}
         </div>
 
-        <h2 className="mt-10 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+        <h2 className="visual-label mt-10 text-xs font-bold uppercase tracking-wider">
           {t("support.channels")}
         </h2>
         <div className="mt-3">

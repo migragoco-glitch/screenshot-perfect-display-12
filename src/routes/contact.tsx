@@ -32,7 +32,7 @@ function ContactPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <AppHeader />
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-14 md:px-8">
+      <main className="visual-page visual-contact mx-auto w-full max-w-3xl flex-1 px-4 py-14 md:px-8">
         <Mail className="size-7 text-secondary" aria-hidden />
         <h1 className="mt-5 text-3xl">{t("contact.title")}</h1>
         <p className="mt-2 text-sm text-muted-foreground">{t("contact.sub")}</p>
@@ -44,7 +44,7 @@ function ContactPage() {
           <SupportChannels />
         </div>
 
-        <div className="mt-6 rounded-2xl border border-dashed border-border bg-muted/50 p-6">
+        <div className="contact-future mt-6 rounded-3xl border border-dashed border-border bg-muted/50 p-6">
           <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
             <Sparkles className="size-3.5" aria-hidden />
             {t("contact.futureTitle")}

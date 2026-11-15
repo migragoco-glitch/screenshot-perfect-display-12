@@ -80,14 +80,14 @@ function CheckoutPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <AppHeader />
-      <main className="mx-auto w-full max-w-lg flex-1 px-4 py-14 md:px-8">
+      <main className="visual-page visual-checkout mx-auto w-full max-w-lg flex-1 px-4 py-14 md:px-8">
         <div className="glass-card rise-in rounded-3xl p-7 md:p-9">
           <Lock className="size-7 text-secondary" aria-hidden />
           <h1 className="mt-5 text-2xl">{t("checkout.title")}</h1>
           <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
             {(["checkout.feat1", "checkout.feat2", "checkout.feat3", "checkout.feat4"] as const).map((key) => <li key={key} className="flex items-start gap-2"><Check className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden /><span>{t(key)}</span></li>)}
           </ul>
-          <p className="mt-5 rounded-2xl bg-muted p-4 text-xs leading-relaxed text-muted-foreground">
+          <p className="checkout-test-note mt-5 rounded-2xl bg-muted p-4 text-xs leading-relaxed text-muted-foreground">
             {t("checkout.testMode")}
           </p>
 
@@ -160,7 +160,7 @@ function CheckoutPage() {
           <button
             type="button"
             onClick={() => void navigate({ to: next === "start" ? "/start" : appState.completed ? "/dashboard" : "/quick-check" })}
-            className="mt-3 w-full text-xs font-semibold text-muted-foreground underline underline-offset-4"
+            className="checkout-cancel mt-3 w-full text-xs font-semibold text-muted-foreground underline underline-offset-4"
           >
             {t("checkout.cancel")}
           </button>

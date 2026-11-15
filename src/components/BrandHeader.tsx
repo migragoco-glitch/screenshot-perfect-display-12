@@ -95,7 +95,7 @@ export function CountrySelector() {
           <ChevronDown className="size-3" aria-hidden />
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="end" dir={lang === "fa" ? "rtl" : "ltr"} aria-label={t("nav.country")} className="max-h-[var(--radix-popover-content-available-height)] w-60 max-w-[calc(100vw-2rem)] overflow-y-auto p-2">
+      <PopoverContent align="end" dir={lang === "fa" ? "rtl" : "ltr"} aria-label={t("nav.country")} className="visual-header-panel max-h-[var(--radix-popover-content-available-height)] w-60 max-w-[calc(100vw-2rem)] overflow-y-auto p-2">
         <ul>
           <li className="flex items-center gap-2 rounded-md bg-secondary px-3 py-2 text-xs font-semibold text-secondary-foreground" aria-current="true">
             <img src={finland.flag} alt="" aria-hidden="true" className="h-4 w-5 shrink-0 object-contain" />{finland.name[lang]}
@@ -108,7 +108,7 @@ export function CountrySelector() {
               <Button type="button" variant="ghost" size="sm" title={t("nav.comingSoonTip")} aria-disabled="true" onClick={() => trackEvent({ type: "country_click", country: c.name.en })} className="h-auto min-h-8 w-full justify-start gap-2 whitespace-normal text-start text-xs text-muted-foreground">
                 <img src={c.flag} alt="" aria-hidden="true" className="h-4 w-5 shrink-0 object-contain" />
                 <span className="min-w-0 flex-1">{c.name[lang]}</span>
-                <Lock className="size-3 text-[var(--plum)]" aria-hidden />
+                <Lock className="visual-country-lock size-3" aria-hidden />
               </Button>
             </li>
           ))}
@@ -193,7 +193,7 @@ export function AppHeader({ registered, quickCheckCta = false }: { registered?: 
                   <Menu className="size-4" aria-hidden />{t("nav.menu")}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent align="end" dir={lang === "fa" ? "rtl" : "ltr"} aria-label={t("nav.menu")} className="flex max-h-[var(--radix-popover-content-available-height)] max-w-[calc(100vw-2rem)] flex-wrap items-center gap-3 overflow-y-auto lg:hidden">
+              <PopoverContent align="end" dir={lang === "fa" ? "rtl" : "ltr"} aria-label={t("nav.menu")} className="visual-header-panel flex max-h-[var(--radix-popover-content-available-height)] max-w-[calc(100vw-2rem)] flex-wrap items-center gap-3 overflow-y-auto lg:hidden">
                 {renderMenuItems(true)}
               </PopoverContent>
             </Popover>
