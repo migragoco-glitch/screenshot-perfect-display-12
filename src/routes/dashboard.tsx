@@ -328,8 +328,8 @@ function Dashboard() {
           <Button
             type="button"
             variant="outline"
-            onClick={() = className="visual-outline"> void navigate({ to: "/assessment", search: state.completed && !editing ? { view: "recorded" } : {} })}
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted"
+            onClick={() => void navigate({ to: "/assessment", search: state.completed && !editing ? { view: "recorded" } : {} })}
+            className="visual-outline inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted"
           >
             <ClipboardList className="size-4" aria-hidden />
             {t(editing ? "assess.continueReassess" : state.completed ? "assess.viewRecorded" : "assess.open")}
@@ -412,7 +412,7 @@ function Dashboard() {
                 <Button
                   type="button"
                   onClick={() => void navigate({ to: "/assessment", search: state.completed && !editing ? { view: "recorded" } : {} })}
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground"
+                  className="visual-solid inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground"
                 >
                   {t(editing ? "assess.continueReassess" : state.completed ? "assess.viewRecorded" : "assess.open")}
                 </Button>
@@ -824,7 +824,7 @@ function Dashboard() {
                   for (const key of ["migrago.start.v1", "migrago.start.done"]) window.sessionStorage.removeItem(key);
                   setDeleted(true);
                   void navigate({ to: "/" });
-                }}><Trash2 className="size-4" />{t("dash.deleteConfirmYes")}</Button><Button type="button" variant="outline" onClick={() = className="visual-outline"> setConfirmDelete(false)}>{t("dash.deleteConfirmCancel")}</Button></div>
+                }}><Trash2 className="size-4" />{t("dash.deleteConfirmYes")}</Button><Button type="button" variant="outline" className="visual-outline rounded-full" onClick={() => setConfirmDelete(false)}>{t("dash.deleteConfirmCancel")}</Button></div>
               </div> : <Button type="button" variant="destructive" className="mt-4 rounded-full" onClick={() => setConfirmDelete(true)}><Trash2 className="size-4" />{t("dash.deleteData")}</Button>}
 
             </section>

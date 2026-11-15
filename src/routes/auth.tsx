@@ -137,7 +137,7 @@ function AuthPage() {
             type="button"
             disabled={busy || !email || password.length < 8}
             onClick={() => void submit()}
-            className="mt-5 w-full rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition-colors duration-200 ease-out hover:bg-primary/90 disabled:opacity-40"
+            className="visual-solid mt-5 w-full rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition-colors duration-200 ease-out hover:bg-primary/90 disabled:opacity-40"
           >
             {mode === "in" ? t("auth.signIn") : t("auth.signUp")}
           </button>
@@ -145,7 +145,7 @@ function AuthPage() {
           <button
             type="button"
             onClick={() => void google()}
-            className="mt-3 w-full rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted"
+            className="visual-motion mt-3 w-full rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted"
           >
             {t("auth.google")}
           </button>

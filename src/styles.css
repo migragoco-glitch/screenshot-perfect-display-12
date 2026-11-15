@@ -609,3 +609,82 @@
   .home-hero-front, .home-hero-plate, .home-hero-button, .how-stack .how-card, .how-plate { transition: none; }
   .home-hero-stack:hover .home-hero-front, .home-hero-stack:hover .home-hero-plate, .home-hero-front:active, .home-hero-button:hover, .home-hero-button:active, .how-stack:hover .how-card, .how-stack:hover .how-plate, .how-stack .how-card:active { transform: none; }
 }
+
+/* Scoped visual alignment; existing global theme and excluded surfaces stay intact. */
+.visual-page, .visual-fallback, .visual-header-panel, .founders-email {
+  --visual-border: color-mix(in srgb, var(--navigator-navy) 10%, transparent);
+  --visual-input-border: color-mix(in srgb, var(--navigator-navy) 20%, transparent);
+  --visual-focus: color-mix(in srgb, var(--navigator-teal) 30%, transparent);
+  --visual-hover-ring: rgba(2,128,138,.14);
+  --visual-inset: inset 0 1px 2px rgba(2,28,59,.05);
+}
+.visual-page:not(.legal-page) h1 { color: var(--navigator-navy); }
+.visual-solid, .visual-page .visual-solid,
+.visual-dashboard section.border-t > button.bg-\[\#02808A\] {
+  background: var(--navigator-gold); color: var(--navigator-navy); border-radius: 9999px; font-weight: 700;
+}
+.visual-solid:enabled:hover, a.visual-solid:hover, .visual-page .visual-solid:enabled:hover,
+.visual-dashboard section.border-t > button.bg-\[\#02808A\]:enabled:hover { background: var(--navigator-gold); color: var(--navigator-navy); }
+.visual-outline, .visual-page .visual-outline { background: transparent; border: 1.5px solid var(--navigator-teal); color: var(--navigator-teal); border-radius: 9999px; }
+.visual-outline:enabled:hover, a.visual-outline:hover, .visual-page .visual-outline:enabled:hover { background: transparent; color: var(--navigator-teal); }
+.visual-solid:disabled, .visual-outline:disabled { opacity: .5; transform: none; }
+:is(.visual-solid, .visual-outline, .visual-motion),
+.visual-dashboard [role="tab"], .visual-assessment button[aria-pressed],
+.visual-contact a.rounded-full { transition: transform 200ms ease-out, background-color 200ms ease-out, color 200ms ease-out; }
+@media (hover: hover) {
+  :is(.visual-solid, .visual-outline, .visual-motion):enabled:hover,
+  a:is(.visual-solid, .visual-outline):hover,
+  .visual-dashboard [role="tab"]:hover, .visual-assessment button[aria-pressed]:enabled:hover,
+  .visual-contact a.rounded-full:hover { transform: translateY(-2px); }
+}
+:is(.visual-solid, .visual-outline, .visual-motion):enabled:active,
+a:is(.visual-solid, .visual-outline):active,
+.visual-dashboard [role="tab"]:active, .visual-assessment button[aria-pressed]:enabled:active,
+.visual-contact a.rounded-full:active { transform: scale(.97); }
+.visual-page :where(button, a, input, textarea, select, summary):not(.visual-preserve *):focus-visible,
+.visual-fallback:focus-visible { outline: 2px solid var(--navigator-teal); outline-offset: 2px; --tw-ring-color: var(--navigator-teal); }
+.visual-page:not(.legal-page):not(.visual-checkout) a:not(.visual-solid):not(.visual-preserve *),
+.visual-page .visual-link, .visual-auth button.underline, .visual-assessment button.underline { color: var(--navigator-teal); }
+.visual-page:not(.legal-page):not(.visual-checkout) a:not(.visual-solid):not(.visual-preserve *):hover,
+.visual-page .visual-link:hover, .visual-auth button.underline:hover, .visual-assessment button.underline:hover { color: var(--start-link-hover); }
+.visual-auth { overflow-x: clip; }
+.auth-layer { position: relative; isolation: isolate; }
+.auth-layer::before { content: ""; position: absolute; z-index: -1; top: -10px; inset-inline-end: -6px; inset-inline-start: 16px; bottom: 12px; border-radius: 20px; background: var(--navigator-teal); pointer-events: none; }
+@media (min-width: 768px) { .auth-layer::before { top: -16px; inset-inline-end: -12px; inset-inline-start: 28px; bottom: 20px; } }
+.visual-auth input, .visual-assessment :is(input, textarea, select), .founders-email { border-color: var(--visual-input-border); }
+.visual-auth input:focus, .visual-assessment :is(input, textarea, select):focus, .founders-email:focus { border-color: var(--navigator-teal); box-shadow: 0 0 0 2px var(--visual-focus); --tw-ring-color: var(--visual-focus); }
+.visual-checkout .checkout-test-note { background: var(--home-hero-inner); border: 1px solid var(--visual-border); }
+.visual-checkout .checkout-cancel { color: var(--start-label); }
+.visual-checkout .checkout-cancel:hover { color: var(--navigator-navy); }
+.legal-notice { background: color-mix(in srgb, var(--plum) 10%, transparent); border: 1px solid color-mix(in srgb, var(--plum) 40%, transparent); border-radius: 20px; padding: 12px 16px; color: var(--foreground); font-size: 13px; }
+.legal-page .legal-notice { padding: 16px; }
+.visual-faq details, .visual-contact .grid > div { border: 1px solid var(--visual-border); border-radius: 24px; background: color-mix(in oklab, var(--card) 78%, transparent); backdrop-filter: blur(14px) saturate(115%); box-shadow: var(--shadow-card); }
+.visual-faq summary:hover { background: var(--home-hero-inner); }
+.visual-label { color: var(--start-label); }
+.visual-contact .contact-future { background: var(--home-hero-inner); }
+.visual-contact a.bg-secondary, .visual-contact a.bg-secondary:hover { background: var(--navigator-gold); color: var(--navigator-navy); font-weight: 700; }
+.visual-contact a.border-secondary, .visual-contact a.border-secondary:hover { background: transparent; border: 1.5px solid var(--navigator-teal); color: var(--navigator-teal); }
+.visual-dashboard [role="tab"] { border: 1px solid var(--visual-border); background: var(--card); color: var(--start-label); }
+.visual-dashboard [role="tab"][aria-selected="true"] { background: var(--navigator-navy); color: var(--institution-active-foreground); }
+.visual-dashboard [role="tab"]:hover { background: var(--home-hero-inner); }
+.visual-dashboard [role="tab"][aria-selected="true"]:hover { color: var(--navigator-navy); }
+.visual-dashboard section.border-border, .visual-dashboard section.glass-card, .visual-dashboard .visual-gap { border-color: var(--visual-border); }
+.visual-dashboard section.border-s-destructive { border-inline-start-color: var(--destructive); }
+.visual-assessment .assessment-question-card { border: 1px solid var(--visual-border); border-radius: 24px; }
+.visual-assessment .assessment-question-card button[aria-pressed], .visual-assessment .assessment-option { border: 1px solid var(--visual-border); border-radius: 16px; box-shadow: var(--visual-inset); }
+.visual-assessment button[aria-pressed]:enabled:hover { border-color: color-mix(in srgb, var(--navigator-teal) 40%, transparent); box-shadow: 0 0 0 3px var(--visual-hover-ring), var(--visual-inset); }
+.visual-assessment button[aria-pressed="true"] { border-color: var(--navigator-teal); background: var(--start-soft-teal); color: var(--navigator-navy); --tw-ring-color: transparent; }
+.visual-assessment .assessment-question-card button.tabular-nums[aria-pressed="true"] { background: var(--navigator-teal); color: var(--institution-active-foreground); }
+.visual-assessment .option-check-active { background: var(--navigator-teal); border-color: var(--navigator-teal); color: var(--institution-active-foreground); }
+.visual-assessment .assessment-notice { background: var(--home-hero-inner); border: 1px solid var(--visual-border); border-radius: 24px; color: var(--navigator-navy); }
+.visual-assessment .assessment-notice .text-muted-foreground { color: var(--start-label); }
+.visual-assessment .assessment-info { background: var(--start-soft-teal); border: 1px solid color-mix(in srgb, var(--navigator-teal) 25%, transparent); color: var(--start-label); }
+.visual-assessment .visual-solid:hover { box-shadow: 0 0 0 4px var(--visual-hover-ring); }
+.visual-header-panel { border: 1px solid var(--visual-border); border-radius: 20px; }
+.visual-country-lock { color: var(--start-label); }
+.visual-page .rise-in:not(.visual-preserve), .visual-page .conditional-reveal { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .visual-page :is(button, a):not(.visual-preserve *), .visual-fallback,
+  .visual-page :is(button, a):not(.visual-preserve *):hover,
+  .visual-page :is(button, a):not(.visual-preserve *):active, .visual-fallback:hover, .visual-fallback:active { transform: none !important; }
+}

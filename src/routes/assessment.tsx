@@ -481,7 +481,7 @@ function Assessment() {
             <button
               type="button"
               onClick={() => setGuidedView("questions")}
-              className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 hover:bg-secondary/90"
+              className="visual-solid mt-7 inline-flex items-center gap-2 rounded-2xl bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-colors duration-200 hover:bg-secondary/90"
             >
               {t("q.beginLevel")}
               <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
@@ -515,7 +515,7 @@ function Assessment() {
               <button
                 type="button"
                 onClick={() => update({ section7Skipped: !section7Skipped })}
-                className="mt-3 inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-xs font-semibold transition-colors duration-200 ease-out hover:bg-muted"
+                className="visual-outline mt-3 inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-xs font-semibold transition-colors duration-200 ease-out hover:bg-muted"
               >
                 {t(section7Skipped ? "q.restoreSection" : "q.skipSection")}
               </button>
@@ -614,7 +614,7 @@ function Assessment() {
             type="button"
             disabled={section === 1}
             onClick={() => moveToSection(Math.max(1, section - 1))}
-            className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted disabled:opacity-40"
+            className="visual-outline inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ease-out hover:bg-muted disabled:opacity-40"
           >
             <ArrowLeft className="size-4 rtl:rotate-180" aria-hidden />
             {t("q.prev")}
