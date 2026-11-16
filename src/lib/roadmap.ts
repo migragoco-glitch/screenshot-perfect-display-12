@@ -88,8 +88,8 @@ const KNOWLEDGE_TABLE_BASE: KnowledgeEntryBase[] = [
     priority: "high",
     requires: ["documents_not_ready"],
     title: {
-      en: "Complete official translation, notarization and apostille of core documents",
-      fa: "ترجمهٔ رسمی، تأیید محضری و آپوستیل مدارک اصلی را کامل کنید",
+      en: "Complete official translation, notarization and legalization (apostille where applicable) of core documents",
+      fa: "ترجمهٔ رسمی، تأیید محضری و قانونی‌سازی (در صورت لزوم آپوستیل) مدارک اصلی را کامل کنید",
     },
     detail: {
       en: "Passport, birth certificate, marriage/divorce records and degree certificates must be legalized before any Finnish authority accepts them.",

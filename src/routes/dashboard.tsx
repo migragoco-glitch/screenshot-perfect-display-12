@@ -67,17 +67,17 @@ export const Route = createFileRoute("/dashboard")({
   validateSearch: (search: Record<string, unknown>): { tab?: "profile" } => search["tab"] === "profile" ? { tab: "profile" } : {},
   head: () => ({
     meta: [
-      { title: "Integration Profile — MigraGo dashboard" },
+      { title: "readiness profile — MigraGo dashboard" },
       {
         name: "description",
         content:
-          "Your Legal / Status Readiness, Economic & Professional Capacity and Soft Skills & Psychological Readiness scores plus your evidence-based 12-week Finland roadmap.",
+          "Your Legal / Status Readiness, Economic & Professional Capacity and Soft Skills & Psychological Readiness scores plus your evidence-based week-by-week plan for Finland.",
       },
-      { property: "og:title", content: "Integration Profile — MigraGo dashboard" },
+      { property: "og:title", content: "readiness profile — MigraGo dashboard" },
       {
         property: "og:description",
         content:
-          "Live-recalculated readiness scores and a 12-week roadmap traced to Finnish institutions.",
+          "Live-recalculated readiness scores and a week-by-week plan traced to Finnish institutions.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -837,7 +837,7 @@ function Dashboard() {
       />
 
 
-      <SiteFooter />
+      <SiteFooter hideLegal />
     </div>
   );
 }

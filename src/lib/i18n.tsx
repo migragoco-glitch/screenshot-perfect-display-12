@@ -296,7 +296,7 @@ export const en = {
   "how.s2.t": "Choose the cards that match your needs",
   "how.s2.d": "Each card is one part of the settlement and integration path. Select one or more cards, or all of them. You answer a few short questions only about the cards you selected, so your steps fit your situation.",
   "how.s3.t": "See the result in one of two ways",
-  "how.s3.d": "“Information for my choices”: For each of your choices: the responsible authority, the link to its official website, the deadline, required documents and notes (where they apply). Premium adds an interactive document checklist.\n“My roadmap”: Your actions are listed in order, in timed phases of 3 to 12 weeks. Premium adds each step's week range, the ability to log completed steps and step details.",
+  "how.s3.d": "“Information for my choices”: For each of your choices: the responsible authority, the link to its official website, the deadline, required documents and notes (where they apply). Premium adds an interactive document checklist.\n“My roadmap”: Your actions are listed in order, in timed phases. Premium adds each step's week range, the ability to log completed steps and step details.",
   "how.mock.city": "City",
   "how.mock.matters": "Your matters",
   "how.mock.more": "… and more",
@@ -396,9 +396,9 @@ export const en = {
   "consent.p1":
     "This assessment collects structured information about your legal status, education and career, financial capacity, psychological readiness, legal history and your Finland strategy. It is used for one purpose only: to calculate your integration-readiness profile and to personalize your roadmap.",
   "consent.p2":
-    "The visa-refusal question (Q31) and the immigration-violation / unauthorized-overstay question (Q33) are answered on a fixed-choice basis. Where an optional free-text reason is offered, it is used only for roadmap personalization and is never shared with government authorities.",
+    "The visa-refusal question and the immigration-violation / unauthorized-overstay question are answered on a fixed-choice basis. Where an optional free-text reason is offered, it is used only for roadmap personalization and is never shared with government authorities.",
   "consent.p3":
-    "MigraGo does not replace legal advice or official authorities, and does not guarantee residence or integration outcomes. You can request deletion of all of your data at any time from Profile Settings.",
+    "MigraGo does not replace legal advice or official authorities, and does not guarantee residence or integration outcomes. You can request deletion of all of your data at any time from the Account tab of the dashboard or from the start page.",
   "consent.selfReport":
     "Your roadmap is generated entirely from the answers you provide. MigraGo does not verify the accuracy of your responses. Incomplete or inaccurate answers — whether unintentional or deliberate — may result in a roadmap that does not reflect your actual situation, and responsibility for the accuracy of your answers rests with you.",
   "q.inconsistencyVisa":
@@ -408,7 +408,7 @@ export const en = {
   "q.inconsistencyOk": "My answers are correct — continue",
   "consent.privacy": "Read the short privacy note",
   "consent.privacyBody":
-    "We store only the answers you give, plus your score history, to show how your profile evolves. No answer is sold, shared with authorities, or used to identify you in aggregate statistics. Deleting your data removes your answers, scores and roadmap permanently.",
+    "Your answers and score history are stored only in your browser, on your device, to show how your profile evolves. No answer is sold, shared with authorities, or used to identify you. Deleting your data permanently removes your answers, scores and roadmap from this device.",
   "consent.check":
     "I have read the above and consent to MigraGo processing these answers, including sensitive-adjacent details, to generate my profile and roadmap (GDPR Art. 6/9 lawful basis).",
   "consent.continue": "I consent — start the assessment",
@@ -479,7 +479,7 @@ export const en = {
 
   "pay.title": "Your profile is ready",
   "pay.sub":
-    "The Free plan includes a step-by-step roadmap with the responsible authority and official link for each step. Premium adds the full assessment, a readiness profile, a 12-week roadmap, step tracking and a document checklist. 30-day access €9.99 or 90-day access €24.99; one-time payment, no automatic renewal.",
+    "The Free plan includes a step-by-step roadmap with the responsible authority and official link for each step. Premium adds the full assessment, a readiness profile, a week-by-week plan, step tracking and a document checklist. 30-day access €9.99 or 90-day access €24.99; one-time payment, no automatic renewal.",
   "pay.teaser": "Locked preview",
   "pay.unlock": "Activate Premium",
   "pay.later": "Stay on the free overview",
@@ -539,7 +539,7 @@ export const en = {
   "nav.signIn": "Sign in",
   "nav.logout": "Log out",
 
-  "auth.subtitle": "Signing in does not currently sync your progress across devices. Your assessment answers and roadmap progress are saved only on this device/browser.",
+  "auth.subtitle": "Signing in is for buying and keeping Premium access. Your assessment answers and progress are not synced between devices; they stay on this device or browser only.",
   "auth.email": "Email",
   "auth.password": "Password (min. 8 characters)",
   "auth.signIn": "Sign in",
@@ -643,7 +643,7 @@ export const en = {
   "metrics.prototype": "Prototype mode",
   "metrics.prototypeBody":
     "Figures combine simulated demonstration data with real pilot signups collected since August 2026.",
-  "metrics.csat": "AI Accuracy Signal (CSAT)",
+  "metrics.csat": "Usefulness Signal (CSAT)",
   "metrics.csatMatch": "positive",
   "metrics.nps": "Recommendation score (NPS)",
   "metrics.npsAvg": "average score",
@@ -1245,7 +1245,7 @@ export const fa: Record<keyof typeof en, string> = {
   "how.s2.t": "کارت‌های مرتبط با نیازهای خود را انتخاب کنید",
   "how.s2.d": "هر کارت یک بخش از مسیر استقرار و ادغام را نشان می‌دهد. یک یا چند کارت، یا همهٔ آن‌ها را انتخاب کنید. فقط دربارهٔ کارت‌های انتخاب‌شده چند پرسش کوتاه پاسخ می‌دهید تا گام‌های شما متناسب با شرایطتان تعیین شود.",
   "how.s3.t": "نتیجه را به یکی از دو شکل ببینید",
-  "how.s3.d": "«اطلاعات مرتبط با انتخاب‌های من»: برای هر انتخاب شما: نهاد مسئول، لینک وب‌سایت رسمی، مهلت، مدارک لازم و یادداشت (در صورت وجود). نسخهٔ Premium چک‌لیست تعاملی مدارک را اضافه می‌کند.\n«نقشهٔ راه من»: اقدام‌ها به ترتیب انجام، در مرحله‌های زمان‌بندی‌شدهٔ ۳ تا ۱۲ هفته‌ای می‌آید. نسخهٔ Premium بازهٔ هفتهٔ هر گام، امکان ثبت گام‌های انجام‌شده و جزئیات هر گام را اضافه می‌کند.",
+  "how.s3.d": "«اطلاعات مرتبط با انتخاب‌های من»: برای هر انتخاب شما: نهاد مسئول، لینک وب‌سایت رسمی، مهلت، مدارک لازم و یادداشت (در صورت وجود). نسخهٔ Premium چک‌لیست تعاملی مدارک را اضافه می‌کند.\n«نقشهٔ راه من»: اقدام‌ها به ترتیب انجام، در مرحله‌های زمان‌بندی‌شده می‌آید. نسخهٔ Premium بازهٔ هفتهٔ هر گام، امکان ثبت گام‌های انجام‌شده و جزئیات هر گام را اضافه می‌کند.",
   "how.mock.city": "شهر",
   "how.mock.matters": "امور شما",
   "how.mock.more": "… و موارد دیگر",
@@ -1344,9 +1344,9 @@ export const fa: Record<keyof typeof en, string> = {
   "consent.p1":
     "این ارزیابی اطلاعاتی ساختارمند دربارهٔ وضعیت حقوقی، تحصیلات و سابقهٔ شغلی، توان مالی، آمادگی روانی، سابقهٔ حقوقی و راهبرد شما برای فنلاند گردآوری می‌کند. این داده‌ها تنها برای یک هدف به کار می‌رود: محاسبهٔ پروفایل آمادگی ادغام شما و شخصی‌سازی نقشه‌راه.",
   "consent.p2":
-    "پرسش مربوط به ریجکتی ویزا (پرسش ۳۱) و پرسش مربوط به تخلف مهاجرتی / اقامت غیرمجاز (پرسش ۳۳) صرفاً به‌صورت گزینه‌ای پاسخ داده می‌شوند. در مواردی که شرح اختیاری متنی ارائه شود، تنها برای شخصی‌سازی نقشه‌راه استفاده می‌گردد و هرگز با مراجع دولتی به اشتراک گذاشته نمی‌شود.",
+    "پرسش مربوط به ریجکتی ویزا و پرسش مربوط به تخلف مهاجرتی / اقامت غیرمجاز صرفاً به‌صورت گزینه‌ای پاسخ داده می‌شوند. در مواردی که شرح اختیاری متنی ارائه شود، تنها برای شخصی‌سازی نقشه‌راه استفاده می‌گردد و هرگز با مراجع دولتی به اشتراک گذاشته نمی‌شود.",
   "consent.p3":
-    "میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام نمی‌دهد. شما می‌توانید در هر زمان از بخش تنظیمات پروفایل، حذف کامل داده‌های خود را درخواست کنید.",
+    "میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام نمی‌دهد. شما می‌توانید در هر زمان از تب «حساب کاربری» داشبورد یا از صفحهٔ شروع، حذف کامل داده‌های خود را درخواست کنید.",
   "consent.selfReport":
     "نقشه‌راه شما کاملاً بر اساس پاسخ‌هایی که ارائه می‌دهید ساخته می‌شود. میگراگو صحت پاسخ‌های شما را بررسی یا تأیید نمی‌کند. پاسخ ناقص یا نادرست — چه غیرعمد و چه عمدی — می‌تواند به نقشه‌راهی منجر شود که با وضعیت واقعی شما هم‌خوانی ندارد، و مسئولیت صحت پاسخ‌ها بر عهدهٔ خود شماست.",
   "q.inconsistencyVisa":
@@ -1356,7 +1356,7 @@ export const fa: Record<keyof typeof en, string> = {
   "q.inconsistencyOk": "پاسخ‌هایم درست است — ادامه",
   "consent.privacy": "مطالعهٔ یادداشت کوتاه حریم خصوصی",
   "consent.privacyBody":
-    "ما تنها پاسخ‌هایی که می‌دهید و تاریخچهٔ نمرهٔ شما را ذخیره می‌کنیم تا روند تحول پروفایل‌تان را نشان دهیم. هیچ پاسخی فروخته نمی‌شود، با مراجع دولتی به اشتراک گذاشته نمی‌شود و برای شناسایی شما در آمار تجمیعی به کار نمی‌رود. حذف داده‌ها، پاسخ‌ها، نمرات و نقشه‌راه شما را برای همیشه پاک می‌کند.",
+    "پاسخ‌ها و تاریخچهٔ نمرهٔ شما فقط در مرورگر خودتان و روی همین دستگاه ذخیره می‌شود تا روند تحول پروفایل‌تان را نشان دهد. هیچ پاسخی فروخته نمی‌شود، با مراجع دولتی به اشتراک گذاشته نمی‌شود و برای شناسایی شما به کار نمی‌رود. حذف داده‌ها، پاسخ‌ها، نمرات و نقشهٔ راه شما را برای همیشه از همین دستگاه پاک می‌کند.",
   "consent.check":
     "متن بالا را خوانده‌ام و رضایت می‌دهم که میگراگو این پاسخ‌ها، از جمله جزئیات نزدیک به دادهٔ حساس، را برای تولید پروفایل و نقشه‌راه من پردازش کند (مبنای قانونی مواد ۶ و ۹ مقررات GDPR).",
   "consent.continue": "رضایت می‌دهم و ادامه می‌دهم",
@@ -1426,7 +1426,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "pay.title": "پروفایل شما آماده است",
   "pay.sub":
-    "پلن رایگان شامل نقشهٔ راه گام‌به‌گام، نهاد مسئول و لینک رسمی هر گام است. Premium ارزیابی کامل، پروفایل آمادگی، نقشهٔ راه ۱۲هفته‌ای، پیگیری گام‌ها و چک‌لیست مدارک را اضافه می‌کند. دسترسی ۳۰ روزه ۹٫۹۹ یورو یا ۹۰ روزه ۲۴٫۹۹ یورو؛ پرداخت یک‌باره و بدون تمدید خودکار.",
+    "پلن رایگان شامل نقشهٔ راه گام‌به‌گام، نهاد مسئول و لینک رسمی هر گام است. Premium ارزیابی کامل، پروفایل آمادگی، برنامهٔ هفته‌به‌هفته، پیگیری گام‌ها و چک‌لیست مدارک را اضافه می‌کند. دسترسی ۳۰ روزه ۹٫۹۹ یورو یا ۹۰ روزه ۲۴٫۹۹ یورو؛ پرداخت یک‌باره و بدون تمدید خودکار.",
   "pay.teaser": "پیش‌نمایش قفل‌شده",
   "pay.unlock": "فعال‌سازی Premium",
   "pay.later": "ادامه با نمای رایگان",
@@ -1487,7 +1487,7 @@ export const fa: Record<keyof typeof en, string> = {
   "nav.logout": "خروج",
 
   "auth.subtitle":
-    "ورود در حال حاضر پیشرفت شما را بین دستگاه‌ها همگام نمی‌کند. پاسخ‌های ارزیابی و پیشرفت نقشه‌راه شما فقط روی همین دستگاه/مرورگر ذخیره می‌شود.",
+    "ورود برای خرید و نگهداری دسترسی Premium است. پاسخ‌های ارزیابی و پیشرفت شما بین دستگاه‌ها همگام نمی‌شود و فقط روی همین دستگاه یا مرورگر ذخیره می‌ماند.",
   "auth.email": "ایمیل",
   "auth.password": "گذرواژه (حداقل ۸ نویسه)",
   "auth.signIn": "ورود",
@@ -1591,7 +1591,7 @@ export const fa: Record<keyof typeof en, string> = {
   "metrics.prototype": "حالت نمونهٔ اولیه",
   "metrics.prototypeBody":
     "این ارقام ترکیبی از داده‌های نمایشی شبیه‌سازی‌شده و ثبت‌نام‌های واقعی آزمایشی گردآوری‌شده از اوت ۲۰۲۶ است.",
-  "metrics.csat": "سیگنال دقت تحلیل هوش مصنوعی (CSAT)",
+  "metrics.csat": "سیگنال سودمندی (CSAT)",
   "metrics.csatMatch": "پاسخ مثبت",
   "metrics.nps": "امتیاز توصیه (NPS)",
   "metrics.npsAvg": "میانگین امتیاز",

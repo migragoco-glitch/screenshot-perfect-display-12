@@ -16,12 +16,12 @@ export const Route = createFileRoute("/checkout")({
       {
         name: "description",
         content:
-          "Activate Premium to unlock the full readiness profile and 12-week roadmap.",
+          "Activate Premium to unlock the full readiness profile and week-by-week plan.",
       },
       { property: "og:title", content: "Checkout — MigraGo" },
       {
         property: "og:description",
-        content: "Unlock the full Integration Profile and your 12-week Finland roadmap.",
+        content: "Unlock the full readiness profile and your week-by-week plan for Finland.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

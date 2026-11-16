@@ -11,12 +11,12 @@ export const Route = createFileRoute("/faq")({
       {
         name: "description",
         content:
-          "Answers about MigraGo's Finland integration assessment, scoring, pricing, data handling and the 12-week roadmap.",
+          "Answers about MigraGo's Finland integration assessment, scoring, pricing, data handling and the step-by-step roadmap.",
       },
       { property: "og:title", content: "FAQ — MigraGo" },
       {
         property: "og:description",
-        content: "Common questions about the assessment, scoring model, pricing and your data.",
+        content: "Common questions about the assessment, scoring, pricing and your data.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

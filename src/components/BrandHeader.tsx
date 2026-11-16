@@ -205,7 +205,7 @@ export function AppHeader({ registered, quickCheckCta = false }: { registered?: 
 }
 
 
-export function SiteFooter() {
+export function SiteFooter({ hideLegal = false }: { hideLegal?: boolean }) {
   const { t } = useI18n();
   return (
     <footer className="border-t border-border/70 text-white" style={{ backgroundColor: "#021C3B" }}>
@@ -241,9 +241,9 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="flex flex-col items-start">
-          <p className="max-w-3xl text-sm leading-relaxed text-white/85">
+          {hideLegal ? null : <p className="max-w-3xl text-sm leading-relaxed text-white/85">
             {t("footer.legal")}
-          </p>
+          </p>}
           <nav className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold">
             <Link to="/faq" className="underline underline-offset-4 hover:opacity-80">
               {t("nav.faq")}
