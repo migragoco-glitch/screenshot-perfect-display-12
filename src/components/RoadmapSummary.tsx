@@ -114,7 +114,7 @@ export function ProfilePreview({ profile, onOpen }: { profile?: Profile; onOpen:
     { label: t("dash.dim3"), value: profile?.psychological, color: DIMENSION_COLORS.psychological },
   ];
   return <section className="mt-8 border-t border-border py-6">
-    {!profile ? <img src={penguin.url} alt="" aria-hidden="true" draggable={false} className="mb-3 w-[72px] select-none" /> : null}
+    {!profile ? <img src={penguin.url} alt="" aria-hidden="true" draggable={false} className="mb-3 w-20 select-none md:w-24" /> : null}
     <h3 className="text-lg font-semibold">{t(profile ? "start.profile.title" : "start.emptyProfile.title")}</h3>
     {!profile ? <p className="mt-2 text-sm text-muted-foreground">{t("start.emptyProfile.sub")}</p> : null}
     <div className="mt-5 grid items-center gap-5 sm:grid-cols-[112px_1fr]">

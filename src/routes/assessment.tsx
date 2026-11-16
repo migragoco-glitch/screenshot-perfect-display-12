@@ -64,6 +64,7 @@ export const Route = createFileRoute("/assessment")({
 });
 
 const SECTION_ICONS = [Gavel, Briefcase, Wallet, HeartHandshake, ScrollText, Compass, Star] as const;
+const COMPANION_AFTER_SECTION = { mid: 2, near: 5 } as const;
 
 const DIMENSION_KEY = {
   legal: "dash.dim1",
@@ -255,10 +256,10 @@ function Assessment() {
       const next = Math.min(7, section + 1);
       setSection(next);
       window.scrollTo({ top: 0, behavior: "smooth" });
-      if (section === 4) {
+      if (section === COMPANION_AFTER_SECTION.mid) {
         setCompanionMoment("mid");
         setGuidedView("companion");
-      } else if (section === 6) {
+      } else if (section === COMPANION_AFTER_SECTION.near) {
         setCompanionMoment("near");
         setGuidedView("companion");
       } else {

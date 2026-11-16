@@ -711,7 +711,7 @@ export const en = {
     "In the Free plan you see your step-by-step roadmap covering 9 core settlement areas. For each step you get the responsible authority and official link, the deadline, required documents, key notes and the last-checked date. The Free plan has no time limit.",
   "faq.q3": "What does Premium add?",
   "faq.a3":
-    "Premium is a one-time access pass for 30 or 90 days, with no automatic renewal. In addition to Free, it adds a week-by-week plan and full details for every step, an interactive document checklist and logging of completed steps. It also adds the full 33-question assessment with a readiness profile and chart, steps prioritized for your situation, reassessment with score history, and a personal dashboard.",
+    "Premium is a one-time access pass for 30 or 90 days, with no automatic renewal. In addition to Free, it adds a week-by-week plan and full details for every step, an interactive document checklist and logging of completed steps. It also adds the full assessment with a readiness profile and chart, steps prioritized for your situation, reassessment with score history, and a personal dashboard.",
   "faq.q4": "How is my roadmap generated?",
   "faq.a4":
     "Your assessment responses evaluate your current status across three core dimensions and identify existing gaps. The system then maps these gaps against the official regulations and procedures of the destination country, structuring the required actions into a 12-week plan across four operational phases..",
@@ -1659,7 +1659,7 @@ export const fa: Record<keyof typeof en, string> = {
     "در نسخهٔ رایگان، نقشهٔ راه گام‌به‌گام شما را با پوشش ۹ حوزهٔ اصلی استقرار می‌بینید. برای هر گام، نهاد مسئول و لینک رسمی، مهلت، مدارک لازم، یادداشت‌های مهم و تاریخ آخرین بررسی را دارید. نسخهٔ رایگان محدودیت زمانی ندارد.",
   "faq.q3": "Premium چه چیزی اضافه می‌کند؟",
   "faq.a3":
-    "Premium یک دسترسی یک‌باره ۳۰ یا ۹۰ روزه است و تمدید خودکار ندارد. علاوه بر امکانات رایگان، برنامهٔ هفته‌به‌هفته و جزئیات کامل هر گام، چک‌لیست تعاملی مدارک و ثبت گام‌های انجام‌شده را دارد. همچنین ارزیابی کامل ۳۳ پرسشی با پروفایل آمادگی و نمودار، اولویت‌بندی گام‌ها بر اساس وضعیت شما، ارزیابی مجدد با تاریخچهٔ نمره‌ها و داشبورد شخصی را اضافه می‌کند.",
+    "Premium یک دسترسی یک‌باره ۳۰ یا ۹۰ روزه است و تمدید خودکار ندارد. علاوه بر امکانات رایگان، برنامهٔ هفته‌به‌هفته و جزئیات کامل هر گام، چک‌لیست تعاملی مدارک و ثبت گام‌های انجام‌شده را دارد. همچنین ارزیابی کامل با پروفایل آمادگی و نمودار، اولویت‌بندی گام‌ها بر اساس وضعیت شما، ارزیابی مجدد با تاریخچهٔ نمره‌ها و داشبورد شخصی را اضافه می‌کند.",
   "faq.q4": "نقشهٔ راه چگونه ساخته می‌شود؟",
   "faq.a4":
     "پاسخ‌های ارزیابی شما، وضعیت کنونی‌تان را در ابعاد سه‌گانه سنجیده و شکاف‌های موجود را شناسایی می‌کند. سامانه سپس این شکاف‌ها را با ضوابط و رویه‌های رسمی کشور مقصد تطبیق داده و اقدامات لازم را در قالب یک برنامه ۱۲ هفته‌ای (در چهار فاز عملیاتی) مرتب می‌سازد.",
