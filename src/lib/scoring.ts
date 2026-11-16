@@ -293,8 +293,8 @@ export function analysisSummary(p: Profile): Bilingual {
         )
       : p.overall >= 55
         ? L(
-            "Your profile is viable with clear, fixable gaps. Prioritizing documentation and financial evidence will move your readiness up the fastest.",
-            "پروفایل شما قابل‌اتکاست و شکاف‌های آن مشخص و قابل رفع است. اولویت‌دادن به مستندسازی و شواهد مالی، سریع‌ترین بهبود آمادگی شما را رقم می‌زند.",
+            "Your score is in the middle range; you have the necessary foundations and the gaps are clear and fixable. Working through the top priorities on the list is the fastest way to improve your readiness.",
+            "نمرهٔ شما در بازهٔ میانی است؛ پایه‌های لازم را دارید و شکاف‌ها مشخص و قابل رفع‌اند. پرداختن به اولویت‌های بالای فهرست، سریع‌ترین بهبود آمادگی شما را رقم می‌زند.",
           )
         : L(
             "Your profile needs foundational work before applying. Start with documents, financial evidence and language, and re-run this assessment as each improves.",

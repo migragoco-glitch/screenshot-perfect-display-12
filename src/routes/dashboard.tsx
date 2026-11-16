@@ -496,13 +496,14 @@ function Dashboard() {
 
               <section className="rounded-3xl border border-border bg-card p-6">
                 <h2 className="text-lg">{t("dash.bonus")}</h2>
-                <p className="mt-2 text-4xl font-bold text-[var(--navigator-teal)] tabular-nums">
-                  {bonusAnswered
-                    ? `${localizeNumber(profile.bonus, lang)}%`
-                    : t("dash.bonusNotAnswered")}
-                </p>
+                {bonusAnswered ? (
+                  <p className="mt-2 text-4xl font-bold text-[var(--navigator-teal)] tabular-nums">
+                    {`${localizeNumber(profile.bonus, lang)}%`}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-base font-semibold text-foreground">{t("dash.bonusNotAnswered")}</p>
+                )}
                 <p className="mt-2 text-xs text-muted-foreground">{t("dash.bonusNote")}</p>
-                <p className="mt-2 text-xs text-muted-foreground">{t("dash.bonusNotCore")}</p>
               </section>
 
               {locked ? (

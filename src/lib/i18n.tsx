@@ -45,7 +45,7 @@ export const en = {
   "dash.showAll": "Show all",
   "prog.noSessionTitle": "Your roadmap in one place",
   "prog.noSessionCta": "Go to my roadmap",
-  "dash.deleteBody": "Your answers, scores and progress are saved only on this device and are never sold or shared with anyone. This button permanently removes all of them from this browser. Any email address submitted for early access is kept separately; to request its deletion, please email migrago.co@gmail.com.",
+  "dash.deleteBody": "Your answers, scores and progress are stored only on this device; they are not sold or shared with anyone. This button erases all of them from this browser. Premium access and account details are not deleted by this button. The email you registered for early access is kept separately. To delete your email or account, write to migrago.co@gmail.com.",
   "authority.combinedMunicipality": "Local municipality / employment area services",
 
   "start.profile.title": "Go deeper: your full readiness profile",
@@ -385,7 +385,7 @@ export const en = {
   "pricing.navItem4": "Interactive document checklist",
   "pricing.navItem5": "Logging completed steps and tracking progress",
   "pricing.navItem6": "Readiness profile with charts",
-  "pricing.navItem7": "Save to account, PDF and alerts (coming soon)",
+  "pricing.navItem7": "PDF export and alerts (coming soon)",
   "pricing.navF1": "Week-by-week plan with step details",
   "pricing.navF0": "Everything in the free plan",
   "pricing.navF2": "Progress tracking and one document checklist",
@@ -460,7 +460,7 @@ export const en = {
   "dash.dim3": "Soft Skills & Psychological Readiness",
   "dash.weight": "weight",
   "dash.bonus": "Entrepreneurship & Talent Potential (Optional)",
-  "dash.bonusNotAnswered": "Optional — not answered yet",
+  "dash.bonusNotAnswered": "Not answered yet",
   "dash.bonusNote":
     "Talent & Founder potential — reported separately, never part of the 100-point base score.",
   "dash.composition": "Dimension composition",
@@ -552,7 +552,7 @@ export const en = {
   "auth.hidePassword": "Hide password",
 
   "csat.q": "Does this analysis match your real situation?",
-  "csat.sub": "One tap. It helps us validate the model — no personal data is stored.",
+  "csat.sub": "One tap. It helps us improve the accuracy of the analysis. Only \"yes\" or \"no\" and a random code (to prevent duplicate submissions) are recorded; your name, email and answers are not recorded.",
   "csat.yes": "Yes, it matches",
   "csat.partly": "Partly",
   "csat.no": "Not really",
@@ -623,7 +623,7 @@ export const en = {
 
   "set.account": "Account",
   "set.email": "Signed in as",
-  "set.notSignedIn": "Your answers, scores and progress are currently saved only in this browser. Saving to your account and access from several devices are coming soon.",
+  "set.notSignedIn": "Your answers, scores and progress are stored only in this browser. Only your account details, purchase and Premium validity period are kept on your account. When you sign in, your Premium access is active on any device, but your answers and scores do not move with you.",
   "set.legal": "Legal",
   "set.privacy": "Privacy Policy",
   "set.terms": "Terms of Service",
@@ -995,7 +995,7 @@ export const fa: Record<keyof typeof en, string> = {
   "dash.showAll": "نمایش همهٔ موارد",
   "prog.noSessionTitle": "نقشهٔ راه شما در یک جا",
   "prog.noSessionCta": "رفتن به نقشهٔ راه من",
-  "dash.deleteBody": "پاسخ‌ها، نمرات و پیشرفت شما فقط روی همین دستگاه ذخیره می‌شوند و فروخته یا با کسی به اشتراک گذاشته نمی‌شوند. این دکمه همهٔ آن‌ها را از همین مرورگر پاک می‌کند. ایمیلی که برای دسترسی زودهنگام ثبت کرده‌اید جداگانه نگهداری می‌شود؛ برای حذف آن به migrago.co@gmail.com ایمیل بزنید.",
+  "dash.deleteBody": "پاسخ‌ها، نمرات و پیشرفت شما فقط روی همین دستگاه ذخیره می‌شوند؛ فروخته نمی‌شوند و با کسی به اشتراک گذاشته نمی‌شوند. این دکمه همهٔ آن‌ها را از همین مرورگر پاک می‌کند. دسترسی Premium و اطلاعات حساب با این دکمه حذف نمی‌شوند. ایمیلی که برای دسترسی زودهنگام ثبت کرده‌اید جداگانه نگهداری می‌شود. برای حذف ایمیل یا حساب به migrago.co@gmail.com ایمیل بزنید.",
   "authority.combinedMunicipality": "شهرداری و منطقهٔ اشتغال",
 
   "start.area.work.title": "مالیات و کار",
@@ -1333,7 +1333,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.navItem4": "چک‌لیست تعاملی مدارک",
   "pricing.navItem5": "ثبت گام‌های انجام‌شده و پیگیری پیشرفت",
   "pricing.navItem6": "پروفایل آمادگی با نمودار",
-  "pricing.navItem7": "ذخیره روی حساب، PDF و هشدار (به‌زودی)",
+  "pricing.navItem7": "خروجی PDF و هشدار (به‌زودی)",
   "pricing.navF1": "برنامهٔ هفته‌به‌هفته با جزئیات هر گام",
   "pricing.navF0": "همهٔ امکانات پلن رایگان",
   "pricing.navF2": "پیگیری پیشرفت و یک فهرست مدارک",
@@ -1407,7 +1407,7 @@ export const fa: Record<keyof typeof en, string> = {
   "dash.dim3": "مهارت‌های نرم و آمادگی روانی",
   "dash.weight": "وزن",
   "dash.bonus": "توان کارآفرینی و استعداد (اختیاری)",
-  "dash.bonusNotAnswered": "اختیاری — هنوز پاسخ داده نشده",
+  "dash.bonusNotAnswered": "هنوز پاسخ داده نشده",
   "dash.bonusNote":
     "توان استعداد و کارآفرینی — جداگانه گزارش می‌شود و هرگز بخشی از نمرهٔ پایهٔ ۱۰۰ نیست.",
   "dash.composition": "ترکیب ابعاد",
@@ -1500,7 +1500,7 @@ export const fa: Record<keyof typeof en, string> = {
   "auth.hidePassword": "پنهان کردن گذرواژه",
 
   "csat.q": "آیا این تحلیل با وضعیت واقعی شما همخوانی دارد؟",
-  "csat.sub": "فقط یک کلیک. این پاسخ به اعتبارسنجی مدل کمک می‌کند و هیچ داده‌ای شخصی ذخیره نمی‌شود.",
+  "csat.sub": "فقط یک کلیک. این پاسخ به بهبود دقت تحلیل کمک می‌کند. فقط «بله» یا «خیر» و یک کد تصادفی (برای جلوگیری از ثبت تکراری) ثبت می‌شود؛ نام، ایمیل و پاسخ‌های شما ثبت نمی‌شود.",
   "csat.yes": "بله، همخوانی دارد",
   "csat.partly": "تا حدی",
   "csat.no": "چندان نه",
@@ -1571,7 +1571,7 @@ export const fa: Record<keyof typeof en, string> = {
 
   "set.account": "حساب کاربری",
   "set.email": "واردشده با",
-  "set.notSignedIn": "پاسخ‌ها، نمرات و پیشرفت شما فعلاً فقط در همین مرورگر ذخیره می‌شوند. ذخیرهٔ روی حساب و دسترسی از چند دستگاه به‌زودی اضافه می‌شود.",
+  "set.notSignedIn": "پاسخ‌ها، نمرات و پیشرفت شما فقط در همین مرورگر ذخیره می‌شوند. روی حساب شما فقط اطلاعات حساب، خرید و مدت اعتبار Premium نگهداری می‌شود. با ورود به حساب، دسترسی Premium شما در هر دستگاه فعال است، اما پاسخ‌ها و نمره‌ها همراه شما منتقل نمی‌شوند.",
   "set.legal": "اسناد حقوقی",
   "set.privacy": "سیاست حریم خصوصی",
   "set.terms": "شرایط استفاده از خدمات",
