@@ -4,7 +4,7 @@ import { useI18n } from "@/lib/i18n";
 export const CONTACT_EMAIL = "migrago.co@gmail.com";
 export const WHATSAPP_NUMBER = "995595413537";
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
-export const MAILTO_URL = `mailto:${CONTACT_EMAIL}?subject=MigraGo%20support`;
+export const MAILTO_URL = `mailto:${CONTACT_EMAIL}?subject=MigraGo`;
 
 /** Email + WhatsApp, shown identically everywhere support is offered. */
 export function SupportChannels({ compact }: { compact?: boolean }) {

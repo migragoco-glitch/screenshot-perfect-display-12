@@ -289,7 +289,7 @@ export function analysisSummary(p: Profile): Bilingual {
     p.overall >= TOP_BAND_THRESHOLD
       ? L(
           "Your profile is strong and close to action-ready. The main task is sequencing: complete the administrative foundation first, then convert your professional profile into Finnish-market form.",
-          "پروفایل شما قوی و نزدیک به آمادگی اجرایی است. کار اصلی، چینش درست گام‌ها است: نخست بنیاد اداری را کامل کنید و سپس پروفایل حرفه‌ای خود را به شکل قابل‌پذیرش بازار فنلاند دربیاورید.",
+          "پروفایل شما قوی و نزدیک به آمادگی اجرایی است. کار اصلی، چینش درست گام‌ها است: نخست بنیاد اداری را کامل کنید و سپس پروفایل حرفه‌ای خود را به شکل قابل‌پذیرش در بازار فنلاند درآورید.",
         )
       : p.overall >= 55
         ? L(
@@ -297,8 +297,8 @@ export function analysisSummary(p: Profile): Bilingual {
             "نمرهٔ شما در بازهٔ میانی است؛ پایه‌های لازم را دارید و شکاف‌ها مشخص و قابل رفع‌اند. پرداختن به اولویت‌های بالای فهرست، سریع‌ترین بهبود آمادگی شما را رقم می‌زند.",
           )
         : L(
-            "Your profile needs foundational work before applying. Start with documents, financial evidence and language, and re-run this assessment as each improves.",
-            "پروفایل شما پیش از اقدام به کارهای بنیادی نیاز دارد. از مدارک، شواهد مالی و زبان آغاز کنید و با بهبود هر مورد، این ارزیابی را دوباره اجرا کنید.",
+            "Your profile needs foundational work before applying. Start with the top priorities in your list and re-run this assessment as each one improves.",
+            "پروفایل شما پیش از اقدام، به کارهای بنیادی نیاز دارد. با اولویت‌های بالای فهرست آغاز کنید و با بهبود هر مورد، ارزیابی را دوباره انجام دهید.",
           );
   return band;
 }

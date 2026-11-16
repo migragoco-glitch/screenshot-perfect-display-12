@@ -77,7 +77,7 @@ export function InstitutionBadge({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 rounded-full border border-[#C8A96A] bg-transparent px-3 py-1.5 text-sm font-semibold text-[#C8A96A] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[#C8A96A] hover:bg-[#C8A96A] hover:text-[#021C3B] hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:border-[#C8A96A] focus-visible:bg-[#C8A96A] focus-visible:text-[#021C3B] focus-visible:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:translate-y-0 active:bg-[#C8A96A] active:text-[#021C3B]"
+        className="inline-flex items-center gap-1.5 rounded-full border border-[#CB902C] bg-transparent px-3 py-1.5 text-sm font-semibold text-[#021C3B] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[#CB902C] hover:bg-[#CB902C] hover:text-[#021C3B] hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:border-[#CB902C] focus-visible:bg-[#CB902C] focus-visible:text-[#021C3B] focus-visible:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:translate-y-0 active:bg-[#CB902C] active:text-[#021C3B]"
       >
         {content}
       </a>

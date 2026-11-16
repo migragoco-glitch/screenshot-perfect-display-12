@@ -25,13 +25,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Assess your integration readiness for Finland and get a personalized 12-week roadmap mapped to Migri, DVV, Kela, Vero and Local Employment Services.",
+          "Assess your integration readiness for Finland and get a personalized step-by-step roadmap mapped to Migri, DVV, Kela, Vero and Local Employment Services.",
       },
       { property: "og:title", content: "MigraGo" },
       {
         property: "og:description",
         content:
-          "Know where you stand. Know what's next. A smart assessment plus an evidence-based 12-week integration roadmap.",
+          "Know where you stand. Know what's next. A readiness assessment plus an evidence-based step-by-step integration roadmap.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -417,7 +417,7 @@ function Landing() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={t(inst.aria)}
-                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#C8A96A] bg-transparent px-4 text-xs font-bold text-[#C8A96A] transition-colors duration-200 ease-out hover:border-[#C8A96A] hover:bg-[#C8A96A] hover:text-[#021C3B] hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:border-[#C8A96A] focus-visible:bg-[#C8A96A] focus-visible:text-[#021C3B] focus-visible:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F8F6F2] active:bg-[#C8A96A] active:text-[#021C3B]"
+                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#CB902C] bg-transparent px-4 text-xs font-bold text-[#021C3B] transition-colors duration-200 ease-out hover:border-[#CB902C] hover:bg-[#CB902C] hover:text-[#021C3B] hover:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:border-[#CB902C] focus-visible:bg-[#CB902C] focus-visible:text-[#021C3B] focus-visible:shadow-[0_10px_20px_rgba(2,28,59,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F8F6F2] active:bg-[#CB902C] active:text-[#021C3B]"
                   >
                     <Building2 className="size-3.5 shrink-0" aria-hidden />
                     {inst.name}
@@ -520,7 +520,7 @@ function Landing() {
               <button
                 type="button"
                 disabled
-                className="mt-6 w-full cursor-not-allowed rounded-full border border-border bg-[#0B2545] px-5 py-3 text-sm font-semibold text-white"
+                className="mt-6 w-full cursor-not-allowed rounded-full border border-border bg-[#021C3B] px-5 py-3 text-sm font-semibold text-white"
               >
                 {t("nav.comingSoon")}
               </button>

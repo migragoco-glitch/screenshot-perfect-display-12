@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, Sparkles } from "lucide-react";
+import { Mail } from "lucide-react";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { SupportChannels } from "@/components/SupportChannels";
 import { useI18n } from "@/lib/i18n";
@@ -12,12 +12,12 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Reach the MigraGo team by email or WhatsApp for support with your Finland integration assessment or roadmap.",
+          "Contact MigraGo by email or WhatsApp about your Finland integration assessment or roadmap.",
       },
       { property: "og:title", content: "Contact us — MigraGo" },
       {
         property: "og:description",
-        content: "Email and WhatsApp support for the MigraGo Finland integration prototype.",
+        content: "Contact MigraGo by email or WhatsApp about your Finland integration assessment or roadmap.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -44,13 +44,6 @@ function ContactPage() {
           <SupportChannels />
         </div>
 
-        <div className="contact-future mt-6 rounded-3xl border border-dashed border-border bg-muted/50 p-6">
-          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            <Sparkles className="size-3.5" aria-hidden />
-            {t("contact.futureTitle")}
-          </span>
-          <p className="mt-3 text-sm text-muted-foreground">{t("contact.futureBody")}</p>
-        </div>
       </main>
       <SiteFooter />
     </div>

@@ -49,12 +49,12 @@ export const Route = createFileRoute("/assessment")({
       {
         name: "description",
         content:
-          "A 7-section assessment covering legal status, career, finances, psychological readiness and your Finland strategy.",
+          "An assessment covering legal status, career, finances, psychological readiness and your Finland strategy.",
       },
       { property: "og:title", content: "Integration readiness assessment — MigraGo" },
       {
         property: "og:description",
-        content: "A full assessment, autosaved, 9–12 minutes. Build your Integration Profile.",
+        content: "A full assessment, autosaved, 9–12 minutes. Build your readiness profile.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

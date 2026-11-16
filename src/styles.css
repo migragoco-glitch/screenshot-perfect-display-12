@@ -63,8 +63,8 @@
   --radius: 0.75rem;
 
   /* Locked official palette (Master Prompt) */
-  --navy: #0b2545;
-  --teal: #2a908f;
+  --navy: #021C3B;
+  --teal: #02808A;
   --gold: #cb902c;
   --plum: #3d2c6b;
   --navigator-navy: #021c3b;
@@ -95,7 +95,7 @@
   --card-foreground: var(--navy);
   --popover: oklch(0.995 0.004 85);
   --popover-foreground: var(--navy);
-  --primary: var(--navy);
+  --primary: #021C3B;
   --primary-foreground: oklch(0.98 0.006 85);
   --secondary: var(--navigator-teal);
   --secondary-foreground: oklch(0.99 0.005 85);
@@ -140,7 +140,7 @@
   --card-foreground: oklch(0.97 0.006 85);
   --popover: oklch(0.268 0.062 258.3);
   --popover-foreground: oklch(0.97 0.006 85);
-  --primary: oklch(0.575 0.072 189.5);
+  --primary: #021C3B;
   --primary-foreground: oklch(0.99 0.005 85);
   --secondary: oklch(0.33 0.055 258);
   --secondary-foreground: oklch(0.97 0.006 85);
@@ -565,8 +565,8 @@
 .start-page a:not(.start-upgrade *), .start-page button.text-secondary:not(.start-upgrade *) { color: var(--navigator-teal); }
 .start-page a:not(.start-upgrade *):hover, .start-page button.text-secondary:not(.start-upgrade *):hover { color: var(--start-link-hover); }
 .start-page a:not(.start-upgrade *) { transform: none; box-shadow: none; }
-.start-page a[class*="C8A96A"] { border-color: var(--start-card-border); background: var(--start-soft-teal); }
-.start-page a[class*="C8A96A"]:hover, .start-page a[class*="C8A96A"]:focus-visible { border-color: var(--navigator-teal); background: var(--start-soft-teal); box-shadow: none; }
+.start-page a[class*="CB902C"] { border-color: var(--start-card-border); background: var(--start-soft-teal); }
+.start-page a[class*="CB902C"]:hover, .start-page a[class*="CB902C"]:focus-visible { border-color: var(--navigator-teal); background: var(--start-soft-teal); box-shadow: none; }
 .start-page .start-delete { color: var(--start-label); }
 .start-page .start-delete:hover { color: var(--navigator-navy); }
 .start-page .start-input, .start-questions :where(input:not([type="checkbox"]), textarea, select) { border-color: var(--start-input-border); }

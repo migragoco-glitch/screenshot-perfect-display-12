@@ -98,13 +98,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Build your Integration Profile and a 12-week Finland settlement roadmap sourced from Migri, DVV, Kela, Vero and Local Employment Services.",
+          "Build your readiness profile and a step-by-step Finland settlement roadmap sourced from Migri, DVV, Kela, Vero and Local Employment Services.",
       },
       { name: "author", content: "MigraGo" },
       { property: "og:title", content: "MigraGo" },
       {
         property: "og:description",
-        content: "Assess your readiness and get an institution-sourced 12-week roadmap for Finland.",
+        content: "Assess your readiness and get an institution-sourced step-by-step roadmap for Finland.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

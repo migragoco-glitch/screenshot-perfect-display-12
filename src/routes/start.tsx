@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Fragment, useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, Briefcase, ListChecks, MapPin, Route as RouteIcon, Building2, Check, ExternalLink, Globe, HeartPulse, House, IdCard, Info, Landmark, Languages, Lock, Users } from "lucide-react";
+import { ArrowLeft, ArrowRight, Briefcase, ListChecks, MapPin, Route as RouteIcon, Building2, Check, ExternalLink, Globe, HeartPulse, House, IdCard, Info, Landmark, Languages, Lock, Trash2, Users } from "lucide-react";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { FoundersCircleModal, InstitutionBadge } from "@/components/FeedbackWidgets";
 import { ProfilePreview, RoadmapSummary } from "@/components/RoadmapSummary";
@@ -113,6 +113,7 @@ function StartScreen() {
   const [firstExpanded, setFirstExpanded] = useState(false);
   const [profileWhyIds, setProfileWhyIds] = useState<string[]>([]);
   const [paywallOpen, setPaywallOpen] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   // Read the activation flag once into the state initializer; the key is
   // removed only when the banner is dismissed.
   const [activated, setActivated] = useState(() => {
@@ -401,7 +402,6 @@ function StartScreen() {
               {hasNavigator ? <div className="start-progress-track mt-2 h-1.5 overflow-hidden rounded-full"><div className="start-progress-fill roadmap-progress-transition h-full" style={{ width: `${docKeys.length ? docsDone / docKeys.length * 100 : 0}%` }} /></div> : <p className="mt-2 text-xs text-muted-foreground">{t("start.docs.freeNote")}</p>}
               {checklist.length ? checklist.map((item) => <div key={item.id} className="mt-5"><h4 className="text-sm font-semibold">{typeof item.title === "string" ? t(item.title) : item.title[lang]}</h4>{hasNavigator ? item.documents.map((key, index) => <label key={`${item.id}:${index}`} className="mt-3 flex items-start gap-3 text-sm"><input type="checkbox" className="mt-1 size-4 accent-[var(--navigator-teal)]" checked={docIds.includes(`${item.id}:${index}`)} onChange={() => toggleDoc(`${item.id}:${index}`)} /><span>{t(key)}</span></label>) : <ul className="mt-2 list-disc space-y-1.5 ps-6 text-sm">{item.documents.map((key, index) => <li key={`${item.id}:${index}`}>{t(key)}</li>)}</ul>}</div>) : <p className="mt-3 text-sm text-muted-foreground">{t("start.checklist.empty")}</p>}
             </details>
-            {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : null}
             <p className="legal-notice mt-6">{t("start.disclaimer")}</p>
             <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -470,7 +470,6 @@ function StartScreen() {
               </ol>
             </section> : null}
             {hasNavigator ? <div className="start-profile"><ProfileCard completed={state.completed} /></div> : <UpgradeCard view="road" onUpgrade={openUpgrade} />}
-            {hasNavigator ? <p className="mt-6 text-xs text-muted-foreground">{t("start.soonNote")}</p> : null}
             <p className="legal-notice mt-6">{t("start.disclaimer")}</p>
             <p className="mt-2 text-xs text-muted-foreground">{t("start.deviceNote")}</p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -479,16 +478,19 @@ function StartScreen() {
             </div>
           </div></section>
         ) : null}
-        <Button type="button" variant="link" className="start-delete mt-10 h-auto p-0 text-xs font-semibold underline underline-offset-4" onClick={() => {
-          if (!window.confirm(t("start.deleteConfirm"))) return;
+        {confirmDelete ? <div className="mt-4">
+          <p className="text-sm font-semibold text-destructive">{t("start.deleteConfirm")}</p>
+          <div className="mt-3 flex flex-wrap gap-3"><Button type="button" variant="destructive" className="rounded-full" onClick={() => {
           reset();
           try { window.sessionStorage.removeItem("migrago.start.v1"); } catch { /* Storage may be unavailable. */ }
           try { window.localStorage.removeItem("migrago.start.done"); } catch { /* Storage may be unavailable. */ }
           try { window.localStorage.removeItem("migrago.start.docs"); } catch { /* Storage may be unavailable. */ }
           setStage("city"); setAreas([]); setDoneIds([]); setDocIds([]); setExpandedIds([]);
-        }}>{t("start.deleteData")}</Button>
+          setConfirmDelete(false);
+        }}><Trash2 className="size-4" />{t("dash.deleteConfirmYes")}</Button><Button type="button" variant="outline" className="visual-outline rounded-full" onClick={() => setConfirmDelete(false)}>{t("dash.deleteConfirmCancel")}</Button></div>
+        </div> : <Button type="button" variant="link" className="start-delete mt-10 h-auto p-0 text-xs font-semibold underline underline-offset-4" onClick={() => setConfirmDelete(true)}>{t("start.deleteData")}</Button>}
       </main>
-      <SiteFooter />
+      <SiteFooter hideLegal />
       <FoundersCircleModal open={paywallOpen} onClose={() => setPaywallOpen(false)} onJoined={() => {
         setPaywallOpen(false); void navigate({ to: "/checkout", search: { next: "start" } });
       }} />
