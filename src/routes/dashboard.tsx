@@ -172,9 +172,7 @@ function Dashboard() {
   const gapList = useMemo(() => buildGapAnalysis(profile), [profile]);
   const locked = state.tier !== "navigator";
   const hasStartPlan = hasNavigatorAccess(state.tier) && Boolean(state.municipality) && startAreas.length > 0;
-  // The home card and the /start roadmap share this exact step set: the
-  // area-flow steps only. The 7 profile steps stay in the /start profile
-  // section and the progress tab, counted separately.
+  // The home card and progress tab share area and completed-profile steps.
   const roadmapSteps = hasStartPlan
     ? buildAreaSteps(startAreas, state.answers, state.route ?? suggestRoute(state.answers[2]?.value), state.region)
     : [];
@@ -192,11 +190,10 @@ function Dashboard() {
       return `${tinted ? `color-mix(in oklab, ${color} 18%, var(--card))` : color} ${index / activePhases.length * 100}% ${(index + 1) / activePhases.length * 100}%`;
     }).join(", ")})`
     : "var(--card)";
-  const roadmapDoneCount = roadmapSteps.filter((step) => done.has(step.id)).length;
   const roadmapPhases = [1, 2, 3, 4].map((phase) => ({
     color: ROADMAP_PHASES[phase - 1]?.value ?? "var(--navigator-teal)",
-    total: roadmapSteps.filter((step) => step.phase === phase).length,
-    done: roadmapSteps.filter((step) => step.phase === phase && done.has(step.id)).length,
+    total: allItems.filter((step) => step.phase === phase).length,
+    done: allItems.filter((step) => step.phase === phase && done.has(step.id)).length,
   }));
   const openStartRoadmap = () => {
     if (hasStartPlan) {
@@ -361,7 +358,7 @@ function Dashboard() {
           <div className="rise-in mt-7 space-y-5">
             <section className="border-b border-border py-6">
               <h2 className="text-lg">{t("dash.homeRoadmapTitle")}</h2>
-              <RoadmapSummary done={roadmapDoneCount} total={roadmapSteps.length} phases={roadmapPhases} />
+              <RoadmapSummary done={doneCount} total={totalTasks} phases={roadmapPhases} />
               {state.completed ? <p className="text-sm font-semibold">{t("dash.readinessScore").replace("{overall}", localizeNumber(profile.overall, lang))}</p> : null}
               <Button type="button" variant="secondary" className="visual-solid mt-4 rounded-full" onClick={openStartRoadmap}>{t("dash.homeRoadmapCta")}<ArrowRight className="size-4 rtl:rotate-180" /></Button>
             </section>
