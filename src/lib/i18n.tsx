@@ -705,7 +705,7 @@ export const en = {
   "faq.sub": "The short answers to what newcomers ask us most.",
   "faq.q1": "Do I need an account to use MigraGo?",
   "faq.a1":
-    "No account is required for the free 6-question Quick Check, your preliminary profile and recommended first steps. The full assessment and its results require Premium (€9.99/month).",
+    "No. The free version works without an account. To buy Premium and keep your access, you need to sign in with your email or Google account. Your answers and progress stay in your browser only.",
   "faq.q2": "What is included in the free tier?",
   "faq.a2":
     "In the Free plan you see your step-by-step roadmap covering 9 core settlement areas. For each step you get the responsible authority and official link, the deadline, required documents, key notes and the last-checked date. The Free plan has no time limit.",
@@ -714,22 +714,22 @@ export const en = {
     "Premium is a one-time access pass for 30 or 90 days, with no automatic renewal. In addition to Free, it adds a week-by-week plan and full details for every step, an interactive document checklist and logging of completed steps. It also adds the full assessment with a readiness profile and chart, steps prioritized for your situation, reassessment with score history, and a personal dashboard.",
   "faq.q4": "How is my roadmap generated?",
   "faq.a4":
-    "Your assessment responses evaluate your current status across three core dimensions and identify existing gaps. The system then maps these gaps against the official regulations and procedures of the destination country, structuring the required actions into a 12-week plan across four operational phases..",
+    "Your roadmap is built from two things: the areas you choose and your answers to a few short questions. Based on fixed rules, MigraGo arranges the required steps together with the responsible authority, deadline and documents for each step. In Premium, the full assessment measures you across three dimensions, shows your gaps and prioritizes the steps in a week-by-week plan in four stages.",
   "faq.q5": "Is this legal advice?",
   "faq.a5":
     "No. MigraGo does not replace legal advice or official authorities and does not guarantee residence permits or integration outcomes. Always verify requirements with the responsible institution.",
   "faq.q6": "Where is my data stored, and how do I delete it?",
   "faq.a6":
-    "Assessment answers and roadmap progress are stored only in your browser, on your device. Feedback you submit and the email address you provide for early-access notifications are stored securely, separately from your assessment data. You can delete all your local data anytime from Settings.",
+    'Assessment answers and roadmap progress are stored only in your browser, on your device. If you create an account, only your account details (email), purchase information and Premium validity period are kept on the server. Feedback you submit and the email address you provide for early-access notifications are stored securely, separately from your assessment data. To delete data on your device, use the "Delete all my data" button in the Account tab of the dashboard or the "Delete my data on this device" option on the start page. To delete your email or account, write to migrago.co@gmail.com.',
   "faq.q7": "How accurate are the scores?",
   "faq.a7":
-    "The model is transparent and rule-based, not a black box: each question maps to a known weight. It is a readiness indicator, not a prediction of any authority's decision.",
+    "The calculation is transparent and rule-based and relies only on your own answers: each dimension's score comes from the answers related to that dimension, and each dimension has a fixed weight (Legal / Status Readiness 30%, Economic & Professional Capacity 40%, Soft Skills & Psychological Readiness 30%). It is a readiness indicator, not a prediction of any authority's decision.",
   "faq.q8": "Which countries are supported?",
   "faq.a8":
     "Only Finland is live at the moment.",
   "faq.q9": "Can I change my answers later?",
   "faq.a9":
-    "Yes. In Premium, after the full assessment you can edit your answers from the Assessment tab in the dashboard and run a reassessment. Scores and your profile are recalculated from the new answers, and your score history is kept.",
+    "Yes. You can change your areas and short answers again on the start page. In Premium, after the full assessment you can edit your answers from the Assessment tab in the dashboard and run a reassessment. Scores and your profile are recalculated from the new answers, and your score history is kept.",
   "faq.q10": "How do I contact MigraGo?",
   "faq.a10":
     "Use the Contact page to reach MigraGo by email at migrago.co@gmail.com or on WhatsApp.",
@@ -1653,7 +1653,7 @@ export const fa: Record<keyof typeof en, string> = {
   "faq.sub": "پاسخ کوتاه به پرسش‌هایی که تازه‌واردان بیش از همه می‌پرسند.",
   "faq.q1": "برای استفاده از میگراگو باید حساب کاربری بسازم؟",
   "faq.a1":
-    "برای بررسی سریع رایگان ۶ پرسشی، پروفایل اولیه و گام‌های پیشنهادی نخست نیازی به حساب کاربری نیست. ارزیابی کامل و نتایج آن به Premium (ماهانه ۹٫۹۹ یورو) نیاز دارند.",
+    "خیر. نسخهٔ رایگان بدون حساب کاربری قابل استفاده است. برای خرید Premium و نگهداری دسترسی‌تان، ورود به حساب کاربری (با ایمیل یا حساب Google) لازم است. پاسخ‌ها و پیشرفت شما همچنان فقط در مرورگر خودتان می‌ماند.",
   "faq.q2": "نسخهٔ رایگان شامل چه چیزهایی است؟",
   "faq.a2":
     "در نسخهٔ رایگان، نقشهٔ راه گام‌به‌گام شما را با پوشش ۹ حوزهٔ اصلی استقرار می‌بینید. برای هر گام، نهاد مسئول و لینک رسمی، مهلت، مدارک لازم، یادداشت‌های مهم و تاریخ آخرین بررسی را دارید. نسخهٔ رایگان محدودیت زمانی ندارد.",
@@ -1662,22 +1662,22 @@ export const fa: Record<keyof typeof en, string> = {
     "Premium یک دسترسی یک‌باره ۳۰ یا ۹۰ روزه است و تمدید خودکار ندارد. علاوه بر امکانات رایگان، برنامهٔ هفته‌به‌هفته و جزئیات کامل هر گام، چک‌لیست تعاملی مدارک و ثبت گام‌های انجام‌شده را دارد. همچنین ارزیابی کامل با پروفایل آمادگی و نمودار، اولویت‌بندی گام‌ها بر اساس وضعیت شما، ارزیابی مجدد با تاریخچهٔ نمره‌ها و داشبورد شخصی را اضافه می‌کند.",
   "faq.q4": "نقشهٔ راه چگونه ساخته می‌شود؟",
   "faq.a4":
-    "پاسخ‌های ارزیابی شما، وضعیت کنونی‌تان را در ابعاد سه‌گانه سنجیده و شکاف‌های موجود را شناسایی می‌کند. سامانه سپس این شکاف‌ها را با ضوابط و رویه‌های رسمی کشور مقصد تطبیق داده و اقدامات لازم را در قالب یک برنامه ۱۲ هفته‌ای (در چهار فاز عملیاتی) مرتب می‌سازد.",
+    "نقشهٔ راه از دو چیز ساخته می‌شود: حوزه‌هایی که انتخاب می‌کنید و پاسخ‌هایتان به چند پرسش کوتاه. میگراگو بر پایهٔ قواعد ثابت، گام‌های لازم را همراه با نهاد مسئول، مهلت و مدارک هر گام مرتب می‌کند. در Premium، ارزیابی کامل شما را در سه بُعد می‌سنجد، شکاف‌ها را نشان می‌دهد و گام‌ها را در برنامه‌ای هفته‌به‌هفته و چهار مرحله‌ای اولویت‌بندی می‌کند.",
   "faq.q5": "آیا این مشاورهٔ حقوقی است؟",
   "faq.a5":
     "خیر. میگراگو جایگزین مشاورهٔ حقوقی یا مراجع رسمی نیست و تضمینی برای اقامت یا نتیجهٔ ادغام نمی‌دهد. همیشه الزامات را با نهاد مسئول راستی‌آزمایی کنید.",
   "faq.q6": "داده‌های من کجا ذخیره می‌شود و چگونه حذف می‌شود؟",
   "faq.a6":
-    "پاسخ‌های ارزیابی و پیشرفت نقشه‌راه فقط در مرورگر شما، روی همان دستگاه ذخیره می‌شوند. بازخوردهایی که ارسال می‌کنید و نشانی ایمیلی که برای اطلاع‌رسانی دسترسی زودهنگام ثبت می‌کنید، جدا از دادهٔ ارزیابی و به‌صورت امن نگهداری می‌شوند. هر زمان می‌توانید تمام دادهٔ محلی خود را از بخش تنظیمات حذف کنید.",
+    "پاسخ‌های ارزیابی و پیشرفت نقشه‌راه فقط در مرورگر شما، روی همان دستگاه ذخیره می‌شوند. اگر حساب کاربری بسازید، فقط اطلاعات حساب (ایمیل)، اطلاعات خرید و مدت اعتبار Premium روی سرور نگهداری می‌شود. بازخوردهایی که ارسال می‌کنید و نشانی ایمیلی که برای اطلاع‌رسانی دسترسی زودهنگام ثبت می‌کنید، جدا از دادهٔ ارزیابی و به‌صورت امن نگهداری می‌شوند. برای حذف داده‌های دستگاه، از دکمهٔ «حذف همهٔ داده‌های من» در تب «حساب کاربری» داشبورد یا از گزینهٔ «حذف داده‌های من از این دستگاه» در صفحهٔ شروع استفاده کنید. برای حذف ایمیل یا حساب، به migrago.co@gmail.com ایمیل بزنید.",
   "faq.q7": "نمره‌ها چقدر دقیق‌اند؟",
   "faq.a7":
-    "مدل شفاف و قاعده‌محور است، نه جعبه‌سیاه: هر پرسش وزن مشخصی دارد. این نمره یک شاخص آمادگی است، نه پیش‌بینی تصمیم هیچ مرجع رسمی.",
+    "محاسبه شفاف و قاعده‌محور است و فقط بر پاسخ‌های خودِ شما تکیه دارد: نمرهٔ هر بُعد از پاسخ‌های مربوط به همان بُعد به دست می‌آید و هر بُعد وزن مشخصی دارد (آمادگی حقوقی / وضعیت اقامت ۳۰٪، ظرفیت اقتصادی و حرفه‌ای ۴۰٪، مهارت‌های نرم و آمادگی روانی ۳۰٪). این نمره یک شاخص آمادگی است، نه پیش‌بینی تصمیم هیچ مرجع رسمی.",
   "faq.q8": "چه کشورهایی پشتیبانی می‌شوند؟",
   "faq.a8":
     "در حال حاضر فقط فنلاند فعال است.",
   "faq.q9": "می‌توانم بعداً پاسخ‌هایم را تغییر دهم؟",
   "faq.a9":
-    "بله. در Premium می‌توانید پس از ارزیابی کامل، پاسخ‌های خود را از بخش «ارزیابی من» در داشبورد ویرایش کنید و ارزیابی مجدد انجام دهید. نمره‌ها و پروفایل بر اساس پاسخ‌های جدید دوباره محاسبه می‌شوند و تاریخچهٔ نمره‌ها حفظ می‌شود.",
+    "بله. می‌توانید حوزه‌ها و پاسخ‌های کوتاه خود را در صفحهٔ شروع دوباره تغییر دهید. در Premium می‌توانید پس از ارزیابی کامل، پاسخ‌های خود را از بخش «ارزیابی من» در داشبورد ویرایش کنید و ارزیابی مجدد انجام دهید. نمره‌ها و پروفایل بر اساس پاسخ‌های جدید دوباره محاسبه می‌شوند و تاریخچهٔ نمره‌ها حفظ می‌شود.",
   "faq.q10": "چگونه با میگراگو تماس بگیرم؟",
   "faq.a10":
     "از صفحهٔ «تماس با ما» می‌توانید با ایمیل migrago.co@gmail.com یا واتس‌اپ پیام بفرستید.",
