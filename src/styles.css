@@ -604,7 +604,7 @@
 .how-area-gold { background: var(--navigator-gold); color: var(--navigator-navy); }
 .how-area-teal { background: var(--navigator-teal); color: var(--institution-active-foreground); }
 .how-area-olive { background: var(--navigator-olive); color: var(--institution-active-foreground); }
-@media (min-width: 700px) { .how-area-chips { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 700px) { .how-area-chips { grid-template-columns: repeat(3, minmax(0, 1fr)); } .how-area-chip { min-height: 78px; } }
 @media (prefers-reduced-motion: reduce) {
   .home-hero-front, .home-hero-plate, .home-hero-button, .how-stack .how-card, .how-plate { transition: none; }
   .home-hero-stack:hover .home-hero-front, .home-hero-stack:hover .home-hero-plate, .home-hero-front:active, .home-hero-button:hover, .home-hero-button:active, .how-stack:hover .how-card, .how-stack:hover .how-plate, .how-stack .how-card:active { transform: none; }
