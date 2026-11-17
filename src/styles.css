@@ -514,8 +514,7 @@
 .home-hero-front { color: var(--navigator-navy); transition: transform 250ms ease-out, box-shadow 250ms ease-out; }
 .home-hero-closing { background: var(--home-hero-inner); }
 :root { --home-hero-inner: #F7F4EE; }
-.home-hero-paragraphs { display: grid; gap: 24px; }
-@media (min-width: 700px) { .home-hero-paragraphs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.home-hero-paragraphs { display: grid; gap: 1rem; text-align: justify; text-align-last: start; hyphens: none; text-wrap: pretty; }
 @media (min-width: 768px) { .home-hero-plate { top: -40px; inset-inline-end: -24px; inset-inline-start: 56px; bottom: 40px; } }
 .how-step-1 { --layer-color: var(--navigator-gold); }
 .how-step-2 { --layer-color: var(--navigator-teal); }
