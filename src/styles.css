@@ -598,8 +598,8 @@
   .start-page :where(button, a):not(.start-upgrade *):active { transform: none !important; transition: none !important; }
 }
 .how-panel-areas { align-self: stretch; }
-.how-area-chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; justify-items: center; gap: 8px; }
-.how-area-chip { display: flex; align-items: center; justify-content: center; width: 100%; min-width: 0; padding: 6px 8px; border-radius: 9999px; text-align: center; font-size: 13px; font-weight: 700; overflow-wrap: anywhere; }
+.how-area-chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; justify-items: stretch; gap: 8px; }
+.how-area-chip { display: flex; align-items: center; justify-content: center; width: 100%; min-width: 0; min-height: 46px; padding: 6px 8px; border-radius: 9999px; text-align: center; font-size: 13px; font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
 .how-area-light-teal { background: var(--navigator-light-teal); color: var(--navigator-navy); }
 .how-area-gold { background: var(--navigator-gold); color: var(--navigator-navy); }
 .how-area-teal { background: var(--navigator-teal); color: var(--institution-active-foreground); }
