@@ -336,10 +336,10 @@ export const en = {
   "pricing.stabPrice": "€249",
   "pricing.stabDesc":
     "A future advanced experience designed to provide deeper integration analysis and a more comprehensive personalized roadmap.",
-  "pricing.stabFutureLabel": "Future / Locked — not available in the current MVP",
+  "pricing.stabFutureLabel": "Future / Locked — not available yet",
   "pricing.stabFuture":
     "Conceptually it would offer deeper integration analysis, a more detailed identification of strengths, gaps and priorities, more comprehensive personalization, a more detailed staged roadmap, relevant institutions and resources presented for information, and a comprehensive downloadable report. It is locked today and there is no purchase flow for it.",
-  "pricing.future": "Future / Locked — not available in the current MVP",
+  "pricing.future": "Future / Locked — not available yet",
   "pricing.recommended": "Recommended",
   "pricing.upgrade": "Upgrade to Premium",
   "pricing.noTimeLimit": "No time limit",
@@ -483,7 +483,7 @@ export const en = {
   "pay.teaser": "Locked preview",
   "pay.unlock": "Activate Premium",
   "pay.later": "Stay on the free overview",
-  "pay.demoNote": "Demo checkout — no payment is taken in this MVP.",
+  "pay.demoNote": "One-time payment, no automatic renewal. Payment is handled by our secure payment provider.",
 
   "road.title": "Your Personalized Roadmap",
   "road.sub":
@@ -668,7 +668,7 @@ export const en = {
   "payment.success.continue": "Continue",
   "privacy.title": "Privacy Policy",
   "privacy.body":
-    "MigraGo respects your privacy. In the current version of the product (MVP):  Your assessment answers are stored only in your browser and are not sent to our servers. The email address you provide for early-access notifications is stored securely and used only for that purpose. Feedback you submit is stored without any identifying information. You can delete your local data at any time from your browser settings. This policy will be replaced with a more comprehensive, GDPR-aligned privacy policy as MigraGo's paid features and account system are fully launched.\n\nPayments. When you buy Premium, your email and account ID are used to link the purchase to your account and activate access. Payment is handled by our payment provider, which acts as the merchant of record. Your email and purchase data are shared with the provider for this purpose, and this may involve processing outside the European Economic Area. Only the provider and its payment partners process your card details; MigraGo never sees them. We keep only the purchase status (plan, start and end dates, order number). Your assessment answers stay on your device unless you choose otherwise.",
+    "MigraGo respects your privacy. MigraGo is operated by Bahareh Jafarian (individual, Türkiye); contact: migrago.co@gmail.com. Your assessment answers and roadmap progress are stored only in your browser, on your device. If you create an account, only your account details (such as your email address), purchase information and Premium validity period are kept on the server. The email address you provide for early-access notifications is stored securely and used only to reserve the early-access price and for early-access notifications. Feedback you submit is stored with a random browser code and without your name or email. You can delete your local data at any time from the dashboard or your browser settings. To delete your email or account, write to migrago.co@gmail.com.\n\nPayments. When you buy Premium, your email and account ID are used to link the purchase to your account and activate access. Payment is handled by our payment provider, which acts as the merchant of record. Your email and purchase data are shared with the provider for this purpose, and this may involve processing outside the European Economic Area. Only the provider and its payment partners process your card details; MigraGo never sees them. We keep only the purchase status (plan, start and end dates, order number). Your assessment answers stay on your device unless you choose otherwise.",
   "terms.title": "Terms of Service",
   "terms.body":
     "Terms of Sale\n1. What you buy. MigraGo Premium is time-limited access to the paid features of the app: 30 days (EUR 9.99) or 90 days (EUR 24.99). It is a one-time payment with no automatic renewal.\n2. Start and end. Access is activated immediately after payment is confirmed and ends after 30 or 90 days. Afterwards your account and data remain, but Premium features are locked.\n3. Payment and seller of record. Payment is processed by our payment provider, which acts as the merchant of record for the transaction, handles payment and VAT, and sends your receipt. The provider's name is shown at checkout and on your receipt. MigraGo never sees your card details.\n4. Nature of the service. MigraGo is a self-service information and planning tool. It is not legal, immigration or financial advice and does not guarantee any outcome of a residence application or official decision. For official decisions, consult official sources (e.g. Migri) and a qualified professional.\n5. Right of withdrawal (digital content). By ticking the box at checkout you ask for access to start immediately and acknowledge that, once access starts, you lose your 14-day right of withdrawal (for EU consumers).\n6. Refunds. Except where the law requires otherwise, payments are not refunded, unless Premium fails to activate or work because of a technical fault and we do not fix it within 7 days; in that case you get a full refund. Request: migrago.co@gmail.com with your purchase email and receipt number. Approved refunds are paid through the payment provider.\n7. Your statutory rights. These terms do not limit consumer rights that cannot be waived by law.\n8. Service provider and contact. The MigraGo service is operated by Bahareh Jafarian (individual, Türkiye). Support: migrago.co@gmail.com.\n9. Governing law. These terms are governed by the laws of Türkiye, without limiting the mandatory consumer protections of your country of residence (e.g. Finland or the EU) or your right to bring proceedings before the courts of your country of residence.",
@@ -751,9 +751,17 @@ export const en = {
   "faq.q11": "What does the €249 MigraGo Advanced Integration Plan include?",
   "faq.a11":
     "The €249 advanced plan is not available yet; it is locked and has no purchase flow. The Free plan and Premium (a one-time 30- or 90-day access pass) are live.",
+  "faq.q12": "How does payment work, and who is the seller?",
+  "faq.a12": "Premium is a one-time payment on a secure page of our payment provider, which acts as the merchant of record. It handles the payment and applicable VAT and emails your receipt; taxes are shown at checkout. MigraGo never sees your card details.",
+  "faq.q13": "What happens when my 30 or 90 days end?",
+  "faq.a13": "Nothing is charged again: there is no automatic renewal. Premium features lock, while the free version, your account and the answers stored in your browser remain. After your access ends, you can buy a new pass at any time.",
+  "faq.q14": "Can I get a refund?",
+  "faq.a14": "When you pay, you ask for access to start immediately and agree that, for EU consumers, your 14-day right of withdrawal for digital content ends once access starts. Apart from that, payments are not refunded unless the law requires otherwise. If Premium fails to activate or work because of a technical fault and we do not fix it within 7 days, you get a full refund. Write to migrago.co@gmail.com with your purchase email and receipt number. Your statutory consumer rights are not limited.",
+  "faq.q15": "How do I get the early-access price?",
+  "faq.a15": "Register your email in the early-access window, then create your account and sign in with the same email address (or the Google account with that address). The early-access price is then shown at checkout. It is a launch offer available for a limited time.",
 
   "contact.title": "Contact us",
-  "contact.sub": "At this MVP stage, email and WhatsApp are the ways to reach MigraGo.",
+  "contact.sub": "Email and WhatsApp are the ways to reach MigraGo.",
   "contact.emailCta": "Email MigraGo",
   "contact.subject": "Subject",
   "contact.message": "Message",
@@ -788,7 +796,7 @@ export const en = {
   "checkout.codeApplied": "70% early-access discount applied",
 
   "pay.emailNote":
-    "Your email is stored to reserve this price. Premium unlocks after payment.",
+    "Your email is stored to reserve this price. Premium unlocks after payment. Use the same email you will sign in with.",
   "pay.standard": "Standard pricing",
 
   "road.completion": "tasks completed",
@@ -1299,10 +1307,10 @@ export const fa: Record<keyof typeof en, string> = {
   "pricing.stabPrice": "۲۴۹ یورو",
   "pricing.stabDesc":
     "یک تجربهٔ پیشرفتهٔ آینده که برای ارائهٔ تحلیل عمیق‌تر ادغام و نقشهٔ راه شخصی‌سازی‌شدهٔ جامع‌تر طراحی شده است.",
-  "pricing.stabFutureLabel": "آینده / قفل‌شده — در نسخهٔ کنونی (MVP) در دسترس نیست",
+  "pricing.stabFutureLabel": "آینده / قفل‌شده — هنوز در دسترس نیست",
   "pricing.stabFuture":
     "از نظر مفهومی می‌تواند تحلیل عمیق‌تر ادغام، شناسایی دقیق‌تر نقاط قوت، شکاف‌ها و اولویت‌ها، شخصی‌سازی جامع‌تر، نقشهٔ راه مرحله‌ای و دقیق‌تر، نهادها و منابع مرتبط را به‌صورت اطلاع‌رسانی، و یک گزارش جامع قابل دانلود ارائه دهد. این طرح اکنون قفل است و هیچ فرایند خریدی برای آن وجود ندارد.",
-  "pricing.future": "آینده / قفل‌شده — در نسخهٔ کنونی (MVP) در دسترس نیست",
+  "pricing.future": "آینده / قفل‌شده — هنوز در دسترس نیست",
   "pricing.recommended": "پیشنهاد ما",
   "pricing.upgrade": "ارتقا به Premium",
   "pricing.noTimeLimit": "بدون محدودیت زمانی",
@@ -1445,7 +1453,7 @@ export const fa: Record<keyof typeof en, string> = {
   "pay.teaser": "پیش‌نمایش قفل‌شده",
   "pay.unlock": "فعال‌سازی Premium",
   "pay.later": "ادامه با نمای رایگان",
-  "pay.demoNote": "پرداخت نمایشی — در این نسخه هیچ مبلغی دریافت نمی‌شود.",
+  "pay.demoNote": "پرداخت یک‌باره و بدون تمدید خودکار؛ پرداخت را ارائه‌دهندهٔ امن پرداخت انجام می‌دهد.",
 
   "road.title": "نقشهٔ راه شخصی‌سازی‌شدهٔ شما",
   "road.sub":
@@ -1631,7 +1639,7 @@ export const fa: Record<keyof typeof en, string> = {
   "payment.success.continue": "ادامه",
   "privacy.title": "سیاست حریم خصوصی",
   "privacy.body":
-    "میگراگو به حریم خصوصی شما اهمیت می‌دهد. در نسخهٔ فعلی محصول (MVP): پاسخ‌های ارزیابی شما فقط در مرورگرتان ذخیره می‌شوند و به سرورهای ما ارسال نمی‌شوند. نشانی ایمیلی که برای اطلاع‌رسانی دسترسی زودهنگام ثبت می‌کنید، به‌صورت ایمن نگهداری و تنها برای همین هدف استفاده می‌شود. بازخوردهایی که ارسال می‌کنید بدون هیچ اطلاعات شناسایی‌کننده ذخیره می‌شوند. هر زمان بخواهید، می‌توانید داده‌های محلی خود را از بخش تنظیمات مرورگر حذف کنید. این سیاست هم‌زمان با تکمیل بخش‌های پولی و سیستم حساب کاربری میگراگو، با نسخه‌ای جامع‌تر و منطبق با الزامات GDPR جایگزین خواهد شد.\n\nپرداخت‌ها. هنگام خرید Premium، ایمیل شما و شناسهٔ حسابتان برای اتصال خرید به حساب و فعال‌سازی دسترسی استفاده می‌شود. پرداخت را ارائه‌دهندهٔ پرداخت ما انجام می‌دهد که فروشندهٔ رسمی (Merchant of Record) است. ایمیل و اطلاعات خرید شما برای همین منظور با ارائه‌دهنده به اشتراک گذاشته می‌شود و این ممکن است پردازش خارج از حوزهٔ اقتصادی اروپا را شامل شود. اطلاعات کارت را فقط ارائه‌دهنده و شرکای پرداخت او پردازش می‌کنند؛ MigraGo آن‌ها را نمی‌بیند. ما فقط وضعیت خرید (طرح، تاریخ شروع و پایان، شمارهٔ سفارش) را نگه می‌داریم. پاسخ‌های ارزیابی شما همچنان فقط روی دستگاه شما می‌ماند، مگر خودتان جز این را انتخاب کنید.",
+    "میگراگو به حریم خصوصی شما اهمیت می‌دهد. میگراگو را Bahareh Jafarian (شخص حقیقی، ترکیه) اداره می‌کند؛ تماس: migrago.co@gmail.com. پاسخ‌های ارزیابی و پیشرفت نقشه‌راه شما فقط در مرورگر شما و روی همان دستگاه ذخیره می‌شود. اگر حساب کاربری بسازید، فقط اطلاعات حساب (مانند نشانی ایمیل)، اطلاعات خرید و مدت اعتبار Premium روی سرور نگهداری می‌شود. نشانی ایمیلی که برای دسترسی زودهنگام ثبت می‌کنید، به‌صورت ایمن نگهداری و فقط برای رزرو قیمت زودهنگام و اطلاع‌رسانی استفاده می‌شود. بازخوردهایی که ارسال می‌کنید با یک کد تصادفی مرورگر و بدون نام یا ایمیل ذخیره می‌شود. هر زمان بخواهید می‌توانید داده‌های محلی خود را از داشبورد یا از تنظیمات مرورگر حذف کنید. برای حذف ایمیل یا حساب، به migrago.co@gmail.com ایمیل بزنید.\n\nپرداخت‌ها. هنگام خرید Premium، ایمیل شما و شناسهٔ حسابتان برای اتصال خرید به حساب و فعال‌سازی دسترسی استفاده می‌شود. پرداخت را ارائه‌دهندهٔ پرداخت ما انجام می‌دهد که فروشندهٔ رسمی (Merchant of Record) است. ایمیل و اطلاعات خرید شما برای همین منظور با ارائه‌دهنده به اشتراک گذاشته می‌شود و این ممکن است پردازش خارج از حوزهٔ اقتصادی اروپا را شامل شود. اطلاعات کارت را فقط ارائه‌دهنده و شرکای پرداخت او پردازش می‌کنند؛ MigraGo آن‌ها را نمی‌بیند. ما فقط وضعیت خرید (طرح، تاریخ شروع و پایان، شمارهٔ سفارش) را نگه می‌داریم. پاسخ‌های ارزیابی شما همچنان فقط روی دستگاه شما می‌ماند، مگر خودتان جز این را انتخاب کنید.",
   "terms.title": "شرایط استفاده از خدمات",
   "terms.body":
     "شرایط فروش\n۱. خدمت چیست؟ Premium در MigraGo یک دسترسی زمان‌دار به امکانات پولی اپ است: ۳۰ روزه (۹٫۹۹ یورو) یا ۹۰ روزه (۲۴٫۹۹ یورو). پرداخت یک‌باره است و تمدید خودکار ندارد.\n۲. شروع و پایان: دسترسی بلافاصله پس از تأیید پرداخت فعال می‌شود و پس از ۳۰ یا ۹۰ روز پایان می‌یابد. پس از پایان، حساب و داده‌های شما می‌ماند ولی امکانات Premium بسته می‌شود.\n۳. پرداخت و فروشندهٔ رسمی: پرداخت از طریق ارائه‌دهندهٔ پرداخت ما انجام می‌شود که برای این معامله فروشندهٔ رسمی (Merchant of Record) است، پرداخت و مالیات بر ارزش افزوده را مدیریت می‌کند و رسید برای شما می‌فرستد. نام آن در صفحهٔ پرداخت و روی رسید نمایش داده می‌شود. MigraGo اطلاعات کارت شما را نمی‌بیند.\n۴. ماهیت خدمت: MigraGo یک ابزار اطلاعاتی و برنامه‌ریزی خودخدمت است. مشاورهٔ حقوقی، مهاجرتی یا مالی نیست و نتیجهٔ درخواست اقامت یا هر تصمیم رسمی را تضمین نمی‌کند. برای تصمیم‌های رسمی به منابع رسمی (مثل Migri) و متخصص مراجعه کنید.\n۵. حق انصراف (محتوای دیجیتال): با تیک‌زدن موافقت در صفحهٔ خرید، می‌خواهید دسترسی بلافاصله فعال شود و می‌پذیرید که با فعال‌سازی فوری، حق انصراف ۱۴ روزه (ویژهٔ مصرف‌کنندگان اتحادیهٔ اروپا) از بین می‌رود.\n۶. بازپرداخت: به‌جز مواردی که قانون الزام می‌کند، پول پس داده نمی‌شود، مگر دسترسی Premium به‌دلیل خطای فنی فعال نشود یا کار نکند و ما ظرف ۷ روز آن را برطرف نکنیم؛ در این حالت مبلغ کامل برگردانده می‌شود. درخواست: migrago.co@gmail.com با ایمیل خرید و شمارهٔ رسید. بازپرداخت‌های تأییدشده از طریق ارائه‌دهندهٔ پرداخت انجام می‌شود.\n۷. حقوق قانونی شما: این شرایط حقوق غیرقابل‌چشم‌پوشی شما به‌عنوان مصرف‌کننده را محدود نمی‌کند.\n۸. ارائه‌دهندهٔ خدمت و تماس: سرویس MigraGo توسط Bahareh Jafarian (شخص حقیقی، ترکیه) اداره می‌شود. پشتیبانی: migrago.co@gmail.com.\n۹. قانون حاکم: این شرایط تابع قوانین جمهوری ترکیه است، بدون آنکه حمایت‌های آمرهٔ قانون محل سکونت شما به‌عنوان مصرف‌کننده (مثلاً فنلاند یا اتحادیهٔ اروپا) را محدود کند؛ در این موارد آن حمایت‌ها و حق مراجعه به دادگاه محل سکونت شما محفوظ است.",
@@ -1714,10 +1722,18 @@ export const fa: Record<keyof typeof en, string> = {
   "faq.q11": "طرح پیشرفتهٔ ادغام میگراگو (۲۴۹ یورو) شامل چه چیزهایی است؟",
   "faq.a11":
     "طرح پیشرفتهٔ ۲۴۹ یورویی هنوز در دسترس نیست و قفل است؛ برای آن فرایند خریدی وجود ندارد. نسخهٔ رایگان و Premium (دسترسی یک‌باره ۳۰ یا ۹۰ روزه) فعال‌اند.",
+  "faq.q12": "پرداخت چگونه انجام می‌شود و فروشنده کیست؟",
+  "faq.a12": "Premium یک پرداخت یک‌باره در صفحهٔ امن ارائه‌دهندهٔ پرداخت ماست که فروشندهٔ رسمی (Merchant of Record) است. پرداخت و مالیات بر ارزش افزودهٔ مربوط را او مدیریت می‌کند و رسید را به ایمیل شما می‌فرستد؛ مالیات در صفحهٔ پرداخت نشان داده می‌شود. میگراگو اطلاعات کارت شما را هرگز نمی‌بیند.",
+  "faq.q13": "پس از پایان ۳۰ یا ۹۰ روز چه می‌شود؟",
+  "faq.a13": "مبلغ دوباره برداشت نمی‌شود، چون تمدید خودکار وجود ندارد. امکانات Premium بسته می‌شود، ولی نسخهٔ رایگان، حساب شما و پاسخ‌های ذخیره‌شده در مرورگرتان می‌ماند. پس از پایان دسترسی، هر زمان بخواهید می‌توانید دسترسی تازه بخرید.",
+  "faq.q14": "آیا می‌توانم بازپرداخت بگیرم؟",
+  "faq.a14": "هنگام پرداخت می‌خواهید دسترسی بلافاصله فعال شود و می‌پذیرید که برای مصرف‌کنندگان اتحادیهٔ اروپا، با شروع دسترسی، حق انصراف ۱۴ روزهٔ محتوای دیجیتال از بین می‌رود. جز این، پول پس داده نمی‌شود، مگر قانون الزام کند. اگر Premium به‌دلیل خطای فنی فعال نشود یا کار نکند و ما ظرف ۷ روز آن را برطرف نکنیم، مبلغ کامل بازپرداخت می‌شود. با ایمیل خرید و شمارهٔ رسید به migrago.co@gmail.com بنویسید. حقوق قانونی شما به‌عنوان مصرف‌کننده محدود نمی‌شود.",
+  "faq.q15": "قیمت دسترسی زودهنگام را چگونه می‌گیرم؟",
+  "faq.a15": "ایمیل خود را در پنجرهٔ دسترسی زودهنگام ثبت کنید، سپس با همان نشانی ایمیل (یا حساب Google با همان نشانی) حساب بسازید و وارد شوید. قیمت دسترسی زودهنگام در صفحهٔ پرداخت نشان داده می‌شود. این پیشنهاد مخصوص دورهٔ راه‌اندازی و زمان‌دار است.",
 
 
   "contact.title": "تماس با ما",
-  "contact.sub": "در این مرحله، ایمیل و واتس‌اپ راه‌های تماس با میگراگو هستند.",
+  "contact.sub": "ایمیل و واتس‌اپ راه‌های تماس با میگراگو هستند.",
   "contact.emailCta": "ارسال ایمیل به میگراگو",
   "contact.subject": "موضوع",
   "contact.message": "پیام",
@@ -1752,7 +1768,7 @@ export const fa: Record<keyof typeof en, string> = {
   "checkout.codeApplied": "تخفیف ۷۰٪ زودهنگام اعمال شد",
 
   "pay.emailNote":
-    "ایمیل شما برای رزرو این قیمت ذخیره می‌شود. Premium پس از پرداخت فعال می‌شود.",
+    "ایمیل شما برای رزرو این قیمت ذخیره می‌شود. Premium پس از پرداخت فعال می‌شود. از همان ایمیلی استفاده کنید که با آن وارد می‌شوید.",
   "pay.standard": "قیمت استاندارد",
 
   "road.completion": "گام انجام‌شده",

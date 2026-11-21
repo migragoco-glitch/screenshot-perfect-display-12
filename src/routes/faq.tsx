@@ -25,7 +25,7 @@ export const Route = createFileRoute("/faq")({
   component: FaqPage,
 });
 
-const ITEMS = Array.from({ length: 11 }, (_, i) => i + 1);
+const ITEMS = Array.from({ length: 15 }, (_, i) => i + 1);
 
 function FaqPage() {
   const { t } = useI18n();
