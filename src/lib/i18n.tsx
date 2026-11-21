@@ -119,7 +119,7 @@ export const en = {
   "start.free.f3": "Steps prioritized based on your situation",
   "start.free.cta": "Activate Premium",
   "start.activatedBanner": "Premium activated. You can now start logging completed steps.",
-  "pay.modalOffer": "Enter your email to get a 70% early-access discount.",
+  "pay.modalOffer": "Enter the same email you sign in with to get a 70% early-access discount.",
   "pay.plan30Row": "30 days — {final} {old}",
   "pay.plan90Row": "90 days — {final} {old}",
   "checkout.feat1": "Full assessment and readiness profile with chart",
@@ -796,7 +796,7 @@ export const en = {
   "checkout.codeApplied": "70% early-access discount applied",
 
   "pay.emailNote":
-    "Your email is stored to reserve this price. Premium unlocks after payment. Use the same email you will sign in with.",
+    "Your email is stored to reserve this price. Premium unlocks after payment. How to get the early-access price: 1) Enter your email here. 2) Sign in with Google or email using that same address. 3) Pay the discounted price. A different email means the standard price. Entered the wrong email? Write to migrago.co@gmail.com.",
   "pay.standard": "Standard pricing",
 
   "road.completion": "tasks completed",
@@ -1092,7 +1092,7 @@ export const fa: Record<keyof typeof en, string> = {
   "start.free.f3": "اولویت‌بندی گام‌ها بر اساس وضعیت شما",
   "start.free.cta": "فعال‌سازی Premium",
   "start.activatedBanner": "Premium فعال شد. حالا می‌توانید ثبت گام‌های انجام‌شده را آغاز کنید.",
-  "pay.modalOffer": "با ثبت ایمیل، ۷۰٪ تخفیف زودهنگام بگیرید.",
+  "pay.modalOffer": "همان ایمیلی را که با آن وارد می‌شوید ثبت کنید و ۷۰٪ تخفیف زودهنگام بگیرید.",
   "pay.plan30Row": "۳۰ روز — {final} {old}",
   "pay.plan90Row": "۹۰ روز — {final} {old}",
   "checkout.feat1": "ارزیابی کامل و پروفایل آمادگی با نمودار",
@@ -1768,7 +1768,7 @@ export const fa: Record<keyof typeof en, string> = {
   "checkout.codeApplied": "تخفیف ۷۰٪ زودهنگام اعمال شد",
 
   "pay.emailNote":
-    "ایمیل شما برای رزرو این قیمت ذخیره می‌شود. Premium پس از پرداخت فعال می‌شود. از همان ایمیلی استفاده کنید که با آن وارد می‌شوید.",
+    "ایمیل شما برای رزرو این قیمت ذخیره می‌شود. Premium پس از پرداخت فعال می‌شود. برای قیمت ویژه: ۱) ایمیل خود را همین‌جا بنویسید. ۲) با گوگل یا ایمیل و با همان نشانی وارد شوید. ۳) مبلغ تخفیف‌خورده را بپردازید. ایمیل متفاوت یعنی قیمت عادی. ایمیل را اشتباه نوشتید؟ به migrago.co@gmail.com پیام دهید.",
   "pay.standard": "قیمت استاندارد",
 
   "road.completion": "گام انجام‌شده",
