@@ -72,15 +72,24 @@ export async function verifyAndParseWebhook(request: Request): Promise<{ ok: fal
   const signatures = request.headers.get("webhook-signature");
   if (!id || !timestamp || !/^\d+$/.test(timestamp) || !signatures || Math.abs(Date.now() / 1000 - Number(timestamp)) > 300) return { ok: false };
   try {
-    // The provider SDK base64-encodes the UTF-8 secret before Standard Webhooks decodes it.
-    const encodedSecret = btoa(String.fromCharCode(...new TextEncoder().encode(secret)));
-    const keyBytes = Uint8Array.from(atob(encodedSecret), (character) => character.charCodeAt(0));
-    const key = await crypto.subtle.importKey("raw", keyBytes, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
-    const digest = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`${id}.${timestamp}.${rawBody}`));
-    const expected = btoa(String.fromCharCode(...new Uint8Array(digest)));
+    const candidates: Uint8Array[] = [];
+    if (secret.startsWith("whsec_")) {
+      try {
+        const encoded = secret.slice(6);
+        const padded = encoded + "=".repeat((4 - encoded.length % 4) % 4);
+        const decoded = Uint8Array.from(atob(padded), (character) => character.charCodeAt(0));
+        if (decoded.length > 0) candidates.push(decoded);
+      } catch { /* Invalid base64 leaves the legacy candidate available. */ }
+    }
+    candidates.push(new TextEncoder().encode(secret));
     let verified = false;
-    for (const entry of signatures.split(/\s+/)) {
-      if (entry.startsWith("v1,")) verified = equal(expected, entry.slice(3)) || verified;
+    for (const keyBytes of candidates) {
+      const key = await crypto.subtle.importKey("raw", keyBytes, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+      const digest = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`${id}.${timestamp}.${rawBody}`));
+      const expected = btoa(String.fromCharCode(...new Uint8Array(digest)));
+      for (const entry of signatures.split(/\s+/)) {
+        if (entry.startsWith("v1,")) verified = equal(expected, entry.slice(3)) || verified;
+      }
     }
     if (!verified) return { ok: false };
     const raw: unknown = JSON.parse(rawBody);

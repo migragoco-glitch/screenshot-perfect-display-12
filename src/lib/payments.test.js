@@ -126,6 +126,23 @@ test("a verified 30-day paid order maps the documented account and amount fields
     expect(result.event.amount).toBe(999);
   }
 });
+test("a whsec_ secret accepts a signature made with its base64-decoded key without padding", async () => {
+  const keyBytes = crypto.getRandomValues(new Uint8Array(32));
+  process.env[setting("_WEBHOOK_SECRET")] = `whsec_${btoa(String.fromCharCode(...keyBytes)).replace(/=+$/, "")}`;
+  const payload = order();
+  const body = JSON.stringify(payload);
+  const id = crypto.randomUUID();
+  const timestamp = String(Math.floor(Date.now() / 1000));
+  const key = await crypto.subtle.importKey("raw", keyBytes, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const digest = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`${id}.${timestamp}.${body}`));
+  const signature = btoa(String.fromCharCode(...new Uint8Array(digest)));
+  const result = await verifyAndParseWebhook(new Request("https://app.migrago.fi/api/public/payment-webhook", {
+    method: "POST", body,
+    headers: { "webhook-id": id, "webhook-timestamp": timestamp, "webhook-signature": `v1,invalid v1,${signature}` },
+  }));
+  expect(result.ok).toBe(true);
+  if (result.ok) expect(result.event.orderId).toBe(payload.data.id);
+});
 test("a verified 90-day paid order maps to 90-day access", async () => {
   const payload = order();
   payload.data.product_id = process.env[setting("_PRODUCT_90_ID")];
