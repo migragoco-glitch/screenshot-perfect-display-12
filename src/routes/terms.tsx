@@ -33,7 +33,7 @@ function TermsPage() {
         <div className="glass-card rounded-3xl border-t-[5px] border-t-[var(--plum)] p-7 md:p-10">
           <div className="flex size-12 items-center justify-center rounded-full bg-[var(--plum)] text-[var(--institution-active-foreground)] shadow-sm" aria-hidden><ScrollText className="size-6" /></div>
           <h1 className="mt-5 text-2xl md:text-3xl">{t("terms.title")}</h1>
-          <p className="mt-5 text-sm leading-relaxed text-muted-foreground">{t("terms.body")}</p>
+          <p className="mt-5 text-sm leading-relaxed whitespace-pre-line text-muted-foreground">{t("terms.body")}</p>
           <p className="legal-notice mt-6">
             {t("set.placeholderNote")}
           </p>

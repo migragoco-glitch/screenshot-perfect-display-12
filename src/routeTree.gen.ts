@@ -18,6 +18,8 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FounderMetricsRouteImport } from './routes/founder-metrics'
+import { Route as PaymentCancelledRouteImport } from './routes/payment-cancelled'
+import { Route as PaymentSuccessRouteImport } from './routes/payment-success'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QuickCheckRouteImport } from './routes/quick-check'
 import { Route as StartRouteImport } from './routes/start'
@@ -68,6 +70,16 @@ const FounderMetricsRoute = FounderMetricsRouteImport.update({
   path: '/founder-metrics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PaymentCancelledRoute = PaymentCancelledRouteImport.update({
+  id: '/payment-cancelled',
+  path: '/payment-cancelled',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentSuccessRoute = PaymentSuccessRouteImport.update({
+  id: '/payment-success',
+  path: '/payment-success',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -99,6 +111,8 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/faq': typeof FaqRoute
   '/founder-metrics': typeof FounderMetricsRoute
+  '/payment-cancelled': typeof PaymentCancelledRoute
+  '/payment-success': typeof PaymentSuccessRoute
   '/privacy': typeof PrivacyRoute
   '/quick-check': typeof QuickCheckRoute
   '/start': typeof StartRoute
@@ -114,6 +128,8 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/faq': typeof FaqRoute
   '/founder-metrics': typeof FounderMetricsRoute
+  '/payment-cancelled': typeof PaymentCancelledRoute
+  '/payment-success': typeof PaymentSuccessRoute
   '/privacy': typeof PrivacyRoute
   '/quick-check': typeof QuickCheckRoute
   '/start': typeof StartRoute
@@ -130,6 +146,8 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/faq': typeof FaqRoute
   '/founder-metrics': typeof FounderMetricsRoute
+  '/payment-cancelled': typeof PaymentCancelledRoute
+  '/payment-success': typeof PaymentSuccessRoute
   '/privacy': typeof PrivacyRoute
   '/quick-check': typeof QuickCheckRoute
   '/start': typeof StartRoute
@@ -147,6 +165,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/faq'
     | '/founder-metrics'
+    | '/payment-cancelled'
+    | '/payment-success'
     | '/privacy'
     | '/quick-check'
     | '/start'
@@ -162,6 +182,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/faq'
     | '/founder-metrics'
+    | '/payment-cancelled'
+    | '/payment-success'
     | '/privacy'
     | '/quick-check'
     | '/start'
@@ -177,6 +199,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/faq'
     | '/founder-metrics'
+    | '/payment-cancelled'
+    | '/payment-success'
     | '/privacy'
     | '/quick-check'
     | '/start'
@@ -193,6 +217,8 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   FaqRoute: typeof FaqRoute
   FounderMetricsRoute: typeof FounderMetricsRoute
+  PaymentCancelledRoute: typeof PaymentCancelledRoute
+  PaymentSuccessRoute: typeof PaymentSuccessRoute
   PrivacyRoute: typeof PrivacyRoute
   QuickCheckRoute: typeof QuickCheckRoute
   StartRoute: typeof StartRoute
@@ -264,6 +290,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FounderMetricsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/payment-cancelled': {
+      id: '/payment-cancelled'
+      path: '/payment-cancelled'
+      fullPath: '/payment-cancelled'
+      preLoaderRoute: typeof PaymentCancelledRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment-success': {
+      id: '/payment-success'
+      path: '/payment-success'
+      fullPath: '/payment-success'
+      preLoaderRoute: typeof PaymentSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -305,6 +345,8 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   FaqRoute: FaqRoute,
   FounderMetricsRoute: FounderMetricsRoute,
+  PaymentCancelledRoute: PaymentCancelledRoute,
+  PaymentSuccessRoute: PaymentSuccessRoute,
   PrivacyRoute: PrivacyRoute,
   QuickCheckRoute: QuickCheckRoute,
   StartRoute: StartRoute,
