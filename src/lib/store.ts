@@ -1,9 +1,48 @@
 import { useCallback, useEffect, useState } from "react";
 import type { AnswerContext, AnswerValue, Answers } from "./questions";
 import { QUESTIONS, applicableQuestions, isQuestionApplicable, subAnswerIndex, subAnswerIndexes } from "./questions";
+import type { PremiumStatus } from "./payments";
 
 const KEY = "migrago.state.v1";
 const METRICS_KEY = "migrago.metrics.v1";
+
+// Paid access is request-verified in memory; persisted tiers are never authority.
+let verifiedUserId: string | null = null;
+let verifiedPremium: PremiumStatus = { active: false, plan: null, expiresAt: null };
+let pendingPremium: { userId: string; promise: Promise<void> } | null = null;
+let premiumExpiryTimer: ReturnType<typeof setTimeout> | null = null;
+
+function accessTier(): AppState["tier"] {
+  return verifiedUserId && verifiedPremium.active && verifiedPremium.expiresAt && Date.parse(verifiedPremium.expiresAt) > Date.now() ? "navigator" : "free";
+}
+
+async function refreshPremium(userId: string | null): Promise<void> {
+  if (verifiedUserId !== userId || !userId) {
+    verifiedUserId = userId;
+    verifiedPremium = { active: false, plan: null, expiresAt: null };
+    if (premiumExpiryTimer !== null) clearTimeout(premiumExpiryTimer);
+    premiumExpiryTimer = null;
+    window.dispatchEvent(new Event("migrago:state"));
+  }
+  if (!userId) return;
+  if (pendingPremium?.userId === userId) return pendingPremium.promise;
+  const promise = (async () => {
+    let status: PremiumStatus = { active: false, plan: null, expiresAt: null };
+    try {
+      const { getPremiumStatus } = await import("./payments.functions");
+      status = await getPremiumStatus();
+    } catch { /* Failed status reads must never grant access. */ }
+    if (verifiedUserId !== userId) return;
+    verifiedPremium = status;
+    if (premiumExpiryTimer !== null) clearTimeout(premiumExpiryTimer);
+    premiumExpiryTimer = status.active && status.expiresAt
+      ? setTimeout(() => void refreshPremium(userId), Math.min(2147483647, Math.max(1, Date.parse(status.expiresAt) - Date.now())))
+      : null;
+    window.dispatchEvent(new Event("migrago:state"));
+  })();
+  pendingPremium = { userId, promise };
+  try { await promise; } finally { if (pendingPremium?.promise === promise) pendingPremium = null; }
+}
 
 export function hasNavigatorAccess(tier: AppState["tier"]): boolean {
   return tier === "navigator";
@@ -233,7 +272,7 @@ function read(): AppState {
   if (typeof window === "undefined") return emptyState;
   try {
     const raw = window.localStorage.getItem(KEY);
-    if (!raw) return emptyState;
+    if (!raw) return { ...emptyState, tier: accessTier() };
     const parsed = JSON.parse(raw) as AppState;
     const history = Array.isArray(parsed?.history) ? parsed.history : [];
     const ctx: AnswerContext = { founderTrack: parsed?.founderTrack ?? null };
@@ -246,6 +285,7 @@ function read(): AppState {
     return {
       ...emptyState,
       ...parsed,
+      tier: accessTier(),
       history,
       answers,
       startAnsweredIds: startAnswerIds(Array.isArray(parsed.startAnsweredIds) ? parsed.startAnsweredIds : undefined),
@@ -258,7 +298,7 @@ function read(): AppState {
       ...(assessmentStatus !== undefined ? { assessmentStatus } : {}),
     };
   } catch {
-    return emptyState;
+    return { ...emptyState, tier: accessTier() };
   }
 }
 
@@ -342,13 +382,37 @@ export function useAppState() {
 
   useEffect(() => {
     setState(read());
-    setHydrated(true);
+    let active = true;
+    let unsubscribe = () => {};
     const sync = () => setState(read());
+    const load = async (userId: string | null) => {
+      await refreshPremium(userId);
+      if (active) { setState(read()); setHydrated(true); }
+    };
+    const onFocus = () => {
+      void import("@/integrations/supabase/client").then(async ({ supabase }) => {
+        const { data } = await supabase.auth.getSession();
+        if (active) await load(data.session?.user.id ?? null);
+      }).catch(() => { if (active) void load(null); });
+    };
     window.addEventListener("migrago:state", sync);
     window.addEventListener("storage", sync);
+    window.addEventListener("focus", onFocus);
+    void import("@/integrations/supabase/client").then(async ({ supabase }) => {
+      if (!active) return;
+      const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+        queueMicrotask(() => { if (active) void load(session?.user.id ?? null); });
+      });
+      unsubscribe = () => subscription.subscription.unsubscribe();
+      const { data } = await supabase.auth.getSession();
+      if (active) await load(data.session?.user.id ?? null);
+    }).catch(() => { if (active) void load(null); });
     return () => {
+      active = false;
+      unsubscribe();
       window.removeEventListener("migrago:state", sync);
       window.removeEventListener("storage", sync);
+      window.removeEventListener("focus", onFocus);
     };
   }, []);
 

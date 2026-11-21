@@ -41,7 +41,20 @@ function AuthPage() {
   const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
-    if (session) void navigate({ to: "/dashboard" });
+    if (!session) return;
+    const raw = window.sessionStorage.getItem("migrago.checkout.return");
+    if (raw) {
+      window.sessionStorage.removeItem("migrago.checkout.return");
+      try {
+        const saved = JSON.parse(raw) as { path?: unknown; plan?: unknown };
+        const path = typeof saved.path === "string" ? new URL(saved.path, window.location.origin) : null;
+        if (path?.origin === window.location.origin && path.pathname === "/checkout" && (saved.plan === "30" || saved.plan === "90")) {
+          void navigate({ to: "/checkout", search: { plan: saved.plan, ...(path.searchParams.get("next") === "start" ? { next: "start" as const } : {}) } });
+          return;
+        }
+      } catch { /* Invalid return data falls back to the dashboard. */ }
+    }
+    void navigate({ to: "/dashboard" });
   }, [session, navigate]);
 
   const submit = async () => {
@@ -53,7 +66,7 @@ function AuthPage() {
         const { error: err } = await supabase.auth.signUp({
           email: email.trim(),
           password,
-          options: { emailRedirectTo: `${window.location.origin}/dashboard` },
+          options: { emailRedirectTo: `${window.location.origin}/auth` },
         });
         if (err) setError(err.message);
         else setNotice(t("auth.checkEmail"));
@@ -72,14 +85,14 @@ function AuthPage() {
   const google = async () => {
     setError(null);
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: `${window.location.origin}/auth`,
     });
     if (result.error) {
       setError(String(result.error));
       return;
     }
     if (result.redirected) return;
-    void navigate({ to: "/dashboard" });
+    // The session effect handles checkout returns after OAuth hydration.
   };
 
   return (

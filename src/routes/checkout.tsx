@@ -1,14 +1,18 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Check, CheckCircle2, CreditCard, Lock, ShieldCheck } from "lucide-react";
 import { AppHeader, SiteFooter } from "@/components/BrandHeader";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { localizeNumber, useI18n } from "@/lib/i18n";
-import { navigatorCheckoutDestination, trackEvent, useAppState } from "@/lib/store";
+import { trackEvent, useAppState } from "@/lib/store";
+import { useSession } from "@/lib/session";
+import { createCheckout, getCheckoutEligibility } from "@/lib/payments.functions";
 
 export const Route = createFileRoute("/checkout")({
-  validateSearch: (search: Record<string, unknown>): { next?: "start" } => ({
+  validateSearch: (search: Record<string, unknown>): { next?: "start"; plan?: "30" | "90" } => ({
     ...(search["next"] === "start" ? { next: "start" as const } : {}),
+    ...(search["plan"] === "30" || search["plan"] === "90" ? { plan: search["plan"] } : {}),
   }),
   head: () => ({
     meta: [
@@ -41,17 +45,28 @@ export const formatEuro = (v: number, lang: "en" | "fa") =>
 function CheckoutPage() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const { next } = Route.useSearch();
-  const { state: appState, hydrated, update } = useAppState();
-  const [code, setCode] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | null>(null);
-  const [state, setState] = useState<"idle" | "busy" | "done">("idle");
-  const [plan, setPlan] = useState<PlanDuration>("30");
+  const { next, plan: returnedPlan } = Route.useSearch();
+  const { state: appState, hydrated } = useAppState();
+  const { user, loading } = useSession();
+  const [code, setCode] = useState(false);
+  const email = code ? user?.email : null;
+  const [state, setState] = useState<"idle" | "busy">("idle");
+  const [plan, setPlan] = useState<PlanDuration>(returnedPlan ?? "30");
+  const [accepted, setAccepted] = useState(false);
+  const [error, setError] = useState(false);
+  const [eligibilityReady, setEligibilityReady] = useState(false);
 
   useEffect(() => {
-    setCode(window.localStorage.getItem("migrago.discountCode"));
-    setEmail(window.localStorage.getItem("migrago.earlyAccessEmail"));
-  }, []);
+    let active = true;
+    setCode(false);
+    setAccepted(false);
+    setEligibilityReady(false);
+    if (!user) return () => { active = false; };
+    void getCheckoutEligibility().then((result) => {
+      if (active) { setCode(result.earlyAccess); setEligibilityReady(true); }
+    }).catch(() => { if (active) setError(true); });
+    return () => { active = false; };
+  }, [user?.id]);
 
   useEffect(() => {
     if (hydrated && !appState.consent) void navigate({ to: "/consent", search: { upgrade: true, ...(next ? { next } : {}) } });
@@ -61,18 +76,15 @@ function CheckoutPage() {
   const total = code ? basePrice * (1 - DISCOUNT) : basePrice;
   const price = (v: number) => formatEuro(v, lang);
 
-  const pay = () => {
-    if (!hydrated || !appState.consent || state !== "idle") return;
+  const pay = async () => {
+    if (!hydrated || !appState.consent || !user || !accepted || !eligibilityReady || state !== "idle") return;
     setState("busy");
+    setError(false);
     trackEvent({ type: "checkout_started" });
-    window.setTimeout(() => {
-      trackEvent({ type: "checkout_completed" });
-      update({ tier: "navigator" });
-      if (appState.completed) window.localStorage.setItem("migrago.justUpgraded", "1");
-      if (next === "start") window.sessionStorage.setItem("migrago.start.activated", "1");
-      setState("done");
-      window.setTimeout(() => void navigate({ to: next === "start" ? "/start" : navigatorCheckoutDestination(appState.completed) }), 700);
-    }, 1200);
+    try {
+      const result = await createCheckout({ data: { plan, origin: window.location.origin } });
+      window.location.href = result.url;
+    } catch { setError(true); setState("idle"); }
   };
 
   if (!hydrated || !appState.consent) return null;
@@ -87,10 +99,6 @@ function CheckoutPage() {
           <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
             {(["checkout.feat1", "checkout.feat2", "checkout.feat3", "checkout.feat4"] as const).map((key) => <li key={key} className="flex items-start gap-2"><Check className="mt-0.5 size-4 shrink-0 text-secondary" aria-hidden /><span>{t(key)}</span></li>)}
           </ul>
-          <p className="checkout-test-note mt-5 rounded-2xl bg-muted p-4 text-xs leading-relaxed text-muted-foreground">
-            {t("checkout.testMode")}
-          </p>
-
           <p id="checkout-plan-label" className="mt-6 text-sm font-semibold">{t("checkout.planChoose")}</p>
           <div role="radiogroup" aria-labelledby="checkout-plan-label" className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {(["30", "90"] as const).map((duration) => (
@@ -143,19 +151,35 @@ function CheckoutPage() {
             </p>
           ) : null}
 
-          <button
+          {user ? <>
+            <div className="mt-5 flex items-start gap-3">
+              <Checkbox id="checkout-consent" checked={accepted} disabled={state === "busy"} onCheckedChange={(checked) => setAccepted(checked === true)} className="mt-1" />
+              <label htmlFor="checkout-consent" className="text-xs leading-relaxed text-muted-foreground">{t("checkout.consent")}</label>
+            </div>
+            <Link to="/terms" className="mt-2 inline-flex text-xs font-semibold text-secondary underline underline-offset-4">{t("checkout.consentLink")}</Link>
+            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">{t("checkout.viaProvider")}</p>
+          </> : !loading ? <>
+            <p className="mt-5 text-sm text-muted-foreground">{t("checkout.loginRequired")}</p>
+            <Button className="mt-3 w-full" onClick={() => {
+              const path = `/checkout?plan=${plan}${next === "start" ? "&next=start" : ""}`;
+              window.sessionStorage.setItem("migrago.checkout.return", JSON.stringify({ plan, path }));
+              void navigate({ to: "/auth" });
+            }}>{t("checkout.loginButton")}</Button>
+          </> : null}
+
+          {error ? <p role="alert" className="mt-3 text-xs font-semibold text-destructive">{t("checkout.error")}</p> : null}
+
+          {user ? <Button
             type="button"
-            disabled={state !== "idle"}
-            onClick={pay}
-            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#02808A] px-5 py-3 text-sm font-bold text-white transition-colors duration-200 ease-out hover:bg-[#026A73] disabled:opacity-50"
+            disabled={state !== "idle" || !accepted || !eligibilityReady}
+            onClick={() => void pay()}
+            className="mt-6 h-auto w-full gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-bold text-secondary-foreground transition-colors duration-200 ease-out hover:bg-secondary/85 disabled:opacity-50"
           >
             <CreditCard className="size-4" aria-hidden />
             {state === "idle"
               ? t("checkout.pay")
-              : state === "busy"
-                ? t("checkout.processing")
-                : t("checkout.done")}
-          </button>
+              : t("checkout.redirecting")}
+          </Button> : null}
 
           <button
             type="button"

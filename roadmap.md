@@ -1,5 +1,7 @@
 # Current roadmap
 
+- [x] Implement authenticated one-time Premium checkout, verified payment callbacks, atomic pass stacking/refunds, server-sourced access, bilingual consent and activation polling; verify once without browser checks or publishing.
+
 - [x] Apply TASK 1 assessment locking, recorded-answer viewing and draft cancellation only; verify once, without browser checks or publishing.
 
 - [ ] Apply approved roadmap/info/dashboard presentation changes and four corrections; preserve document storage and knowledge-version copy.

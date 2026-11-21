@@ -104,6 +104,75 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_unmatched_orders: {
+        Row: {
+          created_at: string
+          id: string
+          payload: Json
+          provider: string
+          provider_order_id: string
+          reason: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          payload: Json
+          provider?: string
+          provider_order_id: string
+          reason: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          payload?: Json
+          provider?: string
+          provider_order_id?: string
+          reason?: string
+        }
+        Relationships: []
+      }
+      premium_passes: {
+        Row: {
+          amount: number | null
+          created_at: string
+          currency: string | null
+          expires_at: string
+          id: string
+          plan: string
+          provider: string
+          provider_order_id: string
+          starts_at: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          currency?: string | null
+          expires_at: string
+          id?: string
+          plan: string
+          provider?: string
+          provider_order_id: string
+          starts_at: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          currency?: string | null
+          expires_at?: string
+          id?: string
+          plan?: string
+          provider?: string
+          provider_order_id?: string
+          starts_at?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       roadmap_progress: {
         Row: {
           completed: boolean
@@ -130,6 +199,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      record_premium_payment: {
+        Args: {
+          p_amount?: number
+          p_currency?: string
+          p_order_id: string
+          p_plan: string
+          p_user_id: string
+        }
+        Returns: undefined
+      }
       validation_signals: { Args: never; Returns: Json }
     }
     Enums: {
