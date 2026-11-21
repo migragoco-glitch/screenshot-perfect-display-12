@@ -72,7 +72,7 @@ export async function verifyAndParseWebhook(request: Request): Promise<{ ok: fal
   const signatures = request.headers.get("webhook-signature");
   if (!id || !timestamp || !/^\d+$/.test(timestamp) || !signatures || Math.abs(Date.now() / 1000 - Number(timestamp)) > 300) return { ok: false };
   try {
-    const candidates: Uint8Array[] = [];
+    const candidates: Uint8Array<ArrayBuffer>[] = [];
     if (secret.startsWith("whsec_")) {
       try {
         const encoded = secret.slice(6);
